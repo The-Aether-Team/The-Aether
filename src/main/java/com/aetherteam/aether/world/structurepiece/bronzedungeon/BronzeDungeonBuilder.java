@@ -91,7 +91,7 @@ public class BronzeDungeonBuilder {
             this.propagateRooms(chestRoom, chunkPos, true);
             StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
             this.buildEndTunnel(lobby, startPos);
-            this.buildSurfaceTunnel(lobby, genContext.heightAccessor(), genContext.chunkGenerator(), genContext.randomState());
+            this.buildSurfaceTunnel(genContext.heightAccessor(), genContext.chunkGenerator(), genContext.randomState());
 
             this.populatePiecesBuilder(builder);
         }
@@ -168,19 +168,48 @@ public class BronzeDungeonBuilder {
         this.nodes.addAll(longestTunnel);
     }
 
-    private void buildSurfaceTunnel(StructurePiece lobby, LevelHeightAccessor level, ChunkGenerator chunkGenerator, RandomState randomState) {
+    @Nullable
+    @SuppressWarnings("SameParameterValue")
+    private StructurePiece seekLastRoomNode(int minWidth) {
+        for (int i = this.nodes.size() - 1; i >= 0; i--) {
+            StructurePiece piece = this.nodes.get(i);
+            BoundingBox box = piece.getBoundingBox();
+            if (box.getXSpan() > minWidth && box.getZSpan() > minWidth) {
+                return piece;
+            }
+        }
+
+        return null;
+    }
+
+    private void buildSurfaceTunnel(LevelHeightAccessor level, ChunkGenerator chunkGenerator, RandomState randomState) {
+        final int shrink = 3;
+        StructurePiece lobby = this.seekLastRoomNode(shrink * 2);
+        if (lobby == null) return; // Not likely to happen ever, but just in case for wackiness
+
         BoundingBox lobbyBounds = lobby.getBoundingBox();
         BlockPos entranceRoomCenter = lobbyBounds.getCenter();
-        int topYSolid = chunkGenerator.getFirstOccupiedHeight(entranceRoomCenter.getX(), entranceRoomCenter.getZ(), Heightmap.Types.OCEAN_FLOOR_WG, level, randomState);
+        int topSurfaceY = chunkGenerator.getFirstOccupiedHeight(entranceRoomCenter.getX(), entranceRoomCenter.getZ(), Heightmap.Types.OCEAN_FLOOR_WG, level, randomState);
 
-        int shrink = 3;
+        int roomCeiling = lobbyBounds.maxY() + 1; // Right above the lobby's ceiling blocks
+
+        if (roomCeiling > topSurfaceY)
+            return; // Room somehow clips through top surface of terrain, no room for generating ruins
+
+        int ruinsTopY = Math.max(roomCeiling, topSurfaceY + 4); // A few extra blocks above the surface centered in this box
+
+        int minX = lobbyBounds.minX() + shrink;
+        int minZ = lobbyBounds.minZ() + shrink;
+        int maxX = lobbyBounds.maxX() - shrink;
+        int maxZ = lobbyBounds.maxZ() - shrink;
+        // Corner-sorting in case any of the templates get customized out of default expectations
         BoundingBox upwardsTunnelBox = new BoundingBox(
-            lobbyBounds.minX() + shrink,
-            lobbyBounds.maxY() + 1, // Right above the lobby's ceiling blocks
-            lobbyBounds.minZ() + shrink,
-            lobbyBounds.maxX() - shrink,
-            topYSolid + 4, // A few extra blocks above the surface centered in this box
-            lobbyBounds.maxZ() - shrink
+            Math.min(minX, maxX),
+            roomCeiling,
+            Math.min(minZ, maxZ),
+            Math.max(minX, maxX),
+            ruinsTopY,
+            Math.max(minZ, maxZ)
         );
         this.nodes.add(new BronzeDungeonSurfaceRuins(upwardsTunnelBox));
     }

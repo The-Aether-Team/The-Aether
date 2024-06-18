@@ -2,6 +2,7 @@ package com.aetherteam.aether.entity.passive;
 
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.entity.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -79,7 +80,7 @@ public class Aerwhale extends FlyingMob {
         return Mob.checkMobSpawnRules(aerwhale, level, reason, pos, random)
                 && level.getFluidState(pos).is(Fluids.EMPTY)
                 && level.getRawBrightness(pos, 0) > 8
-                && level.canSeeSky(pos)
+                && EntityUtil.wholeHitboxCanSeeSky(level, pos, 1)
                 && (reason != MobSpawnType.NATURAL || random.nextInt(40) == 0);
     }
 

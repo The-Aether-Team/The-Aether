@@ -13,7 +13,6 @@
     "common.DirectoryLockMixin",
     "common.EntityMixin",
     "common.EventHooksMixin",
-    "common.FeatureMixin",
     "common.ItemMixin",
     "common.LivingEntityMixin",
     "common.MobMixin",

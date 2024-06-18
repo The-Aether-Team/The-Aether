@@ -1,0 +1,16 @@
+{
+  "feature": "aether:gold_dungeon_island_foliage",
+  "placement": [
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "blocks": "minecraft:air"
+      }
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 16
+    }
+  ]
+}

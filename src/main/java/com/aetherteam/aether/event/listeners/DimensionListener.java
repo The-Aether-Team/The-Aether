@@ -1,6 +1,7 @@
 package com.aetherteam.aether.event.listeners;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,7 +12,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.IEventBus;
@@ -21,13 +24,16 @@ import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.entity.player.SleepingTimeCheckEvent;
+import net.neoforged.neoforge.event.level.AlterGroundEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.level.SleepFinishedTimeEvent;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class DimensionListener {
     /**
-     * @see Aether#eventSetup()
+     * @see Aether#eventSetup(IEventBus)
      */
     public static void listen(IEventBus bus) {
         bus.addListener(DimensionListener::onPlayerLogin);
@@ -39,6 +45,7 @@ public class DimensionListener {
         bus.addListener(DimensionListener::onWorldLoad);
         bus.addListener(DimensionListener::onSleepFinish);
         bus.addListener(DimensionListener::onTriedToSleep);
+        bus.addListener(DimensionListener::onAlterGround);
     }
 
     /**
@@ -133,5 +140,29 @@ public class DimensionListener {
         if (DimensionHooks.isEternalDay(player)) {
             event.setResult(Event.Result.DENY);
         }
+    }
+
+    /**
+     * Prevents Aether Dirt from being replaced by Podzol.
+     */
+    public static void onAlterGround(AlterGroundEvent event) {
+        TreeDecorator.Context context = event.getContext();
+        AlterGroundEvent.StateProvider provider = event.getStateProvider();
+        event.setStateProvider((rand, pos) -> {
+            AtomicReference<BlockState> oldState = new AtomicReference<>(); // Ground to replace.
+            BlockState attemptedState = provider.getState(rand, pos); // Ground to maybe replace with.
+            if (context.level().isStateAtPosition(pos, state -> {
+                if (state.is(AetherTags.Blocks.AETHER_DIRT)) {
+                    oldState.set(state);
+                    return true;
+                } else {
+                    return false;
+                }
+            })) {
+                return attemptedState.is(Blocks.PODZOL) ? oldState.get() : attemptedState; // Ground to actually replace with.
+            } else {
+                return attemptedState;
+            }
+        });
     }
 }
