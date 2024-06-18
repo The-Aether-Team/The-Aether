@@ -51,7 +51,7 @@ public class MoaSaddleEmissiveLayer extends RenderLayer<Moa, MoaModel> {
                 this.saddle.prepareMobModel(moa, limbSwing, limbSwingAmount, partialTicks);
                 this.saddle.setupAnim(moa, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                 VertexConsumer consumer = buffer.getBuffer(renderType);
-                this.saddle.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                this.saddle.renderToBuffer(poseStack, consumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
             }
         }
     }

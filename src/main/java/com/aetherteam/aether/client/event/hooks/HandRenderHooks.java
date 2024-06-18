@@ -148,7 +148,7 @@ public class HandRenderHooks {
         if (isSlim) {
             offset = 5.65F;
         }
-        poseStack.translate(f * offset, 0.0F, 0.0F);
+        poseStack.translate((f * offset) - 0.0025, 0.0025, -0.0025);
         switch (handRenderType) {
             case GLOVES ->
                     ((GlovesRenderer) renderer).renderFirstPerson(glovesStack, poseStack, buffer, combinedLight, player, arm);

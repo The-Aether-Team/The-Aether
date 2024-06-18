@@ -3,6 +3,7 @@ package com.aetherteam.aether.world.structurepiece;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeBossRoom;
 import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeDungeonRoom;
+import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeDungeonSurfaceRuins;
 import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeTunnel;
 import com.aetherteam.aether.world.structurepiece.golddungeon.*;
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverBossRoom;
@@ -23,6 +24,7 @@ public class AetherStructurePieceTypes {
     public static final DeferredHolder<StructurePieceType, StructurePieceType> BRONZE_BOSS_ROOM = register("BBossRoom", BronzeBossRoom::new);
     public static final DeferredHolder<StructurePieceType, StructurePieceType> BRONZE_DUNGEON_ROOM = register("BDungeonRoom", BronzeDungeonRoom::new);
     public static final DeferredHolder<StructurePieceType, StructurePieceType> BRONZE_TUNNEL = register("BTunnel", BronzeTunnel::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> BRONZE_SURFACE_RUINS = register("BSurface", BronzeDungeonSurfaceRuins::new);
     public static final DeferredHolder<StructurePieceType, StructurePieceType> SILVER_TEMPLE_PIECE = register("STemplePiece", SilverTemplePiece::new);
     public static final DeferredHolder<StructurePieceType, StructurePieceType> SILVER_FLOOR_PIECE = register("SFloorPiece", SilverFloorPiece::new);
     public static final DeferredHolder<StructurePieceType, StructurePieceType> SILVER_DUNGEON_ROOM = register("SDungeonRoom", SilverDungeonRoom::new);

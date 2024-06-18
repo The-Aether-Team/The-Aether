@@ -130,15 +130,15 @@ public class AetherMixinHooks {
             TagKey<Item> glovesTag = TagKey.create(Registries.ITEM, new ResourceLocation(CuriosConstants.MOD_ID, "hands"));
             TagKey<Item> pendantTag = TagKey.create(Registries.ITEM, new ResourceLocation(CuriosConstants.MOD_ID, "necklace"));
             if (stack.is(glovesTag)) {
-                return "hands";
+                return GlovesItem.getIdentifierStatic();
             } else if (stack.is(pendantTag) && (livingEntity.getType() == EntityType.PIGLIN || livingEntity.getType() == EntityType.ZOMBIFIED_PIGLIN)) {
-                return "necklace";
+                return PendantItem.getIdentifierStatic();
             }
         } else {
             if (stack.is(AetherTags.Items.AETHER_GLOVES)) {
-                return "aether_gloves";
+                return GlovesItem.getIdentifierStatic();
             } else if (stack.is(AetherTags.Items.AETHER_PENDANT) && (livingEntity.getType() == EntityType.PIGLIN || livingEntity.getType() == EntityType.ZOMBIFIED_PIGLIN)) {
-                return "aether_pendant";
+                return PendantItem.getIdentifierStatic();
             }
         }
         return "";
@@ -148,7 +148,7 @@ public class AetherMixinHooks {
      * Gets an accessory from an entity.
      *
      * @param livingEntity The {@link LivingEntity} to get the accessory from.
-     * @param identifier   The {@link String} for the slot identifier.
+     * @param identifier The {@link String} for the slot identifier.
      * @return The accessory {@link ItemStack} gotten from the entity.
      */
     public static ItemStack getItemByIdentifier(LivingEntity livingEntity, String identifier) {
