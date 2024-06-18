@@ -139,8 +139,6 @@ machete {
 
     lvtStriping.enabled = true
     sourceFileStriping.enabled = true
-
-    keepOriginal = true
 }
 
 tasks.named('jar', Jar).configure {
