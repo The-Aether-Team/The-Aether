@@ -24,6 +24,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.random.SimpleWeightedRandomList.Builder;
 import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -68,6 +69,8 @@ public class AetherConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_GRAVITITE_BURIED_CONFIGURATION = createKey("gravitite_ore_buried");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_GRAVITITE_CONFIGURATION = createKey("gravitite_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION = createKey("trees_skyroot_and_golden_oak");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SINGLE_GOLD_DUNGEON_FLOWER_CONFIGURATION = createKey("single_gold_dungeon_flower");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GOLD_DUNGEON_ISLAND_FOLIAGE_CONFIGURATION = createKey("gold_dungeon_island_foliage");
 
     private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name));
@@ -142,6 +145,15 @@ public class AetherConfiguredFeatures {
         register(context, TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
                 PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(GOLDEN_OAK_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get())), 0.01F)),
                 PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(SKYROOT_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()))));
+        register(context, SINGLE_GOLD_DUNGEON_FLOWER_CONFIGURATION, Feature.SIMPLE_BLOCK,
+            new SimpleBlockConfiguration(new WeightedStateProvider(
+                new Builder<BlockState>()
+                    .add(Blocks.DANDELION.defaultBlockState())
+                    .add(Blocks.POPPY.defaultBlockState()))));
+        register(context, GOLD_DUNGEON_ISLAND_FOLIAGE_CONFIGURATION, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
+            PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(GOLDEN_OAK_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get())), 0.66F)),
+            PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(SINGLE_GOLD_DUNGEON_FLOWER_CONFIGURATION), PlacementUtils.isEmpty())));
+
     }
 
     private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {

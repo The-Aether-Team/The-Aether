@@ -9,6 +9,7 @@ import com.aetherteam.aether.entity.ai.goal.BeeGrowBerryBushGoal;
 import com.aetherteam.aether.entity.ai.goal.FoxEatBerryBushGoal;
 import com.aetherteam.aether.entity.monster.Swet;
 import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
+import com.aetherteam.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.aetherteam.aether.entity.passive.FlyingCow;
 import com.aetherteam.aether.entity.passive.MountableAnimal;
 import com.aetherteam.aether.entity.projectile.crystal.ThunderCrystal;
@@ -517,7 +518,7 @@ public class EntityHooks {
     public static boolean thunderCrystalHitItems(Entity entity, LightningBolt lightning) {
         if (entity instanceof ItemEntity) {
             if (lightning.hasData(AetherDataAttachments.LIGHTNING_TRACKER)) {
-                return lightning.getData(AetherDataAttachments.LIGHTNING_TRACKER).getOwner(lightning.level()) instanceof ThunderCrystal;
+                return lightning.getData(AetherDataAttachments.LIGHTNING_TRACKER).getOwner(lightning.level()) instanceof ValkyrieQueen;
             }
         }
         return false;
