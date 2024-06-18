@@ -91,4 +91,15 @@ public final class EntityUtil {
             projectile.level().addFreshEntity(lightningBolt);
         }
     }
+
+    public static boolean wholeHitboxCanSeeSky(Level level, BlockPos pos, int hitboxRadius) {
+        boolean retval = true;
+        for (int xOffset = - hitboxRadius; xOffset <= hitboxRadius; xOffset++) {
+            for (int zOffset = - hitboxRadius; zOffset <=hitboxRadius; zOffset++) {
+                retval = retval && level.canSeeSky(pos.offset(xOffset, 0, zOffset));
+            }
+        }
+        return retval;
+    }
+
 }
