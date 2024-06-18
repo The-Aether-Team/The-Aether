@@ -2,6 +2,7 @@ package com.aetherteam.aether.entity.passive;
 
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.entity.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -32,8 +33,6 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
-
-import static com.aetherteam.aether.entity.EntityUtil.wholeHitboxCanSeeSky;
 
 public class Aerwhale extends FlyingMob {
     private static final EntityDataAccessor<Float> DATA_X_ROT_O_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
@@ -78,16 +77,10 @@ public class Aerwhale extends FlyingMob {
      * @return Whether this entity can spawn, as a {@link Boolean}.
      */
     public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-        boolean entireHitboxCanSeeSky=true;
-        for(int xOffset = -1; xOffset <= 1; xOffset++) {
-            for (int zOffset = -1; zOffset <= 1; zOffset++) {
-                entireHitboxCanSeeSky = entireHitboxCanSeeSky && level.canSeeSky(pos.offset(xOffset,0,zOffset));
-            }
-        }
         return Mob.checkMobSpawnRules(aerwhale, level, reason, pos, random)
                 && level.getFluidState(pos).is(Fluids.EMPTY)
                 && level.getRawBrightness(pos, 0) > 8
-                && wholeHitboxCanSeeSky((Level) level, pos, 1)
+                && EntityUtil.wholeHitboxCanSeeSky(level, pos, 1)
                 && (reason != MobSpawnType.NATURAL || random.nextInt(40) == 0);
     }
 
