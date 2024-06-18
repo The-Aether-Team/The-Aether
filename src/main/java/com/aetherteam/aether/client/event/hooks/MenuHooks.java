@@ -130,7 +130,6 @@ public class MenuHooks {
             return AetherConfig.CLIENT.default_minecraft_menu.get();
         }
         return AetherConfig.CLIENT.default_aether_menu.get();
-
     }
 
     /**
