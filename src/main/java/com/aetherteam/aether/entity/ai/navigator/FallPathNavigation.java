@@ -3,6 +3,7 @@ package com.aetherteam.aether.entity.ai.navigator;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -14,6 +15,11 @@ public class FallPathNavigation extends GroundPathNavigation {
         super(mob, level);
     }
 
+    /**
+     * [CODE COPY] - {@link PathNavigation#followThePath()}.
+     * Modified to prevent spinning.
+     */
+    @Override
     protected void followThePath() {
         Vec3 vec3 = this.getTempMobPos();
         this.maxDistanceToWaypoint = this.mob.getBbWidth() > 0.75F ? this.mob.getBbWidth() / 2.0F : 0.75F - this.mob.getBbWidth() / 2.0F;
@@ -22,7 +28,7 @@ public class FallPathNavigation extends GroundPathNavigation {
         double d1 = Math.abs(this.mob.getY() - (double) vec3i.getY());
         double d2 = Math.abs(this.mob.getZ() - ((double) vec3i.getZ() + (this.mob.getBbWidth() + 1) / 2D)); //Forge: Fix MC-94054
 
-        //This make No need to rotate around a point when following a path.
+        // Lessens rotation around a point when following a path.
         float fallDistance = this.mob.getMaxFallDistance();
         boolean flag = d0 <= (double) this.maxDistanceToWaypoint && d2 <= (double) this.maxDistanceToWaypoint && d1 < fallDistance; //Forge: Fix MC-94054
         if (flag || this.canCutCorner(this.path.getNextNode().type) && this.shouldTargetNextNodeInDirection(vec3)) {
@@ -32,6 +38,9 @@ public class FallPathNavigation extends GroundPathNavigation {
         this.doStuckDetection(vec3);
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.entity.ai.navigation.PathNavigation#shouldTargetNextNodeInDirection(Vec3)}.
+     */
     private boolean shouldTargetNextNodeInDirection(Vec3 pVec) {
         if (this.path.getNextNodeIndex() + 1 >= this.path.getNodeCount()) {
             return false;
