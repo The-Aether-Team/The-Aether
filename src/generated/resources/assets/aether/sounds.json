@@ -358,11 +358,6 @@
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
-  "entity.sentry.ambient": {
-    "sounds": [
-      "aether:generic/silence"
-    ]
-  },
   "entity.sentry.death": {
     "sounds": [
       "mob/slime/big1",
