@@ -136,9 +136,6 @@ machete {
     json.enabled = true
 
     jij.enabled = true
-
-    lvtStriping.enabled = true
-    sourceFileStriping.enabled = true
 }
 
 tasks.named('jar', Jar).configure {
