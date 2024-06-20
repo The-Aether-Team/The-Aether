@@ -37,7 +37,7 @@ public class BossMusicSoundInstance extends AbstractTickableSoundInstance {
         return new BossMusicSoundInstance(
             sound,
             SoundSource.MUSIC,
-            0.0F,
+            1.0F,
             1.0F,
             SoundInstance.createUnseededRandom(),
             false,
@@ -53,11 +53,6 @@ public class BossMusicSoundInstance extends AbstractTickableSoundInstance {
     @Override
     public void tick() {
 
-    }
-
-    @Override
-    public boolean canStartSilent() {
-        return true;
     }
 
     public void setVolume(float volume) {

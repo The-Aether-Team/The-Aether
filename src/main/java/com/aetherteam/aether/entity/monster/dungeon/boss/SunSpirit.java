@@ -31,6 +31,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
@@ -68,6 +69,7 @@ import java.util.function.Predicate;
 public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy, IEntityWithComplexSpawn {
     private static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
+    private static final Music SUN_SPIRIT_MUSIC = new Music(AetherSoundEvents.MUSIC_BOSS_SUN_SPIRIT, 0, 0, true);
 
     /**
      * Boss health bar manager
@@ -557,6 +559,15 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Override
     public ResourceLocation getBossBarBackgroundTexture() {
         return new ResourceLocation(Aether.MODID, "boss_bar/sun_spirit_background");
+    }
+
+    /**
+     * @return The {@link Music} for this boss's fight.
+     */
+    @Nullable
+    @Override
+    public Music getBossMusic() {
+        return SUN_SPIRIT_MUSIC;
     }
 
     /**

@@ -768,13 +768,13 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                 )
         );
         this.add(AetherSoundEvents.MUSIC_BOSS_SLIDER,
-            definition().with(sound("aether:music/boss/sliderfight").stream())
+            definition().with(sound("aether:music/boss/slider_fight").stream())
         );
         this.add(AetherSoundEvents.MUSIC_BOSS_VALKYRIE_QUEEN,
-            definition().with(sound("aether:music/boss/queenfight").stream())
+            definition().with(sound("aether:music/boss/valkyrie_queen_fight").stream())
         );
-//        this.add(AetherSoundEvents.MUSIC_BOSS_SUN_SPIRIT,
-//            definition().with(sound("aether:music/boss/.").stream())
-//        );
+        this.add(AetherSoundEvents.MUSIC_BOSS_SUN_SPIRIT,
+            definition().with(sound("aether:music/boss/sun_spirit_fight").stream())
+        );
     }
 }

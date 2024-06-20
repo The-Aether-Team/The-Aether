@@ -162,6 +162,7 @@ public class AetherSoundEvents {
     public static final DeferredHolder<SoundEvent, SoundEvent> UI_TOAST_AETHER_GENERAL = register("ui.toast.aether_general");
     public static final DeferredHolder<SoundEvent, SoundEvent> UI_TOAST_AETHER_BRONZE = register("ui.toast.aether_bronze");
     public static final DeferredHolder<SoundEvent, SoundEvent> UI_TOAST_AETHER_SILVER = register("ui.toast.aether_silver");
+    public static final DeferredHolder<SoundEvent, SoundEvent> UI_TOAST_AETHER_GOLD = register("ui.toast.aether_gold");
 
     public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_MENU = registerHolder("music.menu");
     public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_AETHER = registerHolder("music.aether");

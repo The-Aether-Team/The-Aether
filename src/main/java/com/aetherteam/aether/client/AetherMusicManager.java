@@ -51,12 +51,8 @@ public class AetherMusicManager {
 
         if (currentMusic instanceof BossMusicSoundInstance bossMusic) {
             float volume = bossMusic.getVolume();
-            if (music != null && isAetherBossMusic(music)) {
-                if (volume < 1.0F) {
-                    bossMusic.setVolume(Math.min(volume + 0.05F, 1.0F));
-                }
-            } else {
-                bossMusic.setVolume(Math.max(volume - 0.15F, 0.0F));
+            if (music == null || !isAetherBossMusic(music)) {
+                bossMusic.setVolume(Math.max(volume - 0.025F, 0.0F));
                 if (volume <= 0.0F) {
                     currentMusic = null;
                     nextSongDelay = Math.min(Integer.MAX_VALUE, Mth.nextInt(random, AetherConfig.CLIENT.music_backup_min_delay.get(), AetherConfig.CLIENT.music_backup_max_delay.get() / 2));

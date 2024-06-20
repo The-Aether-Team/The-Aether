@@ -937,7 +937,15 @@
   "music.boss.slider": {
     "sounds": [
       {
-        "name": "aether:music/boss/sliderfight",
+        "name": "aether:music/boss/slider_fight",
+        "stream": true
+      }
+    ]
+  },
+  "music.boss.sun_spirit": {
+    "sounds": [
+      {
+        "name": "aether:music/boss/sun_spirit_fight",
         "stream": true
       }
     ]
@@ -945,7 +953,7 @@
   "music.boss.valkyrie_queen": {
     "sounds": [
       {
-        "name": "aether:music/boss/queenfight",
+        "name": "aether:music/boss/valkyrie_queen_fight",
         "stream": true
       }
     ]
