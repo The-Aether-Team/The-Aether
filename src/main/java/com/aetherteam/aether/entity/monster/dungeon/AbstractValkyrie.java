@@ -48,6 +48,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      */
     private MostDamageTargetGoal mostDamageTargetGoal;
     private double lastMotionY;
+    private int lungeCooldown = 0;
 
     public AbstractValkyrie(EntityType<? extends AbstractValkyrie> type, Level level) {
         super(type, level);
@@ -90,6 +91,11 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         double motionY = this.getDeltaMovement().y();
         if (!this.onGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
             this.setDeltaMovement(this.getDeltaMovement().add(0, 0.0225, 0));
+        }
+        if (!this.level().isClientSide()) {
+            if (this.lungeCooldown > 0) {
+                this.lungeCooldown--;
+            }
         }
     }
 
@@ -280,7 +286,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         @Override
         public boolean canUse() {
-            return !this.valkyrie.onGround();
+            return !this.valkyrie.onGround() && this.valkyrie.lungeCooldown <= 0;
         }
 
         @Override
@@ -320,6 +326,11 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         @Override
         public boolean requiresUpdateEveryTick() {
             return true;
+        }
+
+        @Override
+        public void stop() {
+            this.valkyrie.lungeCooldown = 30;
         }
     }
 
