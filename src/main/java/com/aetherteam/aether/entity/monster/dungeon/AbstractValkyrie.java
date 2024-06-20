@@ -139,9 +139,9 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @SuppressWarnings("deprecation")
     protected boolean teleportAroundTarget(Entity target) {
         Vec2 targetVec = new Vec2(this.getRandom().nextFloat() - 0.5F, this.getRandom().nextFloat() - 0.5F).normalized();
-        double x = target.getX() + targetVec.x * 7;
+        double x = target.getX() + targetVec.x * 3;
         double y = target.getY();
-        double z = target.getZ() + targetVec.y * 7;
+        double z = target.getZ() + targetVec.y * 3;
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(x, y, z);
         while (mutableBlockPos.getY() > this.level().getMinBuildHeight() && !this.level().getBlockState(mutableBlockPos).blocksMotion()) {
             mutableBlockPos.move(Direction.DOWN);
