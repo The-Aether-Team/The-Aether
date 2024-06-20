@@ -1,4 +1,10 @@
 {
+  "block.aercloud.blue_aercloud_bounce": {
+    "sounds": [
+      "aether:block/aercloud/blue_aercloud_bounce"
+    ],
+    "subtitle": "subtitles.aether.block.aercloud.blue_aercloud_bounce"
+  },
   "block.aether_portal.ambient": {
     "sounds": [
       {

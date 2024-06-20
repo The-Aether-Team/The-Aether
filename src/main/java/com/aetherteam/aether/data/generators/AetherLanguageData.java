@@ -537,6 +537,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addSubtitle("block", "altar.crackle", "Altar crackles");
         this.addSubtitle("block", "freezer.crackle", "Freezer crackles");
         this.addSubtitle("block", "incubator.crackle", "Incubator crackles");
+        this.addSubtitle("block", "aercloud.blue_aercloud_bounce", "Blue Aercloud wobbles");
         this.addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
         this.addSubtitle("block", "water.evaporate", "Water evaporated");
 
@@ -1286,6 +1287,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addClientConfig("gui", "layout_perks_y", "The y-coordinate of the perks button layout when in the pause menu");
         this.addClientConfig("gui", "enable_hammer_cooldown_overlay", "Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown");
 
+        this.addClientConfig("audio", "blue_aercloud_bounce_sfx", "Makes Blue Aerclouds have their wobbly sounds that play when bouncing on them");
         this.addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         this.addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         this.addClientConfig("audio", "disable_music_manager", "Disables the Aether's internal music manager, if true, this overrides all other audio configs");

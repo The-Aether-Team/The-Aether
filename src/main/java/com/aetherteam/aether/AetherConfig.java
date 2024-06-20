@@ -233,6 +233,7 @@ public class AetherConfig {
         public final ConfigValue<Integer> layout_perks_y;
         public final ConfigValue<Boolean> enable_hammer_cooldown_overlay;
 
+        public final ConfigValue<Boolean> blue_aercloud_bounce_sfx;
         public final ConfigValue<Integer> music_backup_min_delay;
         public final ConfigValue<Integer> music_backup_max_delay;
         public final ConfigValue<Boolean> disable_music_manager;
@@ -348,6 +349,10 @@ public class AetherConfig {
             builder.pop();
 
             builder.push("Audio");
+            blue_aercloud_bounce_sfx = builder
+                    .comment("Makes Blue Aerclouds have their wobbly sounds that play when bouncing on them")
+                    .translation("config.aether.client.audio.blue_aercloud_bounce_sfx")
+                    .define("Blue Aercloud bouncing sounds", true);
             music_backup_min_delay = builder
                     .comment("Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether")
                     .translation("config.aether.client.audio.music_backup_min_delay")

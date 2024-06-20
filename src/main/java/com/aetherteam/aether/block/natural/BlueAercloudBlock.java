@@ -1,7 +1,10 @@
 package com.aetherteam.aether.block.natural;
 
+import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.client.AetherSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -44,6 +47,9 @@ public class BlueAercloudBlock extends AercloudBlock {
                     double yOffset = pos.getY() + level.getRandom().nextDouble();
                     double zOffset = pos.getZ() + level.getRandom().nextDouble();
                     level.addParticle(ParticleTypes.SPLASH, xOffset, yOffset, zOffset, 0.0, 0.0, 0.0);
+                }
+                if (AetherConfig.CLIENT.blue_aercloud_bounce_sfx.get()) {
+                    level.playSound((entity instanceof Player player ? player : null), pos, AetherSoundEvents.BLOCK_BLUE_AERCLOUD_BOUNCE.get(), SoundSource.BLOCKS, 0.8F, 0.5F + (((float) (Math.pow(level.getRandom().nextDouble(), 2.5))) * 0.5F));
                 }
             }
             if (!(entity instanceof Projectile)) {

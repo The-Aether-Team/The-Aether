@@ -19,6 +19,7 @@ public class AetherSoundEvents {
     public static final DeferredHolder<SoundEvent, SoundEvent> BLOCK_FREEZER_CRACKLE = register("block.freezer.crackle");
     public static final DeferredHolder<SoundEvent, SoundEvent> BLOCK_INCUBATOR_CRACKLE = register("block.incubator.crackle");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> BLOCK_BLUE_AERCLOUD_BOUNCE = register("block.aercloud.blue_aercloud_bounce");
     public static final DeferredHolder<SoundEvent, SoundEvent> BLOCK_DUNGEON_TRAP_TRIGGER = register("block.dungeon_trap.trigger");
 
     public static final DeferredHolder<SoundEvent, SoundEvent> WATER_EVAPORATE = register("block.water.evaporate");

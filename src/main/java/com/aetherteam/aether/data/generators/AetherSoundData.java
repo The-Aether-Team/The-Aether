@@ -56,6 +56,10 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                         sound("minecraft:block/furnace/fire_crackle5")
                 ).subtitle("subtitles.aether.block.incubator.crackle")
         );
+        this.add(AetherSoundEvents.BLOCK_BLUE_AERCLOUD_BOUNCE,
+            definition().with(sound("aether:block/aercloud/blue_aercloud_bounce"))
+                .subtitle("subtitles.aether.block.aercloud.blue_aercloud_bounce")
+        );
         this.add(AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER,
                 definition().with(
                         sound("aether:block/dungeon_trap/trigger1"),
