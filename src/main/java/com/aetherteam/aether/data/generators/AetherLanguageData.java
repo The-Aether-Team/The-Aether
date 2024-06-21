@@ -812,6 +812,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.construction_bot", "Construction Bot");
         this.addMoaSkinsText("skin.mossy_statue_moa", "Mossy Statue Moa");
         this.addMoaSkinsText("skin.chicken_moa", "Chicken Moa");
+        this.addMoaSkinsText("skin.medical_bot", "Medical Bot");
+        this.addMoaSkinsText("skin.skeleton_moa", "Skeleton Moa");
         this.addMoaSkinsText("skin.arctic_moa", "Arctic Moa");
         this.addMoaSkinsText("skin.cockatrice_moa", "Cockatrice");
         this.addMoaSkinsText("skin.phoenix_moa", "Phoenix Moa");
