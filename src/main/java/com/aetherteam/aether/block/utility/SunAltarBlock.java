@@ -5,6 +5,7 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.blockentity.SunAltarBlockEntity;
 import com.aetherteam.aether.command.SunAltarWhitelist;
+import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.network.packet.clientbound.OpenSunAltarPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.serialization.MapCodec;
@@ -60,11 +61,15 @@ public class SunAltarBlock extends BaseEntityBlock {
             if (AetherConfig.SERVER.sun_altar_whitelist.get() && !player.hasPermissions(4) && !SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile())) { // Prevents non-operator or non-whitelisted players from using the Sun Altar on servers
                 player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_permission"), true); // Player doesn't have permission to use the Sun Altar.
             } else {
-                if (level.hasData(AetherDataAttachments.AETHER_TIME)) { // Checks if the level has the capability used for Aether time, which determines if the Sun Altar has control over the time of a dimension.
-                    if (!level.getData(AetherDataAttachments.AETHER_TIME).isEternalDay()) { // Checks if the time is locked into eternal day or not.
-                        this.openScreen(level, pos, player);
+                if (AetherConfig.SERVER.sun_altar_dimensions.get().contains(level.dimension().location().toString())) {
+                    if (level.hasData(AetherDataAttachments.AETHER_TIME)) { // Checks if the level has the capability used for Aether time, which determines if the Sun Altar has control over the time of a dimension.
+                        if (!level.getData(AetherDataAttachments.AETHER_TIME).isEternalDay()) { // Checks if the time is locked into eternal day or not.
+                            this.openScreen(level, pos, player, AetherDimensions.AETHER_TICKS_PER_DAY);
+                        } else {
+                            player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.in_control"), true); // Sun Spirit is still in control of the realm.
+                        }
                     } else {
-                        player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.in_control"), true); // Sun Spirit is still in control of the realm.
+                        this.openScreen(level, pos, player, 24000);
                     }
                 } else {
                     player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_power"), true); // Sun Altar has no power in the dimension.
@@ -74,11 +79,11 @@ public class SunAltarBlock extends BaseEntityBlock {
         return InteractionResult.SUCCESS;
     }
 
-    protected void openScreen(Level level, BlockPos pos, Player player) {
+    protected void openScreen(Level level, BlockPos pos, Player player, int timeScale) {
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof SunAltarBlockEntity sunAltar) {
-                PacketRelay.sendToPlayer(new OpenSunAltarPacket(sunAltar.getName()), serverPlayer);
+                PacketRelay.sendToPlayer(new OpenSunAltarPacket(sunAltar.getName(), timeScale), serverPlayer);
             }
         }
     }
