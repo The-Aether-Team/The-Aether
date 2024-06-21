@@ -240,6 +240,7 @@ public class AetherTags {
     }
 
     public static class SoundEvents {
+        public static final TagKey<SoundEvent> ACHIEVEMENT_SOUNDS = tag("achievement_sounds");
         public static final TagKey<SoundEvent> BOSS_MUSIC = tag("boss_music");
 
         private static TagKey<SoundEvent> tag(String name) {

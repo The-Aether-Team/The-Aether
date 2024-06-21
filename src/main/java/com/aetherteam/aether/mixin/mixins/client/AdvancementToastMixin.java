@@ -8,6 +8,7 @@ import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -37,7 +38,9 @@ public class AdvancementToastMixin {
             if (this.advancement != null) {
                 SoundEvent soundOverride = AetherAdvancementSoundOverrides.retrieveOverride(this.advancement);
                 if (soundOverride != null) {
-                    toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(soundOverride, 1.0F, 1.0F));
+                    if (soundOverride != SoundEvents.EMPTY) {
+                        toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forMusic(soundOverride));
+                    }
                     this.playedSound = true;
                 }
             }

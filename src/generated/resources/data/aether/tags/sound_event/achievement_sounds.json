@@ -1,0 +1,8 @@
+{
+  "values": [
+    "aether:ui.toast.aether_general",
+    "aether:ui.toast.aether_bronze",
+    "aether:ui.toast.aether_silver",
+    "aether:ui.toast.aether_gold"
+  ]
+}
