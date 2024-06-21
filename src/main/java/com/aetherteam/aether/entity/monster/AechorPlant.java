@@ -3,6 +3,7 @@ package com.aetherteam.aether.entity.monster;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.effect.AetherEffects;
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.projectile.PoisonNeedle;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.core.BlockPos;
@@ -120,9 +121,9 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
      */
     public static boolean checkAechorPlantSpawnRules(EntityType<? extends AechorPlant> aechorPlant, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
         return level.getBlockState(pos.below()).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON)
-                && level.getRawBrightness(pos, 0) > 8
-                && level.getDifficulty() != Difficulty.PEACEFUL
-                && (reason != MobSpawnType.NATURAL || random.nextInt(10) == 0);
+            && level.getRawBrightness(pos, 0) > 8
+            && level.getDifficulty() != Difficulty.PEACEFUL
+            && (reason != MobSpawnType.NATURAL || (random.nextInt(10) == 0 && !EntityUtil.inRadiusOf(level, pos, 10, AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT)));
     }
 
     /**
