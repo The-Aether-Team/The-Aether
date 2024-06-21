@@ -756,6 +756,9 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         this.add(AetherSoundEvents.UI_TOAST_AETHER_SILVER,
                 definition().with(sound("aether:achievement/achievement_silver").stream())
         );
+        this.add(AetherSoundEvents.UI_TOAST_AETHER_GOLD,
+            definition().with(sound("aether:achievement/achievement_gold").stream())
+        );
 
 
         //Music

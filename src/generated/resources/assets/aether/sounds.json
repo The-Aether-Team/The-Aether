@@ -988,6 +988,14 @@
       }
     ]
   },
+  "ui.toast.aether_gold": {
+    "sounds": [
+      {
+        "name": "aether:achievement/achievement_gold",
+        "stream": true
+      }
+    ]
+  },
   "ui.toast.aether_silver": {
     "sounds": [
       {

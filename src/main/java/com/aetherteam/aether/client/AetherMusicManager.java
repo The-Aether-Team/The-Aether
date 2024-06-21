@@ -4,7 +4,7 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
-import com.aetherteam.aether.client.sound.BossMusicSoundInstance;
+import com.aetherteam.aether.client.sound.MusicSoundInstance;
 import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.mixin.mixins.client.accessor.BossHealthOverlayAccessor;
 import com.aetherteam.cumulus.api.Menus;
@@ -22,6 +22,7 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -35,12 +36,14 @@ import java.util.stream.Collectors;
  * This class is used to replace the menu screen music when applicable, and replace the creative mode music when in an Aether biome.
  */
 public class AetherMusicManager {
+    private static final int FADE_LIMIT = 50;
     private static final RandomSource random = RandomSource.create();
     private static final Minecraft minecraft = Minecraft.getInstance();
     private static final MusicManager musicManager = Minecraft.getInstance().getMusicManager();
     @Nullable
     private static SoundInstance currentMusic;
     private static int nextSongDelay = 100;
+    private static Integer fade = null;
 
     /**
      * [CODE COPY] - {@link MusicManager#tick()}.<br><br>
@@ -48,21 +51,41 @@ public class AetherMusicManager {
      */
     public static void tick() {
         Music music = getSituationalMusic();
-
-        if (currentMusic instanceof BossMusicSoundInstance bossMusic) {
-            float volume = bossMusic.getVolume();
-            if (music == null || !isAetherBossMusic(music)) {
-                bossMusic.setVolume(Math.max(volume - 0.025F, 0.0F));
-                if (volume <= 0.0F) {
-                    currentMusic = null;
-                    nextSongDelay = Math.min(Integer.MAX_VALUE, Mth.nextInt(random, AetherConfig.CLIENT.music_backup_min_delay.get(), AetherConfig.CLIENT.music_backup_max_delay.get() / 2));
+        if (currentMusic instanceof MusicSoundInstance musicSoundInstance) {
+            if (musicSoundInstance.isBossMusic()) {
+                if (music == null || !isAetherBossMusic(music)) {
+                    if (fade == null) {
+                        fade = 0;
+                    }
+                    musicSoundInstance.setVolume((float) Math.exp(-(fade / (FADE_LIMIT / 3.0))));
+                    fade++;
+                    if (fade >= FADE_LIMIT) {
+                        fade = null;
+                        minecraft.getSoundManager().stop(currentMusic);
+                        currentMusic = null;
+                        nextSongDelay = Math.min(Integer.MAX_VALUE, Mth.nextInt(random, AetherConfig.CLIENT.music_backup_min_delay.get(), AetherConfig.CLIENT.music_backup_max_delay.get() / 2)); // End boss music
+                    }
+                }
+            } else {
+                if (music != null && isAetherBossMusic(music)) {
+                    if (fade == null) {
+                        fade = 0;
+                    }
+                    musicSoundInstance.setVolume((float) Math.exp(-(fade / (FADE_LIMIT / 3.0))));
+                    fade++;
+                    if (fade >= FADE_LIMIT) {
+                        fade = null;
+                        minecraft.getSoundManager().stop(currentMusic);
+                        currentMusic = null;
+                        nextSongDelay = FADE_LIMIT / 3; // Start boss music
+                    }
                 }
             }
         }
 
         if (music != null) {
             if (currentMusic != null) {
-                if (!(currentMusic instanceof BossMusicSoundInstance)) {
+                if (fade == null) {
                     if (!music.getEvent().value().getLocation().equals(currentMusic.getLocation()) && music.replaceCurrentMusic()) {
                         minecraft.getSoundManager().stop(currentMusic); // Non-copy, cancels vanilla music if Aether music starts
                         nextSongDelay = Mth.nextInt(random, 0, music.getMinDelay() / 2);
@@ -95,9 +118,9 @@ public class AetherMusicManager {
     public static void startPlaying(Music music) {
         musicManager.stopPlaying(); // Non-copy, cancels vanilla music if Aether music starts
         if (isAetherBossMusic(music)) {
-            currentMusic = BossMusicSoundInstance.forBossMusic(music.getEvent().value());
+            currentMusic = MusicSoundInstance.forBossMusic(music.getEvent().value());
         } else {
-            currentMusic = SimpleSoundInstance.forMusic(music.getEvent().value());
+            currentMusic = MusicSoundInstance.forMusic(music.getEvent().value());
         }
         if (currentMusic.getSound() != SoundManager.EMPTY_SOUND) {
             minecraft.getSoundManager().play(currentMusic);
@@ -127,7 +150,7 @@ public class AetherMusicManager {
      * @return The {@link Music} to play.
      */
     @Nullable
-    public static Music getSituationalMusic() {
+    public static <T extends LivingEntity & AetherBossMob<?>> Music getSituationalMusic() {
         if (!(minecraft.screen instanceof WinScreen)) {
             if (isAetherWorldPreviewEnabled()) { // Play Aether menu music when the Aether menu world preview is enabled.
                 return AetherMenus.THE_AETHER.get().getMusic();
@@ -135,8 +158,8 @@ public class AetherMusicManager {
                 return Menus.MINECRAFT.get().getMusic();
             } else if (minecraft.player != null) { // Otherwise replace creative music with biome music in the Aether.
                 if (isAetherBossMusicActive()) {
-                    AetherBossMob<?> boss = getBossFromFight();
-                    if (boss != null) {
+                    T boss = getBossFromFight();
+                    if (boss != null && boss.getHealth() > 0) {
                         Music bossMusic = boss.getBossMusic();
                         if (bossMusic != null) {
                             return boss.getBossMusic();
@@ -165,13 +188,13 @@ public class AetherMusicManager {
         return ((BossHealthOverlayAccessor) minecraft.gui.getBossOverlay()).getEvents().entrySet().stream().filter((entry) -> GuiHooks.isAetherBossBar(entry.getKey())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public static AetherBossMob<?> getBossFromFight() {
+    public static <T extends LivingEntity & AetherBossMob<?>> T getBossFromFight() {
         for (Map.Entry<UUID, LerpingBossEvent> event : getAetherBossFights().entrySet()) {
             UUID eventUUID = event.getKey();
             int entityId = GuiHooks.BOSS_EVENTS.get(eventUUID);
             Entity entity = minecraft.player.level().getEntity(entityId);
-            if (entity instanceof AetherBossMob<?> bossMob) {
-                return bossMob;
+            if (entity instanceof LivingEntity && entity instanceof AetherBossMob<?>) {
+                return (T) entity;
             }
         }
         return null;
