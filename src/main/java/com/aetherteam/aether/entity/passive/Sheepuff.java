@@ -244,10 +244,16 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     public List<ItemStack> onSheared(@Nullable Player player, ItemStack item, Level level, BlockPos pos, int fortune) {
         level.playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
         if (!level.isClientSide()) {
+            int i;
             this.amountEaten = 0;
-            this.setSheared(true);
-            this.setPuffed(false);
-            int i = 1 + this.getRandom().nextInt(3);
+            if (this.getPuffed()) {
+                this.setPuffed(false);
+                i = 2;
+            } else {
+                this.setSheared(true);
+                i = 1;
+            }
+            i += this.getRandom().nextInt(3);
             List<ItemStack> items = new java.util.ArrayList<>();
             for (int j = 0; j < i; ++j) {
                 items.add(new ItemStack(ITEM_BY_DYE.get(this.getColor())));
@@ -263,10 +269,16 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     @Override
     public void shear(SoundSource source) {
         this.level().playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), source, 1.0F, 1.0F);
+        int i;
         this.amountEaten = 0;
-        this.setSheared(true);
-        this.setPuffed(false);
-        int i = 1 + this.getRandom().nextInt(3);
+        if (this.getPuffed()) {
+            this.setPuffed(false);
+            i = 2;
+        } else {
+            this.setSheared(true);
+            i = 1;
+        }
+        i += this.getRandom().nextInt(3);
 
         for (int j = 0; j < i; ++j) {
             ItemEntity itementity = this.spawnAtLocation(ITEM_BY_DYE.get(this.getColor()), 1);
