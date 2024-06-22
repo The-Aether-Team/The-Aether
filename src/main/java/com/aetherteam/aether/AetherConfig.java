@@ -31,7 +31,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> balance_invisibility_cloak;
         public final ConfigValue<Integer> invisibility_visibility_time;
         public final ConfigValue<Boolean> sun_altar_whitelist;
-        public final ConfigValue<List<String>> sun_altar_dimensions;
+        public final ConfigValue<List<? extends String>> sun_altar_dimensions;
 
         public final ConfigValue<Boolean> spawn_in_aether;
         public final ConfigValue<Boolean> disable_aether_portal;
@@ -126,7 +126,7 @@ public class AetherConfig {
             sun_altar_dimensions = builder
                 .comment("Configures what dimensions are able to have their time changed by the Sun Altar")
                 .translation("config.aether.server.multiplayer.sun_altar_dimensions")
-                .define("Configure Sun Altar dimensions", List.of("aether:the_aether"));
+                .defineList("Configure Sun Altar dimensions", List.of("aether:the_aether"), s -> s instanceof String);
             builder.pop();
 
             builder.push("Modpack");
