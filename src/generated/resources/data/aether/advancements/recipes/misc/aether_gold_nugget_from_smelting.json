@@ -42,6 +42,18 @@
         "recipe": "aether:aether_gold_nugget_from_smelting"
       },
       "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_victory_medal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:victory_medal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
@@ -49,6 +61,7 @@
       "has_golden_gloves",
       "has_golden_pendant",
       "has_golden_ring",
+      "has_victory_medal",
       "has_the_recipe"
     ]
   ],
