@@ -14,6 +14,7 @@ import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -61,7 +62,7 @@ public class BronzeDungeonBuilder {
         this.maxSize = Math.max(3, maxSize);
     }
 
-    public void initializeDungeon(BlockPos startPos, ChunkPos chunkPos, StructurePiecesBuilder builder) {
+    public void initializeDungeon(BlockPos startPos, Structure.GenerationContext genContext, StructurePiecesBuilder builder) {
         StructureTemplate bossTemplate = this.context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/boss_room"));
 
         Rotation rotation = getBossRoomRotation(startPos, startPos.offset(bossTemplate.getSize()));
@@ -80,6 +81,8 @@ public class BronzeDungeonBuilder {
             this.nodes.add(chestRoom);
             new Connection(bossRoom, chestRoom, hallway, direction);
 
+            ChunkPos chunkPos = genContext.chunkPos();
+
             for (int i = 2; i < this.maxSize - 1; ++i) {
                 this.propagateRooms(chestRoom, chunkPos, false);
             }
@@ -87,6 +90,7 @@ public class BronzeDungeonBuilder {
             this.propagateRooms(chestRoom, chunkPos, true);
             StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
             this.buildEndTunnel(lobby, startPos);
+            this.buildSurfaceTunnel(genContext.heightAccessor(), genContext.chunkGenerator(), genContext.randomState());
 
             this.populatePiecesBuilder(builder);
         }
@@ -160,6 +164,52 @@ public class BronzeDungeonBuilder {
             }
         }
         this.nodes.addAll(longestTunnel);
+    }
+
+    @Nullable
+    @SuppressWarnings("SameParameterValue")
+    private StructurePiece seekLastRoomNode(int minWidth) {
+        for (int i = this.nodes.size() - 1; i >= 0; i--) {
+            StructurePiece piece = this.nodes.get(i);
+            BoundingBox box = piece.getBoundingBox();
+            if (box.getXSpan() > minWidth && box.getZSpan() > minWidth) {
+                return piece;
+            }
+        }
+
+        return null;
+    }
+
+    private void buildSurfaceTunnel(LevelHeightAccessor level, ChunkGenerator chunkGenerator, RandomState randomState) {
+        final int shrink = 3;
+        StructurePiece lobby = this.seekLastRoomNode(shrink * 2);
+        if (lobby == null) return; // Not likely to happen ever, but just in case for wackiness
+
+        BoundingBox lobbyBounds = lobby.getBoundingBox();
+        BlockPos entranceRoomCenter = lobbyBounds.getCenter();
+        int topSurfaceY = chunkGenerator.getFirstOccupiedHeight(entranceRoomCenter.getX(), entranceRoomCenter.getZ(), Heightmap.Types.OCEAN_FLOOR_WG, level, randomState);
+
+        int roomCeiling = lobbyBounds.maxY() + 1; // Right above the lobby's ceiling blocks
+
+        if (roomCeiling > topSurfaceY)
+            return; // Room somehow clips through top surface of terrain, no room for generating ruins
+
+        int ruinsTopY = Math.max(roomCeiling, topSurfaceY + 4); // A few extra blocks above the surface centered in this box
+
+        int minX = lobbyBounds.minX() + shrink;
+        int minZ = lobbyBounds.minZ() + shrink;
+        int maxX = lobbyBounds.maxX() - shrink;
+        int maxZ = lobbyBounds.maxZ() - shrink;
+        // Corner-sorting in case any of the templates get customized out of default expectations
+        BoundingBox upwardsTunnelBox = new BoundingBox(
+                Math.min(minX, maxX),
+                roomCeiling,
+                Math.min(minZ, maxZ),
+                Math.max(minX, maxX),
+                ruinsTopY,
+                Math.max(minZ, maxZ)
+        );
+        this.nodes.add(new BronzeDungeonSurfaceRuins(upwardsTunnelBox));
     }
 
     /**
