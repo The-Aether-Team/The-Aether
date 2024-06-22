@@ -91,7 +91,7 @@ public class DimensionHooks {
             BlockPos relativePos = pos.relative(direction);
             if (stack.is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS)) { // Checks if the item can activate the portal.
                 // Checks whether the dimension can have a portal created in it, and that the portal isn't disabled.
-                if ((level.dimension() == LevelUtil.returnDimension() || level.dimension() == LevelUtil.destinationDimension()) && !AetherConfig.SERVER.disable_aether_portal.get()) {
+                if ((level.dimension() == LevelUtil.returnDimension() || level.dimension() == LevelUtil.destinationDimension())) {
                     Optional<AetherPortalShape> optional = AetherPortalShape.findEmptyAetherPortalShape(level, relativePos, Direction.Axis.X);
                     if (optional.isPresent()) {
                         optional.get().createPortalBlocks();
