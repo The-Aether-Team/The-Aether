@@ -11,6 +11,7 @@ plugins {
     id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
+    id "io.github.p03w.machete" version "2.0.1"
 }
 
 version = "${mc_version}-${mod_version}-neoforge"
@@ -73,6 +74,10 @@ minecraft {
 
 sourceSets.main.resources {
     srcDir 'src/generated/resources'
+}
+
+processResources {
+    exclude '.cache/'
 }
 
 dependencies {
@@ -151,6 +156,18 @@ repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.architectury.dev/" }
     //mavenLocal()
+}
+
+machete {
+    additionalTasks.add("jarJar")
+
+    png.enabled = true
+    png.alpha = true
+    png.expectReunpack = true
+
+    json.enabled = true
+
+    jij.enabled = true
 }
 
 tasks.named('jar', Jar).configure {
