@@ -1,6 +1,7 @@
 package com.aetherteam.aether.entity.monster.dungeon.boss;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
@@ -282,7 +283,11 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     private Optional<LivingEntity> sendInvalidToolMessage(LivingEntity attacker) {
         if (!this.getLevel().isClientSide() && attacker instanceof Player player) {
             if (this.getChatCooldown() <= 0) {
-                player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid")); // Invalid tool.
+                if (AetherConfig.COMMON.reposition_slider_message.get()) {
+                    player.displayClientMessage(Component.translatable("gui.aether.slider.message.attack.invalid"), true); // Invalid tool.
+                } else {
+                    player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid")); // Invalid tool.
+                }
                 this.setChatCooldown(15);
             }
         }

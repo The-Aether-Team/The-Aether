@@ -1229,6 +1229,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addCommonConfig("gameplay", "use_curios_menu", "Use the default Curios menu instead of the Aether's Accessories Menu. WARNING: Do not enable this without emptying your equipped accessories");
         this.addCommonConfig("gameplay", "start_with_portal", "On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with");
         this.addCommonConfig("gameplay", "enable_startup_loot", "When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot");
+        this.addCommonConfig("gameplay", "reposition_slider_message", "Moves the message for when a player attacks the Slider with an incorrect item to be above the hotbar instead of in chat");
         this.addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
         this.addCommonConfig("gameplay", "show_patreon_message", "Determines if a message that links The Aether mod's Patreon should show");
 
