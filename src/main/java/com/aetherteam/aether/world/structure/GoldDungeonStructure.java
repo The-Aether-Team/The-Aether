@@ -9,6 +9,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -43,20 +44,26 @@ public class GoldDungeonStructure extends Structure {
             Codec.INT.fieldOf("stubcount").forGetter(o -> o.stubIslandCount),
             Codec.INT.fieldOf("belowTerrain").forGetter(o -> o.belowTerrain),
             Codec.INT.fieldOf("minY").forGetter(o -> o.minY),
-            Codec.INT.fieldOf("rangeY").forGetter(o -> o.rangeY)
+            Codec.INT.fieldOf("rangeY").forGetter(o -> o.rangeY),
+            PlacedFeature.CODEC.fieldOf("islandFoliage").forGetter(p_204928_ -> p_204928_.islandFoliage),
+            PlacedFeature.CODEC.fieldOf("stubFoliage").forGetter(p_204928_ -> p_204928_.stubFoliage)
     ).apply(builder, GoldDungeonStructure::new));
 
     private final int stubIslandCount;
     private final int belowTerrain;
     private final int minY;
     private final int rangeY;
+    private final Holder<PlacedFeature> islandFoliage;
+    private final Holder<PlacedFeature> stubFoliage;
 
-    public GoldDungeonStructure(StructureSettings settings, int stubIslandCount, int belowTerrain, int minY, int rangeY) {
+    public GoldDungeonStructure(StructureSettings settings, int stubIslandCount, int belowTerrain, int minY, int rangeY, Holder<PlacedFeature> islandFoliage, Holder<PlacedFeature> stubFoliage) {
         super(settings);
         this.stubIslandCount = stubIslandCount;
         this.belowTerrain = belowTerrain;
         this.minY = minY;
         this.rangeY = rangeY;
+        this.islandFoliage = islandFoliage;
+        this.stubFoliage = stubFoliage;
     }
 
     @Override
@@ -207,9 +214,9 @@ public class GoldDungeonStructure extends Structure {
     public void afterPlace(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos chunkPos, PiecesContainer pieces) {
         for (StructurePiece piece : pieces.pieces()) {
             if (piece instanceof GoldIsland island) {
-                GoldDungeonStructure.placeGoldenOaks(level, generator, random, island.getBoundingBox(), chunkBox, 48, 2, 1);
+                GoldDungeonStructure.placeGoldenOaks(level, generator, random, island.getBoundingBox(), chunkBox, this.islandFoliage);
             } else if (piece instanceof GoldStub stub) {
-                GoldDungeonStructure.placeGoldenOaks(level, generator, random, stub.getBoundingBox(), chunkBox, 64, 1, 0);
+                GoldDungeonStructure.placeGoldenOaks(level, generator, random, stub.getBoundingBox(), chunkBox, this.stubFoliage);
             }
         }
     }
@@ -221,11 +228,9 @@ public class GoldDungeonStructure extends Structure {
      * @param random The {@link RandomSource} for the structure.
      * @param boundingBox The {@link BoundingBox} for the structure piece.
      * @param chunkBox The {@link BoundingBox} for chunk bounds.
-     * @param randomBounds The {@link Integer} parameter for random.nextInt().
-     * @param treeWeight The {@link Integer} chance out of randomBounds of placing a tree.
-     * @param flowerWeight The {@link Integer} chance out of randomBounds of placing a flower.
+     * @param feature The {@link PlacedFeature} holder for the vegetation to place.
      */
-    private static void placeGoldenOaks(WorldGenLevel level, ChunkGenerator generator, RandomSource random, BoundingBox boundingBox, BoundingBox chunkBox, int randomBounds, int treeWeight, int flowerWeight) {
+    private static void placeGoldenOaks(WorldGenLevel level, ChunkGenerator generator, RandomSource random, BoundingBox boundingBox, BoundingBox chunkBox, Holder<PlacedFeature> feature) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         int minX = Math.max(chunkBox.minX(), boundingBox.minX());
         int minZ = Math.max(chunkBox.minZ(), boundingBox.minZ());
@@ -233,21 +238,13 @@ public class GoldDungeonStructure extends Structure {
         int maxZ = Math.min(chunkBox.maxZ(), boundingBox.maxZ());
         int minY = boundingBox.minY() + Mth.floor((boundingBox.maxY() - boundingBox.minY()) * 0.75);
         int maxY = boundingBox.maxY();
+        PlacedFeature placement = feature.value();
 
         for (int x = minX; x < maxX; ++x) {
             for (int z = minZ; z < maxZ; ++z) {
-                int featureType = random.nextInt(randomBounds);
-                if (featureType < treeWeight + flowerWeight) {
-                    mutable.set(x, maxY, z);
-                    if (GoldDungeonStructure.iterateColumn(level, mutable, minY, maxY)) {
-                        if (featureType < treeWeight) {
-                            PlacedFeature tree = PlacementUtils.inlinePlaced(level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolderOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION)).value();
-                            tree.place(level, generator, random, mutable);
-                        } else {
-                            Block flower = random.nextBoolean() ? Blocks.DANDELION : Blocks.POPPY;
-                            level.setBlock(mutable, flower.defaultBlockState(), 2);
-                        }
-                    }
+                mutable.set(x, maxY, z);
+                if (GoldDungeonStructure.iterateColumn(level, mutable, minY, maxY)) {
+                    placement.place(level, generator, random, mutable);
                 }
             }
         }
