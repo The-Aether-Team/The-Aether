@@ -96,7 +96,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
                         translationId = "gui.aether.valkyrie.dialog." + (char) (this.getRandom().nextInt(3) + '1');
                     }
                     this.chat(player, Component.translatable(translationId));
-                    this.playSound(this.getInteractSound(), 1.0F, this.level().getRandom().nextFloat() - this.level().getRandom().nextFloat() * 0.2F + 1.2F);
+                    this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
                     this.chatTimer = 60;
                 }
             }

@@ -265,6 +265,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
+                            this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
                             PacketRelay.sendToPlayer(new QueenDialoguePacket(this.getId()), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                         }
@@ -367,7 +368,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     protected void chat(Player player, Component message) {
         player.sendSystemMessage(Component.literal("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message));
-        this.playSound(this.getInteractSound(), 1.0F, this.level().getRandom().nextFloat() - this.level().getRandom().nextFloat() * 0.2F + 1.2F);
+        this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
     }
 
     /**

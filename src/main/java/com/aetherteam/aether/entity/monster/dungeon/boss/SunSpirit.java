@@ -224,7 +224,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                         }
                     }
                     if (this.chatLine < 9) {
-                        this.playSound(this.getInteractSound(), 1.0F, this.level().getRandom().nextFloat() - this.level().getRandom().nextFloat() * 0.2F + 1.2F);
+                        this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
                     }
                     switch (this.chatLine++) {
                         case 0 ->
@@ -257,7 +257,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                             if (this.getDungeon() != null) {
                                 this.closeRoom();
                             }
-                            this.playSound(this.getActivateSound(), 1.0F, this.level().getRandom().nextFloat() - this.level().getRandom().nextFloat() * 0.2F + 1.2F);
+                            this.playSound(this.getActivateSound(), 1.0F, this.getVoicePitch());
                             AetherEventDispatch.onBossFightStart(this, this.getDungeon());
                             player.getData(AetherDataAttachments.AETHER_PLAYER).setSeenSunSpiritDialogue(true);
                         }
@@ -627,6 +627,11 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Override
     protected SoundEvent getDeathSound() {
         return AetherSoundEvents.ENTITY_SUN_SPIRIT_DEATH.get();
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 2.0F;
     }
 
     /**
