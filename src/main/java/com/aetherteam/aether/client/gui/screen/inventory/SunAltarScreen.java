@@ -17,7 +17,7 @@ public class SunAltarScreen extends Screen {
         this.timeScale = timeScale;
     }
 
-    @Overrideltar
+    @Override
     public void init() {
         super.init();
         if (this.getMinecraft().level != null) {
