@@ -1,6 +1,7 @@
 package com.aetherteam.aether.entity.monster;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.projectile.ZephyrSnowball;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -72,7 +73,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	 */
 	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
 		return Mob.checkMobSpawnRules(zephyr, level, reason, pos, random)
-				&& level.canSeeSky(pos)
+				&& EntityUtil.wholeHitboxCanSeeSky(level, pos, 2)
 				&& level.getDifficulty() != Difficulty.PEACEFUL
 				&& (reason != MobSpawnType.NATURAL || random.nextInt(11) == 0);
 	}
