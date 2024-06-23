@@ -120,6 +120,8 @@ public class AetherSoundEvents {
 	public static final Supplier<SoundEvent> ENTITY_SENTRY_DEATH = register("entity.sentry.death");
 	public static final Supplier<SoundEvent> ENTITY_SENTRY_HURT = register("entity.sentry.hurt");
 	public static final Supplier<SoundEvent> ENTITY_SENTRY_JUMP = register("entity.sentry.jump");
+	public static final Supplier<SoundEvent> ENTITY_SENTRY_SQUISH = register("entity.sentry.squish");
+	public static final Supplier<SoundEvent> ENTITY_SENTRY_AMBIENT = register("entity.sentry.ambient");
 
 	public static final Supplier<SoundEvent> ENTITY_MIMIC_ATTACK = register("entity.mimic.attack");
 	public static final Supplier<SoundEvent> ENTITY_MIMIC_DEATH = register("entity.mimic.death");
