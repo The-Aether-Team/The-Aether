@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 /**
  * Updates the time on the server, then updates that time for all players in the Aether.
  */
-public record SunAltarUpdatePacket(long dayTime) implements BasePacket {
+public record SunAltarUpdatePacket(long dayTime, int timeScale) implements BasePacket {
     public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "update_sun_altar");
 
     @Override
@@ -28,22 +28,26 @@ public record SunAltarUpdatePacket(long dayTime) implements BasePacket {
     @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeLong(this.dayTime());
+        buf.writeInt(this.timeScale());
     }
 
     public static SunAltarUpdatePacket decode(FriendlyByteBuf buf) {
         long dayTime = buf.readLong();
-        return new SunAltarUpdatePacket(dayTime);
+        int timeScale = buf.readInt();
+        return new SunAltarUpdatePacket(dayTime, timeScale);
     }
 
     @Override
     public void execute(@Nullable Player playerEntity) {
         if (playerEntity != null && playerEntity.level() instanceof ServerLevel level && (!AetherConfig.SERVER.sun_altar_whitelist.get() || playerEntity.hasPermissions(4) || SunAltarWhitelist.INSTANCE.isWhiteListed(playerEntity.getGameProfile()))) {
-            // Get how many days have passed in the world first, then add to it.
-            var dayBase = level.getDayTime() / (long) AetherDimensions.AETHER_TICKS_PER_DAY;
-            var dayTime = (dayBase * AetherDimensions.AETHER_TICKS_PER_DAY) + this.dayTime();
-            // Set the time.
-            level.setDayTime(dayTime);
-            level.getServer().getPlayerList().broadcastAll(new ClientboundSetTimePacket(level.getGameTime(), level.getDayTime(), level.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)), level.dimension());
+            if (AetherConfig.SERVER.sun_altar_dimensions.get().contains(level.dimension().location().toString())) {
+                // Get how many days have passed in the world first, then add to it.
+                var dayBase = level.getDayTime() / (long) this.timeScale();
+                var dayTime = (dayBase * this.timeScale()) + this.dayTime();
+                // Set the time.
+                level.setDayTime(dayTime);
+                level.getServer().getPlayerList().broadcastAll(new ClientboundSetTimePacket(level.getGameTime(), level.getDayTime(), level.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)), level.dimension());
+            }
         }
     }
 }

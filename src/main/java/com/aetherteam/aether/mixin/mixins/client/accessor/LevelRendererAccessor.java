@@ -17,6 +17,9 @@ public interface LevelRendererAccessor {
     @Accessor("skyBuffer")
     VertexBuffer aether$getSkyBuffer();
 
+    @Accessor("darkBuffer")
+    VertexBuffer aether$getDarkBuffer();
+
     @Accessor("cloudBuffer")
     VertexBuffer aether$getCloudBuffer();
 

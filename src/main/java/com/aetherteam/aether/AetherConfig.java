@@ -6,6 +6,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.List;
+
 public class AetherConfig {
     public static class Server {
         public final ConfigValue<Boolean> enable_bed_explosions;
@@ -29,6 +31,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> balance_invisibility_cloak;
         public final ConfigValue<Integer> invisibility_visibility_time;
         public final ConfigValue<Boolean> sun_altar_whitelist;
+        public final ConfigValue<List<? extends String>> sun_altar_dimensions;
 
         public final ConfigValue<Boolean> spawn_in_aether;
         public final ConfigValue<Boolean> disable_aether_portal;
@@ -120,6 +123,10 @@ public class AetherConfig {
                     .comment("Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server")
                     .translation("config.aether.server.multiplayer.sun_altar_whitelist")
                     .define("Only whitelisted users access Sun Altars", false);
+            sun_altar_dimensions = builder
+                .comment("Configures what dimensions are able to have their time changed by the Sun Altar")
+                .translation("config.aether.server.multiplayer.sun_altar_dimensions")
+                .defineList("Configure Sun Altar dimensions", List.of("aether:the_aether"), s -> s instanceof String);
             builder.pop();
 
             builder.push("Modpack");
@@ -155,6 +162,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> use_curios_menu;
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
+        public final ConfigValue<Boolean> reposition_slider_message;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
         public final ConfigValue<Boolean> show_patreon_message;
 
@@ -176,6 +184,10 @@ public class AetherConfig {
                     .comment("When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot")
                     .translation("config.aether.common.gameplay.enable_startup_loot")
                     .define("Gives starting loot on entry", true);
+            reposition_slider_message = builder
+                .comment("Moves the message for when a player attacks the Slider with an incorrect item to be above the hotbar instead of in chat")
+                .translation("config.aether.common.gameplay.reposition_slider_message")
+                .define("Reposition attack message above hotbar", false);
             repeat_sun_spirit_dialogue = builder
                     .comment("Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him")
                     .translation("config.aether.common.gameplay.repeat_sun_spirit_dialogue")

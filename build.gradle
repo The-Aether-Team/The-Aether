@@ -3,10 +3,11 @@ import net.neoforged.gradle.common.tasks.JarJar
 plugins {
     id 'eclipse'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.108'
+    id 'net.neoforged.gradle.userdev' version '7.0.97'
     id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
+    id "io.github.p03w.machete" version "2.0.1"
 }
 
 version = "${mc_version}-${mod_version}-neoforge"
@@ -49,6 +50,10 @@ runs {
 
 sourceSets.main.resources {
     srcDir 'src/generated/resources'
+}
+
+processResources {
+    exclude '.cache/'
 }
 
 dependencies {
@@ -118,7 +123,19 @@ repositories {
     maven githubPackage.invoke("The-Aether-Team/Cumulus")
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.architectury.dev/" }
-    //mavenLocal()
+    mavenLocal()
+}
+
+machete {
+    additionalTasks.add("jarJar")
+
+    png.enabled = true
+    png.alpha = true
+    png.expectReunpack = true
+
+    json.enabled = true
+
+    jij.enabled = true
 }
 
 tasks.named('jar', Jar).configure {
@@ -208,4 +225,16 @@ modrinth {
 
 build {
     dependsOn 'jarJar'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }

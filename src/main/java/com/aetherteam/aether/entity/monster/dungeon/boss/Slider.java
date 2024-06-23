@@ -1,6 +1,7 @@
 package com.aetherteam.aether.entity.monster.dungeon.boss;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
@@ -43,6 +44,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -53,7 +55,9 @@ import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enemy, IEntityWithComplexSpawn {
@@ -62,6 +66,12 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     private static final EntityDataAccessor<Float> DATA_HURT_ANGLE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> DATA_HURT_ANGLE_X_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> DATA_HURT_ANGLE_Z_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
+    public static final Map<Block, Function<BlockState, BlockState>> DUNGEON_BLOCK_CONVERSIONS = Map.ofEntries(
+        Map.entry(AetherBlocks.LOCKED_CARVED_STONE.get(), (blockState) -> AetherBlocks.CARVED_STONE.get().defaultBlockState()),
+        Map.entry(AetherBlocks.LOCKED_SENTRY_STONE.get(), (blockState) -> AetherBlocks.SENTRY_STONE.get().defaultBlockState()),
+        Map.entry(AetherBlocks.BOSS_DOORWAY_CARVED_STONE.get(), (blockState) -> Blocks.AIR.defaultBlockState()),
+        Map.entry(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE.get(), (blockState) -> AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, blockState.getValue(HorizontalDirectionalBlock.FACING)))
+    );
 
     /**
      * Goal for targeting in groups of entities
@@ -279,7 +289,11 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     private Optional<LivingEntity> sendInvalidToolMessage(LivingEntity attacker) {
         if (!this.level().isClientSide() && attacker instanceof Player player) {
             if (this.getChatCooldown() <= 0) {
-                player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid")); // Invalid tool.
+                if (AetherConfig.COMMON.reposition_slider_message.get()) {
+                    player.displayClientMessage(Component.translatable("gui.aether.slider.message.attack.invalid"), true); // Invalid tool.
+                } else {
+                    player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid")); // Invalid tool.
+                }
                 this.setChatCooldown(15);
             }
         }
@@ -402,19 +416,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     @Nullable
     @Override
     public BlockState convertBlock(BlockState state) {
-        if (state.is(AetherBlocks.LOCKED_CARVED_STONE.get())) {
-            return AetherBlocks.CARVED_STONE.get().defaultBlockState();
-        }
-        if (state.is(AetherBlocks.LOCKED_SENTRY_STONE.get())) {
-            return AetherBlocks.SENTRY_STONE.get().defaultBlockState();
-        }
-        if (state.is(AetherBlocks.BOSS_DOORWAY_CARVED_STONE.get())) {
-            return Blocks.AIR.defaultBlockState();
-        }
-        if (state.is(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE.get())) {
-            return AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING));
-        }
-        return null;
+        return DUNGEON_BLOCK_CONVERSIONS.getOrDefault(state.getBlock(), (blockState) -> null).apply(state);
     }
 
     /**
