@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 /**
  * Opens {@link SunAltarScreen} from {@link com.aetherteam.aether.block.utility.SunAltarBlock}.
  */
-public record OpenSunAltarPacket(Component name) implements BasePacket {
+public record OpenSunAltarPacket(Component name, int timeScale) implements BasePacket {
     public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "open_sun_altar");
 
     @Override
@@ -24,17 +24,19 @@ public record OpenSunAltarPacket(Component name) implements BasePacket {
     @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeComponent(this.name());
+        buf.writeInt(this.timeScale());
     }
 
     public static OpenSunAltarPacket decode(FriendlyByteBuf buf) {
         Component name = buf.readComponent();
-        return new OpenSunAltarPacket(name);
+        int timeScale = buf.readInt();
+        return new OpenSunAltarPacket(name, timeScale);
     }
 
     @Override
     public void execute(Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            AetherClient.setToSunAltarScreen(this.name());
+            AetherClient.setToSunAltarScreen(this.name(), this.timeScale());
         }
     }
 }
