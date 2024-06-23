@@ -11,7 +11,6 @@ import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.processor.GlowstonePortalAgeProcessor;
 import com.aetherteam.aether.world.processor.HolystoneReplaceProcessor;
 import com.aetherteam.aether.world.processor.SurfaceRuleProcessor;
-import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -39,7 +38,6 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 
-import java.util.List;
 import java.util.Optional;
 
 public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
