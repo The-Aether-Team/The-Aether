@@ -174,8 +174,13 @@ public class Sentry extends Slime {
 	}
 
 	@Override
+	protected SoundEvent getAmbientSound() {
+		return AetherSoundEvents.ENTITY_SENTRY_AMBIENT.get();
+	}
+
+	@Override
 	protected SoundEvent getJumpSound() {
-		return AetherSoundEvents.ENTITY_SENTRY_JUMP.get();
+		return AetherSoundEvents.ENTITY_SENTRY_SQUISH.get();
 	}
 
 	@Override
