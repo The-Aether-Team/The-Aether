@@ -271,7 +271,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                         }
                     }
                 } else {
-                    this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.ready"));
+                    this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.ready"), true);
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -303,11 +303,11 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID) {
             case 0: // Responds to the player's question of where they are.
-                this.chat(player, Component.translatable("gui.aether.queen.dialog.answer"));
+                this.chat(player, Component.translatable("gui.aether.queen.dialog.answer"), true);
                 break;
             case 1: // Tells the players nearby to ready up for a fight.
                 if (this.level().getDifficulty() == Difficulty.PEACEFUL) { // Check for peaceful mode.
-                    this.chat(player, Component.translatable("gui.aether.queen.dialog.peaceful"));
+                    this.chat(player, Component.translatable("gui.aether.queen.dialog.peaceful"), true);
                 } else {
                     if (player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get()) >= 10) { // Checks for Victory Medals.
                         this.readyUp();
@@ -325,16 +325,16 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                             if (count <= 0) break;
                         }
                     } else {
-                        this.chat(player, Component.translatable("gui.aether.queen.dialog.no_medals"));
+                        this.chat(player, Component.translatable("gui.aether.queen.dialog.no_medals"), true);
                     }
                 }
                 break;
             case 2: // Deny fight.
-                this.chat(player, Component.translatable("gui.aether.queen.dialog.deny_fight"));
+                this.chat(player, Component.translatable("gui.aether.queen.dialog.deny_fight"), true);
                 break;
             case 3:
             default: // Goodbye.
-                this.chat(player, Component.translatable("gui.aether.queen.dialog.goodbye"));
+                this.chat(player, Component.translatable("gui.aether.queen.dialog.goodbye"), true);
                 break;
         }
         this.setConversingPlayer(null);
@@ -345,7 +345,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      */
     public void readyUp() {
         MutableComponent message = Component.translatable("gui.aether.queen.dialog.begin");
-        this.chatWithNearby(message);
+        this.chatWithNearby(message, true);
         this.setReady(true);
     }
 
@@ -354,9 +354,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      *
      * @param message The message {@link Component}.
      */
-    protected void chatWithNearby(Component message) {
+    protected void chatWithNearby(Component message, boolean sound) {
         AABB room = this.dungeon == null ? this.getBoundingBox().inflate(16) : this.dungeon.roomBounds();
-        this.level().getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> this.chat(player, message));
+        this.level().getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> this.chat(player, message, sound));
     }
 
     /**
@@ -366,7 +366,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * @param message The message {@link Component}.
      */
     @Override
-    protected void chat(Player player, Component message) {
+    protected void chat(Player player, Component message, boolean sound) {
         player.sendSystemMessage(Component.literal("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message));
         this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
     }
@@ -388,7 +388,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) {
                     if (super.hurt(source, amount) && this.getHealth() > 0) {
                         if (!this.level().isClientSide() && !this.isBossFight()) {
-                            this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"));
+                            this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"), false);
                             this.setBossFight(true);
                             if (this.getDungeon() != null) {
                                 this.closeRoom();
@@ -417,7 +417,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public boolean doHurtTarget(Entity entity) {
         boolean result = super.doHurtTarget(entity);
         if (entity instanceof ServerPlayer player && player.getHealth() <= 0) {
-            this.chat(player, Component.translatable("gui.aether.queen.dialog.playerdeath"));
+            this.chat(player, Component.translatable("gui.aether.queen.dialog.playerdeath"), true);
         }
         return result;
     }
@@ -445,7 +445,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public void die(DamageSource source) {
         if (!this.level().isClientSide) {
             this.bossFight.setProgress(this.getHealth() / this.getMaxHealth()); // Forces an update to the boss health meter.
-            this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.defeated"));
+            this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.defeated"), false);
             this.spawnExplosionParticles();
             if (this.getDungeon() != null) {
                 this.getDungeon().grantAdvancements(source);
