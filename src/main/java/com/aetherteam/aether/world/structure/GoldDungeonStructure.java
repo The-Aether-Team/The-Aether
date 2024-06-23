@@ -2,7 +2,6 @@ package com.aetherteam.aether.world.structure;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.data.resources.registries.AetherConfiguredFeatures;
 import com.aetherteam.aether.world.BlockLogicUtil;
 import com.aetherteam.aether.world.structurepiece.golddungeon.*;
 import com.mojang.serialization.Codec;
@@ -11,8 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -20,8 +17,6 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -228,9 +223,7 @@ public class GoldDungeonStructure extends Structure {
      * @param random The {@link RandomSource} for the structure.
      * @param boundingBox The {@link BoundingBox} for the structure piece.
      * @param chunkBox The {@link BoundingBox} for chunk bounds.
-     * @param randomBounds The {@link Integer} parameter for random.nextInt().
-     * @param treeWeight The {@link Integer} chance out of randomBounds of placing a tree.
-     * @param flowerWeight The {@link Integer} chance out of randomBounds of placing a flower.
+     * @param feature The {@link PlacedFeature} holder for the vegetation to place.
      */
     private static void placeGoldenOaks(WorldGenLevel level, ChunkGenerator generator, RandomSource random, BoundingBox boundingBox, BoundingBox chunkBox, Holder<PlacedFeature> feature) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
