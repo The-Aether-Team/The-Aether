@@ -2,6 +2,7 @@
   "type": "aether:gold_dungeon",
   "belowTerrain": 20,
   "biomes": "#aether:has_gold_dungeon",
+  "islandFoliage": "aether:gold_dungeon_island_foliage",
   "minY": 40,
   "rangeY": 60,
   "spawn_overrides": {
@@ -55,5 +56,14 @@
     }
   },
   "step": "surface_structures",
+  "stubFoliage": {
+    "feature": "aether:golden_oak_tree",
+    "placement": [
+      {
+        "type": "minecraft:rarity_filter",
+        "chance": 64
+      }
+    ]
+  },
   "stubcount": 8
 }
