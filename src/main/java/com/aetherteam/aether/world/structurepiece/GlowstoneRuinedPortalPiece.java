@@ -4,11 +4,13 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.mixin.mixins.common.accessor.ChunkAccessAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.SpreadingSnowyDirtBlockAccessor;
+import com.aetherteam.aether.world.BlockLogicUtil;
 import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.processor.GlowstonePortalAgeProcessor;
 import com.aetherteam.aether.world.processor.HolystoneReplaceProcessor;
-import com.google.common.collect.Lists;
+import com.aetherteam.aether.world.processor.SurfaceRuleProcessor;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -17,6 +19,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerChunkCache;
+import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
@@ -24,15 +28,17 @@ import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.*;
+import net.minecraft.world.level.levelgen.carver.CarvingContext;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 
-import java.util.List;
+import java.util.Optional;
 
 public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
     private final VerticalPlacement verticalPlacement;
@@ -81,10 +87,9 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
      */
     private static StructurePlaceSettings makeSettings(Mirror mirror, Rotation rotation, BlockPos pos, Properties properties) {
         BlockIgnoreProcessor blockIgnoreProcessor = properties.airPocket ? BlockIgnoreProcessor.STRUCTURE_BLOCK : BlockIgnoreProcessor.STRUCTURE_AND_AIR;
-        List<ProcessorRule> list = Lists.newArrayList();
         StructurePlaceSettings structurePlaceSettings = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror).setRotationPivot(pos)
                 .addProcessor(blockIgnoreProcessor)
-                .addProcessor(new RuleProcessor(list))
+                .addProcessor(new SurfaceRuleProcessor())
                 .addProcessor(new GlowstonePortalAgeProcessor(properties.mossiness))
                 .addProcessor(new DoubleDropsProcessor())
                 .addProcessor(new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE));
@@ -235,8 +240,9 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
      * @param pos The {@link BlockPos} to place at.
      */
     private void placeAetherDirtOrGrass(RandomSource random, LevelAccessor level, BlockPos pos) {
-        if (SpreadingSnowyDirtBlockAccessor.callCanBeGrass(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState(), level, pos)) {
-            level.setBlock(pos, AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true), 3);
+        BlockState grass = getSurfaceBlockForPlacement(level, pos, level.getBlockState(pos));
+        if (SpreadingSnowyDirtBlockAccessor.callCanBeGrass(grass, level, pos)) {
+            level.setBlock(pos, grass, 3);
             this.growGrassAndFlowers(random, level, pos.above());
         } else {
             level.setBlock(pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true), 3);
@@ -280,6 +286,41 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
      */
     public static Heightmap.Types getHeightMapType(VerticalPlacement verticalPlacement) {
         return verticalPlacement == VerticalPlacement.ON_OCEAN_FLOOR ? Heightmap.Types.OCEAN_FLOOR : Heightmap.Types.WORLD_SURFACE;
+    }
+
+    /**
+     * Determines which surface block to place around Ruined Aether Portals.
+     *
+     * @param level         The {@link Level} to place in.
+     * @param pos           The {@link BlockPos} to place at.
+     * @param originalState The original ground {@link BlockState} at the position.
+     * @return The new {@link BlockState}.
+     */
+    public static BlockState getSurfaceBlockForPlacement(LevelAccessor level, BlockPos pos, BlockState originalState) {
+        if (level instanceof WorldGenLevel worldGenLevel) {
+            if (!(worldGenLevel instanceof WorldGenRegion region) || !BlockLogicUtil.isOutOfBounds(pos, region.getCenter())) {
+                if (worldGenLevel.getBiome(pos).is(AetherTags.Biomes.HAS_RUINED_PORTAL_AETHER)) {
+                    if (worldGenLevel.getChunkSource() instanceof ServerChunkCache serverChunkCache) {
+                        if (serverChunkCache.getGenerator() instanceof NoiseBasedChunkGenerator noiseBasedChunkGenerator) {
+                            NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().value();
+                            SurfaceRules.RuleSource surfaceRule = settingsHolder.surfaceRule();
+                            ChunkAccess chunkAccess = worldGenLevel.getChunk(pos);
+                            NoiseChunk noisechunk = ((ChunkAccessAccessor) chunkAccess).aether$getNoiseChunk();
+                            if (noisechunk != null) {
+                                CarvingContext carvingcontext = new CarvingContext(noiseBasedChunkGenerator, worldGenLevel.registryAccess(), chunkAccess.getHeightAccessorForGeneration(), noisechunk, serverChunkCache.randomState(), surfaceRule);
+                                Optional<BlockState> state = carvingcontext.topMaterial(worldGenLevel.getBiomeManager()::getBiome, chunkAccess, pos, false);
+                                if (state.isPresent()) {
+                                    if (originalState.is(AetherTags.Blocks.AETHER_DIRT) && !originalState.is(AetherBlocks.AETHER_DIRT.get()) && state.get().is(AetherTags.Blocks.AETHER_DIRT)) {
+                                        return state.get();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
     }
 
     public static class Properties {
