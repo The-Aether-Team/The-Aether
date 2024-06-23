@@ -79,7 +79,7 @@ public class Aerwhale extends FlyingMob {
         return Mob.checkMobSpawnRules(aerwhale, level, reason, pos, random)
                 && level.getFluidState(pos).is(Fluids.EMPTY)
                 && level.getRawBrightness(pos, 0) > 8
-                && level.canSeeSky(pos)
+                && EntityUtil.wholeHitboxCanSeeSky(level, pos, 1)
                 && (reason != MobSpawnType.NATURAL || random.nextInt(40) == 0);
     }
 

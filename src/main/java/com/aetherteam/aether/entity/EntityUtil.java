@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 
 public final class EntityUtil {
     /**
@@ -91,5 +92,23 @@ public final class EntityUtil {
         if (entity.getDeltaMovement().y() > -0.5D && entity.fallDistance > 1.0F) {
             entity.fallDistance = 1.0F;
         }
+    }
+
+    /**
+     * Checks whether a square surface area with a given radius is exposed to sky light.
+     *
+     * @param level The {@link LevelAccessor} to check in.
+     * @param pos The starting {@link BlockPos}.
+     * @param hitboxRadius The {@link Integer} radius of the area, correlating to the entity's hitbox.
+     * @return Whether the area is exposed to sky, as a {@link Boolean}.
+     */
+    public static boolean wholeHitboxCanSeeSky(LevelAccessor level, BlockPos pos, int hitboxRadius) {
+        boolean flag = true;
+        for (int xOffset = -hitboxRadius; xOffset <= hitboxRadius; xOffset++) {
+            for (int zOffset = -hitboxRadius; zOffset <= hitboxRadius; zOffset++) {
+                flag = flag && level.canSeeSky(pos.offset(xOffset, 0, zOffset));
+            }
+        }
+        return flag;
     }
 }
