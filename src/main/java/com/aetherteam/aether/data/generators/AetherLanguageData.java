@@ -1218,6 +1218,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addServerConfig("multiplayer", "balance_invisibility_cloak", "Makes the Invisibility Cloak more balanced in PVP by disabling equipment invisibility temporarily after attacks");
         this.addServerConfig("multiplayer", "invisibility_visibility_time", "Sets the time in ticks that it takes for the player to become fully invisible again after attacking when wearing an Invisibility Cloak; only works with 'Balance Invisibility Cloak for PVP'");
         this.addServerConfig("multiplayer", "sun_altar_whitelist", "Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server");
+        this.addServerConfig("multiplayer", "sun_altar_dimensions", "Configures what dimensions are able to have their time changed by the Sun Altar");
 
         this.addServerConfig("modpack", "spawn_in_aether", "Spawns the player in the Aether dimension; this is best enabled alongside other modpack configuration to avoid issues");
         this.addServerConfig("modpack", "disable_aether_portal", "Prevents the Aether Portal from being created normally in the mod");
