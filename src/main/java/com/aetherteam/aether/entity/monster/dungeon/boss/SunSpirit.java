@@ -631,7 +631,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     @Override
     protected float getSoundVolume() {
-        return 2.0F;
+        return 3.0F;
     }
 
     /**
