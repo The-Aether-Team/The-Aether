@@ -53,6 +53,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -70,11 +71,21 @@ import net.minecraftforge.network.NetworkHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<ValkyrieQueen>, NpcDialogue, IEntityAdditionalSpawnData {
     private static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
+    public static final Map<Block, Function<BlockState, BlockState>> DUNGEON_BLOCK_CONVERSIONS = Map.ofEntries(
+            Map.entry(AetherBlocks.LOCKED_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.ANGELIC_STONE.get().defaultBlockState()),
+            Map.entry(AetherBlocks.TRAPPED_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.ANGELIC_STONE.get().defaultBlockState()),
+            Map.entry(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState()),
+            Map.entry(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState()),
+            Map.entry(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get(), (blockState) -> Blocks.AIR.defaultBlockState()),
+            Map.entry(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, blockState.getValue(HorizontalDirectionalBlock.FACING)))
+    );
 
     /**
      * Boss health bar manager
@@ -472,19 +483,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Nullable
     @Override
     public BlockState convertBlock(BlockState state) {
-        if (state.is(AetherBlocks.LOCKED_ANGELIC_STONE.get()) || state.is(AetherBlocks.TRAPPED_ANGELIC_STONE.get())) {
-            return AetherBlocks.ANGELIC_STONE.get().defaultBlockState();
-        }
-        if (state.is(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get()) || state.is(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get())) {
-            return AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState();
-        }
-        if (state.is(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get())) {
-            return Blocks.AIR.defaultBlockState();
-        }
-        if (state.is(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get())) {
-            return AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING));
-        }
-        return null;
+        return DUNGEON_BLOCK_CONVERSIONS.getOrDefault(state.getBlock(), (blockState) -> null).apply(state);
     }
 
     /**
