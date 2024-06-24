@@ -330,6 +330,7 @@
   "config.aether.server.modpack.spawn_in_aether": "Spawns the player in the Aether dimension; this is best enabled alongside other modpack configuration to avoid issues",
   "config.aether.server.multiplayer.balance_invisibility_cloak": "Makes the Invisibility Cloak more balanced in PVP by disabling equipment invisibility temporarily after attacks",
   "config.aether.server.multiplayer.invisibility_visibility_time": "Sets the time in ticks that it takes for the player to become fully invisible again after attacking when wearing an Invisibility Cloak; only works with 'Balance Invisibility Cloak for PVP'",
+  "config.aether.server.multiplayer.sun_altar_dimensions": "Configures what dimensions are able to have their time changed by the Sun Altar",
   "config.aether.server.multiplayer.sun_altar_whitelist": "Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server",
   "config.aether.server.world_generation.generate_holiday_tree_always": "Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether, if true, this overrides 'Generate Holiday Trees seasonally'",
   "config.aether.server.world_generation.generate_holiday_tree_seasonally": "Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether, only works if 'Generate Holiday Trees always' is set to false",

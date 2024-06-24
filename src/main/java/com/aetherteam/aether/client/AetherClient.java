@@ -127,7 +127,7 @@ public class AetherClient {
     /**
      * Used to work around a classloading crash on the server.
      */
-    public static void setToSunAltarScreen(Component name) {
-        Minecraft.getInstance().setScreen(new SunAltarScreen(name));
+    public static void setToSunAltarScreen(Component name, int timeScale) {
+        Minecraft.getInstance().setScreen(new SunAltarScreen(name, timeScale));
     }
 }

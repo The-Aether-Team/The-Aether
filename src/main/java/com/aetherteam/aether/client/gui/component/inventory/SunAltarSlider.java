@@ -1,7 +1,5 @@
 package com.aetherteam.aether.client.gui.component.inventory;
 
-import com.aetherteam.aether.capability.AetherCapabilities;
-import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.SunAltarUpdatePacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
@@ -11,16 +9,18 @@ import net.minecraft.world.level.Level;
 
 public class SunAltarSlider extends AbstractSliderButton {
     private final Level level;
+    private final int timeScale;
 
-    public SunAltarSlider(Level level, int x, int y, int width, int height, Component title, double value) {
+    public SunAltarSlider(Level level, int x, int y, int width, int height, Component title, double value, int timeScale) {
         super(x, y, width, height, title, value);
         this.level = level;
+        this.timeScale = timeScale;
     }
 
     @Override
     protected void applyValue() {
-        long time = (long) (this.value * AetherDimensions.AETHER_TICKS_PER_DAY);
-        this.level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent(aetherTime -> PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new SunAltarUpdatePacket(time)));
+        long time = (long) (this.value * this.timeScale);
+        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new SunAltarUpdatePacket(time, this.timeScale));
     }
 
     @Override
