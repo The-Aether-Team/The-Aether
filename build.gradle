@@ -167,6 +167,10 @@ machete {
     jij.enabled = true
 }
 
+sourceJar {
+    dependsOn 'optimizeOutputsOfJar'
+}
+
 tasks.named('jar', Jar).configure {
     manifest {
         attributes([
