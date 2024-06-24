@@ -37,7 +37,6 @@ public record SunAltarUpdatePacket(long dayTime, int timeScale) implements BaseP
                 // Set the time.
                 level.setDayTime(dayTime);
                 level.getServer().getPlayerList().broadcastAll(new ClientboundSetTimePacket(level.getGameTime(), level.getDayTime(), level.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)), level.dimension());
-
             }
         }
     }
