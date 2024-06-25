@@ -8,8 +8,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 
 public record GoldProcessorSettings(Holder<StructureProcessorList> islandSettings, Holder<StructureProcessorList> tunnelSettings, Holder<StructureProcessorList> bossSettings) {
     public static final Codec<GoldProcessorSettings> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-        StructureProcessorType.LIST_CODEC.fieldOf("island_processor").forGetter(GoldProcessorSettings::islandSettings),
-        StructureProcessorType.LIST_CODEC.fieldOf("tunnel_settings").forGetter(GoldProcessorSettings::tunnelSettings),
+        StructureProcessorType.LIST_CODEC.fieldOf("island_processors").forGetter(GoldProcessorSettings::islandSettings),
+        StructureProcessorType.LIST_CODEC.fieldOf("tunnel_processors").forGetter(GoldProcessorSettings::tunnelSettings),
         StructureProcessorType.LIST_CODEC.fieldOf("boss_room_processors").forGetter(GoldProcessorSettings::bossSettings)
     ).apply(builder, GoldProcessorSettings::new));
 }

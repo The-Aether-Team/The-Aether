@@ -9,7 +9,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 public record BronzeProcessorSettings(Holder<StructureProcessorList> roomSettings, Holder<StructureProcessorList> tunnelSettings, Holder<StructureProcessorList> bossSettings) {
     public static final Codec<BronzeProcessorSettings> CODEC = RecordCodecBuilder.create(builder -> builder.group(
         StructureProcessorType.LIST_CODEC.fieldOf("generic_room_processors").forGetter(BronzeProcessorSettings::roomSettings),
-        StructureProcessorType.LIST_CODEC.fieldOf("tunnel_settings").forGetter(BronzeProcessorSettings::tunnelSettings),
+        StructureProcessorType.LIST_CODEC.fieldOf("tunnel_processors").forGetter(BronzeProcessorSettings::tunnelSettings),
         StructureProcessorType.LIST_CODEC.fieldOf("boss_room_processors").forGetter(BronzeProcessorSettings::bossSettings)
     ).apply(builder, BronzeProcessorSettings::new));
 }
