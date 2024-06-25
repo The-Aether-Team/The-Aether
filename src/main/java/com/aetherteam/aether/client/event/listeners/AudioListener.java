@@ -20,12 +20,12 @@ public class AudioListener {
     }
 
     /**
-     * @see AudioHooks#shouldCancelSound(SoundInstance)
+     * @see AudioHooks#shouldCancelMusic(SoundInstance)
      */
     public static void onPlaySound(PlaySoundEvent event) {
         SoundEngine soundEngine = event.getEngine();
         SoundInstance sound = event.getOriginalSound();
-        if (AudioHooks.shouldCancelSound(sound) || AudioHooks.preventAmbientPortalSound(soundEngine, sound)) {
+        if (AudioHooks.shouldCancelMusic(sound) || AudioHooks.preventAmbientPortalSound(soundEngine, sound)) {
             event.setSound(null);
         }
         AudioHooks.overrideActivatedPortalSound(soundEngine, sound);

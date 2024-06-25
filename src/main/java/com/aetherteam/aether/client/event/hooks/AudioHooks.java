@@ -26,7 +26,7 @@ public class AudioHooks {
      *
      * @see com.aetherteam.aether.client.event.listeners.AudioListener#onPlaySound(PlaySoundEvent)
      */
-    public static boolean shouldCancelSound(SoundInstance sound) {
+    public static boolean shouldCancelMusic(SoundInstance sound) {
         if (!AetherConfig.CLIENT.disable_music_manager.get()) {
             Holder<SoundEvent> soundEvent = getSoundEvent(sound);
             if (sound.getSource() == SoundSource.MUSIC && soundEvent != null && !soundEvent.is(AetherTags.SoundEvents.ACHIEVEMENT_SOUNDS)) {
