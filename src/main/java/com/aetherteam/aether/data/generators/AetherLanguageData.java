@@ -625,6 +625,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addSubtitle("entity", "sentry.death", "Sentry dies");
         this.addSubtitle("entity", "sentry.hurt", "Sentry hurts");
         this.addSubtitle("entity", "sentry.jump", "Sentry squishes");
+        this.addSubtitle("entity", "sentry.squish", "Sentry squishes");
 
         this.addSubtitle("entity", "mimic.attack", "Mimic attacks");
         this.addSubtitle("entity", "mimic.death", "Mimic dies");
@@ -809,7 +810,11 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.blue_moa", "Blue Moa");
         this.addMoaSkinsText("skin.white_moa", "White Moa");
         this.addMoaSkinsText("skin.black_moa", "Black Moa");
-        this.addMoaSkinsText("skin.classic_moa", "Classic Moa");
+        this.addMoaSkinsText("skin.orange_moa", "Orange Moa");
+        this.addMoaSkinsText("skin.brown_moa", "Brown Moa");
+        this.addMoaSkinsText("skin.red_moa", "Red Moa");
+        this.addMoaSkinsText("skin.green_moa", "Green Moa");
+        this.addMoaSkinsText("skin.purple_moa", "Purple Moa");
         this.addMoaSkinsText("skin.boko_yellow", "Boko Yellow");
         this.addMoaSkinsText("skin.crookjaw_purple", "Crookjaw Purple");
         this.addMoaSkinsText("skin.gharrix_red", "Gharrix Red");
@@ -820,6 +825,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.construction_bot", "Construction Bot");
         this.addMoaSkinsText("skin.mossy_statue_moa", "Mossy Statue Moa");
         this.addMoaSkinsText("skin.chicken_moa", "Chicken Moa");
+        this.addMoaSkinsText("skin.medical_bot", "Medical Bot");
+        this.addMoaSkinsText("skin.skeleton_moa", "Skeleton Moa");
         this.addMoaSkinsText("skin.arctic_moa", "Arctic Moa");
         this.addMoaSkinsText("skin.cockatrice_moa", "Cockatrice");
         this.addMoaSkinsText("skin.phoenix_moa", "Phoenix Moa");
@@ -830,6 +837,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.molten_moa", "Molten Moa");
         this.addMoaSkinsText("skin.undead_moa", "Undead Moa");
         this.addMoaSkinsText("skin.stratus", "Stratus");
+        this.addMoaSkinsText("skin.peacock_moa", "Peacock Moa");
+        this.addMoaSkinsText("skin.prehistoric_moa", "Prehistoric Moa");
+
 
         this.addMoaSkinsText("tooltip.title.access.pledging", "Pledge Access");
         this.addMoaSkinsText("tooltip.title.access.lifetime", "Lifetime Access");
@@ -1238,6 +1248,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addServerConfig("multiplayer", "balance_invisibility_cloak", "Makes the Invisibility Cloak more balanced in PVP by disabling equipment invisibility temporarily after attacks");
         this.addServerConfig("multiplayer", "invisibility_visibility_time", "Sets the time in ticks that it takes for the player to become fully invisible again after attacking when wearing an Invisibility Cloak; only works with 'Balance Invisibility Cloak for PVP'");
         this.addServerConfig("multiplayer", "sun_altar_whitelist", "Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server");
+        this.addServerConfig("multiplayer", "sun_altar_dimensions", "Configures what dimensions are able to have their time changed by the Sun Altar");
 
         this.addServerConfig("modpack", "spawn_in_aether", "Spawns the player in the Aether dimension; this is best enabled alongside other modpack configuration to avoid issues");
         this.addServerConfig("modpack", "disable_aether_portal", "Prevents the Aether Portal from being created normally in the mod");

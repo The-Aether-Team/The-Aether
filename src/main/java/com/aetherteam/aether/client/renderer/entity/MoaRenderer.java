@@ -70,7 +70,11 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
      */
     @Override
     public ResourceLocation getTextureLocation(Moa moa) {
-        ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
+        return getTexture(moa);
+    }
+
+    public static ResourceLocation getTexture(Moa moa) {
+        ResourceLocation moaSkin = getMoaSkinLocation(moa);
         if (moaSkin != null) {
             return moaSkin;
         }
@@ -78,7 +82,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
             return MOS_TEXTURE;
         }
         if ((moa.hasCustomName() && moa.getName().getString().equals("Raptor__") && moa.getMoaTypeKey() == AetherMoaTypes.BLUE)
-                || (moa.getRider() != null && moa.getRider().equals(UUID.fromString("c3e6871e-8e60-490a-8a8d-2bbe35ad1604")))) { // Raptor__
+            || (moa.getRider() != null && moa.getRider().equals(UUID.fromString("c3e6871e-8e60-490a-8a8d-2bbe35ad1604")))) { // Raptor__
             return RAPTOR_TEXTURE;
         }
         MoaType moaType = moa.getMoaType();
@@ -92,7 +96,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
      * @return The {@link ResourceLocation} for the emissive texture.
      */
     @Nullable
-    private ResourceLocation getMoaSkinLocation(Moa moa) {
+    private static ResourceLocation getMoaSkinLocation(Moa moa) {
         UUID lastRiderUUID = moa.getLastRider();
         UUID moaUUID = moa.getMoaUUID();
         Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();

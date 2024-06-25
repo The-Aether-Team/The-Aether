@@ -572,6 +572,14 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                         sound("minecraft:mob/slime/big4")
                 ).subtitle("subtitles.aether.entity.sentry.jump")
         );
+        this.add(AetherSoundEvents.ENTITY_SENTRY_SQUISH,
+                definition().with(
+                        sound("minecraft:mob/slime/big1"),
+                        sound("minecraft:mob/slime/big2"),
+                        sound("minecraft:mob/slime/big3"),
+                        sound("minecraft:mob/slime/big4")
+                ).subtitle("subtitles.aether.entity.sentry.squish")
+        );
         this.add(AetherSoundEvents.ENTITY_MIMIC_ATTACK,
                 definition().with(
                         sound("minecraft:random/eat1"),

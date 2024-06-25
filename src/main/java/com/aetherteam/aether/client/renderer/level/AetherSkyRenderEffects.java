@@ -318,18 +318,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
                 RenderSystem.disableBlend();
                 RenderSystem.defaultBlendFunc();
                 poseStack.popPose();
-                RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 1.0F);
-                double d0 = Minecraft.getInstance().player.getEyePosition(partialTick).y - level.getLevelData().getHorizonHeight(level);
-                if (d0 < 0.0) {
-                    poseStack.pushPose();
-                    poseStack.translate(0.0F, 12.0F, 0.0F);
-                    ((LevelRendererAccessor) levelRenderer).aether$getDarkBuffer().bind();
-                    ((LevelRendererAccessor) levelRenderer).aether$getDarkBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, shaderinstance);
-                    VertexBuffer.unbind();
-                    poseStack.popPose();
-                }
 
-                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.depthMask(true);
             }
         }

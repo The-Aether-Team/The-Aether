@@ -6,6 +6,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.List;
+
 public class AetherConfig {
     public static class Server {
         public final ConfigValue<Boolean> enable_bed_explosions;
@@ -29,6 +31,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> balance_invisibility_cloak;
         public final ConfigValue<Integer> invisibility_visibility_time;
         public final ConfigValue<Boolean> sun_altar_whitelist;
+        public final ConfigValue<List<? extends String>> sun_altar_dimensions;
 
         public final ConfigValue<Boolean> spawn_in_aether;
         public final ConfigValue<Boolean> disable_aether_portal;
@@ -120,6 +123,10 @@ public class AetherConfig {
                     .comment("Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server")
                     .translation("config.aether.server.multiplayer.sun_altar_whitelist")
                     .define("Only whitelisted users access Sun Altars", false);
+            sun_altar_dimensions = builder
+                .comment("Configures what dimensions are able to have their time changed by the Sun Altar")
+                .translation("config.aether.server.multiplayer.sun_altar_dimensions")
+                .defineList("Configure Sun Altar dimensions", List.of("aether:the_aether"), s -> s instanceof String);
             builder.pop();
 
             builder.push("Modpack");

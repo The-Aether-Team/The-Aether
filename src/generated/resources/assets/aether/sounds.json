@@ -404,6 +404,15 @@
     ],
     "subtitle": "subtitles.aether.entity.sentry.jump"
   },
+  "entity.sentry.squish": {
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ],
+    "subtitle": "subtitles.aether.entity.sentry.squish"
+  },
   "entity.sheepuff.ambient": {
     "sounds": [
       "mob/sheep/say1",
