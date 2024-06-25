@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.sound;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -65,7 +66,7 @@ public class PortalTriggerSoundInstance extends AbstractTickableSoundInstance {
         var data = this.player.getData(AetherDataAttachments.AETHER_PLAYER);
         if (!data.isInPortal()) {
             this.fade++;
-            this.volume = (float) Math.exp(-(this.fade / (75 / 3.0))) - this.startingVolume;
+            this.volume = (float) Math.exp(-(this.fade / (75 / 1.5))) - (1 - this.startingVolume);
             if (this.fade >= 75) {
                 this.stop();
             }

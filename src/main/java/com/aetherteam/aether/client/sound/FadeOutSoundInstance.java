@@ -42,7 +42,7 @@ public class FadeOutSoundInstance extends AbstractTickableSoundInstance {
     public void tick() {
         if (this.fadeOut) {
             this.fade++;
-            this.volume = (float) Math.exp(-(this.fade / (50 / 3.0))) - this.startingVolume;
+            this.volume = (float) Math.exp(-(this.fade / (50 / 3.0))) - (1 - this.startingVolume);
             if (this.fade >= 50) {
                 this.stop();
             }
