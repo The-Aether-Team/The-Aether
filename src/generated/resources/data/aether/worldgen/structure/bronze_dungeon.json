@@ -7,7 +7,7 @@
   "processor_settings": {
     "boss_room_processors": "aether:bronze_boss_room",
     "generic_room_processors": "aether:bronze_room",
-    "tunnel_settings": "aether:bronze_tunnel"
+    "tunnel_processors": "aether:bronze_tunnel"
   },
   "spawn_overrides": {
     "aether_aerwhale": {

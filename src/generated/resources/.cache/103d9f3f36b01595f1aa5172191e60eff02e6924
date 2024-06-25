@@ -1,4 +1,4 @@
-// 1.20.4	2024-06-24T21:47:38.1913252	Registries
+// 1.20.4	2024-06-24T22:44:10.7207183	Registries
 82530938d7de52efd594f6bae0aaef2428f09853 data/aether/aether/moa_type/black.json
 2db7c2a7f294f52b13239ecb53053bd4ffa4bb69 data/aether/aether/moa_type/blue.json
 5eb707f4fb2ff05d33f1718f3e8ca61371af5a62 data/aether/aether/moa_type/white.json
@@ -84,10 +84,10 @@ eebeac9dd50a5f1fdd35fcb535813e80f3cd4251 data/aether/worldgen/processor_list/bro
 13bb954d672285dc1f7361bbb42822779fd01c7e data/aether/worldgen/processor_list/silver_boss_room.json
 c27f952498aeea615b6be90c50543c3cfe2bb859 data/aether/worldgen/processor_list/silver_floor.json
 1bd0b58f266f1ddcefd8e19991aa96fd97c19c2a data/aether/worldgen/processor_list/silver_room.json
-c598a5e20c5b66ccb424696470827066912c91f0 data/aether/worldgen/structure/bronze_dungeon.json
-ea2b9a3a7b89acc284c1956b9893588f6cf074a6 data/aether/worldgen/structure/gold_dungeon.json
+f410a5efebe18277aa1ccdc2957da5aea861dc87 data/aether/worldgen/structure/bronze_dungeon.json
+2c9641a90e30ea7cbcd9206cf8d5035ca25fe819 data/aether/worldgen/structure/gold_dungeon.json
 745c868f238581112eee9397e9a196e1b9d28266 data/aether/worldgen/structure/large_aercloud.json
-7b84a9c3a0439500be623ae3ff4b0ec51d9e7f4c data/aether/worldgen/structure/silver_dungeon.json
+fb8db38ca86f119e42932c0b144e4d2a6d50b7f2 data/aether/worldgen/structure/silver_dungeon.json
 884e1581637a2a56536cc9e667d52281da0be7c3 data/aether/worldgen/structure_set/bronze_dungeon.json
 74c5f4f594d41486e3d8df1cbb87884d46154c50 data/aether/worldgen/structure_set/large_aercloud.json
 02ade18d13850f06e8bb36cbc23fd6375b36c894 data/aether/worldgen/structure_set/silver_and_gold_dungeons.json
