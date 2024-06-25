@@ -23,6 +23,11 @@ public class AetherSoundTagData extends TagsProvider<SoundEvent> {
             AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT.getKey(),
             AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.getKey(),
             AetherSoundEvents.BLOCK_AETHER_PORTAL_TRAVEL.getKey());
+        this.tag(AetherTags.SoundEvents.AMBIENT_PORTAL_SOUNDS).add(
+            AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT.getKey());
+        this.tag(AetherTags.SoundEvents.ACTIVATED_PORTAL_SOUNDS).add(
+            AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.getKey(),
+            AetherSoundEvents.BLOCK_AETHER_PORTAL_TRAVEL.getKey());
         this.tag(AetherTags.SoundEvents.ACHIEVEMENT_SOUNDS).add(
             AetherSoundEvents.UI_TOAST_AETHER_GENERAL.getKey(),
             AetherSoundEvents.UI_TOAST_AETHER_BRONZE.getKey(),

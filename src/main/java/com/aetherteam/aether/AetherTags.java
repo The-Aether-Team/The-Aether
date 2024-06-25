@@ -241,6 +241,8 @@ public class AetherTags {
 
     public static class SoundEvents {
         public static final TagKey<SoundEvent> PORTAL_SOUNDS = tag("portal_sounds");
+        public static final TagKey<SoundEvent> AMBIENT_PORTAL_SOUNDS = tag("ambient_portal_sounds");
+        public static final TagKey<SoundEvent> ACTIVATED_PORTAL_SOUNDS = tag("activated_portal_sounds");
         public static final TagKey<SoundEvent> ACHIEVEMENT_SOUNDS = tag("achievement_sounds");
         public static final TagKey<SoundEvent> BOSS_MUSIC = tag("boss_music");
 

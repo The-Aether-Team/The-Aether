@@ -1,4 +1,6 @@
-// 1.20.4	2024-06-24T18:38:44.6080305	Tags for minecraft:sound_event mod id aether
+// 1.20.4	2024-06-24T19:53:58.7542727	Tags for minecraft:sound_event mod id aether
 be8fbf3cfec3d72534022e70e9f3c02190999d0e data/aether/tags/sound_event/achievement_sounds.json
+82d33e61c871493761a9481f0ad19c848e653a27 data/aether/tags/sound_event/activated_portal_sounds.json
+76045878f347a46601f390204cec75335efaa6bd data/aether/tags/sound_event/ambient_portal_sounds.json
 af881a7f42eaf7f0aba3cbd1459f91f3d972358a data/aether/tags/sound_event/boss_music.json
 15053b3e3df2e79a3f96c7efe2287fa32fe73d99 data/aether/tags/sound_event/portal_sounds.json
