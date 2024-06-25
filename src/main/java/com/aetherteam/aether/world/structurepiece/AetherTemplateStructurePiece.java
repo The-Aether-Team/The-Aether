@@ -53,6 +53,7 @@ public abstract class AetherTemplateStructurePiece extends TemplateStructurePiec
         if (this.placeSettings.getRotationPivot() != BlockPos.ZERO) {
             tag.putLong("RotationPivot", this.placeSettings.getRotationPivot().asLong());
         }
+        writeProcessors(tag, context.registryAccess(), this.processors);
     }
 
     private static StructurePlaceSettings readSettings(CompoundTag tag, StructurePlaceSettings settings, RegistryAccess access) {
@@ -71,6 +72,14 @@ public abstract class AetherTemplateStructurePiece extends TemplateStructurePiec
             .parse(ops, tag.getCompound("Processors"))
             .resultOrPartial(Aether.LOGGER::error)
             .orElseThrow(() -> new IllegalStateException("Invalid processor found"));
+    }
+
+    protected static void writeProcessors(CompoundTag tag, RegistryAccess access, Holder<StructureProcessorList> processors) {
+        DynamicOps<Tag> ops = RegistryOps.create(NbtOps.INSTANCE, access);
+        StructureProcessorType.LIST_CODEC
+            .encodeStart(ops, processors)
+            .resultOrPartial(Aether.LOGGER::error)
+            .ifPresent(entry -> tag.put("Processors", entry));
     }
 
     protected static StructurePlaceSettings addProcessors(StructurePlaceSettings settings, Holder<StructureProcessorList> processors) {
