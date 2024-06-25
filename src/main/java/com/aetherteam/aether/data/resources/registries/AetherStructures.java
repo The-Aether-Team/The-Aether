@@ -9,6 +9,12 @@ import com.aetherteam.aether.world.structure.BronzeDungeonStructure;
 import com.aetherteam.aether.world.structure.GoldDungeonStructure;
 import com.aetherteam.aether.world.structure.LargeAercloudStructure;
 import com.aetherteam.aether.world.structure.SilverDungeonStructure;
+import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeDungeonPiece;
+import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeProcessorSettings;
+import com.aetherteam.aether.world.structurepiece.golddungeon.GoldProcessorSettings;
+import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverProcessorSettings;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -26,6 +32,7 @@ import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -51,6 +58,7 @@ public class AetherStructures {
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
         HolderGetter<PlacedFeature> placements = context.lookup(Registries.PLACED_FEATURE);
         HolderGetter<ConfiguredFeature<?, ?>> configurations = context.lookup(Registries.CONFIGURED_FEATURE);
+        HolderGetter<StructureProcessorList> processors = context.lookup(Registries.PROCESSOR_LIST);
         context.register(LARGE_AERCLOUD, new LargeAercloudStructure(
                 AetherStructureBuilders.structure(biomes.getOrThrow(AetherTags.Biomes.HAS_LARGE_AERCLOUD), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE),
                 BlockStateProvider.simple(AetherBlocks.COLD_AERCLOUD.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true)),
@@ -60,13 +68,21 @@ public class AetherStructures {
                 mobSpawnsPiece,
                 GenerationStep.Decoration.TOP_LAYER_MODIFICATION,
                 TerrainAdjustment.NONE),
-                8, 32, 24));
+                8, 32, 24,
+                new BronzeProcessorSettings(
+                    processors.getOrThrow(AetherStructureProcessorLists.BRONZE_ROOM),
+                    processors.getOrThrow(AetherStructureProcessorLists.BRONZE_TUNNEL),
+                    processors.getOrThrow(AetherStructureProcessorLists.BRONZE_BOSS_ROOM))));
         context.register(SILVER_DUNGEON, new SilverDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_SILVER_DUNGEON),
                 mobSpawnsBox,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
                 TerrainAdjustment.NONE),
-                128, 2, 18, 35, 70));
+                128, 2, 18, 35, 70,
+                new SilverProcessorSettings(
+                    processors.getOrThrow(AetherStructureProcessorLists.SILVER_ROOM),
+                    processors.getOrThrow(AetherStructureProcessorLists.SILVER_FLOOR),
+                    processors.getOrThrow(AetherStructureProcessorLists.SILVER_BOSS_ROOM))));
         context.register(GOLD_DUNGEON, new GoldDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_GOLD_DUNGEON),
                 mobSpawnsBox,
@@ -74,7 +90,10 @@ public class AetherStructures {
                 TerrainAdjustment.NONE),
                 8, 20, 40, 60,
                 placements.getOrThrow(AetherPlacedFeatures.GOLD_DUNGEON_ISLAND_FOLIAGE),
-                PlacementUtils.inlinePlaced(configurations.getOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION), RarityFilter.onAverageOnceEvery(64))
-            ));
+                PlacementUtils.inlinePlaced(configurations.getOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION), RarityFilter.onAverageOnceEvery(64)),
+                new GoldProcessorSettings(
+                    processors.getOrThrow(AetherStructureProcessorLists.GOLD_ISLAND),
+                    processors.getOrThrow(AetherStructureProcessorLists.GOLD_TUNNEL),
+                    processors.getOrThrow(AetherStructureProcessorLists.GOLD_BOSS_ROOM))));
     }
 }

@@ -22,6 +22,7 @@ public class AetherRegistrySets extends DatapackBuiltinEntriesProvider {
             .add(Registries.DIMENSION_TYPE, AetherDimensions::bootstrapDimensionType)
             .add(Registries.LEVEL_STEM, AetherDimensions::bootstrapLevelStem)
             .add(Registries.STRUCTURE, AetherStructures::bootstrap)
+            .add(Registries.PROCESSOR_LIST, AetherStructureProcessorLists::bootstrap)
             .add(Registries.STRUCTURE_SET, AetherStructureSets::bootstrap)
             .add(Registries.DAMAGE_TYPE, AetherDamageTypes::bootstrap)
             .add(Registries.TRIM_MATERIAL, AetherTrimMaterials::bootstrap)
