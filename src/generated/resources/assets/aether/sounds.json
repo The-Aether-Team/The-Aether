@@ -1,21 +1,27 @@
 {
+  "block.aercloud.blue_aercloud_bounce": {
+    "sounds": [
+      "aether:block/aercloud/blue_aercloud_bounce"
+    ],
+    "subtitle": "subtitles.aether.block.aercloud.blue_aercloud_bounce"
+  },
   "block.aether_portal.ambient": {
     "sounds": [
       {
         "attenuation_distance": 10,
-        "name": "portal/portal"
+        "name": "aether:portal/portal"
       }
     ],
     "subtitle": "subtitles.aether.block.aether_portal.ambient"
   },
   "block.aether_portal.travel": {
     "sounds": [
-      "portal/travel"
+      "aether:portal/travel"
     ]
   },
   "block.aether_portal.trigger": {
     "sounds": [
-      "portal/trigger"
+      "aether:portal/trigger"
     ],
     "subtitle": "subtitles.aether.block.aether_portal.trigger"
   },
@@ -100,7 +106,8 @@
   },
   "entity.aerbunny.hurt": {
     "sounds": [
-      "aether:entity/aerbunny/hurt"
+      "aether:entity/aerbunny/hurt",
+      "aether:entity/aerbunny/hurt2"
     ],
     "subtitle": "subtitles.aether.entity.aerbunny.hurt"
   },
@@ -144,13 +151,13 @@
   },
   "entity.cockatrice.ambient": {
     "sounds": [
-      "aether:entity/moa/say"
+      "aether:entity/moa/cockatrice_say"
     ],
     "subtitle": "subtitles.aether.entity.cockatrice.ambient"
   },
   "entity.cockatrice.death": {
     "sounds": [
-      "aether:entity/moa/say"
+      "aether:entity/moa/cockatrice_death"
     ],
     "subtitle": "subtitles.aether.entity.cockatrice.death"
   },
@@ -162,7 +169,7 @@
   },
   "entity.cockatrice.hurt": {
     "sounds": [
-      "aether:entity/moa/say"
+      "aether:entity/moa/cockatrice_hurt"
     ],
     "subtitle": "subtitles.aether.entity.cockatrice.hurt"
   },
@@ -186,6 +193,18 @@
       "random/explode4"
     ],
     "subtitle": "subtitles.aether.entity.fire_crystal.explode"
+  },
+  "entity.fire_minion.death": {
+    "sounds": [
+      "aether:entity/spirit/baby_die"
+    ],
+    "subtitle": "subtitles.aether.entity.fire_minion.death"
+  },
+  "entity.fire_minion.hurt": {
+    "sounds": [
+      "aether:entity/spirit/baby_hurt"
+    ],
+    "subtitle": "subtitles.aether.entity.fire_minion.hurt"
   },
   "entity.flying_cow.ambient": {
     "sounds": [
@@ -282,7 +301,7 @@
   },
   "entity.moa.death": {
     "sounds": [
-      "aether:entity/moa/say"
+      "aether:entity/moa/death"
     ],
     "subtitle": "subtitles.aether.entity.moa.death"
   },
@@ -300,7 +319,7 @@
   },
   "entity.moa.hurt": {
     "sounds": [
-      "aether:entity/moa/say"
+      "aether:entity/moa/hurt"
     ],
     "subtitle": "subtitles.aether.entity.moa.hurt"
   },
@@ -493,6 +512,33 @@
     ],
     "subtitle": "subtitles.aether.entity.slider.move"
   },
+  "entity.sun_spirit.activate": {
+    "sounds": [
+      "aether:entity/spirit/wake"
+    ],
+    "subtitle": "subtitles.aether.entity.sun_spirit.activate"
+  },
+  "entity.sun_spirit.death": {
+    "sounds": [
+      "aether:entity/spirit/die"
+    ],
+    "subtitle": "subtitles.aether.entity.sun_spirit.death"
+  },
+  "entity.sun_spirit.hurt": {
+    "sounds": [
+      "aether:entity/spirit/hurt"
+    ],
+    "subtitle": "subtitles.aether.entity.sun_spirit.hurt"
+  },
+  "entity.sun_spirit.interact": {
+    "sounds": [
+      "aether:entity/spirit/talk1",
+      "aether:entity/spirit/talk2",
+      "aether:entity/spirit/talk3",
+      "aether:entity/spirit/talk4"
+    ],
+    "subtitle": "subtitles.aether.entity.sun_spirit.interact"
+  },
   "entity.sun_spirit.shoot": {
     "sounds": [
       "mob/ghast/fireball4"
@@ -552,35 +598,45 @@
   },
   "entity.valkyrie.death": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "aether:entity/angel/death"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie.death"
   },
   "entity.valkyrie.hurt": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "aether:entity/angel/hurt",
+      "aether:entity/angel/hurt2",
+      "aether:entity/angel/hurt3"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie.hurt"
   },
+  "entity.valkyrie.interact": {
+    "sounds": [
+      "aether:entity/angel/talk",
+      "aether:entity/angel/talk2"
+    ],
+    "subtitle": "subtitles.aether.entity.valkyrie.interact"
+  },
   "entity.valkyrie_queen.death": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "aether:entity/queen/death"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie_queen.death"
   },
   "entity.valkyrie_queen.hurt": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "aether:entity/queen/hurt",
+      "aether:entity/queen/hurt2",
+      "aether:entity/queen/hurt3"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie_queen.hurt"
+  },
+  "entity.valkyrie_queen.interact": {
+    "sounds": [
+      "aether:entity/queen/talk",
+      "aether:entity/queen/talk2"
+    ],
+    "subtitle": "subtitles.aether.entity.valkyrie_queen.interact"
   },
   "entity.whirlwind.drop": {
     "sounds": [
@@ -590,19 +646,20 @@
   },
   "entity.zephyr.ambient": {
     "sounds": [
-      "aether:entity/zephyr/call"
+      "aether:entity/zephyr/call",
+      "aether:entity/zephyr/call2"
     ],
     "subtitle": "subtitles.aether.entity.zephyr.ambient"
   },
   "entity.zephyr.death": {
     "sounds": [
-      "aether:entity/zephyr/call"
+      "aether:entity/zephyr/death"
     ],
     "subtitle": "subtitles.aether.entity.zephyr.death"
   },
   "entity.zephyr.hurt": {
     "sounds": [
-      "aether:entity/zephyr/call"
+      "aether:entity/zephyr/hurt"
     ],
     "subtitle": "subtitles.aether.entity.zephyr.hurt"
   },
@@ -851,6 +908,14 @@
       }
     ]
   },
+  "item.music_disc.klepto": {
+    "sounds": [
+      {
+        "name": "aether:item/records/klepto",
+        "stream": true
+      }
+    ]
+  },
   "item.swet_ball.use": {
     "sounds": [
       "mob/slime/big1",
@@ -884,6 +949,30 @@
       }
     ]
   },
+  "music.boss.slider": {
+    "sounds": [
+      {
+        "name": "aether:music/boss/slider_fight",
+        "stream": true
+      }
+    ]
+  },
+  "music.boss.sun_spirit": {
+    "sounds": [
+      {
+        "name": "aether:music/boss/sun_spirit_fight",
+        "stream": true
+      }
+    ]
+  },
+  "music.boss.valkyrie_queen": {
+    "sounds": [
+      {
+        "name": "aether:music/boss/valkyrie_queen_fight",
+        "stream": true
+      }
+    ]
+  },
   "music.menu": {
     "sounds": [
       {
@@ -904,6 +993,14 @@
     "sounds": [
       {
         "name": "aether:achievement/achievement_gen",
+        "stream": true
+      }
+    ]
+  },
+  "ui.toast.aether_gold": {
+    "sounds": [
+      {
+        "name": "aether:achievement/achievement_gold",
         "stream": true
       }
     ]

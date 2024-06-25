@@ -232,7 +232,8 @@ public class AetherItems {
     public static final DeferredItem<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune", () -> new RecordItem(1, AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 2980));
     public static final DeferredItem<Item> MUSIC_DISC_ASCENDING_DAWN = ITEMS.register("music_disc_ascending_dawn", () -> new RecordItem(2, AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 7000));
     public static final DeferredItem<Item> MUSIC_DISC_CHINCHILLA = ITEMS.register("music_disc_chinchilla", () -> new RecordItem(3, AetherSoundEvents.ITEM_MUSIC_DISC_CHINCHILLA, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3260));
-    public static final DeferredItem<Item> MUSIC_DISC_HIGH = ITEMS.register("music_disc_high", () -> new RecordItem(4, AetherSoundEvents.ITEM_MUSIC_DISC_HIGH, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 2800));
+    public static final DeferredItem<Item> MUSIC_DISC_HIGH = ITEMS.register("music_disc_high", () -> new RecordItem(4, AetherSoundEvents.ITEM_MUSIC_DISC_HIGH, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3720));
+    public static final DeferredItem<Item> MUSIC_DISC_KLEPTO = ITEMS.register("music_disc_klepto", () -> new RecordItem(5, AetherSoundEvents.ITEM_MUSIC_DISC_KLEPTO, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3820));
 
     public static final DeferredItem<Item> SKYROOT_BUCKET = ITEMS.register("skyroot_bucket", () -> new SkyrootBucketItem(() -> Fluids.EMPTY, new Item.Properties().stacksTo(16)));
     public static final DeferredItem<Item> SKYROOT_WATER_BUCKET = ITEMS.register("skyroot_water_bucket", () -> new SkyrootBucketItem(() -> Fluids.WATER, new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1)));

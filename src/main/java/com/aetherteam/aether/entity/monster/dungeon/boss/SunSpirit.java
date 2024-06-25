@@ -31,6 +31,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
@@ -71,6 +72,7 @@ import java.util.function.Predicate;
 public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy, IEntityWithComplexSpawn {
     private static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
+    private static final Music SUN_SPIRIT_MUSIC = new Music(AetherSoundEvents.MUSIC_BOSS_SUN_SPIRIT, 0, 0, true);
     public static final Map<Block, Function<BlockState, BlockState>> DUNGEON_BLOCK_CONVERSIONS = Map.ofEntries(
         Map.entry(AetherBlocks.LOCKED_HELLFIRE_STONE.get(), (blockState) -> AetherBlocks.HELLFIRE_STONE.get().defaultBlockState()),
         Map.entry(AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get(), (blockState) -> AetherBlocks.LIGHT_HELLFIRE_STONE.get().defaultBlockState()),
@@ -96,7 +98,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     public SunSpirit(EntityType<? extends SunSpirit> type, Level level) {
         super(type, level);
         this.moveControl = new BlankMoveControl(this);
-        this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
+        this.bossFight = (ServerBossEvent) new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS).setPlayBossMusic(true);
         this.setBossFight(false);
         this.origin = this.position();
         this.xpReward = XP_REWARD_BOSS;
@@ -230,6 +232,9 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                             this.chatLine = 10;
                         }
                     }
+                    if (this.chatLine < 9) {
+                        this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
+                    }
                     switch (this.chatLine++) {
                         case 0 ->
                                 this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
@@ -261,6 +266,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                             if (this.getDungeon() != null) {
                                 this.closeRoom();
                             }
+                            this.playSound(this.getActivateSound(), 1.0F, this.getVoicePitch());
                             AetherEventDispatch.onBossFightStart(this, this.getDungeon());
                             player.getData(AetherDataAttachments.AETHER_PLAYER).setSeenSunSpiritDialogue(true);
                         }
@@ -556,6 +562,15 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     }
 
     /**
+     * @return The {@link Music} for this boss's fight.
+     */
+    @Nullable
+    @Override
+    public Music getBossMusic() {
+        return SUN_SPIRIT_MUSIC;
+    }
+
+    /**
      * @return The {@link Integer} for the cooldown until another chat message can display.
      */
     public int getChatCooldown() {
@@ -590,20 +605,33 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         return this.isRemoved() || !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.is(AetherTags.DamageTypes.IS_COLD);
     }
 
+    protected SoundEvent getInteractSound() {
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_INTERACT.get();
+    }
+
+    protected SoundEvent getActivateSound() {
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_ACTIVATE.get();
+    }
+
     protected SoundEvent getShootSound() {
         return AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT.get();
     }
 
     @Nullable
     @Override
-    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return null;
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return null;
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_DEATH.get();
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 3.0F;
     }
 
     /**
