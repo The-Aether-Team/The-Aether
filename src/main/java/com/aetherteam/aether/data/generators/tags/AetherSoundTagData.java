@@ -19,6 +19,10 @@ public class AetherSoundTagData extends TagsProvider<SoundEvent> {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        this.tag(AetherTags.SoundEvents.PORTAL_SOUNDS).add(
+            AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT.getKey(),
+            AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.getKey(),
+            AetherSoundEvents.BLOCK_AETHER_PORTAL_TRAVEL.getKey());
         this.tag(AetherTags.SoundEvents.ACHIEVEMENT_SOUNDS).add(
             AetherSoundEvents.UI_TOAST_AETHER_GENERAL.getKey(),
             AetherSoundEvents.UI_TOAST_AETHER_BRONZE.getKey(),

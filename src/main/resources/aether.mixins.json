@@ -51,6 +51,7 @@
     "client.PauseScreenMixin",
     "client.PlayerSkinMixin",
     "client.SmithingScreenMixin",
+    "client.SoundEngineAccessor",
     "client.TippableArrowRendererMixin",
     "client.TitleScreenMixin",
     "client.WorldListEntryMixin",

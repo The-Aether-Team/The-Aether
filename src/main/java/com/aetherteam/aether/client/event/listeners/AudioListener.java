@@ -3,6 +3,7 @@ package com.aetherteam.aether.client.event.listeners;
 import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.AudioHooks;
 import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.client.sounds.SoundEngine;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
@@ -22,8 +23,10 @@ public class AudioListener {
      * @see AudioHooks#shouldCancelSound(SoundInstance)
      */
     public static void onPlaySound(PlaySoundEvent event) {
+        SoundEngine soundEngine = event.getEngine();
         SoundInstance sound = event.getOriginalSound();
-        if (AudioHooks.shouldCancelSound(sound)) {
+        SoundInstance newSound = event.getSound();
+        if (AudioHooks.shouldCancelSound(sound) || AudioHooks.shouldCancelPortalSound(soundEngine, newSound)) {
             event.setSound(null);
         }
     }
