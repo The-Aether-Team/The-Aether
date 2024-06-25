@@ -69,7 +69,7 @@ public abstract class AetherTemplateStructurePiece extends TemplateStructurePiec
     protected static Holder<StructureProcessorList> readProcessors(CompoundTag tag, RegistryAccess access) {
         DynamicOps<Tag> ops = RegistryOps.create(NbtOps.INSTANCE, access);
         return StructureProcessorType.LIST_CODEC
-            .parse(ops, tag.getCompound("Processors"))
+            .parse(ops, tag.get("Processors"))
             .resultOrPartial(Aether.LOGGER::error)
             .orElseThrow(() -> new IllegalStateException("Invalid processor found"));
     }
