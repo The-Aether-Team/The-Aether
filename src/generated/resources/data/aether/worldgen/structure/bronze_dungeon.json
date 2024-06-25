@@ -4,6 +4,11 @@
   "belowTop": 24,
   "biomes": "#aether:has_bronze_dungeon",
   "maxrooms": 8,
+  "processor_settings": {
+    "boss_room_processors": "aether:bronze_boss_room",
+    "generic_room_processors": "aether:bronze_room",
+    "tunnel_settings": "aether:bronze_tunnel"
+  },
   "spawn_overrides": {
     "aether_aerwhale": {
       "bounding_box": "piece",

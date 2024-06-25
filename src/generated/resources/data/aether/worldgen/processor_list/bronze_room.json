@@ -1,0 +1,92 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "input_predicate": {
+            "block": "aether:carved_stone",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "aether:sentry_stone"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "aether:holystone",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "aether:mossy_holystone",
+            "Properties": {
+              "double_drops": "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "input_predicate": {
+            "block": "aether:carved_stone",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.13
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "aether:trapped_carved_stone"
+          },
+          "position_predicate": {
+            "axis": "y",
+            "max_chance": 0.0,
+            "max_dist": 1,
+            "min_chance": 1.0,
+            "min_dist": 0,
+            "predicate_type": "minecraft:axis_aligned_linear_pos"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "aether:sentry_stone",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.003
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "aether:trapped_sentry_stone"
+          },
+          "position_predicate": {
+            "axis": "y",
+            "max_chance": 0.0,
+            "max_dist": 1,
+            "min_chance": 1.0,
+            "min_dist": 0,
+            "predicate_type": "minecraft:axis_aligned_linear_pos"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:protected_blocks",
+      "value": "#aether:non_tunnel_replaceable"
+    },
+    {
+      "processor_type": "aether:double_drops"
+    }
+  ]
+}
