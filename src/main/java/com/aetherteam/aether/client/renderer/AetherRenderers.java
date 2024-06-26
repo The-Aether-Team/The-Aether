@@ -9,6 +9,7 @@ import com.aetherteam.aether.client.renderer.accessory.PendantRenderer;
 import com.aetherteam.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
 import com.aetherteam.aether.client.renderer.accessory.layer.ArmorStandCapeLayer;
 //import com.aetherteam.aether.client.renderer.accessory.layer.EntityAccessoryLayer;
+import com.aetherteam.aether.client.renderer.accessory.layer.EntityAccessoryLayer;
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
 import com.aetherteam.aether.client.renderer.accessory.model.GlovesModel;
 import com.aetherteam.aether.client.renderer.accessory.model.PendantModel;
@@ -26,7 +27,7 @@ import com.aetherteam.aether.entity.projectile.dart.EnchantedDart;
 import com.aetherteam.aether.entity.projectile.dart.GoldenDart;
 import com.aetherteam.aether.entity.projectile.dart.PoisonDart;
 import com.aetherteam.aether.item.AetherItems;
-import dev.emi.trinkets.api.client.TrinketRendererRegistry;
+import io.wispforest.accessories.api.client.AccessoriesRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
@@ -35,10 +36,7 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.blockentity.*;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -165,31 +163,31 @@ public class AetherRenderers {
     }
 
     /**
-     * @see com.aetherteam.aether.client.AetherClient#clientSetup(FMLClientSetupEvent)
+     * @see com.aetherteam.aether.client.AetherClient#onInitializeClient()
      */
     public static void registerCuriosRenderers() {
-        TrinketRendererRegistry.registerRenderer(AetherItems.IRON_PENDANT.get(), PendantRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.GOLDEN_PENDANT.get(), PendantRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.ZANITE_PENDANT.get(), PendantRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.ICE_PENDANT.get(), PendantRenderer.INSTANCE);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.IRON_PENDANT.get(), PendantRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.GOLDEN_PENDANT.get(), PendantRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.ZANITE_PENDANT.get(), PendantRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.ICE_PENDANT.get(), PendantRenderer::new);
 
-        TrinketRendererRegistry.registerRenderer(AetherItems.LEATHER_GLOVES.get(), GlovesRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.CHAINMAIL_GLOVES.get(), GlovesRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.IRON_GLOVES.get(), GlovesRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.GOLDEN_GLOVES.get(), GlovesRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.DIAMOND_GLOVES.get(), GlovesRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.NETHERITE_GLOVES.get(), GlovesRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.ZANITE_GLOVES.get(), GlovesRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.GRAVITITE_GLOVES.get(), GlovesRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.NEPTUNE_GLOVES.get(), GlovesRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.PHOENIX_GLOVES.get(), GlovesRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.OBSIDIAN_GLOVES.get(), GlovesRenderer.INSTANCE);
-        TrinketRendererRegistry.registerRenderer(AetherItems.VALKYRIE_GLOVES.get(), GlovesRenderer.INSTANCE);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.LEATHER_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.CHAINMAIL_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.IRON_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.GOLDEN_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.DIAMOND_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.NETHERITE_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.ZANITE_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.GRAVITITE_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.NEPTUNE_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.PHOENIX_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.OBSIDIAN_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.VALKYRIE_GLOVES.get(), GlovesRenderer::new);
 
-        TrinketRendererRegistry.registerRenderer(AetherItems.SHIELD_OF_REPULSION.get(), new ShieldOfRepulsionRenderer());
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.SHIELD_OF_REPULSION.get(), ShieldOfRepulsionRenderer::new);
     }
 
-    public static void addEntityLayers(EntityType<? extends LivingEntity> entityType, LivingEntityRenderer<?, ?> renderer, LivingEntityFeatureRendererRegistrationCallback.RegistrationHelper registrationHelper, EntityRendererProvider.Context context) {
+    public static <T extends LivingEntity> void addEntityLayers(EntityType<? extends LivingEntity> entityType, LivingEntityRenderer<T, ?> renderer, LivingEntityFeatureRendererRegistrationCallback.RegistrationHelper registrationHelper, EntityRendererProvider.Context context) {
         EntityRenderDispatcher renderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
         if (renderer instanceof PlayerRenderer playerRenderer) {
             registrationHelper.register(new DeveloperGlowLayer<>(playerRenderer));
@@ -202,7 +200,7 @@ public class AetherRenderers {
         List<EntityType<? extends LivingEntity>> entities = List.of(EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.HUSK, EntityType.SKELETON, EntityType.STRAY, EntityType.PIGLIN, EntityType.ZOMBIFIED_PIGLIN, EntityType.ARMOR_STAND);
 //        LivingEntityRenderer<LivingEntity, EntityModel<LivingEntity>> renderer = event.getRenderer(entityType);
         if (entities.contains(entityType)) {
-//            registrationHelper.register(new EntityAccessoryLayer(renderer)); TODO: PORT
+            registrationHelper.register(new EntityAccessoryLayer((RenderLayerParent<LivingEntity, EntityModel<LivingEntity>>) renderer));
         }
 
         if (entityType == EntityType.ARMOR_STAND) {
@@ -213,6 +211,7 @@ public class AetherRenderers {
     public static void init() {
         registerEntityRenderers();
         registerLayerDefinitions();
+        registerCuriosRenderers();
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register(AetherRenderers::addEntityLayers);
     }
 }

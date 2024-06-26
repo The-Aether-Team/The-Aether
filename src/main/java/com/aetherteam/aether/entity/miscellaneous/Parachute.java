@@ -2,6 +2,7 @@ package com.aetherteam.aether.entity.miscellaneous;
 
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
+import com.aetherteam.aether.utils.FabricUtils;
 import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import io.github.fabricators_of_create.porting_lib.entity.PortingLibEntity;
 import net.minecraft.core.Direction;
@@ -44,7 +45,7 @@ public class Parachute extends Entity {
             this.checkSlowFallDistance(); // Resets the Parachute's fall distance.
             this.moveParachute(passenger);
             this.spawnExplosionParticle();
-            if (this.onGround() ||/* this.isInFluidType() TODO: PORT ||*/ this.verticalCollisionBelow) { // The parachute breaks when it collides with something.
+            if (this.onGround() || FabricUtils.isInFluidType(this) || this.verticalCollisionBelow) { // The parachute breaks when it collides with something.
                 this.ejectPassengers();
                 this.die();
             }

@@ -1,30 +1,25 @@
 package com.aetherteam.aether.client.event.listeners.capability;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.CapabilityClientHooks;
 import io.github.fabricators_of_create.porting_lib.event.client.KeyInputCallback;
+import io.github.fabricators_of_create.porting_lib.event.client.MouseInputEvents;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.player.Player;
 
 public class AetherPlayerClientListener {
-//    /** TODO: PORT
-//     * @see CapabilityClientHooks.AetherPlayerHooks#movementInput(Player, Input)
-//     */
-//    @SubscribeEvent
-//    public static void onMove(MovementInputUpdateEvent event) {
-//        Player player = event.getEntity();
-//        Input input = event.getInput();
-//        CapabilityClientHooks.AetherPlayerHooks.movementInput(player, input);
-//    }
-//
-//    /**
-//     * @see CapabilityClientHooks.AetherPlayerHooks#mouseInput(int)
-//     */
-//    @SubscribeEvent
-//    public static void onClick(InputEvent.MouseButton.Post event) {
-//        int button = event.getButton();
-//        CapabilityClientHooks.AetherPlayerHooks.mouseInput(button);
-//    }
+    /**
+     * @see CapabilityClientHooks.AetherPlayerHooks#movementInput(Player, Input)
+     */
+    public static void onMove(Player player, Input input) {
+        CapabilityClientHooks.AetherPlayerHooks.movementInput(player, input);
+    }
+
+    /**
+     * @see CapabilityClientHooks.AetherPlayerHooks#mouseInput(int)
+     */
+    public static void onClick(int button, int modifiers, MouseInputEvents.Action action) {
+        CapabilityClientHooks.AetherPlayerHooks.mouseInput(button);
+    }
 
     /**
      * @see CapabilityClientHooks.AetherPlayerHooks#keyInput(int)
@@ -34,6 +29,7 @@ public class AetherPlayerClientListener {
     }
 
     public static void init() {
+        MouseInputEvents.AFTER_BUTTON.register(AetherPlayerClientListener::onClick);
         KeyInputCallback.EVENT.register(AetherPlayerClientListener::onPress);
     }
 }

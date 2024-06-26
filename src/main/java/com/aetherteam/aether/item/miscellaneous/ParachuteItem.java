@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.miscellaneous;
 
 import com.aetherteam.aether.entity.miscellaneous.Parachute;
+import com.aetherteam.aether.utils.FabricUtils;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -34,7 +35,7 @@ public class ParachuteItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
-        if (!player.onGround()/* && !player.isInFluidType() TODO: PORT*/ && !player.isShiftKeyDown()) { // Player has to be on ground and can't be in liquid, and also can't be holding shift.
+        if (!player.onGround() && !FabricUtils.isInFluidType(player) && !player.isShiftKeyDown()) { // Player has to be on ground and can't be in liquid, and also can't be holding shift.
             Entity entity = this.getParachuteEntity().get().create(level);
             if (entity instanceof Parachute parachute) {
                 parachute.setPos(player.getX(), player.getY() - 1.0, player.getZ()); // Spawn Parachute below player.

@@ -9,6 +9,7 @@ import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.AerbunnyPuffPacket;
+import com.aetherteam.aether.utils.FabricUtils;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import net.minecraft.core.BlockPos;
@@ -104,7 +105,7 @@ public class Aerbunny extends AetherAnimal {
             this.setPuffiness(0);
         }
         this.handlePlayerInput();
-        if (this.getVehicle() != null && (this.getVehicle().onGround()/* || this.getVehicle().isInFluidType() TODO: PORT*/)) { // Reset the last tracked fall position if the Aerbunny touches a surface.
+        if (this.getVehicle() != null && (this.getVehicle().onGround() || FabricUtils.isInFluidType(this.getVehicle()))) { // Reset the last tracked fall position if the Aerbunny touches a surface.
             this.lastPos = null;
         }
     }
@@ -148,7 +149,7 @@ public class Aerbunny extends AetherAnimal {
             if (!player.onGround() && !player.isFallFlying()) {
                 AttributeInstance playerGravity = player.getAttribute(PortingLibAttributes.ENTITY_GRAVITY);
                 if (playerGravity != null) {
-                    if (!player.getAbilities().flying /*&& !player.isInFluidType() TODO: PORT*/ && playerGravity.getValue() > 0.02) {  // Entity isn't allowed to fall too slowly from gravity.
+                    if (!player.getAbilities().flying && !FabricUtils.isInFluidType(player) && playerGravity.getValue() > 0.02) {  // Entity isn't allowed to fall too slowly from gravity.
                         player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
                     }
                 }

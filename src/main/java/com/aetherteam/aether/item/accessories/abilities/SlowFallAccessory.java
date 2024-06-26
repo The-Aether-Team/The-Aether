@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.accessories.abilities;
 
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
+import com.aetherteam.aether.utils.FabricUtils;
 import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,7 +17,7 @@ public interface SlowFallAccessory {
     default void handleSlowFall(LivingEntity livingEntity) {
         AttributeInstance gravity = livingEntity.getAttribute(PortingLibAttributes.ENTITY_GRAVITY);
         if (gravity != null) {
-            if (livingEntity.getDeltaMovement().y() <= -0.06 && !livingEntity.onGround() && !livingEntity.isFallFlying() /*&& !livingEntity.isInFluidType() TODO: PORT*/ && !livingEntity.isShiftKeyDown() && gravity.getValue() > 0.0075) {
+            if (livingEntity.getDeltaMovement().y() <= -0.06 && !livingEntity.onGround() && !livingEntity.isFallFlying() && !FabricUtils.isInFluidType(livingEntity) && !livingEntity.isShiftKeyDown() && gravity.getValue() > 0.0075) {
                 livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(1.0, 0.6, 1.0));
             }
         }

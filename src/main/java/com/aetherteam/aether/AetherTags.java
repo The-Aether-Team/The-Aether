@@ -1,5 +1,6 @@
 package com.aetherteam.aether;
 
+import io.wispforest.accessories.Accessories;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -154,7 +155,7 @@ public class AetherTags {
 		}
 
 		private static TagKey<Item> curio(String name) {
-			return TagKey.create(Registries.ITEM, new ResourceLocation("trinket", name));
+			return TagKey.create(Registries.ITEM, Accessories.of(name));
 		}
 
 		private static TagKey<Item> moddedTag(String modid, String name) {

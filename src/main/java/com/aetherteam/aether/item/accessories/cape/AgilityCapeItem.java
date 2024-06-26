@@ -1,7 +1,7 @@
 package com.aetherteam.aether.item.accessories.cape;
 
-import dev.emi.trinkets.api.SlotReference;
 import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -22,11 +22,11 @@ public class AgilityCapeItem extends CapeItem {
     /**
      * Applies a step height modifier to the wearer as long as they aren't holding shift. If they are, the modifier is removed until they stop holding shift.
      * @param stack The Trinket {@link ItemStack}.
-     * @param slotContext The {@link SlotReference} of the Trinket.
-     * @param livingEntity The {@link LivingEntity} of the Trinket.
+     * @param slotContext The {@link SlotReference} of the Accessory.
      */
     @Override
-    public void tick(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity) {
+    public void tick(ItemStack stack, SlotReference slotContext) {
+        LivingEntity livingEntity = slotContext.entity();
         AttributeInstance stepHeight = livingEntity.getAttribute(PortingLibAttributes.STEP_HEIGHT_ADDITION);
         if (stepHeight != null) {
             if (!stepHeight.hasModifier(this.getStepHeightModifier()) && !livingEntity.isShiftKeyDown()) {
@@ -41,11 +41,11 @@ public class AgilityCapeItem extends CapeItem {
     /**
      * Removes the step height modifier when the Agility Cape is unequipped.
      * @param stack The {@link ItemStack} of the Trinket.
-     * @param slotContext The {@link SlotReference} of the Trinket.
-     * @param livingEntity The {@link LivingEntity} of the Trinket.
+     * @param slotContext The {@link SlotReference} of the Accessory.
      */
     @Override
-    public void onUnequip(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity) {
+    public void onUnequip(ItemStack stack, SlotReference slotContext) {
+        LivingEntity livingEntity = slotContext.entity();
         AttributeInstance stepHeight = livingEntity.getAttribute(PortingLibAttributes.STEP_HEIGHT_ADDITION);
         if (stepHeight != null) {
             if (stepHeight.hasModifier(this.getStepHeightModifier())) {

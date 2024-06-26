@@ -11,6 +11,7 @@
     "client.fabric.BossHealthOverlayMixin",
     "client.fabric.ClientPacketListenerMixin",
     "client.fabric.ExistingFileHelperMixin",
+    "client.fabric.GameRendererMixin",
     "client.fabric.LevelRendererMixin",
     "client.fabric.MinecraftMixin"
   ]

@@ -4,8 +4,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.combat.AetherArmorMaterials;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import dev.emi.trinkets.api.SlotReference;
-import net.minecraft.world.entity.LivingEntity;
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -19,7 +18,7 @@ public class ZaniteGlovesItem extends GlovesItem {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getModifiers(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity, UUID uuid) {
+    public Multimap<Attribute, AttributeModifier> getModifiers(ItemStack stack, SlotReference slotContext, UUID uuid) {
         Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
         attributes.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", calculateIncrease(stack), AttributeModifier.Operation.ADDITION));
         return attributes;

@@ -353,7 +353,7 @@ public class MoaSkinsScreen extends Screen {
         List<FormattedText> formattedTextList = new ArrayList<>();
         formattedTextList.add(title.withStyle(ChatFormatting.GOLD));
         formattedTextList.addAll(Screens.getClient(this).font.getSplitter().splitLines(description, this.width / 3, Style.EMPTY));
-//        guiGraphics.renderComponentTooltip(Screens.getClient(this).font, formattedTextList, mouseX, mouseY, ItemStack.EMPTY); TODO: PORT
+        guiGraphics.renderComponentTooltip(Screens.getTextRenderer(this), formattedTextList, mouseX, mouseY, ItemStack.EMPTY);
     }
 
     /**

@@ -6,6 +6,11 @@
       "prefix": "gui/slots/"
     },
     {
+      "type": "directory",
+      "source": "slot",
+      "prefix": "slot/"
+    },
+    {
       "type": "paletted_permutations",
       "textures": [
         "aether:trims/items/gloves_trim"

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "amount": 2,
+  "operation": "set",
+  "order": 1000,
+  "icon": "aether:slot/ring",
+  "use_native_gui": false
+}

@@ -17,6 +17,7 @@ import net.minecraft.util.CubicSampler;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -319,7 +320,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
      * [CODE COPY] - {@link ClientLevel#getSkyColor(Vec3, float)}.<br><br>
      * Modified to have lighter sky coloration than the Overworld during weather.
      */
-    public Vec3 getSkyColor(ClientLevel level, Vec3 pos, float partialTick) {
+    public Vec3 getSkyColor(@NotNull ClientLevel level, Vec3 pos, float partialTick) {
         float f = level.getTimeOfDay(partialTick);
         Vec3 vec3 = pos.subtract(2.0, 2.0, 2.0).scale(0.25);
         BiomeManager biomeManager = level.getBiomeManager();

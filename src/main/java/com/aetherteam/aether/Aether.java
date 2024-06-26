@@ -52,6 +52,8 @@ import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
 import io.github.fabricators_of_create.porting_lib.config.ConfigRegistry;
 import io.github.fabricators_of_create.porting_lib.config.ConfigType;
+import io.github.fabricators_of_create.porting_lib.event.common.AddPackFindersEvent;
+import io.github.fabricators_of_create.porting_lib.resources.PathPackResources;
 import io.github.fabricators_of_create.porting_lib.util.EnvExecutor;
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
 import net.fabricmc.api.ModInitializer;
@@ -86,9 +88,7 @@ public class Aether implements ModInitializer {
 
     @Override
     public void onInitialize() {
-//        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-//
-//        modEventBus.addListener(this::packSetup);
+        AddPackFindersEvent.EVENT.register(this::packSetup);
 
         LazyRegistrar<?>[] registers = {
                 AetherBlocks.BLOCKS,
@@ -187,244 +187,244 @@ public class Aether implements ModInitializer {
         this.registerComposting();
     }
 
-//    public void packSetup(AddPackFindersEvent event) { TODO: PORT
-//        // Resource Packs
-//        this.setupReleasePack(event);
-//        this.setupBetaPack(event);
-//        this.setupCTMFixPack(event);
-//        this.setupTipsPack(event);
-//        this.setupColorblindPack(event);
-//
-//        // Data Packs
-//        this.setupAccessoriesPack(event);
-//        this.setupCuriosOverridePack(event);
-//        this.setupTemporaryFreezingPack(event);
-//        this.setupRuinedPortalPack(event);
-//    }
-//
-//    /**
-//     * A built-in resource pack for programmer art based on the 1.2.5 version of the mod.
-//     */
-//    private void setupReleasePack(AddPackFindersEvent event) {
-//        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-//            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_125");
-//            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, false, resourcePath);
-//            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_125_art", "pack.aether.125.title", "pack.aether.125.description");
-//        }
-//    }
-//
-//    /**
-//     * A built-in resource pack for programmer art based on the b1.7.3 version of the mod.
-//     */
-//    private void setupBetaPack(AddPackFindersEvent event) {
-//        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-//            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_b173");
-//            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, false, resourcePath);
-//            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_b173_art", "pack.aether.b173.title", "pack.aether.b173.description");
-//        }
-//    }
-//
-//    /**
-//     * Creates a built-in resource pack that combines asset files from two different locations.
-//     * @param sourcePath The {@link Path} of the non-base assets.
-//     * @param pack The {@link PathPackResources} that handles the non-base asset path for the resource pack.
-//     * @param name The {@link String} internal name of the resource pack.
-//     * @param title The {@link String} title of the resource pack.
-//     * @param description The {@link String} description of the resource pack.
-//     */
-//    private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, PathPackResources pack, String name, String title, String description) {
-//        Path baseResourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).getFile().findResource("packs/classic_base");
-//        PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, false, baseResourcePath);
-//        List<PathPackResources> mergedPacks = List.of(pack, basePack);
-//        Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedPackResources(name, new PackMetadataSection(Component.translatable(description), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES)), mergedPacks, sourcePath);
-//        Pack.Info info = Pack.readPackInfo(name, resourcesSupplier);
-//        if (info != null) {
-//            event.addRepositorySource((source) ->
-//                source.accept(Pack.create(
-//                    name,
-//                    Component.translatable(title),
-//                    false,
-//                    resourcesSupplier,
-//                    info,
-//                    PackType.CLIENT_RESOURCES,
-//                    Pack.Position.TOP,
-//                    false,
-//                    PackSource.BUILT_IN)
-//                ));
-//        }
-//    }
-//
-//    /**
-//     * A built-in resource pack to change the model of Quicksoil Glass Panes when using CTM, as CTM's connected textures won't properly work with the normal Quicksoil Glass Pane model.<br><br>
-//     * The pack is loaded and automatically applied if CTM is installed.
-//     */
-//    private void setupCTMFixPack(AddPackFindersEvent event) {
-//        if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("ctm")) {
-//            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ctm_fix");
-//            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-//            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ctm.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
-//            event.addRepositorySource((source) ->
-//                source.accept(Pack.create(
-//                "builtin/aether_ctm_fix",
-//                    Component.translatable("pack.aether.ctm.title"),
-//                    true,
-//                    (string) -> pack,
-//                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-//                    PackType.CLIENT_RESOURCES,
-//                    Pack.Position.TOP,
-//                    false,
-//                    PackSource.BUILT_IN)
-//                )
-//            );
-//        }
-//    }
-//
-//    /**
-//     * A built-in resource pack to include Pro Tips messages in Tips' UI.<br><br>
-//     * The pack is loaded and automatically applied if Tips is installed through {@link AetherClient#autoApplyPacks()}.
-//     */
-//    private void setupTipsPack(AddPackFindersEvent event) {
-//        if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("tipsmod")) {
-//            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/tips");
-//            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-//            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.tips.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
-//            event.addRepositorySource((source) ->
-//                    source.accept(Pack.create(
-//                            "builtin/aether_tips",
-//                            Component.translatable("pack.aether.tips.title"),
-//                            false,
-//                            (string) -> pack,
-//                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-//                            PackType.CLIENT_RESOURCES,
-//                            Pack.Position.TOP,
-//                            false,
-//                            PackSource.BUILT_IN)
-//                    )
-//            );
-//        }
-//    }
-//
-//    /**
-//     * A built-in resource pack to change textures for color blindness accessibility.
-//     */
-//    private void setupColorblindPack(AddPackFindersEvent event) {
-//        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-//            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/colorblind");
-//            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-//            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.colorblind.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
-//            event.addRepositorySource((source) ->
-//                source.accept(Pack.create(
-//                    "builtin/aether_colorblind",
-//                    Component.translatable("pack.aether.colorblind.title"),
-//                    false,
-//                    (string) -> pack,
-//                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-//                    PackType.CLIENT_RESOURCES,
-//                    Pack.Position.TOP,
-//                    false,
-//                    PackSource.BUILT_IN)
-//                )
-//            );
-//        }
-//    }
-//
-//    /**
-//     * A built-in data pack to set up the default slots for Curios.<br><br>
-//     * The pack is loaded and automatically applied if the {@link AetherConfig.Common#use_curios_menu} config isn't enabled.
-//     */
-//    private void setupAccessoriesPack(AddPackFindersEvent event) {
-//        if (event.getPackType() == PackType.SERVER_DATA && !AetherConfig.COMMON.use_curios_menu.get()) {
-//            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/accessories");
-//            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-//            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.accessories.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
-//            event.addRepositorySource((source) ->
-//                    source.accept(Pack.create(
-//                            "builtin/aether_accessories",
-//                            Component.translatable("pack.aether.accessories.title"),
-//                            true,
-//                            (string) -> pack,
-//                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-//                            PackType.SERVER_DATA,
-//                            Pack.Position.TOP,
-//                            false,
-//                            PackSource.BUILT_IN)
-//                    )
-//            );
-//        }
-//    }
-//
-//    /**
-//     * A built-in data pack to empty the Aether's curio slot tags and use the default curio slot tags instead, as well as register the default Curios slots.<br><br>
-//     * The pack is loaded and automatically applied if the {@link AetherConfig.Common#use_curios_menu} config is enabled.
-//     */
-//    private void setupCuriosOverridePack(AddPackFindersEvent event) {
-//        if (event.getPackType() == PackType.SERVER_DATA && AetherConfig.COMMON.use_curios_menu.get()) {
-//            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/curios_override");
-//            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-//            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.curios.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
-//            event.addRepositorySource((source) ->
-//                source.accept(Pack.create(
-//                    "builtin/aether_curios_override",
-//                    Component.translatable("pack.aether.curios.title"),
-//                    true,
-//                    (string) -> pack,
-//                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-//                    PackType.SERVER_DATA,
-//                    Pack.Position.TOP,
-//                    false,
-//                    PackSource.BUILT_IN)
-//                )
-//            );
-//        }
-//    }
-//
-//    /**
-//     * A built-in data pack to make ice accessories create temporary blocks instead of permanent blocks when freezing liquids.
-//     */
-//    private void setupTemporaryFreezingPack(AddPackFindersEvent event) {
-//        if (event.getPackType() == PackType.SERVER_DATA) {
-//            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/temporary_freezing");
-//            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-//            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.freezing.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
-//            event.addRepositorySource((source) ->
-//                source.accept(Pack.create(
-//                    "builtin/aether_temporary_freezing",
-//                    Component.translatable("pack.aether.freezing.title"),
-//                    false,
-//                    (string) -> pack,
-//                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-//                    PackType.SERVER_DATA,
-//                    Pack.Position.TOP,
-//                    false,
-//                    create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_temporary_freezing_automatically.get()))
-//                )
-//            );
-//        }
-//    }
-//
-//    /**
-//     * A built-in data pack for generating ruined Aether Portals.
-//     */
-//    private void setupRuinedPortalPack(AddPackFindersEvent event) {
-//        if (event.getPackType() == PackType.SERVER_DATA) {
-//            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ruined_portal");
-//            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-//            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ruined_portal.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
-//            event.addRepositorySource((source) ->
-//                    source.accept(Pack.create(
-//                            "builtin/aether_ruined_portal",
-//                            Component.translatable("pack.aether.ruined_portal.title"),
-//                            false,
-//                            (string) -> pack,
-//                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-//                            PackType.SERVER_DATA,
-//                            Pack.Position.TOP,
-//                            false,
-//                            create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_ruined_portal_automatically.get()))
-//                    )
-//            );
-//        }
-//    }
+    public void packSetup(AddPackFindersEvent event) {
+        // Resource Packs
+        this.setupReleasePack(event);
+        this.setupBetaPack(event);
+        this.setupCTMFixPack(event);
+        this.setupTipsPack(event);
+        this.setupColorblindPack(event);
+
+        // Data Packs
+        this.setupAccessoriesPack(event);
+        this.setupCuriosOverridePack(event);
+        this.setupTemporaryFreezingPack(event);
+        this.setupRuinedPortalPack(event);
+    }
+
+    /**
+     * A built-in resource pack for programmer art based on the 1.2.5 version of the mod.
+     */
+    private void setupReleasePack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            Path resourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).orElseThrow().findPath("packs/classic_125").orElseThrow();
+            PathPackResources pack = new PathPackResources(Aether.MODID + ":" + resourcePath, false, resourcePath);
+            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_125_art", "pack.aether.125.title", "pack.aether.125.description");
+        }
+    }
+
+    /**
+     * A built-in resource pack for programmer art based on the b1.7.3 version of the mod.
+     */
+    private void setupBetaPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            Path resourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).orElseThrow().findPath("packs/classic_b173").orElseThrow();
+            PathPackResources pack = new PathPackResources(Aether.MODID + ":" + resourcePath, false, resourcePath);
+            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_b173_art", "pack.aether.b173.title", "pack.aether.b173.description");
+        }
+    }
+
+    /**
+     * Creates a built-in resource pack that combines asset files from two different locations.
+     * @param sourcePath The {@link Path} of the non-base assets.
+     * @param pack The {@link PathPackResources} that handles the non-base asset path for the resource pack.
+     * @param name The {@link String} internal name of the resource pack.
+     * @param title The {@link String} title of the resource pack.
+     * @param description The {@link String} description of the resource pack.
+     */
+    private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, PathPackResources pack, String name, String title, String description) {
+        Path baseResourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).orElseThrow().findPath("packs/classic_base").orElseThrow();
+        PathPackResources basePack = new PathPackResources(Aether.MODID + ":" + baseResourcePath, false, baseResourcePath);
+        List<PathPackResources> mergedPacks = List.of(pack, basePack);
+        Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedPackResources(name, new PackMetadataSection(Component.translatable(description), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES)), mergedPacks, sourcePath);
+        Pack.Info info = Pack.readPackInfo(name, resourcesSupplier);
+        if (info != null) {
+            event.addRepositorySource((source) ->
+                source.accept(Pack.create(
+                    name,
+                    Component.translatable(title),
+                    false,
+                    resourcesSupplier,
+                    info,
+                    PackType.CLIENT_RESOURCES,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                ));
+        }
+    }
+
+    /**
+     * A built-in resource pack to change the model of Quicksoil Glass Panes when using CTM, as CTM's connected textures won't properly work with the normal Quicksoil Glass Pane model.<br><br>
+     * The pack is loaded and automatically applied if CTM is installed.
+     */
+    private void setupCTMFixPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES && FabricLoader.getInstance().isModLoaded("ctm")) {
+            Path resourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).orElseThrow().findPath("packs/ctm_fix").orElseThrow();
+            PathPackResources pack = new PathPackResources(Aether.MODID + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ctm.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
+            event.addRepositorySource((source) ->
+                source.accept(Pack.create(
+                "builtin/aether_ctm_fix",
+                    Component.translatable("pack.aether.ctm.title"),
+                    true,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(), FeatureFlagSet.of()),
+                    PackType.CLIENT_RESOURCES,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                )
+            );
+        }
+    }
+
+    /**
+     * A built-in resource pack to include Pro Tips messages in Tips' UI.<br><br>
+     * The pack is loaded and automatically applied if Tips is installed through {@link AetherClient#autoApplyPacks()}.
+     */
+    private void setupTipsPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES && FabricLoader.getInstance().isModLoaded("tipsmod")) {
+            Path resourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).orElseThrow().findPath("packs/tips").orElseThrow();
+            PathPackResources pack = new PathPackResources(Aether.MODID + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.tips.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
+            event.addRepositorySource((source) ->
+                    source.accept(Pack.create(
+                            "builtin/aether_tips",
+                            Component.translatable("pack.aether.tips.title"),
+                            false,
+                            (string) -> pack,
+                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(), FeatureFlagSet.of()),
+                            PackType.CLIENT_RESOURCES,
+                            Pack.Position.TOP,
+                            false,
+                            PackSource.BUILT_IN)
+                    )
+            );
+        }
+    }
+
+    /**
+     * A built-in resource pack to change textures for color blindness accessibility.
+     */
+    private void setupColorblindPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            Path resourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).orElseThrow().findPath("packs/colorblind").orElseThrow();
+            PathPackResources pack = new PathPackResources(Aether.MODID + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.colorblind.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
+            event.addRepositorySource((source) ->
+                source.accept(Pack.create(
+                    "builtin/aether_colorblind",
+                    Component.translatable("pack.aether.colorblind.title"),
+                    false,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(), FeatureFlagSet.of()),
+                    PackType.CLIENT_RESOURCES,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                )
+            );
+        }
+    }
+
+    /**
+     * A built-in data pack to set up the default slots for Curios.<br><br>
+     * The pack is loaded and automatically applied if the {@link AetherConfig.Common#use_curios_menu} config isn't enabled.
+     */
+    private void setupAccessoriesPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.SERVER_DATA && !AetherConfig.COMMON.use_curios_menu.get()) {
+            Path resourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).orElseThrow().findPath("packs/accessories").orElseThrow();
+            PathPackResources pack = new PathPackResources(Aether.MODID + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.accessories.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+            event.addRepositorySource((source) ->
+                    source.accept(Pack.create(
+                            "builtin/aether_accessories",
+                            Component.translatable("pack.aether.accessories.title"),
+                            true,
+                            (string) -> pack,
+                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(), FeatureFlagSet.of()),
+                            PackType.SERVER_DATA,
+                            Pack.Position.TOP,
+                            false,
+                            PackSource.BUILT_IN)
+                    )
+            );
+        }
+    }
+
+    /**
+     * A built-in data pack to empty the Aether's curio slot tags and use the default curio slot tags instead, as well as register the default Curios slots.<br><br>
+     * The pack is loaded and automatically applied if the {@link AetherConfig.Common#use_curios_menu} config is enabled.
+     */
+    private void setupCuriosOverridePack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.SERVER_DATA && AetherConfig.COMMON.use_curios_menu.get()) {
+            Path resourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).orElseThrow().findPath("packs/curios_override").orElseThrow();
+            PathPackResources pack = new PathPackResources(Aether.MODID + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.curios.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+            event.addRepositorySource((source) ->
+                source.accept(Pack.create(
+                    "builtin/aether_curios_override",
+                    Component.translatable("pack.aether.curios.title"),
+                    true,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(), FeatureFlagSet.of()),
+                    PackType.SERVER_DATA,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                )
+            );
+        }
+    }
+
+    /**
+     * A built-in data pack to make ice accessories create temporary blocks instead of permanent blocks when freezing liquids.
+     */
+    private void setupTemporaryFreezingPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.SERVER_DATA) {
+            Path resourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).orElseThrow().findPath("packs/temporary_freezing").orElseThrow();
+            PathPackResources pack = new PathPackResources(Aether.MODID + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.freezing.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+            event.addRepositorySource((source) ->
+                source.accept(Pack.create(
+                    "builtin/aether_temporary_freezing",
+                    Component.translatable("pack.aether.freezing.title"),
+                    false,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(), FeatureFlagSet.of()),
+                    PackType.SERVER_DATA,
+                    Pack.Position.TOP,
+                    false,
+                    create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_temporary_freezing_automatically.get()))
+                )
+            );
+        }
+    }
+
+    /**
+     * A built-in data pack for generating ruined Aether Portals.
+     */
+    private void setupRuinedPortalPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.SERVER_DATA) {
+            Path resourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).orElseThrow().findPath("packs/ruined_portal").orElseThrow();
+            PathPackResources pack = new PathPackResources(Aether.MODID + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ruined_portal.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+            event.addRepositorySource((source) ->
+                    source.accept(Pack.create(
+                            "builtin/aether_ruined_portal",
+                            Component.translatable("pack.aether.ruined_portal.title"),
+                            false,
+                            (string) -> pack,
+                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(), FeatureFlagSet.of()),
+                            PackType.SERVER_DATA,
+                            Pack.Position.TOP,
+                            false,
+                            create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_ruined_portal_automatically.get()))
+                    )
+            );
+        }
+    }
 
     /**
      * [CODE COPY] - {@link PackSource#create(UnaryOperator, boolean)}.

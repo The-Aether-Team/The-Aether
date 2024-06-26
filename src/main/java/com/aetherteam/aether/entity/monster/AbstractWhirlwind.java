@@ -2,6 +2,7 @@ package com.aetherteam.aether.entity.monster;
 
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.utils.FabricUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -99,7 +100,7 @@ public abstract class AbstractWhirlwind extends Mob {
         super.tick();
         this.lifeLeft--;
         if (!this.level().isClientSide()) {
-            if (this.lifeLeft <= 0/* || this.isInFluidType() TODO: PORT*/) {
+            if (this.lifeLeft <= 0 || FabricUtils.isInFluidType(this)) {
                 this.discard();
             }
         }

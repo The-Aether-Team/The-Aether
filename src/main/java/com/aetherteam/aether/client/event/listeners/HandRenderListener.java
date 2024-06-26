@@ -17,19 +17,19 @@ public class HandRenderListener {
      * @see HandRenderHooks#renderShieldOfRepulsionHandOverlay(ItemInHandRenderer, AbstractClientPlayer, InteractionHand, float, float, float, PoseStack, MultiBufferSource, int)
      */
     public static void onRenderHand(RenderHandEvent event) {
-//        ItemInHandRenderer itemInHandRenderer = Minecraft.getInstance().gameRenderer.itemInHandRenderer; TODO: PORT
-//        AbstractClientPlayer abstractClientPlayer = Minecraft.getInstance().player;
-//        InteractionHand hand = event.getHand();
-//        float interpolatedPitch = event.getInterpolatedPitch();
-//        float swingProgress = event.getSwingProgress();
-//        float equipProgress = event.getEquipProgress();
-//        PoseStack poseStack = event.getPoseStack();
-//        MultiBufferSource multiBufferSource = event.getMultiBufferSource();
-//        int packedLight = event.getPackedLight();
-//        if (!event.isCanceled()) {
-//            HandRenderHooks.renderGloveHandOverlay(itemInHandRenderer, abstractClientPlayer, hand, interpolatedPitch, swingProgress, equipProgress, poseStack, multiBufferSource, packedLight);
-//            HandRenderHooks.renderShieldOfRepulsionHandOverlay(itemInHandRenderer, abstractClientPlayer, hand, interpolatedPitch, swingProgress, equipProgress, poseStack, multiBufferSource, packedLight);
-//        }
+        ItemInHandRenderer itemInHandRenderer = Minecraft.getInstance().gameRenderer.itemInHandRenderer;
+        AbstractClientPlayer abstractClientPlayer = Minecraft.getInstance().player;
+        InteractionHand hand = event.getHand();
+        float interpolatedPitch = event.getPitch();
+        float swingProgress = event.getSwingProgress();
+        float equipProgress = event.getEquipProgress();
+        PoseStack poseStack = event.getPoseStack();
+        MultiBufferSource multiBufferSource = event.getMultiBufferSource();
+        int packedLight = event.getPackedLight();
+        if (!event.isCanceled()) {
+            HandRenderHooks.renderGloveHandOverlay(itemInHandRenderer, abstractClientPlayer, hand, interpolatedPitch, swingProgress, equipProgress, poseStack, multiBufferSource, packedLight);
+            HandRenderHooks.renderShieldOfRepulsionHandOverlay(itemInHandRenderer, abstractClientPlayer, hand, interpolatedPitch, swingProgress, equipProgress, poseStack, multiBufferSource, packedLight);
+        }
     }
 
     public static void init() {

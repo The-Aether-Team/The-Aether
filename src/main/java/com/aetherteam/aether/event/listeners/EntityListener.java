@@ -2,8 +2,10 @@ package com.aetherteam.aether.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.EntityHooks;
-import dev.emi.trinkets.api.event.TrinketDropCallback;
+import io.github.fabricators_of_create.porting_lib.core.event.BaseEvent;
 import io.github.fabricators_of_create.porting_lib.entity.events.*;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.MobEffectEvent;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -46,7 +48,7 @@ public class EntityListener {
         EntityHooks.launchMount(player);
     }
 
-//    /** TODO: PORT
+//    /**
 //     * @see EntityHooks#skyrootBucketMilking(Entity, Player, InteractionHand)
 //     * @see EntityHooks#pickupBucketable(Entity, Player, InteractionHand)
 //     * @see EntityHooks#interactWithArmorStand(Entity, Player, ItemStack, Vec3, InteractionHand)
@@ -104,9 +106,9 @@ public class EntityListener {
         return false;
     }
 
-    /** TODO: PORT
-     * @see EntityHooks#handleEntityCurioDrops(LivingEntity, Collection, boolean, int)
-     */
+//    /** TODO: PORT
+//     * @see EntityHooks#handleEntityCurioDrops(LivingEntity, Collection, boolean, int)
+//     */
 //    @SubscribeEvent
 //    public static void onCurioDrops(CurioDropsEvent event) {
 //        LivingEntity entity = event.getEntity();
@@ -126,28 +128,29 @@ public class EntityListener {
         return newExperience;
     }
 
-//    /** TODO: PORT
-//     * @see EntityHooks#preventInebriation(LivingEntity, MobEffectInstance)
-//     */
-//    @SubscribeEvent
-//    public static void onEffectApply(MobEffectEvent.Applicable event) {
-//        LivingEntity livingEntity = event.getEntity();
-//        MobEffectInstance effectInstance = event.getEffectInstance();
-//        if (EntityHooks.preventInebriation(livingEntity, effectInstance)) {
-//            event.setResult(Event.Result.DENY);
-//        }
-//    }
+    /**
+     * @see EntityHooks#preventInebriation(LivingEntity, MobEffectInstance)
+     */
+    public static void onEffectApply(MobEffectEvent.Applicable event) {
+        LivingEntity livingEntity = event.getEntity();
+        MobEffectInstance effectInstance = event.getEffectInstance();
+        if (EntityHooks.preventInebriation(livingEntity, effectInstance)) {
+            event.setResult(BaseEvent.Result.DENY);
+        }
+    }
 
     public static void init() {
         EntityEvents.ON_JOIN_WORLD.register(EntityListener::onEntityJoin);
         EntityMountEvents.registerForBoth(EntityListener::onMountEntity);
         PlayerTickEvents.START.register(EntityListener::onRiderTick);
         PlayerTickEvents.END.register(EntityListener::onRiderTick);
+//        UseEntityCallback.EVENT.register();
         ProjectileImpactEvent.PROJECTILE_IMPACT.register(EntityListener::onProjectileHitEntity);
         ShieldBlockEvent.EVENT.register(EntityListener::onShieldBlock);
         EntityStruckByLightningEvent.ENTITY_STRUCK_BY_LIGHTING.register(EntityListener::onLightningStrike);
         LivingEntityEvents.DROPS.register(EntityListener::onPlayerDrops);
 //        TrinketDropCallback.EVENT.register();
         LivingEntityEvents.EXPERIENCE_DROP.register(EntityListener::onDropExperience);
+        MobEffectEvent.APPLICABLE.register(EntityListener::onEffectApply);
     }
 }

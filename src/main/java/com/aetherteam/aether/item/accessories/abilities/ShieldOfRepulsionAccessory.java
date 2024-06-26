@@ -5,16 +5,14 @@ import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.nitrogen.ConstantsUtil;
-import dev.emi.trinkets.api.SlotReference;
-import dev.emi.trinkets.api.TrinketsApi;
 import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpactEvent;
+import io.wispforest.accessories.api.AccessoriesAPI;
+import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.client.player.Input;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -33,7 +31,7 @@ public interface ShieldOfRepulsionAccessory {
         if (hitResult.getType() == HitResult.Type.ENTITY && hitResult instanceof EntityHitResult entityHitResult) {
             if (entityHitResult.getEntity() instanceof LivingEntity impactedLiving) {
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
-                    Tuple<SlotReference, ItemStack> slotResult = EquipmentUtil.getCurio(impactedLiving, AetherItems.SHIELD_OF_REPULSION.get());
+                    SlotEntryReference slotResult = EquipmentUtil.getCurio(impactedLiving, AetherItems.SHIELD_OF_REPULSION.get());
                     if (slotResult != null) {
                         Vec3 motion = impactedLiving.getDeltaMovement();
                         if (impactedLiving instanceof Player player) {
@@ -62,9 +60,9 @@ public interface ShieldOfRepulsionAccessory {
      * Each deflection takes 1 durability off of the Shield of Repulsion.
      * @param projectile The impacting {@link Projectile}.
      * @param impactedLiving The impacted {@link LivingEntity}.
-     * @param slotResult The {@link SlotReference} of the Shield of Repulsion.
+     * @param slotResult The {@link SlotEntryReference} of the Shield of Repulsion.
      */
-    private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, Tuple<SlotReference, ItemStack> slotResult) {
+    private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, SlotEntryReference slotResult) {
         event.setCanceled(true);
         if (!impactedLiving.equals(projectile.getOwner())) {
             projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25));
@@ -73,7 +71,7 @@ public interface ShieldOfRepulsionAccessory {
                 damagingProjectileEntity.yPower *= -0.25;
                 damagingProjectileEntity.zPower *= -0.25;
             }
-            slotResult.getB().hurtAndBreak(1, impactedLiving, (entity) -> TrinketsApi.onTrinketBroken(slotResult.getB(), slotResult.getA(), impactedLiving));
+            slotResult.stack().hurtAndBreak(1, impactedLiving, (entity) -> AccessoriesAPI.breakStack(slotResult.reference()));
         }
     }
 }

@@ -5,6 +5,7 @@ import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.network.packet.serverbound.OpenInventoryPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import io.github.fabricators_of_create.porting_lib.mixin.accessors.client.accessor.AbstractContainerScreenAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
@@ -47,9 +48,9 @@ public class AccessoryButton extends ImageButton {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-//        Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(this.parentScreen); TODO: PORT
-//        this.setX(this.parentScreen.getGuiLeft() + offsets.getA());
-//        this.setY(this.parentScreen.getGuiTop() + offsets.getB());
+        Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(this.parentScreen);
+        this.setX(((AbstractContainerScreenAccessor) this.parentScreen).port_lib$getGuiLeft() + offsets.getA());
+        this.setY(((AbstractContainerScreenAccessor) this.parentScreen).port_lib$getGuiTop() + offsets.getB());
         if (this.parentScreen instanceof CreativeModeInventoryScreen screen) {
             boolean isInventoryTab = screen.isInventoryOpen();
             this.active = isInventoryTab;

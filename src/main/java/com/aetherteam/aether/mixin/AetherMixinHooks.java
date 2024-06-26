@@ -8,7 +8,13 @@ import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.item.accessories.pendant.PendantItem;
-import dev.emi.trinkets.TrinketsMain;
+import io.wispforest.accessories.Accessories;
+import io.wispforest.accessories.api.AccessoriesAPI;
+import io.wispforest.accessories.api.AccessoriesCapability;
+import io.wispforest.accessories.api.AccessoriesContainer;
+import io.wispforest.accessories.api.slot.SlotEntryReference;
+import io.wispforest.accessories.api.slot.SlotType;
+import io.wispforest.accessories.data.SlotTypeLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.core.registries.Registries;
@@ -34,18 +40,18 @@ public class AetherMixinHooks {
      * @see com.aetherteam.aether.mixin.mixins.client.AbstractClientPlayerMixin
      */
     public static boolean isCapeVisible(LivingEntity livingEntity) {
-//        Optional<SlotResult> slotResult = EquipmentUtil.findFirstCurio(livingEntity, (item) -> item.getItem() instanceof CapeItem); TODO: PORT
-//        if (slotResult.isPresent()) {
-//            String identifier = slotResult.get().slotContext().identifier();
-//            int id = slotResult.get().slotContext().index();
-//            LazyOptional<ICuriosItemHandler> itemHandler = CuriosApi.getCuriosInventory(livingEntity);
-//            if (itemHandler.resolve().isPresent()) {
-//                Optional<ICurioStacksHandler> stacksHandler = itemHandler.resolve().get().getStacksHandler(identifier);
-//                if (stacksHandler.isPresent()) {
-//                    return stacksHandler.get().getRenders().get(id);
-//                }
-//            }
-//        }
+        Optional<SlotEntryReference> slotResult = EquipmentUtil.findFirstCurio(livingEntity, (item) -> item.getItem() instanceof CapeItem);
+        if (slotResult.isPresent()) {
+            SlotType identifier = slotResult.get().reference().type();
+            int id = slotResult.get().reference().slot();
+            AccessoriesCapability itemHandler = livingEntity.accessoriesCapability();
+            if (itemHandler != null) {
+                AccessoriesContainer stacksHandler = itemHandler.getContainer(identifier);
+                if (stacksHandler != null) {
+                    return stacksHandler.shouldRender(id);
+                }
+            }
+        }
         return false;
     }
 
@@ -118,8 +124,8 @@ public class AetherMixinHooks {
      */
     public static String getIdentifierForItem(LivingEntity livingEntity, ItemStack stack) {
         if (AetherConfig.COMMON.use_curios_menu.get()) {
-            TagKey<Item> glovesTag = TagKey.create(Registries.ITEM, new ResourceLocation(TrinketsMain.MOD_ID, "hands"));
-            TagKey<Item> pendantTag = TagKey.create(Registries.ITEM, new ResourceLocation(TrinketsMain.MOD_ID, "necklace"));
+            TagKey<Item> glovesTag = TagKey.create(Registries.ITEM, Accessories.of("hands"));
+            TagKey<Item> pendantTag = TagKey.create(Registries.ITEM, Accessories.of("necklace"));
             if (stack.is(glovesTag)) {
                 return "hands";
             } else if (stack.is(pendantTag) && (livingEntity.getType() == EntityType.PIGLIN || livingEntity.getType() == EntityType.ZOMBIFIED_PIGLIN)) {
@@ -142,14 +148,14 @@ public class AetherMixinHooks {
      * @return The accessory {@link ItemStack} gotten from the entity.
      */
     public static ItemStack getItemByIdentifier(LivingEntity livingEntity, String identifier) {
-//        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity); TODO: PORT
-//        if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
-//            ICuriosItemHandler handler = lazyHandler.resolve().get();
-//            Optional<SlotResult> optionalResult = handler.findCurio(identifier, 0);
-//            if (optionalResult.isPresent()) {
-//                return optionalResult.get().stack();
-//            }
-//        }
+        AccessoriesCapability handler = livingEntity.accessoriesCapability();
+        SlotType type = SlotTypeLoader.getSlotType(livingEntity, identifier);
+        if (handler != null) {
+            AccessoriesContainer container = handler.getContainer(type);
+            if (container != null) {
+                return container.getAccessories().getItem(0);
+            }
+        }
         return ItemStack.EMPTY;
     }
 
@@ -160,10 +166,13 @@ public class AetherMixinHooks {
      * @param identifier The {@link String} for the slot identifier.
      */
     public static void setItemByIdentifier(LivingEntity livingEntity, ItemStack itemStack, String identifier) {
-//        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity); TODO: PORT
-//        if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
-//            ICuriosItemHandler handler = lazyHandler.resolve().get();
-//            handler.setEquippedCurio(identifier, 0, itemStack);
-//        }
+        AccessoriesCapability handler = livingEntity.accessoriesCapability();
+        SlotType type = SlotTypeLoader.getSlotType(livingEntity, identifier);
+        if (handler != null) {
+            AccessoriesContainer container = handler.getContainer(type);
+            if (container != null) {
+                container.getAccessories().setItem(0, itemStack);
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.MountableMob;
 import com.aetherteam.aether.item.EquipmentUtil;
+import com.aetherteam.aether.utils.FabricUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -781,7 +782,7 @@ public class Swet extends Slime implements MountableMob {
         }
 
         public boolean canUse() {
-            return this.swet.getTarget() == null && (this.swet.onGround()/* || this.swet.isInFluidType() TODO: PORT*/ || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof SwetMoveControl;
+            return this.swet.getTarget() == null && (this.swet.onGround() || FabricUtils.isInFluidType(this.swet) || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof SwetMoveControl;
         }
 
         public void tick() {

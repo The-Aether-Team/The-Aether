@@ -5,7 +5,7 @@
     "#aether:accessories_pendants",
     "#aether:accessories_gloves",
     "#aether:accessories_capes",
-    "#trinket:aether_accessory",
+    "#accessories:aether_accessory",
     "#aether:accessories_shields"
   ]
 }

@@ -19,6 +19,7 @@ import com.aetherteam.nitrogen.api.users.UserData;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.platform.InputConstants;
 import io.github.fabricators_of_create.porting_lib.mixin.accessors.client.accessor.AbstractContainerScreenAccessor;
+import io.wispforest.accessories.Accessories;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.Minecraft;
@@ -74,7 +75,7 @@ public class GuiHooks {
     private static boolean areAccessoryTagsFilled() {
         boolean flag = true;
         for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
-            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, new ResourceLocation("curios", string))).spliterator().estimateSize() == 0) {
+            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, Accessories.of(string))).spliterator().estimateSize() == 0) {
                 flag = false;
             }
         }
@@ -105,7 +106,7 @@ public class GuiHooks {
      */
     @Nullable
     private static AbstractContainerScreen<?> canCreateAccessoryButtonForScreen(Screen screen) {
-        if (screen instanceof InventoryScreen || /*screen instanceof CuriosScreen TODO: PORT ||*/ screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) {
+        if (screen instanceof InventoryScreen || screen instanceof io.wispforest.accessories.client.gui.AccessoriesScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) {
             return (AbstractContainerScreen<?>) screen;
         } else if (screen instanceof AccessoriesScreen) {
             shouldAddButton = true;

@@ -4,7 +4,7 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.utils.FabricUtils;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.accessories.abilities.FreezingAccessory;
-import dev.emi.trinkets.api.SlotReference;
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
@@ -19,9 +19,9 @@ public class IcePendantItem extends PendantItem implements FreezingAccessory {
     }
 
     @Override
-    public void tick(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity) {
-        if (!FabricUtils.isInFluidType(livingEntity)) {
-            this.freezeTick(slotContext, stack, livingEntity);
+    public void tick(ItemStack stack, SlotReference slotContext) {
+        if (!FabricUtils.isInFluidType(slotContext.entity())) {
+            this.freezeTick(slotContext, stack);
         }
     }
 }

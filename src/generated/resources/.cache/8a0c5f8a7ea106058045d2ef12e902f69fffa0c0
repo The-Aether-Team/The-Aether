@@ -1,4 +1,4 @@
-// 1.20.1	2024-04-23T15:10:26.222391343	The Aether/Tags for minecraft:item
+// 1.20.1	2024-05-18T16:11:29.102016566	The Aether/Tags for minecraft:item
 38ebf86c0d3c062567705f6b601c2148a0835b65 data/minecraft/tags/items/hoes.json
 a13013ed9a39e23dbed6bd7d18a23dc6cbaabf99 data/aether/tags/items/tools/lances.json
 d78893df4ea9187e50e06a56a808054f3248382d data/c/tags/items/boots.json
@@ -21,7 +21,7 @@ f70a7946cc45435e75e6cd64f7b925fd221e15c0 data/minecraft/tags/items/stone_craftin
 659f7d467da041767129fa04d381834d69fafd44 data/c/tags/items/wooden_fence_gates.json
 5f4e6e4cc59e21f627843a64996db17584566cfe data/aether/tags/items/gold_dungeon_loot.json
 6341df4e85728353213593af68bfecb0c1ddb39e data/aether/tags/items/candy_cane_repairing.json
-3a1dd94c90f05e4dde7eea947500ef3b3388e0c9 data/aether/tags/items/accessories.json
+02304ec865c3f4215a72ce010229c5c16968878a data/aether/tags/items/accessories.json
 26bdcb857cae4dae7df64a87d41a125570f84293 data/minecraft/tags/items/wooden_doors.json
 e44bf2dd952537ff883d46f11b5c2521d820d5d2 data/minecraft/tags/items/hanging_signs.json
 3887ea576666aa3652267f65b89c9f16a6c79ad8 data/minecraft/tags/items/bookshelf_books.json
@@ -35,7 +35,6 @@ c06dcb222c25d98dd0ce5f8fbe754dfea8c35584 data/minecraft/tags/items/shovels.json
 70d34baf255cf4439a3b47927f4e72583a8c1ff2 data/aether/tags/items/gravitite_repairing.json
 697b721a69daa6baddb5e2edfd2840c45e79cbb9 data/c/tags/items/bows.json
 dee0f29688d78798fbadfb82bfdc4300cd29e6e7 data/c/tags/items/chestplates.json
-bbaa16f1f02c4bd778235c087a7fbb29a46e1e32 data/trinket/tags/items/aether_accessory.json
 46b298899063cfd0c24732e6b6ae14b8088e7804 data/aether/tags/items/water_bucket_crafting.json
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/aether/tags/items/phoenix_repairing.json
 3bd2e6fdd4c27659aaba6f96bfff811683cf9115 data/minecraft/tags/items/piglin_loved.json
@@ -53,6 +52,7 @@ b450837789f077896b1ec8af26c600561670e23d data/aether/tags/items/dungeon_blocks.j
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/aether/tags/items/hammer_of_kingbdogz_repairing.json
 260a7f1dac83f6801b065744e85adeeee3c96d68 data/c/tags/items/leggings.json
 bbf0d0c17212568adf6c02381fe81bf1670bf7ff data/aether/tags/items/sheepuff_temptation_items.json
+10d43b920545c952ad58ebcdf75b541fa8158d17 data/accessories/tags/items/aether_ring.json
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/aether/tags/items/valkyrie_repairing.json
 ee3d9c4c74c95a388e8044f4aa7a6198d93ad083 data/minecraft/tags/items/wooden_stairs.json
 370fffc45a13c0f12b26be7a1fd5c1252021eb63 data/aether/tags/items/accessories_pendants.json
@@ -68,7 +68,6 @@ b847d786f30d3d0cdc3a4409b9a7082dabba0e34 data/c/tags/items/slimeballs.json
 58e6c10cbba665eba5d0df910db0464b36cb4e15 data/aether/tags/items/freezable_rings.json
 27ec7478d3d730f2137c76f8728d96a60d03d525 data/aether/tags/items/pig_drops.json
 9e18dd9d83727d5e7f20016037ed41d1ba48100e data/aether/tags/items/bronze_dungeon_loot.json
-37f183384192d14c413a053e57638d22b0142ca0 data/trinket/tags/items/aether_cape.json
 3975fc4afb78f6160b4692c0082c910e1e59d872 data/aether/tags/items/sentry_blocks.json
 5f3c5bb8464dc6568f7e8b6cf6bb5281b4a40fcd data/minecraft/tags/items/wooden_trapdoors.json
 2acfd77949230dd0101bbe7104747bafdf01bee7 data/minecraft/tags/items/music_discs.json
@@ -81,22 +80,24 @@ e9f08a579bf5779dc2cca99315042618a8b93c0b data/aether/tags/items/zanite_repairing
 88755054bae0b364e46370a0ed024be696e5c085 data/minecraft/tags/items/slabs.json
 2f718cd41d1abf899ca612f6ede7c271f19b7fb1 data/aether/tags/items/holystone.json
 d732e520c2a7bfaed06c5dc6a584f2163b801a62 data/c/tags/items/colorless_glass.json
+ce10f123f4b781379f2dc60cabb56424dbcaad09 data/accessories/tags/items/aether_gloves.json
 1774e1109d7f8646050f958510488e3735d1fdb3 data/minecraft/tags/items/trim_materials.json
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/aether/tags/items/aether_portal_activation_items.json
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/aether/tags/items/sentry_repairing.json
 f4d7ff8ed2ff7c665a70d48dc8e09eea2a38b2dc data/minecraft/tags/items/signs.json
 c63a7a1aa5587ad47873835b65ed3fca4fc13006 data/minecraft/tags/items/wooden_buttons.json
 ef4ce84a0782b0b33791bb751a287e73244c05b7 data/aether/tags/items/dungeon_keys.json
+37f183384192d14c413a053e57638d22b0142ca0 data/accessories/tags/items/aether_cape.json
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/aether/tags/items/vampire_repairing.json
-44fb0354da3ff2f1b8ae4bca188ed7fb3acb6bf9 data/trinket/tags/items/aether_pendant.json
 0eb12150059c59b5f12ce688e291290ae18cf7b3 data/minecraft/tags/items/saplings.json
 32281c4552eb4383b7e848cf00a3c946d146b128 data/c/tags/items/storage_blocks.json
 e6a2ad025e148ce0d7ff150adfd18fdd13d95454 data/minecraft/tags/items/wooden_pressure_plates.json
 21b7a80a99f8c6b8d73bc211f9a3385f77564418 data/aether/tags/items/moa_food_items.json
 aec7b008832eba220d2bc2c19f1204b60804b938 data/aether/tags/items/moa_temptation_items.json
-8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/aether/tags/items/obsidian_repairing.json
 bf1b89eee43a1cda8f93a53fb8b575987ee995d1 data/c/tags/items/colorless_glass_panes.json
+8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/aether/tags/items/obsidian_repairing.json
 52681cd60313b99e14f78cec812916bae2179589 data/c/tags/items/ores.json
+44fb0354da3ff2f1b8ae4bca188ed7fb3acb6bf9 data/accessories/tags/items/aether_pendant.json
 3a4616e60bc5a5ee3eb1e30c0089403695c3a445 data/minecraft/tags/items/logs_that_burn.json
 1e0a03eba00c9ab35a60b2a09a38a1d8b427c300 data/aether/tags/items/aerclouds.json
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/aether/tags/items/ice_repairing.json
@@ -119,20 +120,19 @@ fdb504a9b5dcd921e1b074103f4c5fc93dde460a data/aether/tags/items/dart_shooters.js
 659f7d467da041767129fa04d381834d69fafd44 data/c/tags/items/fence_gates.json
 52681cd60313b99e14f78cec812916bae2179589 data/c/tags/items/ore_rates/singular.json
 802bf42a2f00408926ca331108f951d3234d4fdd data/minecraft/tags/items/small_flowers.json
+21eed2b8db510eb669954a79b1282ed2eb4b64ef data/accessories/tags/items/aether_shield.json
 204eea47606e2258ba21d91d8e531ef9edcf67d4 data/aether/tags/items/darts.json
 e9f08a579bf5779dc2cca99315042618a8b93c0b data/c/tags/items/gems.json
 78c68dc8aaa730c878b294aae2f535fa251ffd87 data/aether/tags/items/accessories_miscellaneous.json
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/aether/tags/items/lightning_repairing.json
-10d43b920545c952ad58ebcdf75b541fa8158d17 data/trinket/tags/items/aether_ring.json
 bbf0d0c17212568adf6c02381fe81bf1670bf7ff data/aether/tags/items/flying_cow_temptation_items.json
 c25e552692a3df3c5175becab252003d745996b4 data/minecraft/tags/items/pickaxes.json
-ce10f123f4b781379f2dc60cabb56424dbcaad09 data/trinket/tags/items/aether_gloves.json
 6fe4a49340456c6a206be8764872e00e9980adc7 data/minecraft/tags/items/trimmable_armor.json
 b79247114c573fc2fc49993e393b5df60943be44 data/minecraft/tags/items/wooden_fences.json
 8e6f334dc158e2c64f959d17519dc1f3983a2fba data/aether/tags/items/skyroot_tool_crafting.json
-21eed2b8db510eb669954a79b1282ed2eb4b64ef data/trinket/tags/items/aether_shield.json
 bf6b24ea22c105214d88702fdf5139249196053c data/randomium/tags/items/blacklist.json
 3a4616e60bc5a5ee3eb1e30c0089403695c3a445 data/aether/tags/items/crafts_skyroot_planks.json
 4136c7f8ba6a9f3c22a15c97cfb26d949570aa60 data/minecraft/tags/items/leaves.json
 4e259e8e043674905b9d1b42a668f27840b23370 data/aether/tags/items/save_nbt_in_recipe.json
+bbaa16f1f02c4bd778235c087a7fbb29a46e1e32 data/accessories/tags/items/aether_accessory.json
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/aether/tags/items/flaming_repairing.json

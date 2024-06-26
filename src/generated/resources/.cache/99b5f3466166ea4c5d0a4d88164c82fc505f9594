@@ -1,4 +1,4 @@
-// 1.20.1	2024-04-23T15:10:26.224811348	The Aether/Tags for minecraft:entity_type
+// 1.20.1	2024-05-18T16:11:29.107717038	The Aether/Tags for minecraft:entity_type
 7ee77da0ffe8e88661ec6fdcd247ee6a403bf093 data/minecraft/tags/entity_types/fall_damage_immune.json
 e9ed86b994f5ab33ed3873208757d53bdb72b1d1 data/aether/tags/entity_types/no_ambrosium_drops.json
 dcda1ce9b3509ec8d2baa71806af5f6a6fc88091 data/aether/tags/entity_types/deflectable_projectiles.json

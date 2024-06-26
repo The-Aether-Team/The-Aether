@@ -4,12 +4,11 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import dev.emi.trinkets.api.SlotReference;
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -37,7 +36,7 @@ public class GlovesItem extends AccessoryItem {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getModifiers(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity, UUID uuid) {
+    public Multimap<Attribute, AttributeModifier> getModifiers(ItemStack stack, SlotReference slotContext, UUID uuid) {
         Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
         attributes.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", this.damage, AttributeModifier.Operation.ADDITION));
         return attributes;

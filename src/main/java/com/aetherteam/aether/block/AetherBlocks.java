@@ -20,6 +20,8 @@ import com.aetherteam.aether.item.block.BurnableBlockItem;
 import com.aetherteam.aether.mixin.mixins.common.accessor.FireBlockAccessor;
 import com.aetherteam.aether.world.treegrower.GoldenOakTree;
 import com.aetherteam.aether.world.treegrower.SkyrootTree;
+import io.github.fabricators_of_create.porting_lib.fluids.FluidInteractionRegistry;
+import io.github.fabricators_of_create.porting_lib.fluids.PortingLibFluids;
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
 import net.minecraft.core.BlockPos;
@@ -278,10 +280,10 @@ public class AetherBlocks {
     }
 
     public static void registerFluidInteractions() {
-//        FluidInteractionRegistry.addInteraction(ForgeMod.WATER_TYPE.get(), new FluidInteractionRegistry.InteractionInformation( TODO: PORT
-//                (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(AetherBlocks.QUICKSOIL.get()) && level.getBlockState(relativePos).is(Blocks.MAGMA_BLOCK),
-//                AetherBlocks.HOLYSTONE.get().defaultBlockState()
-//        ));
+        FluidInteractionRegistry.addInteraction(PortingLibFluids.WATER_TYPE, new FluidInteractionRegistry.InteractionInformation(
+                (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(AetherBlocks.QUICKSOIL.get()) && level.getBlockState(relativePos).is(Blocks.MAGMA_BLOCK),
+                AetherBlocks.HOLYSTONE.get().defaultBlockState()
+        ));
     }
 
     public static void registerWoodTypes() {

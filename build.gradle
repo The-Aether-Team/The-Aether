@@ -85,7 +85,7 @@ dependencies {
 //        jarJar.ranged(it, "[${project.curios_version},)")
 //        jarJar.pin(it, "${project.curios_version}+${project.mc_version}")
 //    }
-    modImplementation include("dev.emi:trinkets:${project.trinkets_version}")
+    modImplementation("io.wispforest:accessories-fabric:${project.accessories_version}")
 
     modCompileOnly("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}")
     modCompileOnly("mezz.jei:jei-${mc_version}-fabric-api:${project.jei_version}")
@@ -123,9 +123,11 @@ repositories {
     maven { url = "https://jitpack.io" }
     maven { url = "https://maven.blamejared.com" }
     maven { url = "https://maven.theillusivec4.top/" }
+    maven { url 'https://maven.wispforest.io' }
     maven { url = "https://www.cursemaven.com" }
     maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
     maven { url = "https://maven.parchmentmc.org" }
+    maven { url = "https://maven.neoforged.net/releases/" }
     maven { url = "https://maven.shedaniel.me/" }
     maven { url = "https://mvn.devos.one/snapshots/" }
     maven { url = "https://maven.ladysnake.org/releases" }
@@ -216,7 +218,7 @@ modrinth {
     gameVersions = ["${project.mc_version}"]
     loaders = ["fabric"]
     dependencies {
-        embedded.version "trinkets", "${project.trinkets_version}+${project.mc_version}"
+        embedded.version "accessories", "${project.accessories_version}+${project.mc_version}"
         embedded.version "cumulus", "${project.cumulus_version}"
     }
 }

@@ -21,8 +21,10 @@ import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import io.github.fabricators_of_create.porting_lib.core.event.BaseEvent;
 import io.github.fabricators_of_create.porting_lib.entity.IEntityAdditionalSpawnData;
 import io.github.fabricators_of_create.porting_lib.entity.PortingLibEntity;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.MobEffectEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -349,11 +351,11 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      */
     @Override //code copy
     public boolean canBeAffected(MobEffectInstance pEffectInstance) {
-//        MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, pEffectInstance); TODO: PORT
-//        MinecraftForge.EVENT_BUS.post(event);
-//        if (event.getResult() != Event.Result.DEFAULT) {
-//            return event.getResult() == Event.Result.ALLOW;
-//        }
+        MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, pEffectInstance);
+        event.sendEvent();
+        if (event.getResult() != BaseEvent.Result.DEFAULT) {
+            return event.getResult() == BaseEvent.Result.ALLOW;
+        }
         return false;
     }
 

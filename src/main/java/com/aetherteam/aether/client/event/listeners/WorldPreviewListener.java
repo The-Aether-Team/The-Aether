@@ -21,25 +21,19 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 public class WorldPreviewListener {
-//    /** TODO: PORT
-//     * @see WorldPreviewHooks#setupWorldPreview(Screen)
-//     */
-//    @SubscribeEvent(priority = EventPriority.LOWEST)
-//    public static void onGuiOpenLowest(ScreenEvent.Opening event) {
-//        Screen newScreen = event.getNewScreen();
-//        WorldPreviewHooks.setupWorldPreview(newScreen);
-//    }
-//
-//    /** TODO: PORT
-//     * @see WorldPreviewHooks#hideScreen(Screen)
-//     */
-//    @SubscribeEvent
-//    public static void onScreenRender(ScreenEvent.Render.Pre event) {
-//        Screen screen = event.getScreen();
-//        if (WorldPreviewHooks.hideScreen(screen)) {
-//            event.setCanceled(true);
-//        }
-//    }
+    /**
+     * @see WorldPreviewHooks#setupWorldPreview(Screen)
+     */
+    public static void onGuiOpenLowest(Screen newScreen) {
+        WorldPreviewHooks.setupWorldPreview(newScreen);
+    }
+
+    /**
+     * @see WorldPreviewHooks#hideScreen(Screen)
+     */
+    public static boolean onScreenRender(Screen screen) {
+        return WorldPreviewHooks.hideScreen(screen);
+    }
 
     /**
      * @see WorldPreviewHooks#renderMenuWithWorld()

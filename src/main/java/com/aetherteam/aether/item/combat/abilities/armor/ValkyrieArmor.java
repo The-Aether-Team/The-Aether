@@ -3,6 +3,7 @@ package com.aetherteam.aether.item.combat.abilities.armor;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
+import com.aetherteam.aether.utils.FabricUtils;
 import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -55,6 +56,6 @@ public interface ValkyrieArmor {
     }
 
     private static boolean onGround(Player player) {
-        return player.onGround()/* || player.isInFluidType() TODO: PORT*/;
+        return player.onGround() || FabricUtils.isInFluidType(player);
     }
 }
