@@ -157,7 +157,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         if (this.getChatCooldown() > 0) {
             this.chatCooldown--;
         }
-        if (this.getHealth() > 0) {
+        if (this.getHealth() > 0 && !this.isFrozen()) {
             double x = this.getX() + (this.getRandom().nextFloat() - 0.5F) * this.getRandom().nextFloat();
             double y = this.getBoundingBox().minY + this.getRandom().nextFloat() - 0.5;
             double z = this.getZ() + (this.getRandom().nextFloat() - 0.5F) * this.getRandom().nextFloat();
