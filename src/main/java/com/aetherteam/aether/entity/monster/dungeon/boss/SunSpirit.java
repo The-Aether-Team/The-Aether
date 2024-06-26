@@ -35,10 +35,7 @@ import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.BossEvent;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
@@ -227,53 +224,57 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             if (this.getChatCooldown() <= 0) {
                 this.setChatCooldown(14);
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(player)) {
-                    if (!AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
-                        if (player.getData(AetherDataAttachments.AETHER_PLAYER).hasSeenSunSpiritDialogue() && this.chatLine == 0) {
-                            this.chatLine = 10;
-                        }
-                    }
-                    if (this.chatLine < 9) {
-                        this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
-                    }
-                    switch (this.chatLine++) {
-                        case 0 ->
-                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
-                        case 1 ->
-                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line1").withStyle(ChatFormatting.RED));
-                        case 2 ->
-                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line2").withStyle(ChatFormatting.RED));
-                        case 3 ->
-                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line3").withStyle(ChatFormatting.RED));
-                        case 4 ->
-                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line4").withStyle(ChatFormatting.RED));
-                        case 5 -> {
-                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.1").withStyle(ChatFormatting.RED));
-                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.2").withStyle(ChatFormatting.RED));
-                        }
-                        case 6 -> {
-                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line6.1").withStyle(ChatFormatting.RED));
-                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line6.2").withStyle(ChatFormatting.RED));
-                        }
-                        case 7 -> {
-                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.1").withStyle(ChatFormatting.RED));
-                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.2").withStyle(ChatFormatting.RED));
-                        }
-                        case 8 ->
-                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line8").withStyle(ChatFormatting.RED));
-                        case 9 -> {
-                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.GOLD));
-                            this.setBossFight(true);
-                            if (this.getDungeon() != null) {
-                                this.closeRoom();
+                    if (this.level().getDifficulty() != Difficulty.PEACEFUL) {
+                        if (!AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
+                            if (player.getData(AetherDataAttachments.AETHER_PLAYER).hasSeenSunSpiritDialogue() && this.chatLine == 0) {
+                                this.chatLine = 10;
                             }
-                            this.playSound(this.getActivateSound(), 1.0F, this.getVoicePitch());
-                            AetherEventDispatch.onBossFightStart(this, this.getDungeon());
-                            player.getData(AetherDataAttachments.AETHER_PLAYER).setSeenSunSpiritDialogue(true);
                         }
-                        default -> {
-                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line10").withStyle(ChatFormatting.RED));
-                            this.chatLine = 9;
+                        if (this.chatLine < 9) {
+                            this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
                         }
+                        switch (this.chatLine++) {
+                            case 0 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
+                            case 1 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line1").withStyle(ChatFormatting.RED));
+                            case 2 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line2").withStyle(ChatFormatting.RED));
+                            case 3 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line3").withStyle(ChatFormatting.RED));
+                            case 4 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line4").withStyle(ChatFormatting.RED));
+                            case 5 -> {
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.1").withStyle(ChatFormatting.RED));
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.2").withStyle(ChatFormatting.RED));
+                            }
+                            case 6 -> {
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line6.1").withStyle(ChatFormatting.RED));
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line6.2").withStyle(ChatFormatting.RED));
+                            }
+                            case 7 -> {
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.1").withStyle(ChatFormatting.RED));
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.2").withStyle(ChatFormatting.RED));
+                            }
+                            case 8 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line8").withStyle(ChatFormatting.RED));
+                            case 9 -> {
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.GOLD));
+                                this.setBossFight(true);
+                                if (this.getDungeon() != null) {
+                                    this.closeRoom();
+                                }
+                                this.playSound(this.getActivateSound(), 1.0F, this.getVoicePitch());
+                                AetherEventDispatch.onBossFightStart(this, this.getDungeon());
+                                player.getData(AetherDataAttachments.AETHER_PLAYER).setSeenSunSpiritDialogue(true);
+                            }
+                            default -> {
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line10").withStyle(ChatFormatting.RED));
+                                this.chatLine = 9;
+                            }
+                        }
+                    } else {
+                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line1").withStyle(ChatFormatting.RED));
                     }
                 } else {
                     this.displayTooFarMessage(player);
