@@ -67,7 +67,11 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	 */
 	@Override
 	public ResourceLocation getTextureLocation(Moa moa) {
-		ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
+		return getTexture(moa);
+	}
+
+	public static ResourceLocation getTexture(Moa moa) {
+		ResourceLocation moaSkin = getMoaSkinLocation(moa);
 		if (moaSkin != null) {
 			return moaSkin;
 		}
@@ -88,7 +92,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	 * @return The {@link ResourceLocation} for the emissive texture.
 	 */
 	@Nullable
-	private ResourceLocation getMoaSkinLocation(Moa moa) {
+	private static ResourceLocation getMoaSkinLocation(Moa moa) {
 		UUID lastRiderUUID = moa.getLastRider();
 		UUID moaUUID = moa.getMoaUUID();
 		Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();

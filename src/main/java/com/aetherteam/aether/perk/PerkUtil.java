@@ -36,6 +36,13 @@ public final class PerkUtil {
     }
 
     /**
+     * @return A {@link Predicate} to check if a {@link User} has access to Human-tier Moa skins.
+     */
+    public static Predicate<User> hasHumanMoaSkins() {
+        return (user) -> hasAllSkins().test(user) || hasBaseSkins().test(user) || user.getCurrentTierLevel() >= User.Tier.HUMAN.getLevel();
+    }
+
+    /**
      * @return A {@link Predicate} to check if a {@link User} has access to a base set of Moa skins.
      */
     public static Predicate<User> hasBaseSkins() {
