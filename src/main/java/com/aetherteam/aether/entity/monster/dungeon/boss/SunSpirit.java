@@ -68,6 +68,7 @@ import java.util.function.Predicate;
 
 public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy, IEntityWithComplexSpawn {
     private static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_FROZEN_DURATION = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
     private static final Music SUN_SPIRIT_MUSIC = new Music(AetherSoundEvents.MUSIC_BOSS_SUN_SPIRIT, 0, 0, true);
     public static final Map<Block, Function<BlockState, BlockState>> DUNGEON_BLOCK_CONVERSIONS = Map.ofEntries(
@@ -142,6 +143,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     public void defineSynchedData() {
         super.defineSynchedData();
         this.getEntityData().define(DATA_IS_FROZEN, false);
+        this.getEntityData().define(DATA_FROZEN_DURATION, 0);
         this.getEntityData().define(DATA_BOSS_NAME, Component.literal("Sun Spirit"));
     }
 
@@ -199,7 +201,15 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.trackDungeon();
         this.checkIceCrystals();
-        this.setFrozen(this.hurtTime > 0);
+        if (this.hurtTime > 0) {
+            this.setFrozen(true);
+            this.setFrozenDuration(25);
+        }
+        if (this.getFrozenDuration() > 0) {
+            this.setFrozenDuration(this.getFrozenDuration() - 1);
+        } else {
+            this.setFrozen(false);
+        }
     }
 
     /**
@@ -481,6 +491,22 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     }
 
     /**
+     * @return The remaining duration for how long the Sun Spirit is frozen, as an {@link Integer}.
+     */
+    public int getFrozenDuration() {
+        return this.getEntityData().get(DATA_FROZEN_DURATION);
+    }
+
+    /**
+     * Sets the remaining duration for how long the Sun Spirit should be frozen.
+     *
+     * @param duration The {@link Integer} duration.
+     */
+    public void setFrozenDuration(int duration) {
+        this.getEntityData().set(DATA_FROZEN_DURATION, duration);
+    }
+
+    /**
      * @return The {@link Component} for the boss name.
      */
     @Override
@@ -603,7 +629,15 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      */
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
-        return this.isRemoved() || !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.is(AetherTags.DamageTypes.IS_COLD);
+        if (this.isRemoved()) {
+            return true;
+        } else {
+            if (this.isFrozen()) {
+                return source.getEntity() instanceof LivingEntity && !(source.getEntity() instanceof SunSpirit);
+            } else {
+                return !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.is(AetherTags.DamageTypes.IS_COLD);
+            }
+        }
     }
 
     protected SoundEvent getInteractSound() {
