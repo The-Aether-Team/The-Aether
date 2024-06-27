@@ -28,7 +28,7 @@ public class MoaSkins {
                     .iconLocation(new ResourceLocation(Aether.MODID, "skins/icons/" + name + "_icon"))
                     .skinLocation(moaType.getMoaTexture())
                     .saddleLocation(moaType.getSaddleTexture())
-                    .info(new MoaSkin.Info(User.Tier.HUMAN, true))
+                    .info(new MoaSkin.Info(User.Tier.HUMAN, false))
             ));
         }
         register("orange_moa", new MoaSkin("orange_moa", new MoaSkin.Properties()
