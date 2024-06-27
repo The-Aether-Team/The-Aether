@@ -791,7 +791,11 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.blue_moa", "Blue Moa");
         this.addMoaSkinsText("skin.white_moa", "White Moa");
         this.addMoaSkinsText("skin.black_moa", "Black Moa");
-        this.addMoaSkinsText("skin.classic_moa", "Classic Moa");
+        this.addMoaSkinsText("skin.orange_moa", "Orange Moa");
+        this.addMoaSkinsText("skin.brown_moa", "Brown Moa");
+        this.addMoaSkinsText("skin.red_moa", "Red Moa");
+        this.addMoaSkinsText("skin.green_moa", "Green Moa");
+        this.addMoaSkinsText("skin.purple_moa", "Purple Moa");
         this.addMoaSkinsText("skin.boko_yellow", "Boko Yellow");
         this.addMoaSkinsText("skin.crookjaw_purple", "Crookjaw Purple");
         this.addMoaSkinsText("skin.gharrix_red", "Gharrix Red");
@@ -802,6 +806,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.construction_bot", "Construction Bot");
         this.addMoaSkinsText("skin.mossy_statue_moa", "Mossy Statue Moa");
         this.addMoaSkinsText("skin.chicken_moa", "Chicken Moa");
+        this.addMoaSkinsText("skin.medical_bot", "Medical Bot");
+        this.addMoaSkinsText("skin.skeleton_moa", "Skeleton Moa");
         this.addMoaSkinsText("skin.arctic_moa", "Arctic Moa");
         this.addMoaSkinsText("skin.cockatrice_moa", "Cockatrice");
         this.addMoaSkinsText("skin.phoenix_moa", "Phoenix Moa");
@@ -812,6 +818,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.molten_moa", "Molten Moa");
         this.addMoaSkinsText("skin.undead_moa", "Undead Moa");
         this.addMoaSkinsText("skin.stratus", "Stratus");
+        this.addMoaSkinsText("skin.peacock_moa", "Peacock Moa");
+        this.addMoaSkinsText("skin.prehistoric_moa", "Prehistoric Moa");
 
         this.addMoaSkinsText("tooltip.title.access.pledging", "Pledge Access");
         this.addMoaSkinsText("tooltip.title.access.lifetime", "Lifetime Access");
