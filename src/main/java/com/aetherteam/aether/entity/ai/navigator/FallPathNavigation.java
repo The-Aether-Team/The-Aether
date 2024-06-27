@@ -5,6 +5,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -36,6 +37,10 @@ public class FallPathNavigation extends GroundPathNavigation {
         }
 
         this.doStuckDetection(vec3);
+    }
+
+    private boolean canCutCorner(BlockPathTypes pPathType) {
+        return pPathType != BlockPathTypes.DANGER_FIRE && pPathType != BlockPathTypes.DANGER_OTHER && pPathType != BlockPathTypes.WALKABLE_DOOR;
     }
 
     /**
