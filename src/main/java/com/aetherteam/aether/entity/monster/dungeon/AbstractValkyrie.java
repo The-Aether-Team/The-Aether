@@ -48,6 +48,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      */
     private MostDamageTargetGoal mostDamageTargetGoal;
     private double lastMotionY;
+    private int lungeCooldown = 0;
 
     public AbstractValkyrie(EntityType<? extends AbstractValkyrie> type, Level level) {
         super(type, level);
@@ -68,6 +69,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
    
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.25)
                 .add(Attributes.MOVEMENT_SPEED, 0.5);
     }
 
@@ -88,7 +90,12 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         }
         double motionY = this.getDeltaMovement().y();
         if (!this.isOnGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
-            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.055, 0));
+            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.0225, 0));
+        }
+        if (!this.getLevel().isClientSide()) {
+            if (this.lungeCooldown > 0) {
+                this.lungeCooldown--;
+            }
         }
     }
 
@@ -129,12 +136,14 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      */
     protected boolean teleportAroundTarget(Entity target) {
         Vec2 targetVec = new Vec2(this.getRandom().nextFloat() - 0.5F, this.getRandom().nextFloat() - 0.5F).normalized();
-        double x = target.getX() + targetVec.x * 7;
+        double x = target.getX() + targetVec.x * 3;
         double y = target.getY();
-        double z = target.getZ() + targetVec.y * 7;
+        double z = target.getZ() + targetVec.y * 3;
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(x, y, z);
-        while (mutableBlockPos.getY() > this.getLevel().getMinBuildHeight() && !this.getLevel().getBlockState(mutableBlockPos).getMaterial().blocksMotion()) {
+        int i = 0;
+        while (mutableBlockPos.getY() > this.getLevel().getMinBuildHeight() && !this.getLevel().getBlockState(mutableBlockPos).getMaterial().blocksMotion() && i <= 4) {
             mutableBlockPos.move(Direction.DOWN);
+            i++;
         }
 
         BlockState blockState = this.getLevel().getBlockState(mutableBlockPos);
@@ -265,7 +274,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         @Override
         public boolean canUse() {
-            return !this.valkyrie.isOnGround();
+            return !this.valkyrie.isOnGround() && this.valkyrie.lungeCooldown <= 0;
         }
 
         @Override
@@ -305,6 +314,11 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         @Override
         public boolean requiresUpdateEveryTick() {
             return true;
+        }
+
+        @Override
+        public void stop() {
+            this.valkyrie.lungeCooldown = 30;
         }
     }
 
