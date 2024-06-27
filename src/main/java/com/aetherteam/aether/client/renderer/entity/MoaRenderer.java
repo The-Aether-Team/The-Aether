@@ -5,9 +5,7 @@ import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
-import com.aetherteam.aether.client.renderer.entity.layers.MoaEmissiveLayer;
-import com.aetherteam.aether.client.renderer.entity.layers.MoaSaddleEmissiveLayer;
-import com.aetherteam.aether.client.renderer.entity.layers.MoaSaddleLayer;
+import com.aetherteam.aether.client.renderer.entity.layers.*;
 import com.aetherteam.aether.client.renderer.entity.model.MoaModel;
 import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
@@ -30,6 +28,8 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	public MoaRenderer(EntityRendererProvider.Context context) {
 		super(context, new MoaModel(context.bakeLayer(AetherModelLayers.MOA)), 0.7F);
 		this.addLayer(new MoaEmissiveLayer(this));
+		this.addLayer(new MoaHatLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_HAT))));
+		this.addLayer(new MoaHatEmissiveLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_HAT))));
 		this.addLayer(new MoaSaddleLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
 		this.addLayer(new MoaSaddleEmissiveLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
 	}
@@ -67,7 +67,11 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	 */
 	@Override
 	public ResourceLocation getTextureLocation(Moa moa) {
-		ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
+		return getTexture(moa);
+	}
+
+	public static ResourceLocation getTexture(Moa moa) {
+		ResourceLocation moaSkin = getMoaSkinLocation(moa);
 		if (moaSkin != null) {
 			return moaSkin;
 		}
@@ -88,7 +92,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	 * @return The {@link ResourceLocation} for the emissive texture.
 	 */
 	@Nullable
-	private ResourceLocation getMoaSkinLocation(Moa moa) {
+	private static ResourceLocation getMoaSkinLocation(Moa moa) {
 		UUID lastRiderUUID = moa.getLastRider();
 		UUID moaUUID = moa.getMoaUUID();
 		Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
