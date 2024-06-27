@@ -4,6 +4,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.TimeUtil;
@@ -30,7 +31,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     /**
      * General neutral mob necessities. Valkyries will only attack when provoked.
      */
-    private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
+    private static final int PERSISTENT_ANGER_TIME = Integer.MAX_VALUE;
     private int remainingPersistentAngerTime;
     @Nullable
     private UUID persistentAngerTarget;
@@ -47,7 +48,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     @Override
     public void registerGoals() {
         super.registerGoals();
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, this::isAngryAt));
         this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, false));
     }
    
@@ -56,6 +57,14 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
                 .add(Attributes.FOLLOW_RANGE, 16.0)
                 .add(Attributes.ATTACK_DAMAGE, 10.0)
                 .add(Attributes.MAX_HEALTH, 50.0);
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (!this.level().isClientSide()) {
+            this.updatePersistentAnger((ServerLevel) this.level(), true);
+        }
     }
 
     /**
@@ -151,7 +160,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
      */
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.getRandom()));
+        this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME);
     }
 
     /**
