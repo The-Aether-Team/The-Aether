@@ -633,7 +633,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             return true;
         } else {
             if (this.isFrozen()) {
-                return source.getEntity() instanceof LivingEntity && !(source.getEntity() instanceof SunSpirit);
+                return !(source.getEntity() instanceof LivingEntity);
             } else {
                 return !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.is(AetherTags.DamageTypes.IS_COLD);
             }
