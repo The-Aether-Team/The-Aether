@@ -201,10 +201,6 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.trackDungeon();
         this.checkIceCrystals();
-        if (this.hurtTime > 0) {
-            this.setFrozen(true);
-            this.setFrozenDuration(75);
-        }
         if (this.getFrozenDuration() > 0) {
             this.setFrozenDuration(this.getFrozenDuration() - 1);
         } else {
@@ -315,6 +311,8 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     public boolean hurt(DamageSource source, float amount) {
         boolean flag = super.hurt(source, amount);
         if (!this.level().isClientSide() && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity && source.getDirectEntity() instanceof IceCrystal) {
+            this.setFrozen(true);
+            this.setFrozenDuration(75);
             FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level());
             minion.setPos(this.position());
             minion.setTarget(entity);
@@ -633,7 +631,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             return true;
         } else {
             if (this.isFrozen()) {
-                return !(source.getEntity() instanceof LivingEntity);
+                return !(source.getEntity() instanceof LivingEntity) || source.getEntity() instanceof SunSpirit;
             } else {
                 return !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.is(AetherTags.DamageTypes.IS_COLD);
             }
