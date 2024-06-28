@@ -314,7 +314,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Override
     public boolean hurt(DamageSource source, float amount) {
         boolean flag = super.hurt(source, amount);
-        if (!this.level().isClientSide() && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity) {
+        if (!this.level().isClientSide() && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity && source.getDirectEntity() instanceof IceCrystal) {
             FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level());
             minion.setPos(this.position());
             minion.setTarget(entity);
