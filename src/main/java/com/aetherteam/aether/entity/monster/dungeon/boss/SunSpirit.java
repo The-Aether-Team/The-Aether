@@ -135,7 +135,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 50.0)
+                .add(Attributes.MAX_HEALTH, 300.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.35);
     }
 
@@ -203,7 +203,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         this.checkIceCrystals();
         if (this.hurtTime > 0) {
             this.setFrozen(true);
-            this.setFrozenDuration(25);
+            this.setFrozenDuration(75);
         }
         if (this.getFrozenDuration() > 0) {
             this.setFrozenDuration(this.getFrozenDuration() - 1);
@@ -320,7 +320,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             minion.setTarget(entity);
             this.level().addFreshEntity(minion);
         }
-        this.velocity = 1 - this.getHealth() / 700;
+        this.velocity = (1 - this.getHealth() / 700) * (this.isFrozen() ? 0.35 : 1);
         return flag;
     }
 
