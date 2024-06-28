@@ -851,7 +851,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
         public ShootFireballGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
-            this.shootInterval = (int) (55 + sunSpirit.getHealth() / 2);
+            this.shootInterval = 50; //todo
         }
 
         @Override
