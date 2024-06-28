@@ -101,7 +101,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         this.origin = this.position();
         this.xpReward = XP_REWARD_BOSS;
         this.noPhysics = true;
-        this.velocity = 1 - this.getHealth() / 700;
+        this.velocity = 1; //todo
         this.setPersistenceRequired();
     }
 
@@ -318,7 +318,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             minion.setTarget(entity);
             this.level().addFreshEntity(minion);
         }
-        this.velocity = (1 - this.getHealth() / 700) * (this.isFrozen() ? 0.35 : 1);
+        this.velocity = (this.isFrozen() ? 0.35 : 1);
         return flag;
     }
 
