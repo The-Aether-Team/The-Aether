@@ -357,7 +357,7 @@ public class EntityHooks {
                                 if (0 < stackHandler.getContainerSize()) {
                                     ItemStack itemStack = stackHandler.getItem(0);
                                     if (stack.getItem() instanceof AccessoryItem accessoryItem) {
-                                        SlotReference slotContext = new SlotReference(identifier, armorStand, 0);
+                                        SlotReference slotContext = stacksHandler.createReference(0);;
                                         if (accessoryItem.canEquip(stack, slotContext)) {
                                             stackHandler.setItem(0, stack.copy());
                                             if (accessoryItem instanceof GlovesItem glovesItem) {

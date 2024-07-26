@@ -20,7 +20,7 @@ public class GoldGlovesItem extends GlovesItem implements PiglinsNeutralItem, Pi
     }
 
     @Override
-    public TriState makesPiglinsNeutral(ItemStack stack, SlotReference reference) {
+    public TriState makePiglinsNeutral(ItemStack stack, SlotReference reference) {
         return TriState.of(makesPiglinsNeutral(stack, reference.entity()));
     }
 }

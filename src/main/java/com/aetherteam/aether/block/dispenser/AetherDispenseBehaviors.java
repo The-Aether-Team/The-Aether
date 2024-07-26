@@ -80,11 +80,12 @@ public class AetherDispenseBehaviors {
                 Optional.ofNullable(AccessoriesAPI.getAccessory(itemStack)).ifPresent(curio -> Optional.ofNullable(livingEntity.accessoriesCapability()).ifPresent(handler -> {
                     Map<String, AccessoriesContainer> curios = handler.getContainers();
                     for (Map.Entry<String, AccessoriesContainer> entry : curios.entrySet()) { // Curios entries.
+                        AccessoriesContainer stacksHandler = entry.getValue();
                         if (List.of(AccessoriesMenu.AETHER_IDENTIFIERS).contains(entry.getKey())) { // Check if Curios entries match the ones in the Aether accessories menu.
-                            ExpandedSimpleContainer stackHandler = entry.getValue().getAccessories();
+                            ExpandedSimpleContainer stackHandler = stacksHandler.getAccessories();
                             for (int i = 0; i < stackHandler.items.size(); i++) {
                                 String id = entry.getKey();
-                                SlotReference slotContext = new SlotReference(id, livingEntity, i); // Get slot that a Curio entry has.
+                                SlotReference slotContext = stacksHandler.createReference(i); // Get slot that a Curio entry has.
                                 if (curio.canEquip(itemStack, slotContext) && curio.canEquipFromUse(itemStack, slotContext)) {
                                     ItemStack slotStack = stackHandler.getItem(i);
                                     if (slotStack.isEmpty()) { // Check if Curio slot is empty.
@@ -122,7 +123,7 @@ public class AetherDispenseBehaviors {
                             if (0 < stackHandler.items.size()) {
                                 if (stackHandler.getItem(0).isEmpty()) {
                                     if (itemStack.getItem() instanceof AccessoryItem accessoryItem) {
-                                        SlotReference slotContext = new SlotReference(identifier, armorStand, 0);
+                                        SlotReference slotContext = stacksHandler.createReference(0);
                                         if (accessoryItem.canEquip(itemStack, slotContext)) {
                                             stackHandler.setItem(0, itemStack.copy());
                                             if (accessoryItem instanceof GlovesItem glovesItem) {
