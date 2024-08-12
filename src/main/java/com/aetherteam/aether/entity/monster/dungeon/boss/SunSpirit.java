@@ -67,6 +67,15 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy, IEntityWithComplexSpawn {
+    private static final double DEFAULT_SPEED_MODIFIER = 1.0; //todo ALL THESE
+    private static final double FROZEN_SPEED_MODIFIER = 0.25;
+    private static final float INCINERATION_DAMAGE = 10.0F;
+    private static final int INCINERATION_FIRE_DURATION = 8;
+    private static final int SUN_SPIRIT_FROZEN_DURATION = 200;
+    private static final int ICE_CRYSTAL_SHOOT_COUNT_INTERVAL = 6;
+    private static final int SHOOT_CRYSTAL_INTERVAL = 50;
+    private static final int SPAWN_FIRE_INTERVAL = 25;
+
     private static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> DATA_FROZEN_DURATION = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
@@ -91,7 +100,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     private int chatLine;
     private int chatCooldown;
 
-    protected double velocity;
+    protected double speedModifier;
 
     public SunSpirit(EntityType<? extends SunSpirit> type, Level level) {
         super(type, level);
@@ -101,7 +110,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         this.origin = this.position();
         this.xpReward = XP_REWARD_BOSS;
         this.noPhysics = true;
-        this.velocity = 0.8; //todo
+        this.speedModifier = DEFAULT_SPEED_MODIFIER;
         this.setPersistenceRequired();
     }
 
@@ -186,8 +195,8 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         List<Entity> entities = this.level().getEntities(this, this.getBoundingBox().expandTowards(0, -2, 0).contract(-0.75, 0, -0.75).contract(0.75, 0, 0.75));
         for (Entity target : entities) {
             if (target instanceof LivingEntity) {
-                target.hurt(AetherDamageTypes.entityDamageSource(this.level(), AetherDamageTypes.INCINERATION, this), 20);
-                target.setSecondsOnFire(8);
+                target.hurt(AetherDamageTypes.entityDamageSource(this.level(), AetherDamageTypes.INCINERATION, this), INCINERATION_DAMAGE);
+                target.setSecondsOnFire(INCINERATION_FIRE_DURATION);
             }
         }
     }
@@ -312,13 +321,13 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         boolean flag = super.hurt(source, amount);
         if (!this.level().isClientSide() && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity && source.getDirectEntity() instanceof IceCrystal) {
             this.setFrozen(true);
-            this.setFrozenDuration(200);
+            this.setFrozenDuration(SUN_SPIRIT_FROZEN_DURATION);
             FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level());
             minion.setPos(this.position());
             minion.setTarget(entity);
             this.level().addFreshEntity(minion);
         }
-        this.velocity = (this.isFrozen() ? 0.25 : 1);
+        this.speedModifier = (this.isFrozen() ? FROZEN_SPEED_MODIFIER : DEFAULT_SPEED_MODIFIER);
         return flag;
     }
 
@@ -774,8 +783,8 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         @Override
         public void tick() {
             boolean changedCourse = this.outOfBounds();
-            double x = Mth.sin(this.rotation * Mth.DEG_TO_RAD) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
-            double z = -Mth.cos(this.rotation * Mth.DEG_TO_RAD) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
+            double x = Mth.sin(this.rotation * Mth.DEG_TO_RAD) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.speedModifier;
+            double z = -Mth.cos(this.rotation * Mth.DEG_TO_RAD) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.speedModifier;
             this.sunSpirit.setDeltaMovement(x, 0, z);
             if (changedCourse || ++this.courseChangeTimer >= 20) {
                 if (this.sunSpirit.getRandom().nextInt(3) == 0) {
@@ -844,17 +853,18 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      */
     public static class ShootFireballGoal extends Goal {
         private final SunSpirit sunSpirit;
-        private int shootInterval;
-        private int crystalCount = 3;
+        private int shootCrystalInterval;
+        private int crystalCount;
 
         public ShootFireballGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
-            this.shootInterval = 50; //todo
+            this.shootCrystalInterval = SHOOT_CRYSTAL_INTERVAL;
+            this.crystalCount = ICE_CRYSTAL_SHOOT_COUNT_INTERVAL;
         }
 
         @Override
         public boolean canUse() {
-            return this.sunSpirit.isBossFight() && --this.shootInterval <= 0;
+            return this.sunSpirit.isBossFight() && --this.shootCrystalInterval <= 0;
         }
 
         @Override
@@ -862,13 +872,13 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             AbstractCrystal crystal;
             if (--this.crystalCount <= 0) {
                 crystal = new IceCrystal(this.sunSpirit.level(), this.sunSpirit);
-                this.crystalCount = 4 + this.sunSpirit.getRandom().nextInt(4);
+                this.crystalCount = ICE_CRYSTAL_SHOOT_COUNT_INTERVAL; //TODO RANDOM?
             } else {
                 crystal = new FireCrystal(this.sunSpirit.level(), this.sunSpirit);
             }
             this.sunSpirit.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level().getRandom().nextFloat() - this.sunSpirit.level().getRandom().nextFloat() * 0.2F + 1.2F);
             this.sunSpirit.level().addFreshEntity(crystal);
-            this.shootInterval = 50;
+            this.shootCrystalInterval = SHOOT_CRYSTAL_INTERVAL;
         }
 
         @Override
@@ -882,16 +892,16 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      */
     public static class SummonFireGoal extends Goal {
         private final SunSpirit sunSpirit;
-        private int shootInterval;
+        private int summonFireInterval;
 
         public SummonFireGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
-            this.shootInterval = 10 + sunSpirit.getRandom().nextInt(40);
+            this.summonFireInterval = SPAWN_FIRE_INTERVAL;
         }
 
         @Override
         public boolean canUse() {
-            return this.sunSpirit.isBossFight() && --this.shootInterval <= 0;
+            return this.sunSpirit.isBossFight() && --this.summonFireInterval <= 0;
         }
 
         @Override
@@ -904,7 +914,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                 }
                 pos = pos.below();
             }
-            this.shootInterval = 10 + this.sunSpirit.getRandom().nextInt(40);
+            this.summonFireInterval = SPAWN_FIRE_INTERVAL; //TODO random or not
         }
 
         @Override
