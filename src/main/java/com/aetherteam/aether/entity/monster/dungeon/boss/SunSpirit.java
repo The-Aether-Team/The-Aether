@@ -101,7 +101,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         this.origin = this.position();
         this.xpReward = XP_REWARD_BOSS;
         this.noPhysics = true;
-        this.velocity = 1; //todo
+        this.velocity = 0.8; //todo
         this.setPersistenceRequired();
     }
 
@@ -135,7 +135,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 300.0)
+                .add(Attributes.MAX_HEALTH, 500.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.35);
     }
 
@@ -312,13 +312,13 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         boolean flag = super.hurt(source, amount);
         if (!this.level().isClientSide() && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity && source.getDirectEntity() instanceof IceCrystal) {
             this.setFrozen(true);
-            this.setFrozenDuration(75);
+            this.setFrozenDuration(200);
             FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level());
             minion.setPos(this.position());
             minion.setTarget(entity);
             this.level().addFreshEntity(minion);
         }
-        this.velocity = (this.isFrozen() ? 0.35 : 1);
+        this.velocity = (this.isFrozen() ? 0.25 : 1);
         return flag;
     }
 
@@ -868,7 +868,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             }
             this.sunSpirit.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level().getRandom().nextFloat() - this.sunSpirit.level().getRandom().nextFloat() * 0.2F + 1.2F);
             this.sunSpirit.level().addFreshEntity(crystal);
-            this.shootInterval = (int) (15 + this.sunSpirit.getHealth() / 2);
+            this.shootInterval = 50;
         }
 
         @Override
