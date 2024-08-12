@@ -69,8 +69,8 @@ import java.util.function.Predicate;
 public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy, IEntityWithComplexSpawn {
     private static final double DEFAULT_SPEED_MODIFIER = 1.0; //todo ALL THESE
     private static final double FROZEN_SPEED_MODIFIER = 0.3;
-    private static final float INCINERATION_DAMAGE = 10.0F;
-    private static final int INCINERATION_FIRE_DURATION = 8;
+    private static final float INCINERATION_DAMAGE = 10.0F; // this seems good
+    private static final int INCINERATION_FIRE_DURATION = 8; // this seems good
     private static final int SUN_SPIRIT_FROZEN_DURATION = 175;
     private static final int ICE_CRYSTAL_SHOOT_COUNT_INTERVAL = 5; // this seems good
     private static final int SHOOT_CRYSTAL_INTERVAL = 50;
