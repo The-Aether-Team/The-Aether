@@ -68,13 +68,13 @@ import java.util.function.Predicate;
 
 public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy, IEntityWithComplexSpawn {
     private static final double DEFAULT_SPEED_MODIFIER = 1.0; //todo ALL THESE
-    private static final double FROZEN_SPEED_MODIFIER = 0.25;
+    private static final double FROZEN_SPEED_MODIFIER = 0.3;
     private static final float INCINERATION_DAMAGE = 10.0F;
     private static final int INCINERATION_FIRE_DURATION = 8;
-    private static final int SUN_SPIRIT_FROZEN_DURATION = 200;
-    private static final int ICE_CRYSTAL_SHOOT_COUNT_INTERVAL = 6;
+    private static final int SUN_SPIRIT_FROZEN_DURATION = 175;
+    private static final int ICE_CRYSTAL_SHOOT_COUNT_INTERVAL = 5; // this seems good
     private static final int SHOOT_CRYSTAL_INTERVAL = 50;
-    private static final int SPAWN_FIRE_INTERVAL = 25;
+    private static final int SPAWN_FIRE_INTERVAL = 35;
 
     private static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> DATA_FROZEN_DURATION = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.INT);
@@ -144,7 +144,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 500.0)
+                .add(Attributes.MAX_HEALTH, 450.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.35);
     }
 
@@ -174,6 +174,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             this.burnEntities();
         }
         this.setYRot(Mth.rotateIfNecessary(this.getYRot(), this.getYHeadRot(), 20));
+        this.speedModifier = (this.isFrozen() ? FROZEN_SPEED_MODIFIER : DEFAULT_SPEED_MODIFIER);
     }
 
     /**
@@ -328,7 +329,6 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             minion.setTarget(entity);
             this.level().addFreshEntity(minion);
         }
-        this.speedModifier = (this.isFrozen() ? FROZEN_SPEED_MODIFIER : DEFAULT_SPEED_MODIFIER);
         return flag;
     }
 
