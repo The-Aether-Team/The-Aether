@@ -275,6 +275,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                                 this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line8").withStyle(ChatFormatting.RED));
                             case 9 -> {
                                 this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.GOLD));
+                                this.setHealth(this.getMaxHealth());
                                 this.setBossFight(true);
                                 if (this.getDungeon() != null) {
                                     this.closeRoom();
@@ -338,7 +339,6 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     public void reset() {
         this.setBossFight(false);
         this.setTarget(null);
-        this.setHealth(this.getMaxHealth());
         if (this.dungeon != null) {
             this.openRoom();
         }

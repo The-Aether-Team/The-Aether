@@ -400,6 +400,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                     if (super.hurt(source, amount) && this.getHealth() > 0) {
                         if (!this.level().isClientSide() && !this.isBossFight()) {
                             this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"), false);
+                            this.setHealth(this.getMaxHealth());
                             this.setBossFight(true);
                             if (this.getDungeon() != null) {
                                 this.closeRoom();
@@ -440,7 +441,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public void reset() {
         this.setBossFight(false);
         this.setTarget(null);
-        this.setHealth(this.getMaxHealth());
         if (this.getDungeon() != null) {
             this.openRoom();
         }
