@@ -51,7 +51,6 @@
     "client.PauseScreenMixin",
     "client.PlayerSkinMixin",
     "client.SmithingScreenMixin",
-    "client.SoundEngineAccessor",
     "client.TippableArrowRendererMixin",
     "client.TitleScreenMixin",
     "client.WorldListEntryMixin",
@@ -68,6 +67,7 @@
     "client.accessor.PlayerModelAccessor",
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.ScreenAccessor",
+    "client.accessor.SoundEngineAccessor",
     "client.accessor.TitleScreenAccessor",
     "client.optifine.BossHealthOverlayMixin"
   ],
