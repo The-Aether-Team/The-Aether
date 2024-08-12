@@ -51,6 +51,6 @@ public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.base.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, alpha);
+        this.base.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }
