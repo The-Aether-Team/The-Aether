@@ -37,8 +37,8 @@ import java.util.*;
  * @see <a href="https://en.wikipedia.org/wiki/Directed_graph">https://en.wikipedia.org/wiki/Directed_graph</a>
  */
 public class BronzeDungeonBuilder {
-    public static final SimpleWeightedRandomList.Builder<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonRoom>> ROOM_OPTIONS_BUILDER = new SimpleWeightedRandomList.Builder<>();
-    private static SimpleWeightedRandomList<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonRoom>> ROOM_OPTIONS;
+    public static final SimpleWeightedRandomList.Builder<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonPiece>> ROOM_OPTIONS_BUILDER = new SimpleWeightedRandomList.Builder<>();
+    private static SimpleWeightedRandomList<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonPiece>> ROOM_OPTIONS;
 
     private final Structure.GenerationContext context;
     private final StructureTemplateManager manager;
@@ -84,9 +84,9 @@ public class BronzeDungeonBuilder {
         Direction direction = bossRoom.getOrientation();
         if (direction != null) {
             BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(bossRoom.getBoundingBox().moved(0, 2, 0), direction, this.edgeWidth);
-            BronzeDungeonRoom hallway = this.chooseRoom("square_tunnel", pos, bossRoom.getRotation(), this.processors.roomSettings());
+            BronzeDungeonPiece hallway = this.chooseRoom("square_tunnel", pos, bossRoom.getRotation(), this.processors.roomSettings());
             pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
-            BronzeDungeonRoom defaultRoom = this.chooseRoom("room", pos, hallway.getRotation(), this.processors.roomSettings());
+            BronzeDungeonPiece defaultRoom = this.chooseRoom("room", pos, hallway.getRotation(), this.processors.roomSettings());
 
             this.nodes.add(bossRoom);
             this.nodes.add(defaultRoom);
@@ -134,9 +134,9 @@ public class BronzeDungeonBuilder {
             } else {
                 BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(currentNode.getBoundingBox(), direction, this.edgeWidth);
 
-                BronzeDungeonRoom hallway = this.chooseRoom("square_tunnel", pos, rotation, this.processors.roomSettings());
+                BronzeDungeonPiece hallway = this.chooseRoom("square_tunnel", pos, rotation, this.processors.roomSettings());
                 pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
-                BronzeDungeonRoom room = this.chooseRoom(roomName, pos, rotation, this.processors.roomSettings());
+                BronzeDungeonPiece room = this.chooseRoom(roomName, pos, rotation, this.processors.roomSettings());
                 StructurePiece collisionPiece = StructurePiece.findCollisionPiece(this.nodes, room.getBoundingBox());
 
                 if (this.isCloseToCenter(chunkPos, room.templatePosition()) && this.isCoveredAtPos(room.getBoundingBox())) {
@@ -237,7 +237,7 @@ public class BronzeDungeonBuilder {
     public boolean buildTunnelFromRoom(StructurePiece connectedRoom, List<StructurePiece> list, Rotation rotation, Direction direction, BlockPos origin) {
         StructureTemplate template = this.manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/entrance"));
         BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(connectedRoom.getBoundingBox(), direction, template.getSize().getX());
-        BronzeDungeonRoom entrance = this.chooseRoom("entrance", startPos, rotation, this.processors.roomSettings());
+        BronzeDungeonPiece entrance = this.chooseRoom("entrance", startPos, rotation, this.processors.roomSettings());
         list.add(entrance);
         startPos = startPos.relative(direction);
 
@@ -278,10 +278,10 @@ public class BronzeDungeonBuilder {
         return noOverlap && reachedAir;
     }
 
-    public BronzeDungeonRoom chooseRoom(String name, BlockPos pos, Rotation rotation, Holder<StructureProcessorList> processors) {
+    public BronzeDungeonPiece chooseRoom(String name, BlockPos pos, Rotation rotation, Holder<StructureProcessorList> processors) {
         List<String> uniqueRooms = List.of("entrance", "lobby", "square_tunnel");
         if (!uniqueRooms.contains(name)) {
-            Optional<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonRoom>> option = ROOM_OPTIONS.getRandomValue(this.random);
+            Optional<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonPiece>> option = ROOM_OPTIONS.getRandomValue(this.random);
             if (option.isPresent()) {
                 return option.get().apply(pos, rotation, processors);
             }
