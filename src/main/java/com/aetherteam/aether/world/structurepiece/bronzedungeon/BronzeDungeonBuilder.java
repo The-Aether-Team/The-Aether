@@ -9,6 +9,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
@@ -24,12 +25,10 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import org.apache.commons.lang3.function.TriFunction;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A directed graph used for assembling the Bronze Dungeon. This allows us to keep track of how far away a room is
@@ -38,6 +37,9 @@ import java.util.Map;
  * @see <a href="https://en.wikipedia.org/wiki/Directed_graph">https://en.wikipedia.org/wiki/Directed_graph</a>
  */
 public class BronzeDungeonBuilder {
+    public static final SimpleWeightedRandomList.Builder<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonRoom>> ROOM_OPTIONS_BUILDER = new SimpleWeightedRandomList.Builder<>();
+    private static SimpleWeightedRandomList<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonRoom>> ROOM_OPTIONS;
+
     private final Structure.GenerationContext context;
     private final StructureTemplateManager manager;
     private final RandomSource random;
@@ -65,9 +67,13 @@ public class BronzeDungeonBuilder {
         this.edgeLength = edgeSize.getZ();
 
         this.maxSize = Math.max(3, maxSize);
+
+        ROOM_OPTIONS_BUILDER.add((blockPos, rotation, processorList) -> new BronzeDungeonRoom(this.manager, "chest_room", blockPos, rotation, processorList), 1);
     }
 
     public void initializeDungeon(BlockPos startPos, Structure.GenerationContext genContext, StructurePiecesBuilder builder) {
+        ROOM_OPTIONS = ROOM_OPTIONS_BUILDER.build();
+
         StructureTemplate bossTemplate = this.context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/boss_room"));
 
         Rotation rotation = getBossRoomRotation(startPos, startPos.offset(bossTemplate.getSize()));
@@ -78,21 +84,21 @@ public class BronzeDungeonBuilder {
         Direction direction = bossRoom.getOrientation();
         if (direction != null) {
             BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(bossRoom.getBoundingBox().moved(0, 2, 0), direction, this.edgeWidth);
-            BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, bossRoom.getRotation(), this.processors.roomSettings());
+            BronzeDungeonRoom hallway = this.chooseRoom("square_tunnel", pos, bossRoom.getRotation(), this.processors.roomSettings());
             pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
-            BronzeDungeonRoom chestRoom = new BronzeDungeonRoom(manager, "chest_room", pos, hallway.getRotation(), this.processors.roomSettings());
+            BronzeDungeonRoom defaultRoom = this.chooseRoom("room", pos, hallway.getRotation(), this.processors.roomSettings());
 
             this.nodes.add(bossRoom);
-            this.nodes.add(chestRoom);
-            new Connection(bossRoom, chestRoom, hallway, direction);
+            this.nodes.add(defaultRoom);
+            new Connection(bossRoom, defaultRoom, hallway, direction);
 
             ChunkPos chunkPos = genContext.chunkPos();
 
             for (int i = 2; i < this.maxSize - 1; ++i) {
-                this.propagateRooms(chestRoom, chunkPos, false);
+                this.propagateRooms(defaultRoom, chunkPos, false);
             }
 
-            this.propagateRooms(chestRoom, chunkPos, true);
+            this.propagateRooms(defaultRoom, chunkPos, true);
             StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
             this.buildEndTunnel(lobby, startPos);
             this.buildSurfaceTunnel(genContext.heightAccessor(), genContext.chunkGenerator(), genContext.randomState());
@@ -128,9 +134,9 @@ public class BronzeDungeonBuilder {
             } else {
                 BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(currentNode.getBoundingBox(), direction, this.edgeWidth);
 
-                BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, rotation, this.processors.roomSettings());
+                BronzeDungeonRoom hallway = this.chooseRoom("square_tunnel", pos, rotation, this.processors.roomSettings());
                 pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
-                BronzeDungeonRoom room = new BronzeDungeonRoom(this.manager, roomName, pos, rotation, this.processors.roomSettings());
+                BronzeDungeonRoom room = this.chooseRoom(roomName, pos, rotation, this.processors.roomSettings());
                 StructurePiece collisionPiece = StructurePiece.findCollisionPiece(this.nodes, room.getBoundingBox());
 
                 if (this.isCloseToCenter(chunkPos, room.templatePosition()) && this.isCoveredAtPos(room.getBoundingBox())) {
@@ -231,7 +237,7 @@ public class BronzeDungeonBuilder {
     public boolean buildTunnelFromRoom(StructurePiece connectedRoom, List<StructurePiece> list, Rotation rotation, Direction direction, BlockPos origin) {
         StructureTemplate template = this.manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/entrance"));
         BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(connectedRoom.getBoundingBox(), direction, template.getSize().getX());
-        BronzeDungeonRoom entrance = new BronzeDungeonRoom(this.manager, "entrance", startPos, rotation, this.processors.roomSettings());
+        BronzeDungeonRoom entrance = this.chooseRoom("entrance", startPos, rotation, this.processors.roomSettings());
         list.add(entrance);
         startPos = startPos.relative(direction);
 
@@ -270,6 +276,17 @@ public class BronzeDungeonBuilder {
         } while (Math.abs(origin.getX() - pos.getX()) < 100 && Math.abs(origin.getZ() - pos.getZ()) < 100); // At some point, the tunnel should cut off to avoid issues.
 
         return noOverlap && reachedAir;
+    }
+
+    public BronzeDungeonRoom chooseRoom(String name, BlockPos pos, Rotation rotation, Holder<StructureProcessorList> processors) {
+        List<String> uniqueRooms = List.of("entrance", "lobby", "square_tunnel");
+        if (!uniqueRooms.contains(name)) {
+            Optional<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonRoom>> option = ROOM_OPTIONS.getRandomValue(this.random);
+            if (option.isPresent()) {
+                return option.get().apply(pos, rotation, processors);
+            }
+        }
+        return new BronzeDungeonRoom(this.manager, name, pos, rotation, processors);
     }
 
     /**
