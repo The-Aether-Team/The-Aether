@@ -37,7 +37,11 @@ public abstract class BronzeDungeonPiece extends AetherTemplateStructurePiece {
     ));
 
     public BronzeDungeonPiece(StructurePieceType type, StructureTemplateManager manager, String name, StructurePlaceSettings settings, BlockPos pos, Holder<StructureProcessorList> processors) {
-        super(type, manager, makeLocation(name), settings, pos, processors);
+        this(type, manager, makeLocation(name), settings, pos, processors);
+    }
+
+    public BronzeDungeonPiece(StructurePieceType type, StructureTemplateManager manager, ResourceLocation name, StructurePlaceSettings settings, BlockPos pos, Holder<StructureProcessorList> processors) {
+        super(type, manager, name, settings, pos, processors);
     }
 
     public BronzeDungeonPiece(StructurePieceType type, RegistryAccess access, CompoundTag tag, StructureTemplateManager manager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
