@@ -3,6 +3,7 @@ package com.aetherteam.aether.world.structurepiece.bronzedungeon;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.world.BlockLogicUtil;
+import com.mojang.datafixers.util.Function4;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -25,10 +26,10 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
-import org.apache.commons.lang3.function.TriFunction;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * A directed graph used for assembling the Bronze Dungeon. This allows us to keep track of how far away a room is
@@ -37,8 +38,15 @@ import java.util.*;
  * @see <a href="https://en.wikipedia.org/wiki/Directed_graph">https://en.wikipedia.org/wiki/Directed_graph</a>
  */
 public class BronzeDungeonBuilder {
-    public static final SimpleWeightedRandomList.Builder<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonPiece>> ROOM_OPTIONS_BUILDER = new SimpleWeightedRandomList.Builder<>();
-    private static SimpleWeightedRandomList<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonPiece>> ROOM_OPTIONS;
+    public static final Map<String, SimpleWeightedRandomList.Builder<Function4<StructureTemplateManager, BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonPiece>>> ROOM_OPTIONS_BUILDER = Map.ofEntries(
+        Map.entry("boss_room", new SimpleWeightedRandomList.Builder<>()),
+        Map.entry("chest_room", new SimpleWeightedRandomList.Builder<>()),
+        Map.entry("end_corridor", new SimpleWeightedRandomList.Builder<>()),
+        Map.entry("entrance", new SimpleWeightedRandomList.Builder<>()),
+        Map.entry("lobby", new SimpleWeightedRandomList.Builder<>()),
+        Map.entry("square_tunnel", new SimpleWeightedRandomList.Builder<>())
+    );
+    private static Map<String, SimpleWeightedRandomList<Function4<StructureTemplateManager, BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonPiece>>> ROOM_OPTIONS;
 
     private final Structure.GenerationContext context;
     private final StructureTemplateManager manager;
@@ -68,11 +76,16 @@ public class BronzeDungeonBuilder {
 
         this.maxSize = Math.max(3, maxSize);
 
-        ROOM_OPTIONS_BUILDER.add((blockPos, rotation, processorList) -> new BronzeDungeonRoom(this.manager, "chest_room", blockPos, rotation, processorList), 1);
+        ROOM_OPTIONS_BUILDER.get("boss_room").add((manager, pos, rotation, processorList) -> new BronzeBossRoom(manager, "boss_room", pos, rotation, processorList), 1);
+        ROOM_OPTIONS_BUILDER.get("chest_room").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "chest_room", pos, rotation, processorList), 1);
+        ROOM_OPTIONS_BUILDER.get("end_corridor").add((manager, pos, rotation, processorList) -> new BronzeTunnel(manager, "end_corridor", pos, rotation, processorList), 1);
+        ROOM_OPTIONS_BUILDER.get("entrance").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "entrance", pos, rotation, processorList), 1);
+        ROOM_OPTIONS_BUILDER.get("lobby").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "lobby", pos, rotation, processorList), 1);
+        ROOM_OPTIONS_BUILDER.get("square_tunnel").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "square_tunnel", pos, rotation, processorList), 1);
     }
 
     public void initializeDungeon(BlockPos startPos, Structure.GenerationContext genContext, StructurePiecesBuilder builder) {
-        ROOM_OPTIONS = ROOM_OPTIONS_BUILDER.build();
+        ROOM_OPTIONS = ROOM_OPTIONS_BUILDER.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, (e) -> e.getValue().build()));
 
         StructureTemplate bossTemplate = this.context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/boss_room"));
 
@@ -80,7 +93,7 @@ public class BronzeDungeonBuilder {
         if (rotation == null) { // The space may not be big enough for multiple rooms. If so, stop trying.
             return;
         }
-        BronzeBossRoom bossRoom = new BronzeBossRoom(this.manager, "boss_room", startPos, rotation, this.processors.bossSettings());
+        BronzeDungeonPiece bossRoom = this.chooseRoom("boss_room", startPos, rotation, this.processors.bossSettings());
         Direction direction = bossRoom.getOrientation();
         if (direction != null) {
             BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(bossRoom.getBoundingBox().moved(0, 2, 0), direction, this.edgeWidth);
@@ -248,7 +261,7 @@ public class BronzeDungeonBuilder {
         int i = 0;
         do {
             pos = startPos.relative(direction, i);
-            BronzeTunnel tunnel = new BronzeTunnel(this.manager, "end_corridor", pos, rotation, this.processors.tunnelSettings());
+            BronzeDungeonPiece tunnel = this.chooseRoom("end_corridor", pos, rotation, this.processors.tunnelSettings());
 
             // Skip the connected piece, since the tunnel will be digging into it.
             StructurePiece col = null;
@@ -279,11 +292,11 @@ public class BronzeDungeonBuilder {
     }
 
     public BronzeDungeonPiece chooseRoom(String name, BlockPos pos, Rotation rotation, Holder<StructureProcessorList> processors) {
-        List<String> uniqueRooms = List.of("entrance", "lobby", "square_tunnel");
-        if (!uniqueRooms.contains(name)) {
-            Optional<TriFunction<BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonPiece>> option = ROOM_OPTIONS.getRandomValue(this.random);
+        SimpleWeightedRandomList<Function4<StructureTemplateManager, BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonPiece>> list = ROOM_OPTIONS.get(name);
+        if (list != null) {
+            Optional<Function4<StructureTemplateManager, BlockPos, Rotation, Holder<StructureProcessorList>, ? extends BronzeDungeonPiece>> option = list.getRandomValue(this.random);
             if (option.isPresent()) {
-                return option.get().apply(pos, rotation, processors);
+                return option.get().apply(this.manager, pos, rotation, processors);
             }
         }
         return new BronzeDungeonRoom(this.manager, name, pos, rotation, processors);
