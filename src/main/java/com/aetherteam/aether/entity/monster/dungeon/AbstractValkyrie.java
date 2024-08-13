@@ -47,8 +47,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * Goal for targeting in groups of entities
      */
     private MostDamageTargetGoal mostDamageTargetGoal;
-    private double lastMotionY;
     private int lungeCooldown = 0;
+    protected double lastMotionY;
 
     public AbstractValkyrie(EntityType<? extends AbstractValkyrie> type, Level level) {
         super(type, level);
@@ -85,10 +85,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         super.tick();
         if (this.onGround()) {
             this.setEntityOnGround(true);
-        }
-        double motionY = this.getDeltaMovement().y();
-        if (!this.onGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
-            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.0225, 0));
         }
         if (!this.level().isClientSide()) {
             if (this.lungeCooldown > 0) {

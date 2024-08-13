@@ -175,6 +175,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         super.tick();
         this.breakBlocks();
         this.evaporate();
+        double motionY = this.getDeltaMovement().y();
+        if (!this.onGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
+            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.055, 0));
+        }
     }
 
     /**

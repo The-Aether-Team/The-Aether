@@ -59,6 +59,15 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        double motionY = this.getDeltaMovement().y();
+        if (!this.onGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
+            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.0225, 0));
+        }
+    }
+
+    @Override
     public void aiStep() {
         super.aiStep();
         if (!this.level().isClientSide()) {
