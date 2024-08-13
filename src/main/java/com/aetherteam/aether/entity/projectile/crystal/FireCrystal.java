@@ -119,7 +119,7 @@ public class FireCrystal extends AbstractCrystal {
                     this.xPower = vec3.x() * 0.25;
                     this.yPower = vec3.y() * 0.15;
                     this.zPower = vec3.z() * 0.25;
-                    this.ticksInAir += amount * 10;
+                    this.ticksInAir += amount * 50;
                 }
                 return true;
             } else {
