@@ -12,15 +12,16 @@ import java.util.function.Supplier;
 public class AetherSoundEvents {
 	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, Aether.MODID);
 
-	public static final Supplier<SoundEvent> BLOCK_AETHER_PORTAL_AMBIENT = register("block.aether_portal.ambient");
-	public static final Supplier<SoundEvent> BLOCK_AETHER_PORTAL_TRAVEL = register("block.aether_portal.travel");
-	public static final Supplier<SoundEvent> BLOCK_AETHER_PORTAL_TRIGGER = register("block.aether_portal.trigger");
+	public static final DeferredHolder<SoundEvent, SoundEvent> BLOCK_AETHER_PORTAL_AMBIENT = registerHolder("block.aether_portal.ambient");
+	public static final DeferredHolder<SoundEvent, SoundEvent> BLOCK_AETHER_PORTAL_TRAVEL = registerHolder("block.aether_portal.travel");
+	public static final DeferredHolder<SoundEvent, SoundEvent> BLOCK_AETHER_PORTAL_TRIGGER = registerHolder("block.aether_portal.trigger");
 	public static final Supplier<SoundEvent> BLOCK_CHEST_MIMIC_OPEN = register("block.chest_mimic.open");
 
 	public static final Supplier<SoundEvent> BLOCK_ALTAR_CRACKLE = register("block.altar.crackle");
 	public static final Supplier<SoundEvent> BLOCK_FREEZER_CRACKLE = register("block.freezer.crackle");
 	public static final Supplier<SoundEvent> BLOCK_INCUBATOR_CRACKLE = register("block.incubator.crackle");
 
+	public static final Supplier<SoundEvent> BLOCK_BLUE_AERCLOUD_BOUNCE = register("block.aercloud.blue_aercloud_bounce");
 	public static final Supplier<SoundEvent> BLOCK_DUNGEON_TRAP_TRIGGER = register("block.dungeon_trap.trigger");
 
 	public static final Supplier<SoundEvent> WATER_EVAPORATE = register("block.water.evaporate");
@@ -58,6 +59,7 @@ public class AetherSoundEvents {
 	public static final Supplier<SoundEvent> ITEM_MUSIC_DISC_ASCENDING_DAWN = register("item.music_disc.ascending_dawn");
 	public static final Supplier<SoundEvent> ITEM_MUSIC_DISC_CHINCHILLA = register("item.music_disc.chinchilla");
 	public static final Supplier<SoundEvent> ITEM_MUSIC_DISC_HIGH = register("item.music_disc.high");
+	public static final Supplier<SoundEvent> ITEM_MUSIC_DISC_KLEPTO = register("item.music_disc.klepto");
 
 	public static final Supplier<SoundEvent> ENTITY_PHYG_AMBIENT = register("entity.phyg.ambient");
 	public static final Supplier<SoundEvent> ENTITY_PHYG_DEATH = register("entity.phyg.death");
@@ -135,13 +137,22 @@ public class AetherSoundEvents {
 	public static final Supplier<SoundEvent> ENTITY_SLIDER_HURT = register("entity.slider.hurt");
 	public static final Supplier<SoundEvent> ENTITY_SLIDER_DEATH = register("entity.slider.death");
 
+	public static final Supplier<SoundEvent> ENTITY_VALKYRIE_INTERACT = register("entity.valkyrie.interact");
 	public static final Supplier<SoundEvent> ENTITY_VALKYRIE_DEATH = register("entity.valkyrie.death");
 	public static final Supplier<SoundEvent> ENTITY_VALKYRIE_HURT = register("entity.valkyrie.hurt");
 
+	public static final Supplier<SoundEvent> ENTITY_VALKYRIE_QUEEN_INTERACT = register("entity.valkyrie_queen.interact");
 	public static final Supplier<SoundEvent> ENTITY_VALKYRIE_QUEEN_DEATH = register("entity.valkyrie_queen.death");
 	public static final Supplier<SoundEvent> ENTITY_VALKYRIE_QUEEN_HURT = register("entity.valkyrie_queen.hurt");
 
+	public static final Supplier<SoundEvent> ENTITY_FIRE_MINION_DEATH = register("entity.fire_minion.death");
+	public static final Supplier<SoundEvent> ENTITY_FIRE_MINION_HURT = register("entity.fire_minion.hurt");
+
+	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_INTERACT = register("entity.sun_spirit.interact");
+	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_ACTIVATE = register("entity.sun_spirit.activate");
 	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_SHOOT = register("entity.sun_spirit.shoot");
+	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_DEATH = register("entity.sun_spirit.death");
+	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_HURT = register("entity.sun_spirit.hurt");
 
 	public static final Supplier<SoundEvent> ENTITY_CLOUD_MINION_SHOOT = register("entity.cloud_minion.shoot");
 
@@ -153,12 +164,17 @@ public class AetherSoundEvents {
 
 	public static final Supplier<SoundEvent> ENTITY_DART_HIT = register("entity.dart.hit");
 
-	public static final Supplier<SoundEvent> UI_TOAST_AETHER_GENERAL = register("ui.toast.aether_general");
-	public static final Supplier<SoundEvent> UI_TOAST_AETHER_BRONZE = register("ui.toast.aether_bronze");
-	public static final Supplier<SoundEvent> UI_TOAST_AETHER_SILVER = register("ui.toast.aether_silver");
+	public static final DeferredHolder<SoundEvent, SoundEvent> UI_TOAST_AETHER_GENERAL = registerHolder("ui.toast.aether_general");
+	public static final DeferredHolder<SoundEvent, SoundEvent> UI_TOAST_AETHER_BRONZE = registerHolder("ui.toast.aether_bronze");
+	public static final DeferredHolder<SoundEvent, SoundEvent> UI_TOAST_AETHER_SILVER = registerHolder("ui.toast.aether_silver");
+	public static final DeferredHolder<SoundEvent, SoundEvent> UI_TOAST_AETHER_GOLD = registerHolder("ui.toast.aether_gold");
 
 	public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_MENU = registerHolder("music.menu");
 	public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_AETHER = registerHolder("music.aether");
+
+	public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_BOSS_SLIDER = registerHolder("music.boss.slider");
+	public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_BOSS_VALKYRIE_QUEEN = registerHolder("music.boss.valkyrie_queen");
+	public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_BOSS_SUN_SPIRIT = registerHolder("music.boss.sun_spirit");
 
 	private static Supplier<SoundEvent> register(String location) {
 		return SOUNDS.register(location, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Aether.MODID, location)));

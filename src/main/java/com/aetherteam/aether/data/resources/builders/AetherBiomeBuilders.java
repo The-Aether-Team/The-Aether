@@ -7,7 +7,7 @@ import com.aetherteam.aether.data.resources.registries.AetherPlacedFeatures;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.sounds.Music;
+import net.minecraft.sounds.Musics;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -46,7 +46,7 @@ public class AetherBiomeBuilders {
                         .grassColorOverride(0xb1_ff_cb)
                         .foliageColorOverride(0xb1_ff_cb)
                         .grassColorModifier(BiomeSpecialEffects.GrassColorModifier.NONE)
-                        .backgroundMusic(new Music(AetherSoundEvents.MUSIC_AETHER, 12000, 24000, true))
+                        .backgroundMusic(Musics.createGameMusic(AetherSoundEvents.MUSIC_AETHER))
                         .build(),
                 new MobSpawnSettings.Builder()
                         .addMobCharge(AetherEntityTypes.COCKATRICE.get(), 0.5, 0.15)
