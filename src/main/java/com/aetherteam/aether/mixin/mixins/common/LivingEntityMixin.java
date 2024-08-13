@@ -27,7 +27,7 @@ public class LivingEntityMixin {
     }
 
     @WrapWithCondition(method = "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;knockback(DDD)V"))
-    private boolean onlyRenderIfAllowed(LivingEntity instance, double strength, double x, double z, @Local(argsOnly = true) DamageSource source) {
+    private boolean hurt(LivingEntity instance, double strength, double x, double z, @Local(argsOnly = true) DamageSource source) {
         return (!(instance instanceof ValkyrieQueen) || !(source.getDirectEntity() instanceof Projectile));
     }
 }

@@ -149,6 +149,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));
         this.goalSelector.addGoal(1, new GetUnstuckGoal(this));
         this.goalSelector.addGoal(2, new ThunderCrystalAttackGoal(this, 450, 28.0F));
+        this.goalSelector.addGoal(3, new LungeGoal(this, 0.65, 0));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, livingEntity -> this.isBossFight()));
     }
 
