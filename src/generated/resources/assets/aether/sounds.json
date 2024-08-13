@@ -604,9 +604,9 @@
   },
   "entity.valkyrie.hurt": {
     "sounds": [
-      "aether:entity/queen/hurt",
-      "aether:entity/queen/hurt2",
-      "aether:entity/queen/hurt3"
+      "aether:entity/valkyrie/hurt",
+      "aether:entity/valkyrie/hurt2",
+      "aether:entity/valkyrie/hurt3"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie.hurt"
   },

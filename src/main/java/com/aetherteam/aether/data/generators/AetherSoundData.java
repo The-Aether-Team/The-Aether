@@ -661,9 +661,9 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                         .subtitle("subtitles.aether.entity.valkyrie.death")
         );
         this.add(AetherSoundEvents.ENTITY_VALKYRIE_HURT,
-                definition().with(sound("aether:entity/queen/hurt"),
-                                sound("aether:entity/queen/hurt2"),
-                                sound("aether:entity/queen/hurt3"))
+                definition().with(sound("aether:entity/valkyrie/hurt"),
+                                sound("aether:entity/valkyrie/hurt2"),
+                                sound("aether:entity/valkyrie/hurt3"))
                         .subtitle("subtitles.aether.entity.valkyrie.hurt")
         );
         this.add(AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_INTERACT,
