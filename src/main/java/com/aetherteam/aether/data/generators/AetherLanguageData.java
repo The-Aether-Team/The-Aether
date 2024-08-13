@@ -325,6 +325,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
         this.addItem(AetherItems.MUSIC_DISC_HIGH, "Super Music Disc");
         this.addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
+        this.addItem(AetherItems.MUSIC_DISC_KLEPTO, "Blackened Music Disc");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_KLEPTO, "sunsette - klepto");
 
         this.addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         this.addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");
@@ -535,6 +537,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addSubtitle("block", "altar.crackle", "Altar crackles");
         this.addSubtitle("block", "freezer.crackle", "Freezer crackles");
         this.addSubtitle("block", "incubator.crackle", "Incubator crackles");
+        this.addSubtitle("block", "aercloud.blue_aercloud_bounce", "Blue Aercloud wobbles");
         this.addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
         this.addSubtitle("block", "water.evaporate", "Water evaporated");
 
@@ -636,13 +639,22 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addSubtitle("entity", "slider.hurt", "Slider hurts");
         this.addSubtitle("entity", "slider.death", "Slider breaks");
 
+        this.addSubtitle("entity", "valkyrie.interact", "Valkyrie speaks");
         this.addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
         this.addSubtitle("entity", "valkyrie.hurt", "Valkyrie hurts");
 
+        this.addSubtitle("entity", "valkyrie_queen.interact", "Valkyrie speaks");
         this.addSubtitle("entity", "valkyrie_queen.death", "Valkyrie Queen dies");
         this.addSubtitle("entity", "valkyrie_queen.hurt", "Valkyrie Queen hurts");
 
+        this.addSubtitle("entity", "fire_minion.death", "Fire Minion dies");
+        this.addSubtitle("entity", "fire_minion.hurt", "Fire Minion hurts");
+
+        this.addSubtitle("entity", "sun_spirit.interact", "Sun Spirit speaks");
+        this.addSubtitle("entity", "sun_spirit.activate", "Sun Spirit rumbles");
         this.addSubtitle("entity", "sun_spirit.shoot", "Sun Spirit shoots");
+        this.addSubtitle("entity", "sun_spirit.death", "Sun Spirit dies");
+        this.addSubtitle("entity", "sun_spirit.hurt", "Sun Spirit hurts");
 
         this.addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
 
@@ -1151,6 +1163,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "A music disc that plays \"Ascending Dawn\" by Emile van Krieken.");
         this.addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays \"chinchilla\" by RENREN.");
         this.addLore(AetherItems.MUSIC_DISC_HIGH,"A music disc that plays \"high\" by RENREN.");
+        this.addLore(AetherItems.MUSIC_DISC_KLEPTO, "A music disc that plays \"klepto\" by sunsette.");
         this.addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point, it vanished from existence. It's said this was actually Jeb's hammer at one point.");
 
 
@@ -1284,9 +1297,11 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addClientConfig("gui", "layout_perks_y", "The y-coordinate of the perks button layout when in the pause menu");
         this.addClientConfig("gui", "enable_hammer_cooldown_overlay", "Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown");
 
+        this.addClientConfig("audio", "blue_aercloud_bounce_sfx", "Makes Blue Aerclouds have their wobbly sounds that play when bouncing on them");
         this.addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         this.addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         this.addClientConfig("audio", "disable_music_manager", "Disables the Aether's internal music manager, if true, this overrides all other audio configs");
+        this.addClientConfig("audio", "disable_aether_boss_music", "Disables the Aether's boss fight music, only works if 'Disables Aether music manager' is false");
         this.addClientConfig("audio", "disable_aether_menu_music", "Disables the Aether's menu music in case another mod implements its own, only works if 'Disables Aether music manager' is false");
         this.addClientConfig("audio", "disable_vanilla_world_preview_menu_music", "Disables the menu music on the vanilla world preview menu, only works if 'Disables Aether music manager' is false");
         this.addClientConfig("audio", "disable_aether_world_preview_menu_music", "Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false");

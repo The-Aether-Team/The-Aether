@@ -58,6 +58,7 @@
     "client.WorldListEntryMixin",
     "client.WorldOpenFlowsMixin",
     "client.accessor.BlockColorsAccessor",
+    "client.accessor.BossHealthOverlayAccessor",
     "client.accessor.ButtonAccessor",
     "client.accessor.EntityRendererAccessor",
     "client.accessor.GuiAccessor",
@@ -68,6 +69,7 @@
     "client.accessor.PlayerModelAccessor",
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.ScreenAccessor",
+    "client.accessor.SoundEngineAccessor",
     "client.accessor.TitleScreenAccessor",
     "client.optifine.BossHealthOverlayMixin"
   ],

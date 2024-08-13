@@ -47,6 +47,7 @@ public class AetherData {
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherDamageTypeTagData(packOutput, lookupProvider, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherSoundTagData(packOutput, lookupProvider, fileHelper));
 
         // pack.mcmeta
         PackMetadataGenerator packMeta = new PackMetadataGenerator(packOutput);

@@ -1,13 +1,17 @@
 package com.aetherteam.aether.block.natural;
 
+import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.client.AetherSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -31,12 +35,18 @@ public class BlueAercloudBlock extends AercloudBlock {
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (!entity.isShiftKeyDown() && (!entity.isVehicle() || !(entity.getControllingPassenger() instanceof Player))) {
+			Vec3 prevMotion = entity.getDeltaMovement();
 			entity.resetFallDistance();
-			entity.setDeltaMovement(entity.getDeltaMovement().x(), 2.0, entity.getDeltaMovement().z());
+			entity.setDeltaMovement(prevMotion.x(), 2.0, prevMotion.z());
 			if (level.isClientSide()) {
 				int amount = 50; // Default amount.
 				if (entity.getY() == entity.yOld) {
 					amount = 10; // Alternative amount if the entity's y-position is not changing.
+				}
+				if (entity.getDeltaMovement().y() != prevMotion.y()) {
+					if (AetherConfig.CLIENT.blue_aercloud_bounce_sfx.get()) {
+						level.playSound((entity instanceof Player player ? player : null), pos, AetherSoundEvents.BLOCK_BLUE_AERCLOUD_BOUNCE.get(), SoundSource.BLOCKS, 0.8F, 0.5F + (((float) (Math.pow(level.getRandom().nextDouble(), 2.5))) * 0.5F));
+					}
 				}
 				for (int count = 0; count < amount; count++) {
 					double xOffset = pos.getX() + level.getRandom().nextDouble();
