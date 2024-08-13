@@ -99,7 +99,7 @@ public class BronzeDungeonBuilder {
             BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(bossRoom.getBoundingBox().moved(0, 2, 0), direction, this.edgeWidth);
             BronzeDungeonPiece hallway = this.chooseRoom("square_tunnel", pos, bossRoom.getRotation(), this.processors.roomSettings());
             pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
-            BronzeDungeonPiece defaultRoom = this.chooseRoom("room", pos, hallway.getRotation(), this.processors.roomSettings());
+            BronzeDungeonPiece defaultRoom = this.chooseRoom("chest_room", pos, hallway.getRotation(), this.processors.roomSettings());
 
             this.nodes.add(bossRoom);
             this.nodes.add(defaultRoom);
