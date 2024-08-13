@@ -3,9 +3,11 @@ package com.aetherteam.aether.world.structure;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeDungeonBuilder;
+import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeProcessorSettings;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -17,6 +19,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -28,18 +32,21 @@ public class BronzeDungeonStructure extends Structure {
             settingsCodec(builder),
             Codec.INT.fieldOf("maxrooms").forGetter(o -> o.maxRooms),
             Codec.INT.fieldOf("aboveBottom").forGetter(o -> o.aboveBottom),
-            Codec.INT.fieldOf("belowTop").forGetter(o -> o.belowTop)
+            Codec.INT.fieldOf("belowTop").forGetter(o -> o.belowTop),
+            BronzeProcessorSettings.CODEC.fieldOf("processor_settings").forGetter(o -> o.processors)
     ).apply(builder, BronzeDungeonStructure::new));
 
     private final int maxRooms;
     private final int aboveBottom;
     private final int belowTop;
+    private final BronzeProcessorSettings processors;
 
-    public BronzeDungeonStructure(StructureSettings settings, int maxRooms, int aboveBottom, int belowTop) {
+    public BronzeDungeonStructure(StructureSettings settings, int maxRooms, int aboveBottom, int belowTop, BronzeProcessorSettings processors) {
         super(settings);
         this.maxRooms = maxRooms;
         this.aboveBottom = aboveBottom;
         this.belowTop = belowTop;
+        this.processors = processors;
     }
 
     @Override
@@ -64,7 +71,7 @@ public class BronzeDungeonStructure extends Structure {
     }
 
     private void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context, BlockPos startPos) {
-        BronzeDungeonBuilder graph = new BronzeDungeonBuilder(context, this.maxRooms);
+        BronzeDungeonBuilder graph = new BronzeDungeonBuilder(context, this.maxRooms, this.processors);
         graph.initializeDungeon(startPos, context, builder);
     }
 

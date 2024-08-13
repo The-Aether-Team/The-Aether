@@ -6,11 +6,13 @@ import com.aetherteam.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.aetherteam.aether.world.structurepiece.LargeAercloudChunk;
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverBossRoom;
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverDungeonBuilder;
+import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverProcessorSettings;
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverTemplePiece;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
@@ -25,6 +27,8 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.phys.AABB;
 
@@ -37,7 +41,8 @@ public class SilverDungeonStructure extends Structure {
             Codec.INT.fieldOf("belowTerrain").forGetter(o -> o.belowTerrain),
             Codec.INT.fieldOf("aboveTerrain").forGetter(o -> o.aboveTerrain),
             Codec.INT.fieldOf("minY").forGetter(o -> o.minY),
-            Codec.INT.fieldOf("rangeY").forGetter(o -> o.rangeY)
+            Codec.INT.fieldOf("rangeY").forGetter(o -> o.rangeY),
+            SilverProcessorSettings.CODEC.fieldOf("processor_settings").forGetter(o -> o.processors)
     ).apply(builder, SilverDungeonStructure::new));
 
     private final int maxY;
@@ -45,14 +50,16 @@ public class SilverDungeonStructure extends Structure {
     private final int aboveTerrain;
     private final int minY;
     private final int rangeY;
+    private final SilverProcessorSettings processors;
 
-    public SilverDungeonStructure(StructureSettings settings, int maxY, int belowTerrain, int aboveTerrain, int minY, int rangeY) {
+    public SilverDungeonStructure(StructureSettings settings, int maxY, int belowTerrain, int aboveTerrain, int minY, int rangeY, SilverProcessorSettings processors) {
         super(settings);
         this.maxY = maxY;
         this.belowTerrain = belowTerrain;
         this.aboveTerrain = aboveTerrain;
         this.minY = minY;
         this.rangeY = rangeY;
+        this.processors = processors;
     }
 
     @Override
@@ -97,7 +104,8 @@ public class SilverDungeonStructure extends Structure {
                 manager,
                 "rear",
                 elevatedPos,
-                rotation
+                rotation,
+                this.processors.roomSettings()
         );
         builder.addPiece(rear);
 
@@ -106,7 +114,8 @@ public class SilverDungeonStructure extends Structure {
                 manager,
                 "boss_room",
                 bossRoomPos,
-                rotation
+                rotation,
+                this.processors.bossSettings()
         );
         builder.addPiece(bossRoom);
 
@@ -117,11 +126,12 @@ public class SilverDungeonStructure extends Structure {
                 manager,
                 "skeleton",
                 offsetPos,
-                rotation
+                rotation,
+                this.processors.roomSettings()
         );
         builder.addPiece(exterior);
 
-        SilverDungeonBuilder grid = new SilverDungeonBuilder(randomSource, 3, 3, 3);
+        SilverDungeonBuilder grid = new SilverDungeonBuilder(randomSource, 3, 3, 3, this.processors);
         grid.assembleDungeon(builder, manager, offsetPos, rotation, direction);
     }
 

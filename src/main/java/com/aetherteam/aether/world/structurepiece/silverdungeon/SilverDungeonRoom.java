@@ -7,6 +7,7 @@ import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
@@ -25,13 +27,13 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  * Different types of rooms in the Silver Dungeon.
  */
 public class SilverDungeonRoom extends SilverDungeonPiece {
-    public SilverDungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-        super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), manager, name, SilverDungeonRoom.makeSettings(manager, rotation, new ResourceLocation(Aether.MODID, "silver_dungeon/" + name)), pos);
+    public SilverDungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation, Holder<StructureProcessorList> processors) {
+        super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), manager, name, SilverDungeonRoom.makeSettings(manager, rotation, new ResourceLocation(Aether.MODID, "silver_dungeon/" + name)), pos, processors);
         this.setOrientation(rotation.rotate(Direction.SOUTH));
     }
 
     public SilverDungeonRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), tag, context.structureTemplateManager(), id -> SilverDungeonRoom.makeSettings(context.structureTemplateManager(), id));
+        super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), context.registryAccess(), tag, context.structureTemplateManager(), id -> SilverDungeonRoom.makeSettings(context.structureTemplateManager(), id));
     }
 
     private static StructurePlaceSettings makeSettings(StructureTemplateManager manager, Rotation rotation, ResourceLocation id) {
@@ -42,9 +44,7 @@ public class SilverDungeonRoom extends SilverDungeonPiece {
         StructureTemplate template = manager.getOrCreate(id);
         BlockPos pivot = new BlockPos(template.getSize().getX() / 2 - 4, 0, template.getSize().getZ() / 2 - 4);
         return new StructurePlaceSettings()
-                .setRotationPivot(pivot)
-                .addProcessor(SilverDungeonPiece.LOCKED_ANGELIC_STONE)
-                .addProcessor(DoubleDropsProcessor.INSTANCE);
+                .setRotationPivot(pivot);
     }
 
     @Override
