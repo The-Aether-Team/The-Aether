@@ -3,9 +3,11 @@ package com.aetherteam.aether.world.structurepiece.silverdungeon;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.ArrayList;
@@ -26,13 +28,15 @@ public class SilverDungeonBuilder {
     private static final int VISITED = 0b10000000;
 
     private final RandomSource random;
+    private final SilverProcessorSettings processors;
     private final int[][][] grid;
     private final int width;
     private final int height;
     private final int length;
 
-    public SilverDungeonBuilder(RandomSource random, int x, int y, int z) {
+    public SilverDungeonBuilder(RandomSource random, int x, int y, int z, SilverProcessorSettings processors) {
         this.random = random;
+        this.processors = processors;
         this.grid = new int[x][y][z];
         this.width = x;
         this.height = y;
@@ -167,20 +171,20 @@ public class SilverDungeonBuilder {
 
                     int room = this.grid[x][y][z];
                     builder.addPiece(new SilverFloorPiece(templateManager, "floor",
-                            offset.offset(direction.getStepX() + direction.getStepZ(), -1, direction.getStepZ() - direction.getStepX()), rotation));
+                            offset.offset(direction.getStepX() + direction.getStepZ(), -1, direction.getStepZ() - direction.getStepX()), rotation, this.processors.floorSettings()));
                     builder.addPiece(new SilverTemplePiece(templateManager, (room & NORTH_DOOR) == NORTH_DOOR ? "door" : "wall",
-                            offset.offset(direction.getStepZ(), 0, -direction.getStepX()), rotation));
+                            offset.offset(direction.getStepZ(), 0, -direction.getStepX()), rotation, this.processors.roomSettings()));
                     builder.addPiece(new SilverTemplePiece(templateManager, (room & WEST_DOOR) == WEST_DOOR ? "door" : "wall",
-                            offset.relative(direction), sideways));
+                            offset.relative(direction), sideways, this.processors.roomSettings()));
 
                     if ((room & FINAL_STAIRS) == FINAL_STAIRS) {
-                        builder.addPiece(new SilverDungeonRoom(templateManager, "tall_staircase", offset.offset(2, 0, 2), rotation));
+                        builder.addPiece(new SilverDungeonRoom(templateManager, "tall_staircase", offset.offset(2, 0, 2), rotation, this.processors.roomSettings()));
                         builder.addPiece(new SilverTemplePiece(templateManager, "boss_door",
-                                offset.offset(direction.getStepZ() * 3, 0, -direction.getStepX() * 3), rotation));
+                                offset.offset(direction.getStepZ() * 3, 0, -direction.getStepX() * 3), rotation, this.processors.roomSettings()));
                     } else if ((room & STAIRS) == STAIRS) {
-                        builder.addPiece(new SilverDungeonRoom(templateManager, "staircase", offset.offset(2, 0, 2), rotation));
+                        builder.addPiece(new SilverDungeonRoom(templateManager, "staircase", offset.offset(2, 0, 2), rotation, this.processors.roomSettings()));
                     } else if ((room & CHEST_ROOM) == CHEST_ROOM) {
-                        builder.addPiece(new SilverDungeonRoom(templateManager, "chest_room", offset.offset(3, 0, 3), rotation));
+                        builder.addPiece(new SilverDungeonRoom(templateManager, "chest_room", offset.offset(3, 0, 3), rotation, this.processors.roomSettings()));
                     }
                 }
             }

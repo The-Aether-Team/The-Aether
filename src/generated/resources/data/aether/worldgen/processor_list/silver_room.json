@@ -1,0 +1,41 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "input_predicate": {
+            "block": "aether:locked_angelic_stone",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.05
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "aether:locked_light_angelic_stone"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "aether:holystone",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.034
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "aether:mossy_holystone",
+            "Properties": {
+              "double_drops": "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "aether:double_drops"
+    }
+  ]
+}

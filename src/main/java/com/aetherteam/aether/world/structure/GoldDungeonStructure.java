@@ -28,6 +28,8 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
@@ -42,7 +44,8 @@ public class GoldDungeonStructure extends Structure {
             Codec.INT.fieldOf("minY").forGetter(o -> o.minY),
             Codec.INT.fieldOf("rangeY").forGetter(o -> o.rangeY),
             PlacedFeature.CODEC.fieldOf("islandFoliage").forGetter(p_204928_ -> p_204928_.islandFoliage),
-            PlacedFeature.CODEC.fieldOf("stubFoliage").forGetter(p_204928_ -> p_204928_.stubFoliage)
+            PlacedFeature.CODEC.fieldOf("stubFoliage").forGetter(p_204928_ -> p_204928_.stubFoliage),
+            GoldProcessorSettings.CODEC.fieldOf("processor_settings").forGetter(o -> o.processors)
         ).apply(builder, GoldDungeonStructure::new));
 
     private final int stubIslandCount;
@@ -51,8 +54,9 @@ public class GoldDungeonStructure extends Structure {
     private final int rangeY;
     private final Holder<PlacedFeature> islandFoliage;
     private final Holder<PlacedFeature> stubFoliage;
+    private final GoldProcessorSettings processors;
 
-    public GoldDungeonStructure(StructureSettings settings, int stubIslandCount, int belowTerrain, int minY, int rangeY, Holder<PlacedFeature> islandFoliage, Holder<PlacedFeature> stubFoliage) {
+    public GoldDungeonStructure(StructureSettings settings, int stubIslandCount, int belowTerrain, int minY, int rangeY, Holder<PlacedFeature> islandFoliage, Holder<PlacedFeature> stubFoliage, GoldProcessorSettings processors) {
         super(settings);
         this.stubIslandCount = stubIslandCount;
         this.belowTerrain = belowTerrain;
@@ -60,6 +64,7 @@ public class GoldDungeonStructure extends Structure {
         this.rangeY = rangeY;
         this.islandFoliage = islandFoliage;
         this.stubFoliage = stubFoliage;
+        this.processors = processors;
     }
 
     @Override
@@ -87,7 +92,8 @@ public class GoldDungeonStructure extends Structure {
         GoldIsland island = new GoldIsland(
                 templateManager,
                 "island",
-                elevatedPos
+                elevatedPos,
+                this.processors.islandSettings()
         );
         builder.addPiece(island);
 
@@ -102,7 +108,8 @@ public class GoldDungeonStructure extends Structure {
                 templateManager,
                 "boss_room",
                 bossPos,
-                rotation
+                rotation,
+                this.processors.bossSettings()
         );
         // We need the tunnel to always be exposed.
         int verticalOffset = this.tunnelFromBossRoom(templateManager, builder, bossRoom, context.chunkGenerator(), context.heightAccessor(), context.randomState());
@@ -137,7 +144,8 @@ public class GoldDungeonStructure extends Structure {
             GoldStub stub = new GoldStub(
                     templateManager,
                     "stub",
-                    stubPos
+                    stubPos,
+                    this.processors.islandSettings()
             );
             builder.addPiece(stub);
         }
@@ -179,7 +187,7 @@ public class GoldDungeonStructure extends Structure {
 
         BlockPos startPos = BlockLogicUtil.tunnelFromOddSquareRoom(room.getBoundingBox(), direction, width);
         startPos = startPos.offset(direction.getStepX() * 3, 1, direction.getStepZ() * 3);
-        GoldTunnel tunnel = new GoldTunnel(templateManager, "tunnel", startPos, rotation);
+        GoldTunnel tunnel = new GoldTunnel(templateManager, "tunnel", startPos, rotation, this.processors.tunnelSettings());
         builder.addPiece(tunnel);
         BlockPos endPos = BlockLogicUtil.tunnelFromEvenSquareRoom(tunnel.getBoundingBox(), direction, tunnel.template().getSize().getX());
 

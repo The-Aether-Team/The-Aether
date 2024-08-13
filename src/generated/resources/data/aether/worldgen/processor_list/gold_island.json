@@ -1,0 +1,13 @@
+{
+  "processors": [
+    {
+      "processor_type": "aether:surface_rule"
+    },
+    {
+      "processor_type": "aether:vertical_gradient"
+    },
+    {
+      "processor_type": "aether:double_drops"
+    }
+  ]
+}
