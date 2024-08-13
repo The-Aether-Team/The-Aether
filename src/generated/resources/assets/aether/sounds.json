@@ -151,13 +151,13 @@
   },
   "entity.cockatrice.ambient": {
     "sounds": [
-      "aether:entity/moa/cockatrice_say"
+      "aether:entity/cockatrice/say"
     ],
     "subtitle": "subtitles.aether.entity.cockatrice.ambient"
   },
   "entity.cockatrice.death": {
     "sounds": [
-      "aether:entity/moa/cockatrice_death"
+      "aether:entity/cockatrice/death"
     ],
     "subtitle": "subtitles.aether.entity.cockatrice.death"
   },
@@ -169,7 +169,7 @@
   },
   "entity.cockatrice.hurt": {
     "sounds": [
-      "aether:entity/moa/cockatrice_hurt"
+      "aether:entity/cockatrice/hurt"
     ],
     "subtitle": "subtitles.aether.entity.cockatrice.hurt"
   },
@@ -196,13 +196,13 @@
   },
   "entity.fire_minion.death": {
     "sounds": [
-      "aether:entity/spirit/baby_die"
+      "aether:entity/minion/death"
     ],
     "subtitle": "subtitles.aether.entity.fire_minion.death"
   },
   "entity.fire_minion.hurt": {
     "sounds": [
-      "aether:entity/spirit/baby_hurt"
+      "aether:entity/minion/hurt"
     ],
     "subtitle": "subtitles.aether.entity.fire_minion.hurt"
   },
@@ -520,7 +520,7 @@
   },
   "entity.sun_spirit.death": {
     "sounds": [
-      "aether:entity/spirit/die"
+      "aether:entity/spirit/death"
     ],
     "subtitle": "subtitles.aether.entity.sun_spirit.death"
   },
@@ -598,22 +598,22 @@
   },
   "entity.valkyrie.death": {
     "sounds": [
-      "aether:entity/angel/death"
+      "aether:entity/valkyrie/death"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie.death"
   },
   "entity.valkyrie.hurt": {
     "sounds": [
-      "aether:entity/angel/hurt",
-      "aether:entity/angel/hurt2",
-      "aether:entity/angel/hurt3"
+      "aether:entity/valkyrie/hurt",
+      "aether:entity/valkyrie/hurt2",
+      "aether:entity/valkyrie/hurt3"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie.hurt"
   },
   "entity.valkyrie.interact": {
     "sounds": [
-      "aether:entity/angel/talk",
-      "aether:entity/angel/talk2"
+      "aether:entity/valkyrie/talk",
+      "aether:entity/valkyrie/talk2"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie.interact"
   },
