@@ -104,7 +104,8 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
                     } else {
                         translationId = "gui.aether.valkyrie.dialog." + (char) (this.getRandom().nextInt(3) + '1');
                     }
-                    this.chat(player, Component.translatable(translationId));
+                    this.chat(player, Component.translatable(translationId), false);
+                    this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
                     this.chatTimer = 60;
                 }
             }
@@ -123,7 +124,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
         boolean result = super.hurt(source, amount);
         if (!this.getLevel().isClientSide() && source.getEntity() instanceof Player player) {
             if (this.getTarget() == null && this.getLevel().getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
-                this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.attack." + (char) (this.getRandom().nextInt(3) + '1')));
+                this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.attack." + (char) (this.getRandom().nextInt(3) + '1')), false);
             }
         }
         return result;
@@ -137,7 +138,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     public boolean doHurtTarget(Entity entity) {
         boolean result = super.doHurtTarget(entity);
         if (entity instanceof ServerPlayer player && player.getHealth() <= 0) {
-            this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.playerdeath." + (char) (this.getRandom().nextInt(3) + '1'), ComponentUtils.getDisplayName(player.getGameProfile())));
+            this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.playerdeath." + (char) (this.getRandom().nextInt(3) + '1'), player.getDisplayName()), false);
         }
         return result;
     }
@@ -149,7 +150,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     @Override
     public void die(DamageSource source) {
         if (source.getEntity() instanceof Player player) {
-            this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.defeated." + (char) (this.getRandom().nextInt(3) + '1')));
+            this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.defeated." + (char) (this.getRandom().nextInt(3) + '1')), false);
         }
         this.spawnExplosionParticles();
         super.die(source);
@@ -206,5 +207,9 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     @Override
     protected SoundEvent getDeathSound() {
         return AetherSoundEvents.ENTITY_VALKYRIE_DEATH.get();
+    }
+
+    protected SoundEvent getInteractSound() {
+        return AetherSoundEvents.ENTITY_VALKYRIE_INTERACT.get();
     }
 }

@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.client.sound.PortalTriggerSoundInstance;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
@@ -405,7 +406,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 */
 	@OnlyIn(Dist.CLIENT)
 	private void playPortalSound(Minecraft minecraft) {
-		minecraft.getSoundManager().play(SimpleSoundInstance.forLocalAmbience(AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.get(), this.getPlayer().getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
+		minecraft.getSoundManager().play(PortalTriggerSoundInstance.forLocalAmbience(player, AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.get(), player.getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
 	}
 
 	/**

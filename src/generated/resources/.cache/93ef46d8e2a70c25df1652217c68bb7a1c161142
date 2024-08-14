@@ -1,4 +1,4 @@
-// 1.19.4	2024-01-01T14:23:34.4647009	Item Models: aether
+// 1.19.4	2024-08-13T17:42:42.3172071	Item Models: aether
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -152,6 +152,7 @@ efdafb22ff9ce0550d5de3490f93d7e5d246fe4f assets/aether/models/item/mossy_holysto
 06d4382138ed6e63f13ce799b854de9b933f398f assets/aether/models/item/music_disc_ascending_dawn.json
 9c6ed4e747204a8beb5115b0429c9aa97583606b assets/aether/models/item/music_disc_chinchilla.json
 55d686cff90f5dfc9d48adfcd47b299e5ce4876c assets/aether/models/item/music_disc_high.json
+d3c2062825f3587c291c1e02981aa419d79cce61 assets/aether/models/item/music_disc_klepto.json
 902b04b2a7f9c6e8e1f4ec322698902ab4f714b6 assets/aether/models/item/nature_staff.json
 f115500cefe2f7db2716be8476bfdbb085159345 assets/aether/models/item/neptune_boots.json
 73a3cc2ad59c8a11882916065f992aa256e7109c assets/aether/models/item/neptune_chestplate.json
