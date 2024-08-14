@@ -1,4 +1,4 @@
-// 1.20.4	2024-05-06T15:12:13.183353	Recipes
+// 1.20.4	2024-08-14T16:40:53.3465423	Recipes
 677229eff00099e5ef402be1ab8f30aed900069d data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 5df758ef8ac62e1c2c9f75056306fd9b4a95cfb0 data/aether/advancements/recipes/building_blocks/aerogel_slab_from_aerogel_stonecutting.json
 e093ed5a0f506d259f063268945b9afeb0e1e046 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -199,6 +199,7 @@ ecda1f1f3c2c03837b24e5ead109f66b12df17e9 data/aether/advancements/recipes/decora
 927d91fb3c72f6dfc43727ae34525b567c253794 data/aether/advancements/recipes/decorations/skyroot_loom.json
 3d01835ed42f7051b2d5c0b81ba25901eff2c376 data/aether/advancements/recipes/decorations/skyroot_sign.json
 a21a31db0083f4d1a8a1ab89bb558dd6a798bb9b data/aether/advancements/recipes/decorations/skyroot_smithing_table.json
+424cb1c11de17af6a29889f9ceb668504748d672 data/aether/advancements/recipes/decorations/swet_banner.json
 e645640441844b5d427bfd106ad215b30f5d3c5a data/aether/advancements/recipes/food/enchanted_berry_enchanting.json
 db56ceff8a31ce75e74c0fb57138e82f26fb4209 data/aether/advancements/recipes/food/healing_stone_enchanting.json
 640c1b2af122e03d9e8fdbc960017742d63c026f data/aether/advancements/recipes/food/moa_egg_cake.json
@@ -626,6 +627,7 @@ f693c86b142ef0588380278317e902fe905ab050 data/aether/recipes/stripped_skyroot_wo
 f85b4440cfc9da0098e1496560d3fc69da042e41 data/aether/recipes/swet_ball_grass_to_podzol.json
 38427776a268076deb848b7648bf98ad2c1145d6 data/aether/recipes/swet_ball_netherrack_to_crimson_nylium.json
 b48f4dd76f79b4f9fa5e82f5dfeea1e533120939 data/aether/recipes/swet_ball_netherrack_to_warped_nylium.json
+bdf401a41ace496340539773f1b58080747bc3b5 data/aether/recipes/swet_banner.json
 82fe4739917bdd977f3d7002c2373cb7529e6f56 data/aether/recipes/swet_lead.json
 1f06cf4e572c80ec320bd9ad6927a6062a4e744d data/aether/recipes/swet_slime_block.json
 209d0a23361db9db689cea6ab0d0f47f0f4c541d data/aether/recipes/swet_sticky_piston.json

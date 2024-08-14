@@ -1,6 +1,7 @@
 package com.aetherteam.aether.entity.monster;
 
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.MountableMob;
@@ -30,6 +31,8 @@ import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
@@ -109,7 +112,34 @@ public class Swet extends Slime implements MountableMob {
     public static boolean checkSwetSpawnRules(EntityType<? extends Swet> swet, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
         return level.getBlockState(pos.below()).is(AetherTags.Blocks.SWET_SPAWNABLE_ON)
                 && level.getRawBrightness(pos, 0) > 8
-                && level.getDifficulty() != Difficulty.PEACEFUL;
+                && level.getDifficulty() != Difficulty.PEACEFUL
+                && (reason != MobSpawnType.NATURAL || !inRadiusOfBanner(level, pos, 10));
+    }
+
+    /**
+     * Checks whether the Swet has a certain type of banner within its radius.
+     *
+     * @param level The {@link LevelAccessor} to check in.
+     * @param pos The starting {@link BlockPos}.
+     * @param radius The {@link Integer} radius around the position.
+     * @return Whether the blocks were found in the radius, as a {@link Boolean}.
+     */
+    private static boolean inRadiusOfBanner(LevelAccessor level, BlockPos pos, int radius) {
+        for (int xOffset = -radius; xOffset <= radius; xOffset++) {
+            for (int zOffset = -radius; zOffset <= radius; zOffset++) {
+                if (xOffset * xOffset + zOffset * zOffset <= radius * radius) {
+                    BlockPos offsetPos = pos.offset(xOffset, 0, zOffset);
+                    if (level.getBlockState(offsetPos).is(Blocks.BLACK_BANNER)) {
+                        if (level.getBlockEntity(offsetPos) instanceof BannerBlockEntity bannerBlockEntity) {
+                            if (AetherBlocks.SWET_BANNER_PATTERN.toListTag().equals(BannerBlockEntity.getItemPatterns(bannerBlockEntity.getItem()))) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**

@@ -170,7 +170,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addBlock(AetherBlocks.FROSTED_ICE, "Frosted Ice");
         this.addBlock(AetherBlocks.UNSTABLE_OBSIDIAN, "Unstable Obsidian");
 
-
+        this.addGeneric("block.aether.swet_banner", "Swet Banner");
+        
         this.addGeneric("loot", "Aether Loot");
 
         this.addItem(AetherItems.SKYROOT_PICKAXE, "Skyroot Pickaxe");
