@@ -5,6 +5,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.nitrogen.entity.BossMob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.block.Blocks;
@@ -97,4 +98,12 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
      */
     @Nullable
     ResourceLocation getBossBarTexture();
+
+    /**
+     * @return The {@link Music} for this boss's fight.
+     */
+    @Nullable
+    default Music getBossMusic() {
+        return null;
+    }
 }

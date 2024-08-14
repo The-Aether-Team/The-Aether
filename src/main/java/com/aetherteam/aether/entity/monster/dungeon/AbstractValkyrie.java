@@ -181,7 +181,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * @param player The interacting {@link Player}.
      * @param message The message {@link Component}.
      */
-    protected void chat(Player player, Component message) {
+    protected void chat(Player player, Component message, boolean sound) {
         player.sendSystemMessage(message);
     }
 

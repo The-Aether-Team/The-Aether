@@ -19,6 +19,7 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> BLOCK_FREEZER_CRACKLE = register("block.freezer.crackle");
 	public static final RegistryObject<SoundEvent> BLOCK_INCUBATOR_CRACKLE = register("block.incubator.crackle");
 
+	public static final RegistryObject<SoundEvent> BLOCK_BLUE_AERCLOUD_BOUNCE = register("block.aercloud.blue_aercloud_bounce");
 	public static final RegistryObject<SoundEvent> BLOCK_DUNGEON_TRAP_TRIGGER = register("block.dungeon_trap.trigger");
 
 	public static final RegistryObject<SoundEvent> WATER_EVAPORATE = register("block.water.evaporate");
@@ -56,6 +57,7 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_ASCENDING_DAWN = register("item.music_disc.ascending_dawn");
 	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_CHINCHILLA = register("item.music_disc.chinchilla");
 	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_HIGH = register("item.music_disc.high");
+	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_KLEPTO = register("item.music_disc.klepto");
 
 	public static final RegistryObject<SoundEvent> ENTITY_PHYG_AMBIENT = register("entity.phyg.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_PHYG_DEATH = register("entity.phyg.death");
@@ -133,13 +135,22 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_HURT = register("entity.slider.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_DEATH = register("entity.slider.death");
 
+	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_INTERACT = register("entity.valkyrie.interact");
 	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_DEATH = register("entity.valkyrie.death");
 	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_HURT = register("entity.valkyrie.hurt");
 
+	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_QUEEN_INTERACT = register("entity.valkyrie_queen.interact");
 	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_QUEEN_DEATH = register("entity.valkyrie_queen.death");
 	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_QUEEN_HURT = register("entity.valkyrie_queen.hurt");
 
+	public static final RegistryObject<SoundEvent> ENTITY_FIRE_MINION_DEATH = register("entity.fire_minion.death");
+	public static final RegistryObject<SoundEvent> ENTITY_FIRE_MINION_HURT = register("entity.fire_minion.hurt");
+
+	public static final RegistryObject<SoundEvent> ENTITY_SUN_SPIRIT_INTERACT = register("entity.sun_spirit.interact");
+	public static final RegistryObject<SoundEvent> ENTITY_SUN_SPIRIT_ACTIVATE = register("entity.sun_spirit.activate");
 	public static final RegistryObject<SoundEvent> ENTITY_SUN_SPIRIT_SHOOT = register("entity.sun_spirit.shoot");
+	public static final RegistryObject<SoundEvent> ENTITY_SUN_SPIRIT_DEATH = register("entity.sun_spirit.death");
+	public static final RegistryObject<SoundEvent> ENTITY_SUN_SPIRIT_HURT = register("entity.sun_spirit.hurt");
 
 	public static final RegistryObject<SoundEvent> ENTITY_CLOUD_MINION_SHOOT = register("entity.cloud_minion.shoot");
 
@@ -154,9 +165,14 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> UI_TOAST_AETHER_GENERAL = register("ui.toast.aether_general");
 	public static final RegistryObject<SoundEvent> UI_TOAST_AETHER_BRONZE = register("ui.toast.aether_bronze");
 	public static final RegistryObject<SoundEvent> UI_TOAST_AETHER_SILVER = register("ui.toast.aether_silver");
+	public static final RegistryObject<SoundEvent> UI_TOAST_AETHER_GOLD = register("ui.toast.aether_gold");
 
 	public static final RegistryObject<SoundEvent> MUSIC_MENU = register("music.menu");
 	public static final RegistryObject<SoundEvent> MUSIC_AETHER = register("music.aether");
+
+	public static final RegistryObject<SoundEvent> MUSIC_BOSS_SLIDER = register("music.boss.slider");
+	public static final RegistryObject<SoundEvent> MUSIC_BOSS_VALKYRIE_QUEEN = register("music.boss.valkyrie_queen");
+	public static final RegistryObject<SoundEvent> MUSIC_BOSS_SUN_SPIRIT = register("music.boss.sun_spirit");
 
 	private static RegistryObject<SoundEvent> register(String location) {
 		return SOUNDS.register(location, () -> new SoundEvent(new ResourceLocation(Aether.MODID, location)));

@@ -2,6 +2,7 @@ package com.aetherteam.aether;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -236,4 +237,16 @@ public class AetherTags {
 //			return TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Aether.MODID, name));
 //		}
 //	}
+
+	public static class SoundEvents {
+		public static final TagKey<SoundEvent> PORTAL_SOUNDS = tag("portal_sounds");
+		public static final TagKey<SoundEvent> AMBIENT_PORTAL_SOUNDS = tag("ambient_portal_sounds");
+		public static final TagKey<SoundEvent> ACTIVATED_PORTAL_SOUNDS = tag("activated_portal_sounds");
+		public static final TagKey<SoundEvent> ACHIEVEMENT_SOUNDS = tag("achievement_sounds");
+		public static final TagKey<SoundEvent> BOSS_MUSIC = tag("boss_music");
+
+		private static TagKey<SoundEvent> tag(String name) {
+			return TagKey.create(Registry.SOUND_EVENT_REGISTRY, new ResourceLocation(Aether.MODID, name));
+		}
+	}
 }

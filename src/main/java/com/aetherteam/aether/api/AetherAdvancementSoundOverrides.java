@@ -25,6 +25,8 @@ public class AetherAdvancementSoundOverrides {
     public static final RegistryObject<AdvancementSoundOverride> GENERAL = ADVANCEMENT_SOUND_OVERRIDES.register("general", () -> new AdvancementSoundOverride(0, advancement -> checkRoot(advancement, new ResourceLocation(Aether.MODID, "enter_aether")), AetherSoundEvents.UI_TOAST_AETHER_GENERAL));
     public static final RegistryObject<AdvancementSoundOverride> BRONZE_DUNGEON = ADVANCEMENT_SOUND_OVERRIDES.register("bronze_dungeon", () -> new AdvancementSoundOverride(10, advancement -> advancement.getId().getPath().equals("bronze_dungeon"), AetherSoundEvents.UI_TOAST_AETHER_BRONZE));
     public static final RegistryObject<AdvancementSoundOverride> SILVER_DUNGEON = ADVANCEMENT_SOUND_OVERRIDES.register("silver_dungeon", () -> new AdvancementSoundOverride(10, advancement -> advancement.getId().getPath().equals("silver_dungeon"), AetherSoundEvents.UI_TOAST_AETHER_SILVER));
+    public static final RegistryObject<AdvancementSoundOverride> GOLD_DUNGEON = ADVANCEMENT_SOUND_OVERRIDES.register("gold_dungeon", () -> new AdvancementSoundOverride(10, advancement -> advancement.getId().getPath().equals("gold_dungeon"), AetherSoundEvents.UI_TOAST_AETHER_GOLD));
+    public static final RegistryObject<AdvancementSoundOverride> EMPTY = ADVANCEMENT_SOUND_OVERRIDES.register("empty", () -> new AdvancementSoundOverride(10, advancement -> advancement.getId().getPath().equals("enter_aether"), () -> null));
 
     @Nullable
     public static AdvancementSoundOverride get(String id) {
