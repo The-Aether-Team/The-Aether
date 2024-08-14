@@ -586,7 +586,7 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_MIMIC_DEATH,
                 definition().with(
-                        sound("minecraft:block/chest/close"),
+                        sound("minecraft:block/chest/close1"),
                         sound("minecraft:block/chest/close2"),
                         sound("minecraft:block/chest/close3")
                 ).subtitle("subtitles.aether.entity.mimic.death")
