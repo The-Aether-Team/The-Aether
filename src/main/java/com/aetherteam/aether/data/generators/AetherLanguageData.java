@@ -637,7 +637,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
         this.addSubtitle("entity", "valkyrie.hurt", "Valkyrie hurts");
 
-        this.addSubtitle("entity", "valkyrie_queen.interact", "Valkyrie speaks");
+        this.addSubtitle("entity", "valkyrie_queen.interact", "Valkyrie Queen speaks");
         this.addSubtitle("entity", "valkyrie_queen.death", "Valkyrie Queen dies");
         this.addSubtitle("entity", "valkyrie_queen.hurt", "Valkyrie Queen hurts");
 

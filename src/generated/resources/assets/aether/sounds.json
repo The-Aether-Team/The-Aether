@@ -272,7 +272,7 @@
   },
   "entity.mimic.death": {
     "sounds": [
-      "block/chest/close1",
+      "block/chest/close",
       "block/chest/close2",
       "block/chest/close3"
     ],
