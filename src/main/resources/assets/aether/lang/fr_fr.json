@@ -15,6 +15,8 @@
   "biome.aether.skyroot_meadow": "Prairie de skyroot",
   "biome.aether.skyroot_woodland": "Bois de skyroot",
   "block.aether.frosted_ice": "Glace givrée",
+  "config.aether.client.audio.blue_aercloud_bounce_sfx": "Fait en sorte que les aéronuages bleus fassent des sons de boing-boing quand on rebondit dessus",
+  "config.aether.client.audio.disable_aether_boss_music": "Désactive la musique de boss de l'Aether, marchant seulement si \"Désactive le manager musical de l'Aether\" est réglé sur \"false\"",
   "config.aether.client.gui.button_accessories_x": "La position X du bouton des accessoires dans le menu prévu à cet effet",
   "config.aether.client.gui.button_accessories_y": "La position Y du bouton des accessoires dans le menu prévu à cet effet",
   "config.aether.client.gui.button_creative_x": "La position X du bouton des accessoires dans le menu créatif",
@@ -46,6 +48,9 @@
   "gui.aether.moa_skins.skin.skeleton_moa": "Moa squelette",
   "item.aether.music_disc_aether_tune.desc": "Noisestorm - Aether Tune",
   "item.aether.music_disc_ascending_dawn.desc": "Emile van Krieken - Ascending Dawn",
+  "item.aether.music_disc_klepto": "Disque de musique terni",
+  "item.aether.music_disc_klepto.desc": "sunsette - klepto",
+  "lore.item.aether.music_disc_klepto": "Un disque de musique qui joue \"klepto\" par sunsette.",
   "lore.item.aether.skyroot_axolotl_bucket": "Un seau d'eau en skyroot contenant un axolotl.",
   "lore.item.aether.skyroot_boat": "Un bateau en skyroot, le bois le plus commun de l'Aether.",
   "lore.item.aether.skyroot_powder_snow_bucket": "Un seau en skyroot contenant de la neige poudreuse.",
@@ -76,5 +81,13 @@
   "lore.item.aether.zanite_pickaxe": "Une pioche plutôt basique, similaire à celle en fer. L'efficacité est de plus en plus remarquable.",
   "lore.item.aether.zanite_ring": "Un anneau en zanite, qui permet au joueur de miner les blocs plus vite.",
   "lore.item.aether.zanite_shovel": "Une pelle plutôt basique, similaire à celle en fer. L'efficacité est de plus en plus remarquable.",
-  "lore.item.aether.zanite_sword": "Une épée plutôt basique, similaire à celle en fer. L'efficacité est de plus en plus remarquable."
+  "lore.item.aether.zanite_sword": "Une épée plutôt basique, similaire à celle en fer. L'efficacité est de plus en plus remarquable.",
+  "subtitles.aether.block.aercloud.blue_aercloud_bounce": "Rebondissements sur un aéronuage bleu",
+  "subtitles.aether.entity.fire_minion.death": "Minion de feu qui meurt",
+  "subtitles.aether.entity.fire_minion.hurt": "Minion de feu prenant des dégâts",
+  "subtitles.aether.entity.sun_spirit.activate": "Bruits de l'Esprit du soleil",
+  "subtitles.aether.entity.sun_spirit.death": "Esprit du soleil qui meurt",
+  "subtitles.aether.entity.sun_spirit.hurt": "Esprit du soleil prenant des dégâts",
+  "subtitles.aether.entity.sun_spirit.interact": "Esprit du soleil qui parle",
+  "subtitles.aether.entity.valkyrie.interact": "Valkyrie qui parle"
 }
