@@ -30,7 +30,8 @@ import java.util.Calendar;
  * Stripped down to only use what is necessary.
  */
 public class ChestMimicRenderer implements BlockEntityRenderer<ChestMimicBlockEntity> {
-	private static final Material LOOTR_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("lootr", "chest"));
+	private static final Material LOOTR_MATERIAL = new Material(Sheets.CHEST_SHEET, new ResourceLocation("lootr", "chest"));
+	private static final Material OLD_LOOTR_MATERIAL = new Material(Sheets.CHEST_SHEET, new ResourceLocation("lootr", "old_chest"));
 	private final ModelPart lid;
 	private final ModelPart bottom;
 	private final ModelPart lock;
@@ -72,7 +73,11 @@ public class ChestMimicRenderer implements BlockEntityRenderer<ChestMimicBlockEn
 	private Material getMaterial(ChestMimicBlockEntity blockEntity) {
 		if (ModList.get().isLoaded("lootr")) {
 			if (!ConfigManager.isVanillaTextures()) {
-				return LOOTR_MATERIAL;
+				if (ConfigManager.isOldTextures()) {
+					return OLD_LOOTR_MATERIAL;
+				} else {
+					return LOOTR_MATERIAL;
+				}
 			}
 		}
 		return Sheets.chooseMaterial(blockEntity, ChestType.SINGLE, this.xmasTextures);
