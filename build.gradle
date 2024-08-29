@@ -143,6 +143,9 @@ dependencies {
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:$rei_version")
     compileOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:$cloth_config_version")
     compileOnly fg.deobf("dev.architectury:architectury-forge:$architectury_version")
+
+    compileOnly fg.deobf("org.violetmoon.quark:Quark:${project.quark_version}")
+    compileOnly fg.deobf("org.violetmoon.zeta:Zeta:${project.zeta_version}")
 }
 
 repositories {

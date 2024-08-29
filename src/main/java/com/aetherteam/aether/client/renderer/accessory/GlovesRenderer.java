@@ -23,6 +23,8 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.ArmorTrim;
+import net.minecraftforge.fml.ModList;
+import org.violetmoon.quark.content.tools.module.ColorRunesModule;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
@@ -91,7 +93,12 @@ public class GlovesRenderer implements ICurioRenderer {
             finalTrimModel.renderToBuffer(poseStack, trimConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         });
         if (stack.hasFoil()) {
-            model.renderToBuffer(poseStack, buffer.getBuffer(RenderType.armorEntityGlint()), packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            RenderType glint = RenderType.armorEntityGlint();
+            if (ModList.get().isLoaded("quark")) {
+                ColorRunesModule.setTargetStack(stack);
+                glint = ColorRunesModule.Client.getArmorEntityGlint();
+            }
+            model.renderToBuffer(poseStack, buffer.getBuffer(glint), packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
 
@@ -142,7 +149,12 @@ public class GlovesRenderer implements ICurioRenderer {
             gloveTrimArm.render(poseStack, trimConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         });
         if (stack.hasFoil()) {
-            gloveArm.render(poseStack, buffer.getBuffer(RenderType.armorEntityGlint()), packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            RenderType glint = RenderType.armorEntityGlint();
+            if (ModList.get().isLoaded("quark")) {
+                ColorRunesModule.setTargetStack(stack);
+                glint = ColorRunesModule.Client.getArmorEntityGlint();
+            }
+            gloveArm.render(poseStack, buffer.getBuffer(glint), packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
 }
