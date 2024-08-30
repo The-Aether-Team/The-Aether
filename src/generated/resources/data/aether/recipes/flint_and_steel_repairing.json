@@ -1,7 +1,7 @@
 {
   "type": "aether:repairing",
   "ingredient": {
-    "item": "minecraft:fishing_rod"
+    "item": "minecraft:flint_and_steel"
   },
   "repairTime": 300
 }
