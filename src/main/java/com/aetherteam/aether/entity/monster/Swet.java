@@ -27,13 +27,16 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BannerBlockEntity;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
@@ -113,7 +116,7 @@ public class Swet extends Slime implements MountableMob {
         return level.getBlockState(pos.below()).is(AetherTags.Blocks.SWET_SPAWNABLE_ON)
                 && level.getRawBrightness(pos, 0) > 8
                 && level.getDifficulty() != Difficulty.PEACEFUL
-                && (reason != MobSpawnType.NATURAL || !inRadiusOfBanner(level, pos, 10));
+                && (reason != MobSpawnType.NATURAL || (!inRadiusOfBanner(level, pos, 10) && !inRadiusOfSwetCape(level, pos, 10)));
     }
 
     /**
@@ -140,6 +143,18 @@ public class Swet extends Slime implements MountableMob {
             }
         }
         return false;
+    }
+
+    /**
+     * Checks whether the Swet has an armor stand with a Swet Cape within its radius.
+     *
+     * @param level The {@link LevelAccessor} to check in.
+     * @param pos The starting {@link BlockPos}.
+     * @param radius The {@link Integer} radius around the position.
+     * @return Whether the entity was found in the radius, as a {@link Boolean}.
+     */
+    private static boolean inRadiusOfSwetCape(LevelAccessor level, BlockPos pos, int radius) {
+        return !level.getEntities(EntityTypeTest.forClass(ArmorStand.class), AABB.ofSize(pos.getCenter(), radius, radius, radius), EquipmentUtil::hasSwetCape).isEmpty();
     }
 
     /**
