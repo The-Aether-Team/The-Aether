@@ -54,6 +54,9 @@ public abstract class AbstractDart extends AbstractArrow {
                 this.discard();
             }
         }
+        if (!this.getLevel().getFluidState(this.blockPosition()).isEmpty()) {
+            this.setNoGravity(false);
+        }
     }
 
     /**
