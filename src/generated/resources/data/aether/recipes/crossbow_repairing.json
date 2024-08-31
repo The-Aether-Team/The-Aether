@@ -1,7 +1,7 @@
 {
   "type": "aether:repairing",
   "ingredient": {
-    "item": "minecraft:bow"
+    "item": "minecraft:crossbow"
   },
   "repairTime": 600
 }
