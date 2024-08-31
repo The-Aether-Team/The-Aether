@@ -6,8 +6,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
@@ -65,7 +63,6 @@ public enum AetherArmorMaterials implements ArmorMaterial {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public String getName() {
 		return this.name;
 	}
