@@ -55,6 +55,9 @@ public abstract class AbstractDart extends AbstractArrow {
                 this.discard();
             }
         }
+        if (this.isInLiquid()) {
+            this.setNoGravity(false);
+        }
     }
 
     /**
