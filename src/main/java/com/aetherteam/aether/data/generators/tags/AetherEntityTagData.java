@@ -83,7 +83,8 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.FIRE_CRYSTAL.get(),
                 AetherEntityTypes.ICE_CRYSTAL.get());
         this.tag(AetherTags.Entities.SLIDER_DAMAGING_PROJECTILES)
-                .addOptional(new ResourceLocation("quark", "pickarang"));
+                .addOptional(new ResourceLocation("quark", "pickarang"))
+                .addOptional(new ResourceLocation("quark", "flamerang"));
 
         // Forge
         this.tag(Tags.EntityTypes.BOSSES).add(
