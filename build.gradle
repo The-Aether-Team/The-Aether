@@ -1,7 +1,9 @@
 import net.minecraftforge.gradle.userdev.tasks.JarJar
 
 plugins {
+    id 'java-library'
     id 'eclipse'
+    id 'idea'
     id 'maven-publish'
     id 'net.neoforged.gradle' version '[6.0.13, 6.2)'
     id 'org.spongepowered.mixin' version '[0.7,0.8)'
@@ -272,4 +274,12 @@ mixin {
 
 build {
     dependsOn 'jarJar'
+}
+
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }
