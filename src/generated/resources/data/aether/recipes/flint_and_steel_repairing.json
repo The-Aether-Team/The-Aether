@@ -1,8 +1,7 @@
 {
   "type": "aether:repairing",
-  "category": "enchanting_repair",
   "ingredient": {
-    "item": "minecraft:fishing_rod"
+    "item": "minecraft:flint_and_steel"
   },
   "repairTime": 300
 }

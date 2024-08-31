@@ -1,8 +1,7 @@
 {
   "type": "aether:repairing",
-  "category": "enchanting_repair",
   "ingredient": {
-    "item": "minecraft:shield"
+    "item": "minecraft:crossbow"
   },
   "repairTime": 600
 }
