@@ -20,8 +20,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fml.ModList;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
+import vazkii.quark.content.tools.module.ColorRunesModule;
 
 public class GlovesRenderer implements ICurioRenderer {
     private final GlovesModel glovesModel;
@@ -66,6 +68,9 @@ public class GlovesRenderer implements ICurioRenderer {
         float green = glovesItem.getColors(stack).getMiddle();
         float blue = glovesItem.getColors(stack).getRight();
 
+        if (ModList.get().isLoaded("quark")) {
+            ColorRunesModule.setTargetStack(stack);
+        }
         VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(texture), false, stack.isEnchanted());
         model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
     }
@@ -88,6 +93,9 @@ public class GlovesRenderer implements ICurioRenderer {
         model.swimAmount = 0.0F;
         model.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 
+        if (ModList.get().isLoaded("quark")) {
+            ColorRunesModule.setTargetStack(stack);
+        }
         GlovesItem glovesItem = (GlovesItem) stack.getItem();
         VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(glovesItem.getGlovesTexture()), false, stack.isEnchanted());
 

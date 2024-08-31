@@ -140,6 +140,9 @@ dependencies {
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:$rei_version")
     compileOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:$cloth_config_version")
     compileOnly fg.deobf("dev.architectury:architectury-forge:$architectury_version")
+
+    compileOnly fg.deobf("vazkii.autoreglib:AutoRegLib:${project.arl_version}")
+    compileOnly fg.deobf("curse.maven:quark-243121:${project.quark_version}")
 }
 
 repositories {
