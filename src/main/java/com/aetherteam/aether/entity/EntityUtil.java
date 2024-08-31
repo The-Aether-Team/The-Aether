@@ -1,13 +1,10 @@
 package com.aetherteam.aether.entity;
 
-import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.mixin.mixins.common.accessor.EntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -16,8 +13,6 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 
 public final class EntityUtil {
     /**
@@ -114,27 +109,5 @@ public final class EntityUtil {
             }
         }
         return flag;
-    }
-
-    /**
-     * Checks whether an entity has a certain type of block within its radius.
-     *
-     * @param level The {@link LevelAccessor} to check in.
-     * @param pos The starting {@link BlockPos}.
-     * @param radius The {@link Integer} radius around the position.
-     * @param blocks The {@link TagKey} of {@link Block}s to check.
-     * @return Whether the blocks were found in the radius, as a {@link Boolean}.
-     */
-    public static boolean inRadiusOf(LevelAccessor level, BlockPos pos, int radius, TagKey<Block> blocks) {
-        for (int xOffset = -radius; xOffset <= radius; xOffset++) {
-            for (int zOffset = -radius; zOffset <= radius; zOffset++) {
-                if (xOffset * xOffset + zOffset * zOffset <= radius * radius) {
-                    if (level.getBlockState(pos.offset(xOffset, 0, zOffset)).is(blocks)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 }

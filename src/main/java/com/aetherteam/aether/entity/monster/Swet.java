@@ -154,7 +154,7 @@ public class Swet extends Slime implements MountableMob {
      * @return Whether the entity was found in the radius, as a {@link Boolean}.
      */
     private static boolean inRadiusOfSwetCape(LevelAccessor level, BlockPos pos, int radius) {
-        return !level.getEntities(EntityTypeTest.forClass(ArmorStand.class), AABB.ofSize(pos.getCenter(), radius, radius, radius), EquipmentUtil::hasSwetCape).isEmpty();
+        return !level.getEntities(EntityTypeTest.forClass(ArmorStand.class), AABB.ofSize(pos.getCenter(), radius * 2, radius * 2, radius * 2), EquipmentUtil::hasSwetCape).isEmpty();
     }
 
     /**
