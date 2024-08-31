@@ -138,10 +138,12 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
      */
     public static boolean inRadiusOfFlowers(LevelAccessor level, BlockPos pos, int radius) {
         for (int xOffset = -radius; xOffset <= radius; xOffset++) {
-            for (int zOffset = -radius; zOffset <= radius; zOffset++) {
-                if (xOffset * xOffset + zOffset * zOffset <= radius * radius) {
-                    if (level.getBlockState(pos.offset(xOffset, 0, zOffset)).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT)) {
-                        return true;
+            for (int yOffset = -radius; yOffset <= radius; yOffset++) {
+                for (int zOffset = -radius; zOffset <= radius; zOffset++) {
+                    if (xOffset * xOffset + zOffset * zOffset <= radius * radius) {
+                        if (level.getBlockState(pos.offset(xOffset, yOffset, zOffset)).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -160,10 +162,12 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
      */
     public static boolean inRadiusOfEnchantedFlowers(LevelAccessor level, BlockPos pos, int radius) {
         for (int xOffset = -radius; xOffset <= radius; xOffset++) {
-            for (int zOffset = -radius; zOffset <= radius; zOffset++) {
-                if (xOffset * xOffset + zOffset * zOffset <= radius * radius) {
-                    if (level.getBlockState(pos.offset(xOffset, 0, zOffset)).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT) && level.getBlockState(pos.offset(xOffset, 0, zOffset).below()).is(AetherTags.Blocks.ENCHANTED_GRASS)) {
-                        return true;
+            for (int yOffset = -radius; yOffset <= radius; yOffset++) {
+                for (int zOffset = -radius; zOffset <= radius; zOffset++) {
+                    if (xOffset * xOffset + zOffset * zOffset <= radius * radius) {
+                        if (level.getBlockState(pos.offset(xOffset, yOffset, zOffset)).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT) && level.getBlockState(pos.offset(xOffset, yOffset, zOffset).below()).is(AetherTags.Blocks.ENCHANTED_GRASS)) {
+                            return true;
+                        }
                     }
                 }
             }

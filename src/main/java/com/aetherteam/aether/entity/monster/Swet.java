@@ -129,13 +129,15 @@ public class Swet extends Slime implements MountableMob {
      */
     private static boolean inRadiusOfBanner(LevelAccessor level, BlockPos pos, int radius) {
         for (int xOffset = -radius; xOffset <= radius; xOffset++) {
-            for (int zOffset = -radius; zOffset <= radius; zOffset++) {
-                if (xOffset * xOffset + zOffset * zOffset <= radius * radius) {
-                    BlockPos offsetPos = pos.offset(xOffset, 0, zOffset);
-                    if (level.getBlockState(offsetPos).is(Blocks.BLACK_BANNER)) {
-                        if (level.getBlockEntity(offsetPos) instanceof BannerBlockEntity bannerBlockEntity) {
-                            if (AetherBlocks.SWET_BANNER_PATTERN.toListTag().equals(BannerBlockEntity.getItemPatterns(bannerBlockEntity.getItem()))) {
-                                return true;
+            for (int yOffset = -radius; yOffset <= radius; yOffset++) {
+                for (int zOffset = -radius; zOffset <= radius; zOffset++) {
+                    if (xOffset * xOffset + yOffset * yOffset + zOffset * zOffset <= radius * radius) {
+                        BlockPos offsetPos = pos.offset(xOffset, yOffset, zOffset);
+                        if (level.getBlockState(offsetPos).is(Blocks.BLACK_BANNER)) {
+                            if (level.getBlockEntity(offsetPos) instanceof BannerBlockEntity bannerBlockEntity) {
+                                if (AetherBlocks.SWET_BANNER_PATTERN.toListTag().equals(BannerBlockEntity.getItemPatterns(bannerBlockEntity.getItem()))) {
+                                    return true;
+                                }
                             }
                         }
                     }
