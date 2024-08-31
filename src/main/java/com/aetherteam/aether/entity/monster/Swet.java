@@ -116,7 +116,7 @@ public class Swet extends Slime implements MountableMob {
         return level.getBlockState(pos.below()).is(AetherTags.Blocks.SWET_SPAWNABLE_ON)
                 && level.getRawBrightness(pos, 0) > 8
                 && level.getDifficulty() != Difficulty.PEACEFUL
-                && (reason != MobSpawnType.NATURAL || (!inRadiusOfBanner(level, pos, 10) && !inRadiusOfSwetCape(level, pos, 10)));
+                && (reason != MobSpawnType.NATURAL || (!inRadiusOfBanner(level, pos, 40) && !inRadiusOfSwetCape(level, pos, 40)));
     }
 
     /**
