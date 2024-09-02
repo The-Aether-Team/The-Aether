@@ -655,8 +655,12 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         return AetherSoundEvents.ENTITY_SUN_SPIRIT_ACTIVATE.get();
     }
 
-    protected SoundEvent getShootSound() {
-        return AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT.get();
+    protected SoundEvent getShootFireSound() {
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT_FIRE.get();
+    }
+
+    protected SoundEvent getShootIceSound() {
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT_ICE.get();
     }
 
     @Nullable
@@ -873,10 +877,11 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             if (--this.crystalCount <= 0) {
                 crystal = new IceCrystal(this.sunSpirit.level(), this.sunSpirit);
                 this.crystalCount = ICE_CRYSTAL_SHOOT_COUNT_INTERVAL; //TODO RANDOM?
+                this.sunSpirit.playSound(this.sunSpirit.getShootIceSound(), 3.0F, this.sunSpirit.level().getRandom().nextFloat() - this.sunSpirit.level().getRandom().nextFloat() * 0.2F + 1.2F);
             } else {
                 crystal = new FireCrystal(this.sunSpirit.level(), this.sunSpirit);
+                this.sunSpirit.playSound(this.sunSpirit.getShootFireSound(), 3.0F, this.sunSpirit.level().getRandom().nextFloat() - this.sunSpirit.level().getRandom().nextFloat() * 0.2F + 1.2F);
             }
-            this.sunSpirit.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level().getRandom().nextFloat() - this.sunSpirit.level().getRandom().nextFloat() * 0.2F + 1.2F);
             this.sunSpirit.level().addFreshEntity(crystal);
             this.shootCrystalInterval = SHOOT_CRYSTAL_INTERVAL;
         }
