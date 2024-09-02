@@ -71,6 +71,7 @@ public class AetherTags {
         public static final TagKey<Item> SENTRY_BLOCKS = tag("sentry_blocks");
         public static final TagKey<Item> ANGELIC_BLOCKS = tag("angelic_blocks");
         public static final TagKey<Item> HELLFIRE_BLOCKS = tag("hellfire_blocks");
+        public static final TagKey<Item> AECHOR_PLANT_SPAWNABLE_DETERRENT = tag("aechor_plant_spawnable_deterrent");
 
         public static final TagKey<Item> CRAFTS_SKYROOT_PLANKS = tag("crafts_skyroot_planks");
         public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");

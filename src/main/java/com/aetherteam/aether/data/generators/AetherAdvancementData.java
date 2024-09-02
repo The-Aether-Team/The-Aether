@@ -155,6 +155,26 @@ public class AetherAdvancementData extends AdvancementProvider {
                     .addCriterion("aechor_petal", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.AECHOR_PETAL.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "obtain_petal"), existingFileHelper);
 
+            AdvancementHolder preventAechorPlantSpawning = Advancement.Builder.advancement()
+                .parent(obtainPetal)
+                .display(AetherBlocks.PURPLE_FLOWER.get(),
+                    Component.translatable("advancement.aether.prevent_aechor_petal_spawning"),
+                    Component.translatable("advancement.aether.prevent_aechor_petal_spawning.desc"),
+                    null,
+                    AdvancementType.TASK, true, true, false)
+                .addCriterion("place_flower", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(AetherTags.Blocks.ENCHANTED_GRASS)), ItemPredicate.Builder.item().of(AetherTags.Items.AECHOR_PLANT_SPAWNABLE_DETERRENT)))
+                .save(consumer, new ResourceLocation(Aether.MODID, "prevent_aechor_petal_spawning"), existingFileHelper);
+
+            AdvancementHolder preventSwetSpawning = Advancement.Builder.advancement()
+                .parent(preventAechorPlantSpawning)
+                .display(AetherItems.createSwetBannerItemStack(),
+                    Component.translatable("advancement.aether.prevent_swet_spawning"),
+                    Component.translatable("advancement.aether.prevent_swet_spawning.desc"),
+                    null,
+                    AdvancementType.TASK, true, true, false)
+                .addCriterion("place_banner", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location(), ItemPredicate.Builder.item().of(Items.BLACK_BANNER).hasNbt(AetherItems.createSwetBannerItemStack().getTag())))
+                .save(consumer, new ResourceLocation(Aether.MODID, "prevent_swet_spawning"), existingFileHelper);
+
             AdvancementHolder incubateMoa = Advancement.Builder.advancement()
                     .parent(obtainEgg)
                     .display(AetherBlocks.INCUBATOR.get(),

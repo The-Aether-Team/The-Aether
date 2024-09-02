@@ -171,7 +171,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addBlock(AetherBlocks.UNSTABLE_OBSIDIAN, "Unstable Obsidian");
 
         this.addGeneric("block.aether.swet_banner", "Swet Banner");
-        
+
         this.addGeneric("loot", "Aether Loot");
 
         this.addItem(AetherItems.SKYROOT_PICKAXE, "Skyroot Pickaxe");
@@ -478,6 +478,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addAdvancement("blue_aercloud", "To Infinity and Beyond!");
         this.addAdvancement("obtain_egg", "Don't Count Your Moas...");
         this.addAdvancement("obtain_petal", "Baby Food");
+        this.addAdvancement("prevent_aechor_petal_spawning", "Tending The Garden");
+        this.addAdvancement("prevent_swet_spawning", "Get Off My Lawn!");
         this.addAdvancement("incubate_moa", "... Until They hatch!");
         this.addAdvancement("black_moa", "Let's Fly!");
         this.addAdvancement("zanite", "Exotic Hardware");
@@ -507,6 +509,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addAdvancementDesc("blue_aercloud", "Bounce on a Blue Aercloud");
         this.addAdvancementDesc("obtain_egg", "Obtain a Moa Egg");
         this.addAdvancementDesc("obtain_petal", "Harvest an Aechor Petal from an Aechor Plant");
+        this.addAdvancementDesc("prevent_aechor_petal_spawning", "Deter Aechor Plants by planting a flower on Enchanted Grass");
+        this.addAdvancementDesc("prevent_swet_spawning", "Deter Swets by placing down a Swet Banner");
         this.addAdvancementDesc("incubate_moa", "Incubate a Moa");
         this.addAdvancementDesc("black_moa", "Ride a Black Moa");
         this.addAdvancementDesc("zanite", "Have a Zanite Gemstone in your inventory");
