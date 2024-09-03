@@ -1,1 +1,9 @@
-{}
+{
+  "advancement.aether.craft_altar.desc": "Membuat sebuah Penyihir",
+  "aether.pro_tips.line.aether.altar_repairing": "Penyihir boleh membaikan dan juga meningkatkan pelbagai peralatan.",
+  "aether.pro_tips.line.aether.ambrosium_shard_fuel": "Serpihan Ambrosium bagus digunakan sebagai bahan pengisi Penyihir.",
+  "block.aether.altar": "Penyihir",
+  "lore.aether.blue_berry": "Dinuai daripada Belukar Beri, ia adalah sumber makanan biasa di dalam Aether. Ia ada memulih laparan yang lemah. Anda boleh pesonakannya dengan sebuah Penyihir untuk memberi memulih laparan yang lebih baik.",
+  "menu.aether.altar": "Penyihir",
+  "subtitles.aether.block.altar.crackle": "Penyihir kerisik"
+}
