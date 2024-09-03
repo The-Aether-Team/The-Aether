@@ -3,6 +3,10 @@
     {
       "id": "quark:pickarang",
       "required": false
+    },
+    {
+      "id": "quark:flamerang",
+      "required": false
     }
   ]
 }

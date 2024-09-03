@@ -1,0 +1,10 @@
+{
+  "processors": [
+    {
+      "processor_type": "aether:double_drops"
+    },
+    {
+      "processor_type": "aether:boss_room"
+    }
+  ]
+}

@@ -4,6 +4,11 @@
   "biomes": "#aether:has_gold_dungeon",
   "islandFoliage": "aether:gold_dungeon_island_foliage",
   "minY": 40,
+  "processor_settings": {
+    "boss_room_processors": "aether:gold_boss_room",
+    "island_processors": "aether:gold_island",
+    "tunnel_processors": "aether:gold_tunnel"
+  },
   "rangeY": 60,
   "spawn_overrides": {
     "aether_aerwhale": {

@@ -12,6 +12,7 @@ import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -29,20 +30,19 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.*;
  * This is the throne room for fighting the Valkyrie Queen.
  */
 public class SilverBossRoom extends SilverDungeonPiece {
-    public SilverBossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-        super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), manager, name, SilverBossRoom.makeSettings(manager, SilverDungeonPiece.makeLocation(name)).setRotation(rotation), pos);
+    public SilverBossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation, Holder<StructureProcessorList> processors) {
+        super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), manager, name, SilverBossRoom.makeSettings(manager, SilverDungeonPiece.makeLocation(name)).setRotation(rotation), pos, processors);
         this.setOrientation(rotation.rotate(Direction.SOUTH));
     }
 
     public SilverBossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> SilverBossRoom.makeSettings(context.structureTemplateManager(), new ResourceLocation(tag.getString("Template"))));
+        super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), context.registryAccess(), tag, context.structureTemplateManager(), resourceLocation -> SilverBossRoom.makeSettings(context.structureTemplateManager(), new ResourceLocation(tag.getString("Template"))));
     }
 
     private static StructurePlaceSettings makeSettings(StructureTemplateManager templateManager, ResourceLocation name) {
         return new StructurePlaceSettings()
+                // TODO: convert to datagen somehow, maybe with a new StructureProcessor type
                 .addProcessor(makeBoxProcessor(templateManager, name))
-                .addProcessor(DoubleDropsProcessor.INSTANCE)
-                .addProcessor(BossRoomProcessor.INSTANCE)
                 .setFinalizeEntities(true);
     }
 

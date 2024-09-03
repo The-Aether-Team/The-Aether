@@ -1,0 +1,45 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:protected_blocks",
+      "value": "#aether:non_tunnel_replaceable"
+    },
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "input_predicate": {
+            "block": "aether:carved_stone",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "aether:sentry_stone"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "aether:holystone",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "aether:mossy_holystone",
+            "Properties": {
+              "double_drops": "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "aether:double_drops"
+    }
+  ]
+}

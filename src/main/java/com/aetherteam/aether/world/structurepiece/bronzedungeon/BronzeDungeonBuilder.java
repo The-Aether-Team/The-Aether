@@ -5,6 +5,7 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.world.BlockLogicUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
@@ -39,6 +41,7 @@ public class BronzeDungeonBuilder {
     private final Structure.GenerationContext context;
     private final StructureTemplateManager manager;
     private final RandomSource random;
+    private final BronzeProcessorSettings processors;
 
     private final int nodeWidth;
     private final int edgeWidth;
@@ -48,10 +51,11 @@ public class BronzeDungeonBuilder {
     private final List<StructurePiece> nodes = new ArrayList<>();
     private final Map<StructurePiece, Map<Direction, Connection>> edges = new HashMap<>();
 
-    public BronzeDungeonBuilder(Structure.GenerationContext context, int maxSize) {
+    public BronzeDungeonBuilder(Structure.GenerationContext context, int maxSize, BronzeProcessorSettings processors) {
         this.context = context;
         this.manager = context.structureTemplateManager();
         this.random = context.random();
+        this.processors = processors;
 
         Vec3i nodeSize = context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/chest_room")).getSize();
         this.nodeWidth = nodeSize.getX();
@@ -70,13 +74,13 @@ public class BronzeDungeonBuilder {
         if (rotation == null) { // The space may not be big enough for multiple rooms. If so, stop trying.
             return;
         }
-        BronzeBossRoom bossRoom = new BronzeBossRoom(this.manager, "boss_room", startPos, rotation);
+        BronzeBossRoom bossRoom = new BronzeBossRoom(this.manager, "boss_room", startPos, rotation, this.processors.bossSettings());
         Direction direction = bossRoom.getOrientation();
         if (direction != null) {
             BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(bossRoom.getBoundingBox().moved(0, 2, 0), direction, this.edgeWidth);
-            BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, bossRoom.getRotation());
+            BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, bossRoom.getRotation(), this.processors.roomSettings());
             pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
-            BronzeDungeonRoom chestRoom = new BronzeDungeonRoom(manager, "chest_room", pos, hallway.getRotation());
+            BronzeDungeonRoom chestRoom = new BronzeDungeonRoom(manager, "chest_room", pos, hallway.getRotation(), this.processors.roomSettings());
 
             this.nodes.add(bossRoom);
             this.nodes.add(chestRoom);
@@ -124,9 +128,9 @@ public class BronzeDungeonBuilder {
             } else {
                 BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(currentNode.getBoundingBox(), direction, this.edgeWidth);
 
-                BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, rotation);
+                BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, rotation, this.processors.roomSettings());
                 pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
-                BronzeDungeonRoom room = new BronzeDungeonRoom(this.manager, roomName, pos, rotation);
+                BronzeDungeonRoom room = new BronzeDungeonRoom(this.manager, roomName, pos, rotation, this.processors.roomSettings());
                 StructurePiece collisionPiece = StructurePiece.findCollisionPiece(this.nodes, room.getBoundingBox());
 
                 if (this.isCloseToCenter(chunkPos, room.templatePosition()) && this.isCoveredAtPos(room.getBoundingBox())) {
@@ -227,7 +231,7 @@ public class BronzeDungeonBuilder {
     public boolean buildTunnelFromRoom(StructurePiece connectedRoom, List<StructurePiece> list, Rotation rotation, Direction direction, BlockPos origin) {
         StructureTemplate template = this.manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/entrance"));
         BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(connectedRoom.getBoundingBox(), direction, template.getSize().getX());
-        BronzeDungeonRoom entrance = new BronzeDungeonRoom(this.manager, "entrance", startPos, rotation);
+        BronzeDungeonRoom entrance = new BronzeDungeonRoom(this.manager, "entrance", startPos, rotation, this.processors.roomSettings());
         list.add(entrance);
         startPos = startPos.relative(direction);
 
@@ -238,7 +242,7 @@ public class BronzeDungeonBuilder {
         int i = 0;
         do {
             pos = startPos.relative(direction, i);
-            BronzeTunnel tunnel = new BronzeTunnel(this.manager, "end_corridor", pos, rotation);
+            BronzeTunnel tunnel = new BronzeTunnel(this.manager, "end_corridor", pos, rotation, this.processors.tunnelSettings());
 
             // Skip the connected piece, since the tunnel will be digging into it.
             StructurePiece col = null;

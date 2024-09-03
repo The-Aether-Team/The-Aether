@@ -326,6 +326,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
         this.addItem(AetherItems.MUSIC_DISC_HIGH, "Super Music Disc");
         this.addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
+        this.addItem(AetherItems.MUSIC_DISC_KLEPTO, "Blackened Music Disc");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_KLEPTO, "sunsette - klepto");
 
         this.addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         this.addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");
@@ -540,6 +542,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addSubtitle("block", "altar.crackle", "Altar crackles");
         this.addSubtitle("block", "freezer.crackle", "Freezer crackles");
         this.addSubtitle("block", "incubator.crackle", "Incubator crackles");
+        this.addSubtitle("block", "aercloud.blue_aercloud_bounce", "Blue Aercloud wobbles");
         this.addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
         this.addSubtitle("block", "water.evaporate", "Water evaporated");
 
@@ -641,13 +644,22 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addSubtitle("entity", "slider.hurt", "Slider hurts");
         this.addSubtitle("entity", "slider.death", "Slider breaks");
 
+        this.addSubtitle("entity", "valkyrie.interact", "Valkyrie speaks");
         this.addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
         this.addSubtitle("entity", "valkyrie.hurt", "Valkyrie hurts");
 
+        this.addSubtitle("entity", "valkyrie_queen.interact", "Valkyrie Queen speaks");
         this.addSubtitle("entity", "valkyrie_queen.death", "Valkyrie Queen dies");
         this.addSubtitle("entity", "valkyrie_queen.hurt", "Valkyrie Queen hurts");
 
+        this.addSubtitle("entity", "fire_minion.death", "Fire Minion dies");
+        this.addSubtitle("entity", "fire_minion.hurt", "Fire Minion hurts");
+
+        this.addSubtitle("entity", "sun_spirit.interact", "Sun Spirit speaks");
+        this.addSubtitle("entity", "sun_spirit.activate", "Sun Spirit rumbles");
         this.addSubtitle("entity", "sun_spirit.shoot", "Sun Spirit shoots");
+        this.addSubtitle("entity", "sun_spirit.death", "Sun Spirit dies");
+        this.addSubtitle("entity", "sun_spirit.hurt", "Sun Spirit hurts");
 
         this.addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
 
@@ -803,7 +815,11 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.blue_moa", "Blue Moa");
         this.addMoaSkinsText("skin.white_moa", "White Moa");
         this.addMoaSkinsText("skin.black_moa", "Black Moa");
-        this.addMoaSkinsText("skin.classic_moa", "Classic Moa");
+        this.addMoaSkinsText("skin.orange_moa", "Orange Moa");
+        this.addMoaSkinsText("skin.brown_moa", "Brown Moa");
+        this.addMoaSkinsText("skin.red_moa", "Red Moa");
+        this.addMoaSkinsText("skin.green_moa", "Green Moa");
+        this.addMoaSkinsText("skin.purple_moa", "Purple Moa");
         this.addMoaSkinsText("skin.boko_yellow", "Boko Yellow");
         this.addMoaSkinsText("skin.crookjaw_purple", "Crookjaw Purple");
         this.addMoaSkinsText("skin.gharrix_red", "Gharrix Red");
@@ -814,6 +830,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.construction_bot", "Construction Bot");
         this.addMoaSkinsText("skin.mossy_statue_moa", "Mossy Statue Moa");
         this.addMoaSkinsText("skin.chicken_moa", "Chicken Moa");
+        this.addMoaSkinsText("skin.medical_bot", "Medical Bot");
+        this.addMoaSkinsText("skin.skeleton_moa", "Skeleton Moa");
         this.addMoaSkinsText("skin.arctic_moa", "Arctic Moa");
         this.addMoaSkinsText("skin.cockatrice_moa", "Cockatrice");
         this.addMoaSkinsText("skin.phoenix_moa", "Phoenix Moa");
@@ -824,6 +842,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.molten_moa", "Molten Moa");
         this.addMoaSkinsText("skin.undead_moa", "Undead Moa");
         this.addMoaSkinsText("skin.stratus", "Stratus");
+        this.addMoaSkinsText("skin.peacock_moa", "Peacock Moa");
+        this.addMoaSkinsText("skin.prehistoric_moa", "Prehistoric Moa");
+
 
         this.addMoaSkinsText("tooltip.title.access.pledging", "Pledge Access");
         this.addMoaSkinsText("tooltip.title.access.lifetime", "Lifetime Access");
@@ -1148,6 +1169,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "A music disc that plays \"Ascending Dawn\" by Emile van Krieken.");
         this.addLore(AetherItems.MUSIC_DISC_CHINCHILLA, "A music disc that plays \"chinchilla\" by RENREN.");
         this.addLore(AetherItems.MUSIC_DISC_HIGH, "A music disc that plays \"high\" by RENREN.");
+        this.addLore(AetherItems.MUSIC_DISC_KLEPTO, "A music disc that plays \"klepto\" by sunsette.");
         this.addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point, it vanished from existence. It's said this was actually Jeb's hammer at one point.");
         this.addLoreUnique("item.aether.swet_banner", "A decorative banner with the likeness of a Swet. By placing this down you can prevent them from appearing around your home.");
 
@@ -1232,6 +1254,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addServerConfig("multiplayer", "balance_invisibility_cloak", "Makes the Invisibility Cloak more balanced in PVP by disabling equipment invisibility temporarily after attacks");
         this.addServerConfig("multiplayer", "invisibility_visibility_time", "Sets the time in ticks that it takes for the player to become fully invisible again after attacking when wearing an Invisibility Cloak; only works with 'Balance Invisibility Cloak for PVP'");
         this.addServerConfig("multiplayer", "sun_altar_whitelist", "Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server");
+        this.addServerConfig("multiplayer", "sun_altar_dimensions", "Configures what dimensions are able to have their time changed by the Sun Altar");
 
         this.addServerConfig("modpack", "spawn_in_aether", "Spawns the player in the Aether dimension; this is best enabled alongside other modpack configuration to avoid issues");
         this.addServerConfig("modpack", "disable_aether_portal", "Prevents the Aether Portal from being created normally in the mod");
@@ -1281,9 +1304,11 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addClientConfig("gui", "layout_perks_y", "The y-coordinate of the perks button layout when in the pause menu");
         this.addClientConfig("gui", "enable_hammer_cooldown_overlay", "Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown");
 
+        this.addClientConfig("audio", "blue_aercloud_bounce_sfx", "Makes Blue Aerclouds have their wobbly sounds that play when bouncing on them");
         this.addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         this.addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         this.addClientConfig("audio", "disable_music_manager", "Disables the Aether's internal music manager, if true, this overrides all other audio configs");
+        this.addClientConfig("audio", "disable_aether_boss_music", "Disables the Aether's boss fight music, only works if 'Disables Aether music manager' is false");
         this.addClientConfig("audio", "disable_aether_menu_music", "Disables the Aether's menu music in case another mod implements its own, only works if 'Disables Aether music manager' is false");
         this.addClientConfig("audio", "disable_vanilla_world_preview_menu_music", "Disables the menu music on the vanilla world preview menu, only works if 'Disables Aether music manager' is false");
         this.addClientConfig("audio", "disable_aether_world_preview_menu_music", "Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false");

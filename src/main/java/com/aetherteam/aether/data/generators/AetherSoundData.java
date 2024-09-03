@@ -15,14 +15,14 @@ public class AetherSoundData extends SoundDefinitionsProvider {
     public void registerSounds() {
         // Blocks
         this.add(AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT,
-                definition().with(sound("minecraft:portal/portal").attenuationDistance(10))
+                definition().with(sound("aether:portal/portal").attenuationDistance(10))
                         .subtitle("subtitles.aether.block.aether_portal.ambient")
         );
         this.add(AetherSoundEvents.BLOCK_AETHER_PORTAL_TRAVEL,
-                definition().with(sound("minecraft:portal/travel"))
+                definition().with(sound("aether:portal/travel"))
         );
         this.add(AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER,
-                definition().with(sound("minecraft:portal/trigger"))
+                definition().with(sound("aether:portal/trigger"))
                         .subtitle("subtitles.aether.block.aether_portal.trigger")
         );
         this.add(AetherSoundEvents.BLOCK_CHEST_MIMIC_OPEN,
@@ -55,6 +55,10 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                         sound("minecraft:block/furnace/fire_crackle4"),
                         sound("minecraft:block/furnace/fire_crackle5")
                 ).subtitle("subtitles.aether.block.incubator.crackle")
+        );
+        this.add(AetherSoundEvents.BLOCK_BLUE_AERCLOUD_BOUNCE,
+            definition().with(sound("aether:block/aercloud/blue_aercloud_bounce"))
+                .subtitle("subtitles.aether.block.aercloud.blue_aercloud_bounce")
         );
         this.add(AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER,
                 definition().with(
@@ -275,6 +279,10 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         this.add(AetherSoundEvents.ITEM_MUSIC_DISC_HIGH,
                 definition().with(sound("aether:item/records/high").stream())
         );
+        this.add(AetherSoundEvents.ITEM_MUSIC_DISC_KLEPTO,
+            definition().with(sound("aether:item/records/klepto").stream())
+        );
+
 
 
         //Entities
@@ -389,11 +397,11 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                         .subtitle("subtitles.aether.entity.moa.ambient")
         );
         this.add(AetherSoundEvents.ENTITY_MOA_DEATH,
-                definition().with(sound("aether:entity/moa/say"))
+                definition().with(sound("aether:entity/moa/death"))
                         .subtitle("subtitles.aether.entity.moa.death")
         );
         this.add(AetherSoundEvents.ENTITY_MOA_HURT,
-                definition().with(sound("aether:entity/moa/say"))
+                definition().with(sound("aether:entity/moa/hurt"))
                         .subtitle("subtitles.aether.entity.moa.hurt")
         );
         this.add(AetherSoundEvents.ENTITY_MOA_SADDLE,
@@ -434,8 +442,10 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                         .subtitle("subtitles.aether.entity.aerbunny.death")
         );
         this.add(AetherSoundEvents.ENTITY_AERBUNNY_HURT,
-                definition().with(sound("aether:entity/aerbunny/hurt"))
-                        .subtitle("subtitles.aether.entity.aerbunny.hurt")
+                definition().with(
+                    sound("aether:entity/aerbunny/hurt"),
+                    sound("aether:entity/aerbunny/hurt2")
+                ).subtitle("subtitles.aether.entity.aerbunny.hurt")
         );
         this.add(AetherSoundEvents.ENTITY_AERBUNNY_LIFT,
                 definition().with(sound("aether:entity/aerbunny/lift"))
@@ -503,15 +513,15 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                         .subtitle("subtitles.aether.entity.cockatrice.shoot")
         );
         this.add(AetherSoundEvents.ENTITY_COCKATRICE_AMBIENT,
-                definition().with(sound("aether:entity/moa/say"))
+                definition().with(sound("aether:entity/cockatrice/say"))
                         .subtitle("subtitles.aether.entity.cockatrice.ambient")
         );
         this.add(AetherSoundEvents.ENTITY_COCKATRICE_DEATH,
-                definition().with(sound("aether:entity/moa/say"))
+                definition().with(sound("aether:entity/cockatrice/death"))
                         .subtitle("subtitles.aether.entity.cockatrice.death")
         );
         this.add(AetherSoundEvents.ENTITY_COCKATRICE_HURT,
-                definition().with(sound("aether:entity/moa/say"))
+                definition().with(sound("aether:entity/cockatrice/hurt"))
                         .subtitle("subtitles.aether.entity.cockatrice.hurt")
         );
         this.add(AetherSoundEvents.ENTITY_COCKATRICE_FLAP,
@@ -523,15 +533,17 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                         .subtitle("subtitles.aether.entity.zephyr.shoot")
         );
         this.add(AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT,
-                definition().with(sound("aether:entity/zephyr/call"))
-                        .subtitle("subtitles.aether.entity.zephyr.ambient")
+                definition().with(
+                    sound("aether:entity/zephyr/call"),
+                    sound("aether:entity/zephyr/call2")
+                ).subtitle("subtitles.aether.entity.zephyr.ambient")
         );
         this.add(AetherSoundEvents.ENTITY_ZEPHYR_DEATH,
-                definition().with(sound("aether:entity/zephyr/call"))
+                definition().with(sound("aether:entity/zephyr/death"))
                         .subtitle("subtitles.aether.entity.zephyr.death")
         );
         this.add(AetherSoundEvents.ENTITY_ZEPHYR_HURT,
-                definition().with(sound("aether:entity/zephyr/call"))
+                definition().with(sound("aether:entity/zephyr/hurt"))
                         .subtitle("subtitles.aether.entity.zephyr.hurt")
         );
         this.add(AetherSoundEvents.ENTITY_SENTRY_DEATH,
@@ -640,33 +652,66 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                 definition().with(sound("aether:entity/slider/death"))
                         .subtitle("subtitles.aether.entity.slider.death")
         );
+        this.add(AetherSoundEvents.ENTITY_VALKYRIE_INTERACT,
+            definition().with(sound("aether:entity/valkyrie/talk"),
+                    sound("aether:entity/valkyrie/talk2"))
+                .subtitle("subtitles.aether.entity.valkyrie.interact")
+        );
         this.add(AetherSoundEvents.ENTITY_VALKYRIE_DEATH,
-                definition().with(sound("damage/hit1"),
-                                sound("damage/hit2"),
-                                sound("damage/hit3"))
+                definition().with(sound("aether:entity/valkyrie/death"))
                         .subtitle("subtitles.aether.entity.valkyrie.death")
         );
         this.add(AetherSoundEvents.ENTITY_VALKYRIE_HURT,
-                definition().with(sound("damage/hit1"),
-                                sound("damage/hit2"),
-                                sound("damage/hit3"))
+                definition().with(sound("aether:entity/valkyrie/hurt"),
+                                sound("aether:entity/valkyrie/hurt2"),
+                                sound("aether:entity/valkyrie/hurt3"))
                         .subtitle("subtitles.aether.entity.valkyrie.hurt")
         );
+        this.add(AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_INTERACT,
+            definition().with(sound("aether:entity/queen/talk"),
+                    sound("aether:entity/queen/talk2"))
+                .subtitle("subtitles.aether.entity.valkyrie_queen.interact")
+        );
         this.add(AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_DEATH,
-                definition().with(sound("damage/hit1"),
-                                sound("damage/hit2"),
-                                sound("damage/hit3"))
+            definition().with(sound("aether:entity/queen/death"))
                         .subtitle("subtitles.aether.entity.valkyrie_queen.death")
         );
         this.add(AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_HURT,
-                definition().with(sound("damage/hit1"),
-                                sound("damage/hit2"),
-                                sound("damage/hit3"))
+            definition().with(sound("aether:entity/queen/hurt"),
+                    sound("aether:entity/queen/hurt2"),
+                    sound("aether:entity/queen/hurt3"))
                         .subtitle("subtitles.aether.entity.valkyrie_queen.hurt")
+        );
+        this.add(AetherSoundEvents.ENTITY_FIRE_MINION_DEATH,
+            definition().with(sound("aether:entity/minion/death"))
+                .subtitle("subtitles.aether.entity.fire_minion.death")
+        );
+        this.add(AetherSoundEvents.ENTITY_FIRE_MINION_HURT,
+            definition().with(sound("aether:entity/minion/hurt"))
+                .subtitle("subtitles.aether.entity.fire_minion.hurt")
+        );
+        this.add(AetherSoundEvents.ENTITY_SUN_SPIRIT_INTERACT,
+            definition().with(sound("aether:entity/spirit/talk1"),
+                    sound("aether:entity/spirit/talk2"),
+                    sound("aether:entity/spirit/talk3"),
+                    sound("aether:entity/spirit/talk4"))
+                .subtitle("subtitles.aether.entity.sun_spirit.interact")
+        );
+        this.add(AetherSoundEvents.ENTITY_SUN_SPIRIT_ACTIVATE,
+            definition().with(sound("aether:entity/spirit/wake"))
+                .subtitle("subtitles.aether.entity.sun_spirit.activate")
         );
         this.add(AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT,
                 definition().with(sound("minecraft:mob/ghast/fireball4"))
                         .subtitle("subtitles.aether.entity.sun_spirit.shoot")
+        );
+        this.add(AetherSoundEvents.ENTITY_SUN_SPIRIT_DEATH,
+            definition().with(sound("aether:entity/spirit/death"))
+                .subtitle("subtitles.aether.entity.sun_spirit.death")
+        );
+        this.add(AetherSoundEvents.ENTITY_SUN_SPIRIT_HURT,
+            definition().with(sound("aether:entity/spirit/hurt"))
+                .subtitle("subtitles.aether.entity.sun_spirit.hurt")
         );
         this.add(AetherSoundEvents.ENTITY_CLOUD_MINION_SHOOT,
                 definition().with(sound("aether:entity/zephyr/shoot"))
@@ -717,6 +762,9 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         this.add(AetherSoundEvents.UI_TOAST_AETHER_SILVER,
                 definition().with(sound("aether:achievement/achievement_silver").stream())
         );
+        this.add(AetherSoundEvents.UI_TOAST_AETHER_GOLD,
+            definition().with(sound("aether:achievement/achievement_gold").stream())
+        );
 
 
         //Music
@@ -731,6 +779,15 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                         sound("aether:music/aether4").stream(),
                         sound("aether:music/aether5").stream()
                 )
+        );
+        this.add(AetherSoundEvents.MUSIC_BOSS_SLIDER,
+            definition().with(sound("aether:music/boss/slider_fight").stream())
+        );
+        this.add(AetherSoundEvents.MUSIC_BOSS_VALKYRIE_QUEEN,
+            definition().with(sound("aether:music/boss/valkyrie_queen_fight").stream())
+        );
+        this.add(AetherSoundEvents.MUSIC_BOSS_SUN_SPIRIT,
+            definition().with(sound("aether:music/boss/sun_spirit_fight").stream())
         );
     }
 }

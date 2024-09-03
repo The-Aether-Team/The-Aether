@@ -5,6 +5,11 @@
   "biomes": "#aether:has_silver_dungeon",
   "maxY": 128,
   "minY": 35,
+  "processor_settings": {
+    "boss_room_processors": "aether:silver_boss_room",
+    "floor_processors": "aether:silver_floor",
+    "generic_room_processors": "aether:silver_room"
+  },
   "rangeY": 70,
   "spawn_overrides": {
     "aether_aerwhale": {

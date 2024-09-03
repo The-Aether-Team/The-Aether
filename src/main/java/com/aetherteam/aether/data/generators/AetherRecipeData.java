@@ -642,6 +642,8 @@ public class AetherRecipeData extends AetherRecipeProvider {
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.GOLDEN_GLOVES.get(), AetherItems.GOLDEN_PENDANT.get(), AetherItems.GOLDEN_RING.get(), AetherItems.VICTORY_MEDAL.get()), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 100).unlockedBy("has_golden_gloves", has(AetherItems.GOLDEN_GLOVES.get())).unlockedBy("has_golden_pendant", has(AetherItems.GOLDEN_PENDANT.get())).unlockedBy("has_golden_ring", has(AetherItems.GOLDEN_RING.get())).unlockedBy("has_victory_medal", has(AetherItems.VICTORY_MEDAL.get())).group(getBlastingRecipeName(Items.GOLD_NUGGET)).save(consumer, this.name("aether_" + getBlastingRecipeName(Items.GOLD_NUGGET)));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.IRON_GLOVES.get(), AetherItems.IRON_PENDANT.get(), AetherItems.IRON_RING.get(), AetherItems.CHAINMAIL_GLOVES.get()), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 100).unlockedBy("has_iron_gloves", has(AetherItems.IRON_GLOVES.get())).unlockedBy("has_iron_pendant", has(AetherItems.IRON_PENDANT.get())).unlockedBy("has_iron_ring", has(AetherItems.IRON_RING.get())).unlockedBy("has_chainmail_gloves", has(AetherItems.CHAINMAIL_GLOVES.get())).group(getBlastingRecipeName(Items.IRON_NUGGET)).save(consumer, this.name("aether_" + getBlastingRecipeName(Items.IRON_NUGGET)));
 
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(Items.MUSIC_DISC_STAL), RecipeCategory.MISC, AetherItems.MUSIC_DISC_KLEPTO, 1.0F, 200).unlockedBy("has_disc", has(AetherItems.MUSIC_DISC_KLEPTO.get())).save(consumer, this.name("klepto_smelting"));
+
 
         this.stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.CARVED_WALL.get(), AetherBlocks.CARVED_STONE.get());
         this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_STAIRS.get(), AetherBlocks.CARVED_STONE.get());
@@ -693,10 +695,12 @@ public class AetherRecipeData extends AetherRecipeProvider {
         this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AEROGEL_SLAB.get(), AetherBlocks.AEROGEL.get(), 2);
 
 
-        this.repairingRecipe(RecipeCategory.TOOLS, Items.FISHING_ROD, 600).save(consumer, this.name("fishing_rod_repairing"));
-        this.repairingRecipe(RecipeCategory.COMBAT, Items.BOW, 4000).save(consumer, this.name("bow_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.FISHING_ROD, 300).save(consumer, this.name("fishing_rod_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.FLINT_AND_STEEL, 300).save(consumer, this.name("flint_and_steel_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.BOW, 600).save(consumer, this.name("bow_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.CROSSBOW, 600).save(consumer, this.name("crossbow_repairing"));
 
-        this.repairingRecipe(RecipeCategory.COMBAT, Items.SHIELD, 3000).save(consumer, this.name("shield_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.SHIELD, 600).save(consumer, this.name("shield_repairing"));
 
         this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_PICKAXE.get(), 250).group("altar_pickaxe_repair").save(consumer, this.name("skyroot_pickaxe_repairing"));
         this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_AXE.get(), 250).group("altar_axe_repair").save(consumer, this.name("skyroot_axe_repairing"));

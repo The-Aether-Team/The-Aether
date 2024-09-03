@@ -1,7 +1,9 @@
 import net.neoforged.gradle.common.tasks.JarJar
 
 plugins {
+    id 'java-library'
     id 'eclipse'
+    id 'idea'
     id 'maven-publish'
     id 'net.neoforged.gradle.userdev' version '7.0.97'
     id 'io.github.0ffz.github-packages' version '[1,2)'

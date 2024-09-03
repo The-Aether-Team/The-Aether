@@ -35,6 +35,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
@@ -50,6 +51,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -66,11 +68,22 @@ import net.neoforged.neoforge.event.EventHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<ValkyrieQueen>, NpcDialogue, IEntityWithComplexSpawn {
     private static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
+    private static final Music VALKYRIE_QUEEN_MUSIC = new Music(AetherSoundEvents.MUSIC_BOSS_VALKYRIE_QUEEN, 0, 0, true);
+    public static final Map<Block, Function<BlockState, BlockState>> DUNGEON_BLOCK_CONVERSIONS = Map.ofEntries(
+        Map.entry(AetherBlocks.LOCKED_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.ANGELIC_STONE.get().defaultBlockState()),
+        Map.entry(AetherBlocks.TRAPPED_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.ANGELIC_STONE.get().defaultBlockState()),
+        Map.entry(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState()),
+        Map.entry(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState()),
+        Map.entry(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get(), (blockState) -> Blocks.AIR.defaultBlockState()),
+        Map.entry(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, blockState.getValue(HorizontalDirectionalBlock.FACING)))
+    );
 
     /**
      * Boss health bar manager
@@ -88,7 +101,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     public ValkyrieQueen(EntityType<? extends ValkyrieQueen> type, Level level) {
         super(type, level);
-        this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
+        this.bossFight = (ServerBossEvent) new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS).setPlayBossMusic(true);
         this.setBossFight(false);
         this.xpReward = XP_REWARD_BOSS;
         this.setPathfindingMalus(AetherBlockPathTypes.BOSS_DOORWAY, -1.0F); // Prevents the Queen from leaving the boss room.
@@ -263,12 +276,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
+                            this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
                             PacketRelay.sendToPlayer(new QueenDialoguePacket(this.getId()), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                         }
                     }
                 } else {
-                    this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.ready"));
+                    this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.ready"), true);
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -300,11 +314,11 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID) {
             case 0: // Responds to the player's question of where they are.
-                this.chat(player, Component.translatable("gui.aether.queen.dialog.answer"));
+                this.chat(player, Component.translatable("gui.aether.queen.dialog.answer"), true);
                 break;
             case 1: // Tells the players nearby to ready up for a fight.
                 if (this.level().getDifficulty() == Difficulty.PEACEFUL) { // Check for peaceful mode.
-                    this.chat(player, Component.translatable("gui.aether.queen.dialog.peaceful"));
+                    this.chat(player, Component.translatable("gui.aether.queen.dialog.peaceful"), true);
                 } else {
                     if (player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get()) >= 10) { // Checks for Victory Medals.
                         this.readyUp();
@@ -322,16 +336,16 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                             if (count <= 0) break;
                         }
                     } else {
-                        this.chat(player, Component.translatable("gui.aether.queen.dialog.no_medals"));
+                        this.chat(player, Component.translatable("gui.aether.queen.dialog.no_medals"), true);
                     }
                 }
                 break;
             case 2: // Deny fight.
-                this.chat(player, Component.translatable("gui.aether.queen.dialog.deny_fight"));
+                this.chat(player, Component.translatable("gui.aether.queen.dialog.deny_fight"), true);
                 break;
             case 3:
             default: // Goodbye.
-                this.chat(player, Component.translatable("gui.aether.queen.dialog.goodbye"));
+                this.chat(player, Component.translatable("gui.aether.queen.dialog.goodbye"), true);
                 break;
         }
         this.setConversingPlayer(null);
@@ -342,7 +356,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      */
     public void readyUp() {
         MutableComponent message = Component.translatable("gui.aether.queen.dialog.begin");
-        this.chatWithNearby(message);
+        this.chatWithNearby(message, true);
         this.setReady(true);
     }
 
@@ -351,9 +365,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      *
      * @param message The message {@link Component}.
      */
-    protected void chatWithNearby(Component message) {
+    protected void chatWithNearby(Component message, boolean sound) {
         AABB room = this.dungeon == null ? this.getBoundingBox().inflate(16) : this.dungeon.roomBounds();
-        this.level().getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> this.chat(player, message));
+        this.level().getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> this.chat(player, message, sound));
     }
 
     /**
@@ -363,8 +377,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * @param message The message {@link Component}.
      */
     @Override
-    protected void chat(Player player, Component message) {
+    protected void chat(Player player, Component message, boolean sound) {
         player.sendSystemMessage(Component.literal("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message));
+        this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
     }
 
     /**
@@ -384,7 +399,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) {
                     if (super.hurt(source, amount) && this.getHealth() > 0) {
                         if (!this.level().isClientSide() && !this.isBossFight()) {
-                            this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"));
+                            this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"), false);
                             this.setBossFight(true);
                             if (this.getDungeon() != null) {
                                 this.closeRoom();
@@ -413,7 +428,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public boolean doHurtTarget(Entity entity) {
         boolean result = super.doHurtTarget(entity);
         if (entity instanceof ServerPlayer player && player.getHealth() <= 0) {
-            this.chat(player, Component.translatable("gui.aether.queen.dialog.playerdeath"));
+            this.chat(player, Component.translatable("gui.aether.queen.dialog.playerdeath"), true);
         }
         return result;
     }
@@ -441,7 +456,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public void die(DamageSource source) {
         if (!this.level().isClientSide) {
             this.bossFight.setProgress(this.getHealth() / this.getMaxHealth()); // Forces an update to the boss health meter.
-            this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.defeated"));
+            this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.defeated"), false);
             this.spawnExplosionParticles();
             if (this.getDungeon() != null) {
                 this.getDungeon().grantAdvancements(source);
@@ -481,19 +496,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Nullable
     @Override
     public BlockState convertBlock(BlockState state) {
-        if (state.is(AetherBlocks.LOCKED_ANGELIC_STONE.get()) || state.is(AetherBlocks.TRAPPED_ANGELIC_STONE.get())) {
-            return AetherBlocks.ANGELIC_STONE.get().defaultBlockState();
-        }
-        if (state.is(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get()) || state.is(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get())) {
-            return AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState();
-        }
-        if (state.is(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get())) {
-            return Blocks.AIR.defaultBlockState();
-        }
-        if (state.is(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get())) {
-            return AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING));
-        }
-        return null;
+        return DUNGEON_BLOCK_CONVERSIONS.getOrDefault(state.getBlock(), (blockState) -> null).apply(state);
     }
 
     /**
@@ -644,6 +647,15 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     }
 
     /**
+     * @return The {@link Music} for this boss's fight.
+     */
+    @Nullable
+    @Override
+    public Music getBossMusic() {
+        return VALKYRIE_QUEEN_MUSIC;
+    }
+
+    /**
      * Sets the bounds of the entire Silver Dungeon.
      *
      * @param dungeonBounds The {@link AABB} bounds.
@@ -683,6 +695,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public void setCustomName(@Nullable Component pName) {
         super.setCustomName(pName);
         this.setBossName(pName);
+    }
+
+    protected SoundEvent getInteractSound() {
+        return AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_INTERACT.get();
     }
 
     @Override

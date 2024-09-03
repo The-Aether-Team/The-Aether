@@ -5,6 +5,7 @@ import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -14,26 +15,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 /**
  * A normal Bronze Dungeon room or hallway.
  */
 public class BronzeDungeonRoom extends BronzeDungeonPiece {
-    public BronzeDungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), manager, name, BronzeDungeonRoom.makeSettings().setRotation(rotation), pos);
+    public BronzeDungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation, Holder<StructureProcessorList> processors) {
+        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), manager, name, new StructurePlaceSettings().setRotation(rotation), pos, processors);
     }
 
     public BronzeDungeonRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> BronzeDungeonRoom.makeSettings());
-    }
-
-    static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings()
-                .addProcessor(BronzeDungeonPiece.BRONZE_DUNGEON_STONE)
-                .addProcessor(BronzeDungeonPiece.TRAPPED_CARVED_STONE)
-                .addProcessor(BronzeDungeonPiece.AVOID_DUNGEONS)
-                .addProcessor(DoubleDropsProcessor.INSTANCE);
+        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), context.registryAccess(), tag, context.structureTemplateManager(), resourceLocation -> new StructurePlaceSettings());
     }
 
     @Override
