@@ -1,6 +1,38 @@
 {
   "parent": "aether:obtain_petal",
   "criteria": {
+    "enchant_grass": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "tag": "aether:enchanted_grass"
+              }
+            }
+          },
+          {
+            "condition": "minecraft:location_check",
+            "offsetY": 1,
+            "predicate": {
+              "block": {
+                "tag": "aether:aechor_plant_spawnable_deterrent"
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": [
+                "aether:ambrosium_shard"
+              ]
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    },
     "place_flower": {
       "conditions": {
         "location": [
@@ -36,7 +68,8 @@
   },
   "requirements": [
     [
-      "place_flower"
+      "place_flower",
+      "enchant_grass"
     ]
   ],
   "sends_telemetry_event": true
