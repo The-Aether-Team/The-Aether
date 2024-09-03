@@ -623,6 +623,12 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy("has_pumpkin", has(Blocks.PUMPKIN))
                 .save(consumer, this.name("moa_egg_pumpkin_pie"));
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, AetherItems.createSwetBannerItemStack())
+            .requires(ItemTags.BANNERS)
+            .requires(AetherItems.SWET_CAPE.get())
+            .unlockedBy("has_swet_cape", has(AetherItems.SWET_CAPE.get()))
+            .save(consumer, this.name("swet_banner"));
+
 
         this.smeltingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, this.name("ambrosium_shard_from_smelting"));
         this.blastingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, this.name("ambrosium_shard_from_blasting"));

@@ -1,0 +1,43 @@
+{
+  "parent": "aether:prevent_aechor_petal_spawning",
+  "criteria": {
+    "place_banner": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {}
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": [
+                "minecraft:black_banner"
+              ],
+              "nbt": "{BlockEntityTag:{Patterns:[{Color:9,Pattern:\"dls\"},{Color:9,Pattern:\"bs\"},{Color:9,Pattern:\"ls\"},{Color:15,Pattern:\"hh\"},{Color:9,Pattern:\"sc\"},{Color:0,Pattern:\"bo\"},{Color:3,Pattern:\"gru\"},{Color:3,Pattern:\"gra\"}],id:\"minecraft:banner\"},HideFlags:32,display:{Name:'{\"translate\":\"aether.block.aether.swet_banner\",\"color\":\"gold\"}'}}"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.prevent_swet_spawning.desc"
+    },
+    "icon": {
+      "item": "minecraft:black_banner",
+      "nbt": "{BlockEntityTag:{Patterns:[{Color:9,Pattern:\"dls\"},{Color:9,Pattern:\"bs\"},{Color:9,Pattern:\"ls\"},{Color:15,Pattern:\"hh\"},{Color:9,Pattern:\"sc\"},{Color:0,Pattern:\"bo\"},{Color:3,Pattern:\"gru\"},{Color:3,Pattern:\"gra\"}],id:\"minecraft:banner\"},HideFlags:32,display:{Name:'{\"translate\":\"aether.block.aether.swet_banner\",\"color\":\"gold\"}'}}"
+    },
+    "title": {
+      "translate": "advancement.aether.prevent_swet_spawning"
+    }
+  },
+  "requirements": [
+    [
+      "place_banner"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
