@@ -1,1 +1,11 @@
-{}
+{
+  "advancement.aether.craft_altar.desc": "Membuat sebuah Pempesona",
+  "aether.pro_tips.line.aether.altar_repairing": "Pempesona boleh membaikan dan juga pesonakan pelbagai peralatan.",
+  "aether.pro_tips.line.aether.ambrosium_shard_fuel": "Serpihan Ambrosium bagus digunakan sebagai bahan pengisi Pempesona.",
+  "block.aether.altar": "Pempesona",
+  "lore.aether.blue_berry": "Dinuai daripada Belukar Beri, ia adalah sumber makanan biasa di dalam Aether. Ia ada memulih laparan yang lemah. Anda boleh pesonakannya dengan sebuah Pempesona untuk memberi memulih laparan yang lebih baik.",
+  "lore.aether.enchanted_gravitite": "Selepas letak Bijih Gravitite ke dalam Pempesona dan pesonakannya, anda akan dapat Gravitite Terpesona. Ia boleh digunakan untuk membuat pelbagai peralatan dan zirah Gravitite. Apabila dikuasakan dengan signal Redstone, blok-blok Gravitite Terpesona akan terapung ke dalam udara, sama seperti Bijih Gravitite.",
+  "lore.aether.golden_dart_shooter": "Sebuah Penembak Damak yang menembak Damak Emas, pesonakan dengan Pempesona akan menaik taraf kuasanya!",
+  "menu.aether.altar": "Pempesona",
+  "subtitles.aether.block.altar.crackle": "Pempesona kerisik"
+}
