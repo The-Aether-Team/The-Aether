@@ -1,0 +1,38 @@
+{
+  "parent": "aether:obtain_petal",
+  "criteria": {
+    "place_flower": {
+      "conditions": {
+        "item": {
+          "tag": "aether:aechor_plant_spawnable_deterrent"
+        },
+        "location": {
+          "block": {
+            "tag": "aether:enchanted_grass"
+          }
+        }
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.aether.prevent_aechor_petal_spawning.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:purple_flower"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.prevent_aechor_petal_spawning"
+    }
+  },
+  "requirements": [
+    [
+      "place_flower"
+    ]
+  ]
+}

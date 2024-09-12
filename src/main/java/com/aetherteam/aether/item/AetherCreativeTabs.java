@@ -187,6 +187,7 @@ public class AetherCreativeTabs {
                             output.accept(AetherBlocks.TREASURE_CHEST.get());
                             output.accept(AetherBlocks.CHEST_MIMIC.get());
                             output.accept(AetherBlocks.PRESENT.get());
+                            output.accept(AetherItems.createSwetBannerItemStack());
                         }));
         AETHER_REDSTONE_BLOCKS = event.registerCreativeModeTab(
                 new ResourceLocation(Aether.MODID, "redstone_blocks"),

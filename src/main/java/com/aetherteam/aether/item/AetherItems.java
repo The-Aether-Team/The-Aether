@@ -2,6 +2,7 @@ package com.aetherteam.aether.item;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.api.AetherMoaTypes;
+import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.accessories.cape.AgilityCapeItem;
@@ -54,6 +55,7 @@ import com.aetherteam.aether.item.tools.zanite.ZaniteHoeItem;
 import com.aetherteam.aether.item.tools.zanite.ZanitePickaxeItem;
 import com.aetherteam.aether.item.tools.zanite.ZaniteShovelItem;
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -65,6 +67,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
@@ -303,5 +306,14 @@ public class AetherItems {
 		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.TROPICAL_FISH_BUCKET, AetherItems.SKYROOT_TROPICAL_FISH_BUCKET);
 		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.AXOLOTL_BUCKET, AetherItems.SKYROOT_AXOLOTL_BUCKET);
 		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.TADPOLE_BUCKET, AetherItems.SKYROOT_TADPOLE_BUCKET);
+	}
+
+	public static ItemStack createSwetBannerItemStack() {
+		ItemStack bannerStack = new ItemStack(Items.BLACK_BANNER).setHoverName(Component.translatable("aether.block.aether.swet_banner").withStyle(ChatFormatting.GOLD));
+		CompoundTag tag = new CompoundTag();
+		tag.put("Patterns", AetherBlocks.SWET_BANNER_PATTERN.toListTag());
+		BlockItem.setBlockEntityData(bannerStack, BlockEntityType.BANNER, tag);
+		bannerStack.hideTooltipPart(ItemStack.TooltipPart.ADDITIONAL);
+		return bannerStack;
 	}
 }

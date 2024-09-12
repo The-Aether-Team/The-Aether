@@ -1,4 +1,4 @@
-// 1.19.4	2024-08-13T17:42:42.3212072	Tags for minecraft:item mod id aether
+// 1.19.4	2024-09-11T20:18:28.2543481	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -7,6 +7,7 @@ cd6129430937fd4b57b84a64be78f993ba915b85 data/aether/tags/items/accessories_glov
 dfabf018a03431c6925f20338e5f5b105beacae6 data/aether/tags/items/accessories_pendants.json
 cd70d1f5f10c0f6f5aaa22bcd218352b3a14cb69 data/aether/tags/items/accessories_rings.json
 3f9727bd2367c552a68056fe20cf61a448d0e81e data/aether/tags/items/accessories_shields.json
+04c3617fbc472d94c5befb6664262911a296e0de data/aether/tags/items/aechor_plant_spawnable_deterrent.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/items/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/items/aerogel.json

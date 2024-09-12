@@ -15,6 +15,7 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.HoeItemAccessor;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.commands.CommandFunction;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
@@ -24,6 +25,8 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
 
@@ -154,6 +157,27 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                             FrameType.TASK, true, true, false)
                     .addCriterion("aechor_petal", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.AECHOR_PETAL.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID,"obtain_petal"), existingFileHelper);
+
+            Advancement preventAechorPlantSpawning = Advancement.Builder.advancement()
+                    .parent(obtainPetal)
+                    .display(AetherBlocks.PURPLE_FLOWER.get(),
+                            Component.translatable("advancement.aether.prevent_aechor_petal_spawning"),
+                            Component.translatable("advancement.aether.prevent_aechor_petal_spawning.desc"),
+                            null,
+                            FrameType.TASK, true, true, false)
+                    .requirements(RequirementsStrategy.OR)
+                    .addCriterion("place_flower", ItemInteractWithBlockTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(AetherTags.Blocks.ENCHANTED_GRASS).build()), ItemPredicate.Builder.item().of(AetherTags.Items.AECHOR_PLANT_SPAWNABLE_DETERRENT)))
+                    .save(consumer, new ResourceLocation(Aether.MODID, "prevent_aechor_petal_spawning"), existingFileHelper);
+
+            Advancement preventSwetSpawning = Advancement.Builder.advancement()
+                    .parent(preventAechorPlantSpawning)
+                    .display(AetherItems.createSwetBannerItemStack(),
+                            Component.translatable("advancement.aether.prevent_swet_spawning"),
+                            Component.translatable("advancement.aether.prevent_swet_spawning.desc"),
+                            null,
+                            FrameType.TASK, true, true, false)
+                    .addCriterion("place_banner", ItemInteractWithBlockTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location(), ItemPredicate.Builder.item().of(Items.BLACK_BANNER).hasNbt(AetherItems.createSwetBannerItemStack().getTag())))
+                    .save(consumer, new ResourceLocation(Aether.MODID, "prevent_swet_spawning"), existingFileHelper);
 
             Advancement incubateMoa = Advancement.Builder.advancement()
                     .parent(obtainEgg)
