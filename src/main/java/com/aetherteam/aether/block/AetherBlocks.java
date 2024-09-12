@@ -30,6 +30,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -47,6 +49,16 @@ import java.util.function.Supplier;
 
 public class AetherBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Aether.MODID);
+
+    public static final BannerPattern.Builder SWET_BANNER_PATTERN = new BannerPattern.Builder()
+            .addPattern(BannerPatterns.STRIPE_DOWNLEFT, DyeColor.CYAN)
+            .addPattern(BannerPatterns.STRIPE_BOTTOM, DyeColor.CYAN)
+            .addPattern(BannerPatterns.STRIPE_LEFT, DyeColor.CYAN)
+            .addPattern(BannerPatterns.HALF_HORIZONTAL, DyeColor.BLACK)
+            .addPattern(BannerPatterns.STRAIGHT_CROSS, DyeColor.CYAN)
+            .addPattern(BannerPatterns.BORDER, DyeColor.WHITE)
+            .addPattern(BannerPatterns.GRADIENT_UP, DyeColor.LIGHT_BLUE)
+            .addPattern(BannerPatterns.GRADIENT, DyeColor.LIGHT_BLUE);
 
     public static final RegistryObject<AetherPortalBlock> AETHER_PORTAL = BLOCKS.register("aether_portal", () -> new AetherPortalBlock(Block.Properties.copy(Blocks.NETHER_PORTAL)));
 

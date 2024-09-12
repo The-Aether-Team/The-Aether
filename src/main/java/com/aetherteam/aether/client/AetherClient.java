@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.repository.PackRepository;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterEntitySpectatorShadersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -84,6 +85,7 @@ public class AetherClient {
      */
     public static void registerLoreOverrides() {
         LoreBookMenu.addLoreEntryOverride(stack -> stack.is(AetherItems.HAMMER_OF_KINGBDOGZ.get()) && stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb"), "lore.item.aether.hammer_of_jeb");
+        LoreBookMenu.addLoreEntryOverride(stack -> ItemStack.isSameItemSameTags(stack, AetherItems.createSwetBannerItemStack()), "lore.item.aether.swet_banner");
     }
 
     /**
