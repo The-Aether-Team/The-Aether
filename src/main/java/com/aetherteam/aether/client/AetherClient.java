@@ -16,6 +16,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
@@ -81,6 +82,7 @@ public class AetherClient {
      */
     public static void registerLoreOverrides() {
         LoreBookMenu.addLoreEntryOverride(stack -> stack.is(AetherItems.HAMMER_OF_KINGBDOGZ.get()) && stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb"), "lore.item.aether.hammer_of_jeb");
+        LoreBookMenu.addLoreEntryOverride(stack -> ItemStack.isSameItemSameTags(stack, AetherItems.createSwetBannerItemStack()), "lore.item.aether.swet_banner");
     }
 
     /**

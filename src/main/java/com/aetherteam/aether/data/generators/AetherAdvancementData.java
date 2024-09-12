@@ -15,6 +15,7 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.HoeItemAccessor;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.commands.CommandFunction;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
@@ -24,6 +25,8 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -155,6 +158,28 @@ public class AetherAdvancementData extends AdvancementProvider {
                             FrameType.TASK, true, true, false)
                     .addCriterion("aechor_petal", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.AECHOR_PETAL.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID,"obtain_petal"), existingFileHelper);
+
+            AdvancementHolder preventAechorPlantSpawning = Advancement.Builder.advancement()
+                    .parent(obtainPetal)
+                    .display(AetherBlocks.PURPLE_FLOWER.get(),
+                            Component.translatable("advancement.aether.prevent_aechor_petal_spawning"),
+                            Component.translatable("advancement.aether.prevent_aechor_petal_spawning.desc"),
+                            null,
+                            FrameType.TASK, true, true, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("place_flower", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(AetherTags.Blocks.ENCHANTED_GRASS)), ItemPredicate.Builder.item().of(AetherTags.Items.AECHOR_PLANT_SPAWNABLE_DETERRENT)))
+                    .addCriterion("enchant_grass", itemUsedOnBlockCheckAbove(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(AetherTags.Blocks.ENCHANTED_GRASS)), LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT)), ItemPredicate.Builder.item().of(AetherItems.AMBROSIUM_SHARD.get())))
+                    .save(consumer, new ResourceLocation(Aether.MODID, "prevent_aechor_petal_spawning"), existingFileHelper);
+
+            AdvancementHolder preventSwetSpawning = Advancement.Builder.advancement()
+                    .parent(preventAechorPlantSpawning)
+                    .display(AetherItems.createSwetBannerItemStack(),
+                            Component.translatable("advancement.aether.prevent_swet_spawning"),
+                            Component.translatable("advancement.aether.prevent_swet_spawning.desc"),
+                            null,
+                            FrameType.TASK, true, true, false)
+                    .addCriterion("place_banner", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location(), ItemPredicate.Builder.item().of(Items.BLACK_BANNER).hasNbt(AetherItems.createSwetBannerItemStack().getTag())))
+                    .save(consumer, new ResourceLocation(Aether.MODID, "prevent_swet_spawning"), existingFileHelper);
 
             AdvancementHolder incubateMoa = Advancement.Builder.advancement()
                     .parent(obtainEgg)
@@ -351,5 +376,14 @@ public class AetherAdvancementData extends AdvancementProvider {
                     .addCriterion("aether_sleep", CriteriaTriggers.SLEPT_IN_BED.createCriterion(new PlayerTrigger.TriggerInstance(Optional.of(EntityPredicate.wrap(EntityPredicate.Builder.entity().located(LocationPredicate.Builder.inDimension(AetherDimensions.AETHER_LEVEL)))))))
                     .save(consumer, new ResourceLocation(Aether.MODID, "aether_sleep"), existingFileHelper);
         }
+    }
+
+    private static ItemUsedOnLocationTrigger.TriggerInstance itemUsedOnLocationCheckAbove(LocationPredicate.Builder location, LocationPredicate.Builder above, ItemPredicate.Builder item) {
+        ContextAwarePredicate contextawarepredicate = ContextAwarePredicate.create(LocationCheck.checkLocation(location).build(), LocationCheck.checkLocation(above, BlockPos.ZERO.above()).build(), MatchTool.toolMatches(item).build());
+        return new ItemUsedOnLocationTrigger.TriggerInstance(Optional.empty(), Optional.of(contextawarepredicate));
+    }
+
+    public static Criterion<ItemUsedOnLocationTrigger.TriggerInstance> itemUsedOnBlockCheckAbove(LocationPredicate.Builder location, LocationPredicate.Builder above, ItemPredicate.Builder item) {
+        return CriteriaTriggers.ITEM_USED_ON_BLOCK.createCriterion(itemUsedOnLocationCheckAbove(location, above, item));
     }
 }

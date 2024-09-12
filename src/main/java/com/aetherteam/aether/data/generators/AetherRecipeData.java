@@ -7,6 +7,7 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.providers.AetherRecipeProvider;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.MinMaxBounds;
@@ -623,6 +624,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy("has_pumpkin", has(Blocks.PUMPKIN))
                 .save(consumer, this.name("moa_egg_pumpkin_pie"));
 
+        SpecialRecipeBuilder.special(AetherRecipeSerializers.SWET_BANNER.get()).save(consumer, "swet_banner");
 
 
         this.smeltingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, this.name("ambrosium_shard_from_smelting"));
