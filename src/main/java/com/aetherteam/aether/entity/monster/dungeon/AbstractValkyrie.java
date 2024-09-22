@@ -47,8 +47,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * Goal for targeting in groups of entities
      */
     private MostDamageTargetGoal mostDamageTargetGoal;
-    private double lastMotionY;
     private int lungeCooldown = 0;
+    protected double lastMotionY;
 
     public AbstractValkyrie(EntityType<? extends AbstractValkyrie> type, Level level) {
         super(type, level);
@@ -58,7 +58,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     public void registerGoals() {
         this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
-        this.goalSelector.addGoal(3, new LungeGoal(this, 0.65));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 0.65, true));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
@@ -69,7 +68,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.25)
                 .add(Attributes.MOVEMENT_SPEED, 0.5);
     }
 
@@ -87,10 +85,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         super.tick();
         if (this.onGround()) {
             this.setEntityOnGround(true);
-        }
-        double motionY = this.getDeltaMovement().y();
-        if (!this.onGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
-            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.0225, 0));
         }
         if (!this.level().isClientSide()) {
             if (this.lungeCooldown > 0) {
@@ -279,10 +273,12 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         private final AbstractValkyrie valkyrie;
         private final double speedModifier;
         private int flyingTicks;
+        private int lungeCooldownMax;
 
-        public LungeGoal(AbstractValkyrie valkyrie, double speedModifier) {
+        public LungeGoal(AbstractValkyrie valkyrie, double speedModifier, int lungeCooldownMax) {
             this.valkyrie = valkyrie;
             this.speedModifier = speedModifier;
+            this.lungeCooldownMax = lungeCooldownMax;
             this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
@@ -332,7 +328,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         @Override
         public void stop() {
-            this.valkyrie.lungeCooldown = 30;
+            this.valkyrie.lungeCooldown = this.lungeCooldownMax;
         }
     }
 

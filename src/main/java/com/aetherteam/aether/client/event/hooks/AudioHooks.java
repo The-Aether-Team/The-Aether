@@ -4,7 +4,7 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherMusicManager;
 import com.aetherteam.aether.client.sound.FadeOutSoundInstance;
-import com.aetherteam.aether.mixin.mixins.client.SoundEngineAccessor;
+import com.aetherteam.aether.mixin.mixins.client.accessor.SoundEngineAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;

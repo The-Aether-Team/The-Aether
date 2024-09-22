@@ -89,12 +89,12 @@ public class ThunderCrystal extends AbstractCrystal {
      * When this projectile is hurt, this method particles, knocks the projectile back, and increases the time it is considered in the air.
      */
     @Override
-    public boolean hurt(DamageSource source, float pAmount) {
+    public boolean hurt(DamageSource source, float amount) {
         if (!this.level().isClientSide() && source.getSourcePosition() != null && this.level() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2, 0.2, 0.2, 0.0);
-            this.knockback(0.15 + pAmount / 8, this.position().subtract(source.getSourcePosition())); // Sets knockback movement in the direction of the damage.
+            this.knockback(0.15 + amount / 8, this.position().subtract(source.getSourcePosition())); // Sets knockback movement in the direction of the damage.
         }
-        this.ticksInAir += pAmount * 10;
+        this.ticksInAir += amount * 10;
         return true;
     }
 

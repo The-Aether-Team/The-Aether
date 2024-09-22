@@ -1,4 +1,4 @@
-package com.aetherteam.aether.mixin.mixins.client;
+package com.aetherteam.aether.mixin.mixins.client.accessor;
 
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.ChannelAccess;
