@@ -103,7 +103,7 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.of(ValkyrieQueen::new, MobCategory.MONSTER).sized(0.8F, 1.95F).fireImmune().clientTrackingRange(10).build("valkyrie_queen"));
 
     public static final Supplier<EntityType<FireMinion>> FIRE_MINION = ENTITY_TYPES.register("fire_minion",
-            () -> EntityType.Builder.of(FireMinion::new, MobCategory.MONSTER).fireImmune().sized(1.1F, 1.95F).clientTrackingRange(8).build("fire_minion"));
+            () -> EntityType.Builder.of(FireMinion::new, MobCategory.MONSTER).sized(1.1F, 1.95F).fireImmune().clientTrackingRange(8).build("fire_minion"));
 
     public static final Supplier<EntityType<SunSpirit>> SUN_SPIRIT = ENTITY_TYPES.register("sun_spirit",
             () -> EntityType.Builder.of(SunSpirit::new, MobCategory.MONSTER).sized(2.5F, 3.4F).fireImmune().clientTrackingRange(10).build("sun_spirit"));

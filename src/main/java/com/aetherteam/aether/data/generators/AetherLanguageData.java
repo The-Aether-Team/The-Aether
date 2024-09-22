@@ -658,7 +658,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
         this.addSubtitle("entity", "sun_spirit.interact", "Sun Spirit speaks");
         this.addSubtitle("entity", "sun_spirit.activate", "Sun Spirit rumbles");
-        this.addSubtitle("entity", "sun_spirit.shoot", "Sun Spirit shoots");
+        this.addSubtitle("entity", "sun_spirit.shoot_fire", "Sun Spirit shoots Fire Crystal");
+        this.addSubtitle("entity", "sun_spirit.shoot_ice", "Sun Spirit shoots Ice Crystal");
         this.addSubtitle("entity", "sun_spirit.death", "Sun Spirit dies");
         this.addSubtitle("entity", "sun_spirit.hurt", "Sun Spirit hurts");
 

@@ -150,7 +150,8 @@ public class AetherSoundEvents {
 
 	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_INTERACT = register("entity.sun_spirit.interact");
 	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_ACTIVATE = register("entity.sun_spirit.activate");
-	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_SHOOT = register("entity.sun_spirit.shoot");
+	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_SHOOT_FIRE = register("entity.sun_spirit.shoot_fire");
+	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_SHOOT_ICE = register("entity.sun_spirit.shoot_ice");
 	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_DEATH = register("entity.sun_spirit.death");
 	public static final Supplier<SoundEvent> ENTITY_SUN_SPIRIT_HURT = register("entity.sun_spirit.hurt");
 
