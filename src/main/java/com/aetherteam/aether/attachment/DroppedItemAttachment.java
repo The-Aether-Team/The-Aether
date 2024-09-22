@@ -9,6 +9,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Capability class used to track {@link ItemEntity}s dropped by player death.
@@ -17,24 +18,29 @@ import java.util.Collection;
  * @see com.aetherteam.aether.event.hooks.DimensionHooks#fallFromAether(Level)
  */
 public class DroppedItemAttachment {
-    private int ownerID;
+    private Optional<Integer> ownerID;
     @Nullable
     private Entity owner;
 
     public static final Codec<DroppedItemAttachment> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.INT.fieldOf("owner_id").forGetter(o -> o.owner.getId())
+            Codec.INT.optionalFieldOf("owner_id").forGetter(o -> o.ownerID)
     ).apply(instance, DroppedItemAttachment::new));
 
     protected DroppedItemAttachment() {
 
     }
 
-    private DroppedItemAttachment(int ownerID) {
+    private DroppedItemAttachment(Optional<Integer> ownerID) {
         this.ownerID = ownerID;
     }
 
     public void setOwner(Entity owner) {
         this.owner = owner;
+        if (this.owner != null) {
+            this.ownerID = Optional.of(this.owner.getId());
+        } else {
+            this.ownerID = Optional.empty();
+        }
     }
 
     /**
@@ -42,8 +48,8 @@ public class DroppedItemAttachment {
      */
     @Nullable
     public Entity getOwner(Level level) {
-        if (this.owner == null) {
-            this.owner = level.getEntity(this.ownerID);
+        if (this.owner == null && this.ownerID.isPresent()) {
+            this.owner = level.getEntity(this.ownerID.get());
         }
         return this.owner;
     }
