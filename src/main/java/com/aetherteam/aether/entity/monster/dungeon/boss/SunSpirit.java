@@ -67,12 +67,12 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy, IEntityWithComplexSpawn {
-    private static final double DEFAULT_SPEED_MODIFIER = 1.0; //todo ALL THESE
+    private static final double DEFAULT_SPEED_MODIFIER = 1.0;
     private static final double FROZEN_SPEED_MODIFIER = 0.3;
-    private static final float INCINERATION_DAMAGE = 10.0F; // this seems good
-    private static final int INCINERATION_FIRE_DURATION = 8; // this seems good
+    private static final float INCINERATION_DAMAGE = 10.0F;
+    private static final int INCINERATION_FIRE_DURATION = 8;
     private static final int SUN_SPIRIT_FROZEN_DURATION = 175;
-    private static final int ICE_CRYSTAL_SHOOT_COUNT_INTERVAL = 5; // this seems good
+    private static final int ICE_CRYSTAL_SHOOT_COUNT_INTERVAL = 5;
     private static final int SHOOT_CRYSTAL_INTERVAL = 50;
     private static final int SPAWN_FIRE_INTERVAL = 35;
 
@@ -876,7 +876,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             AbstractCrystal crystal;
             if (--this.crystalCount <= 0) {
                 crystal = new IceCrystal(this.sunSpirit.level(), this.sunSpirit);
-                this.crystalCount = ICE_CRYSTAL_SHOOT_COUNT_INTERVAL; //TODO RANDOM?
+                this.crystalCount = ICE_CRYSTAL_SHOOT_COUNT_INTERVAL;
                 this.sunSpirit.playSound(this.sunSpirit.getShootIceSound(), 3.0F, this.sunSpirit.level().getRandom().nextFloat() - this.sunSpirit.level().getRandom().nextFloat() * 0.2F + 1.2F);
             } else {
                 crystal = new FireCrystal(this.sunSpirit.level(), this.sunSpirit);
@@ -919,7 +919,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                 }
                 pos = pos.below();
             }
-            this.summonFireInterval = SPAWN_FIRE_INTERVAL; //TODO random or not
+            this.summonFireInterval = SPAWN_FIRE_INTERVAL;
         }
 
         @Override
