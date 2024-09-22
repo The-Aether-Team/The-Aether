@@ -12,6 +12,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -33,6 +34,7 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -120,9 +122,57 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
      */
     public static boolean checkAechorPlantSpawnRules(EntityType<? extends AechorPlant> aechorPlant, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
         return level.getBlockState(pos.below()).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON)
-                && level.getRawBrightness(pos, 0) > 8
-                && level.getDifficulty() != Difficulty.PEACEFUL
-                && (reason != MobSpawnType.NATURAL || random.nextInt(10) == 0);
+            && level.getRawBrightness(pos, 0) > 8
+            && level.getDifficulty() != Difficulty.PEACEFUL
+            && (reason != MobSpawnType.NATURAL || (random.nextInt(10) == 0 && !inRadiusOfFlowers(level, pos, 10) && !inRadiusOfEnchantedFlowers(level, pos, 40)));
+    }
+
+    /**
+     * Checks whether an Aechor Plant has a flower within its radius.
+     *
+     * @param level The {@link LevelAccessor} to check in.
+     * @param pos The starting {@link BlockPos}.
+     * @param radius The {@link Integer} radius around the position.
+     * @param blocks The {@link TagKey} of {@link Block}s to check.
+     * @return Whether the blocks were found in the radius, as a {@link Boolean}.
+     */
+    public static boolean inRadiusOfFlowers(LevelAccessor level, BlockPos pos, int radius) {
+        for (int xOffset = -radius; xOffset <= radius; xOffset++) {
+            for (int yOffset = -radius; yOffset <= radius; yOffset++) {
+                for (int zOffset = -radius; zOffset <= radius; zOffset++) {
+                    if (xOffset * xOffset + zOffset * zOffset <= radius * radius) {
+                        if (level.getBlockState(pos.offset(xOffset, yOffset, zOffset)).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether an Aechor Plant has a flower on an Enchanted Grass block within its radius.
+     *
+     * @param level The {@link LevelAccessor} to check in.
+     * @param pos The starting {@link BlockPos}.
+     * @param radius The {@link Integer} radius around the position.
+     * @param blocks The {@link TagKey} of {@link Block}s to check.
+     * @return Whether the blocks were found in the radius, as a {@link Boolean}.
+     */
+    public static boolean inRadiusOfEnchantedFlowers(LevelAccessor level, BlockPos pos, int radius) {
+        for (int xOffset = -radius; xOffset <= radius; xOffset++) {
+            for (int yOffset = -radius; yOffset <= radius; yOffset++) {
+                for (int zOffset = -radius; zOffset <= radius; zOffset++) {
+                    if (xOffset * xOffset + zOffset * zOffset <= radius * radius) {
+                        if (level.getBlockState(pos.offset(xOffset, yOffset, zOffset)).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT) && level.getBlockState(pos.offset(xOffset, yOffset, zOffset).below()).is(AetherTags.Blocks.ENCHANTED_GRASS)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**

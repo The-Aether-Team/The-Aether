@@ -623,6 +623,12 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy("has_pumpkin", has(Blocks.PUMPKIN))
                 .save(consumer, this.name("moa_egg_pumpkin_pie"));
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, AetherItems.createSwetBannerItemStack())
+            .requires(ItemTags.BANNERS)
+            .requires(AetherItems.SWET_CAPE.get())
+            .unlockedBy("has_swet_cape", has(AetherItems.SWET_CAPE.get()))
+            .save(consumer, this.name("swet_banner"));
+
 
         this.smeltingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, this.name("ambrosium_shard_from_smelting"));
         this.blastingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, this.name("ambrosium_shard_from_blasting"));
@@ -689,10 +695,12 @@ public class AetherRecipeData extends AetherRecipeProvider {
         this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AEROGEL_SLAB.get(), AetherBlocks.AEROGEL.get(), 2);
 
 
-        this.repairingRecipe(RecipeCategory.TOOLS, Items.FISHING_ROD, 600).save(consumer, this.name("fishing_rod_repairing"));
-        this.repairingRecipe(RecipeCategory.COMBAT, Items.BOW, 4000).save(consumer, this.name("bow_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.FISHING_ROD, 300).save(consumer, this.name("fishing_rod_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.FLINT_AND_STEEL, 300).save(consumer, this.name("flint_and_steel_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.BOW, 600).save(consumer, this.name("bow_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.CROSSBOW, 600).save(consumer, this.name("crossbow_repairing"));
 
-        this.repairingRecipe(RecipeCategory.COMBAT, Items.SHIELD, 3000).save(consumer, this.name("shield_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.SHIELD, 600).save(consumer, this.name("shield_repairing"));
 
         this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_PICKAXE.get(), 250).group("altar_pickaxe_repair").save(consumer, this.name("skyroot_pickaxe_repairing"));
         this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_AXE.get(), 250).group("altar_axe_repair").save(consumer, this.name("skyroot_axe_repairing"));
