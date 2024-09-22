@@ -112,6 +112,11 @@ public class IceCrystal extends AbstractCrystal implements WeaknessDamage {
     }
 
     @Override
+    public int getLifeSpan() {
+        return 500;
+    }
+
+    @Override
     protected ParticleOptions getExplosionParticle() {
         return AetherParticleTypes.FROZEN.get();
     }

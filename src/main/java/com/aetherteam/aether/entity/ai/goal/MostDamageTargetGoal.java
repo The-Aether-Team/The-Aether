@@ -2,6 +2,7 @@ package com.aetherteam.aether.entity.ai.goal;
 
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
@@ -100,14 +101,17 @@ public class MostDamageTargetGoal extends TargetGoal {
     private void tickAggro() {
         if (++this.aiTicks >= 10) {
             this.aiTicks = 0;
-            this.attackers.forEach((livingEntity, oldAggro) -> {
+            for (ObjectIterator<Map.Entry<LivingEntity, Double>> iterator = this.attackers.entrySet().iterator(); iterator.hasNext(); ) {
+                Map.Entry<LivingEntity, Double> entry = iterator.next();
+                LivingEntity livingEntity = entry.getKey();
+                Double oldAggro = entry.getValue();
                 double aggro = oldAggro - this.calmDownRate;
                 if (!livingEntity.isAlive() || (aggro <= 0 && !this.canAttack(livingEntity, HURT_BY_TARGETING)) || (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator()))) {
-                    this.attackers.removeDouble(livingEntity);
+                    iterator.remove();
                 } else {
-                    this.attackers.put(livingEntity, aggro);
+                    entry.setValue(aggro);
                 }
-            });
+            }
         }
     }
 

@@ -72,7 +72,7 @@ public class FireCrystal extends AbstractCrystal {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
-            if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.FIRE_CRYSTAL, this, this.getOwner()), 20.0F)) {
+            if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.FIRE_CRYSTAL, this, this.getOwner()), 15.0F)) {
                 livingEntity.setSecondsOnFire(6);
                 if (this.getImpactExplosionSoundEvent() != null) {
                     this.getLevel().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
@@ -117,6 +117,7 @@ public class FireCrystal extends AbstractCrystal {
                     this.xPower = vec3.x() * 0.25;
                     this.yPower = vec3.y() * 0.15;
                     this.zPower = vec3.z() * 0.25;
+                    this.ticksInAir += (int) (amount * 10);
                 }
                 return true;
             } else {
