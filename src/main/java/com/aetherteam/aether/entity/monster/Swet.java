@@ -743,6 +743,7 @@ public class Swet extends Slime implements MountableMob {
                 if (target != null) {
                     this.swet.lookAt(target, 10.0F, 10.0F);
                     swetMoveControl.setDirection(this.swet.getYRot(), true);
+                    swetMoveControl.setWantedMovement(1.0D);
                     if (this.swet.getBoundingBox().intersects(target.getBoundingBox())) {
                         this.swet.consumePassenger(target);
                     }
