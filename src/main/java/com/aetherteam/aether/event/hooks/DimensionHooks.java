@@ -181,26 +181,28 @@ public class DimensionHooks {
      */
     public static void dimensionTravel(Entity entity, ResourceKey<Level> dimension) {
         if (entity instanceof Player player) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                if (!AetherConfig.SERVER.spawn_in_aether.get() || !aetherPlayer.canSpawnInAether()) {
-                    if (entity.getLevel().getBiome(entity.blockPosition()).is(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT)) {
-                        if (entity.level.dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) { // We display the Descending GUI text to the player if they're about to return to the Overworld.
-                            displayAetherTravel = true;
-                            playerLeavingAether = true;
-                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(true));
-                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new LeavingAetherPacket(true));
-                        } else if (entity.level.dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) { // We display the Ascending GUI text to the player if they're about to enter the Aether.
-                            displayAetherTravel = true;
-                            playerLeavingAether = false;
-                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(true));
-                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new LeavingAetherPacket(false));
-                        } else { // Don't display any text if not travelling between the Aether and Overworld or vice-versa.
-                            displayAetherTravel = false;
-                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(false));
+            if (!player.getLevel().isClientSide()) {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                    if (!AetherConfig.SERVER.spawn_in_aether.get() || !aetherPlayer.canSpawnInAether()) {
+                        if (entity.getLevel().getBiome(entity.blockPosition()).is(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT)) {
+                            if (entity.level.dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) { // We display the Descending GUI text to the player if they're about to return to the Overworld.
+                                displayAetherTravel = true;
+                                playerLeavingAether = true;
+                                PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(true));
+                                PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new LeavingAetherPacket(true));
+                            } else if (entity.level.dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) { // We display the Ascending GUI text to the player if they're about to enter the Aether.
+                                displayAetherTravel = true;
+                                playerLeavingAether = false;
+                                PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(true));
+                                PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new LeavingAetherPacket(false));
+                            } else { // Don't display any text if not travelling between the Aether and Overworld or vice-versa.
+                                displayAetherTravel = false;
+                                PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(false));
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
