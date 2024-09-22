@@ -152,6 +152,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));
         this.goalSelector.addGoal(1, new GetUnstuckGoal(this));
         this.goalSelector.addGoal(2, new ThunderCrystalAttackGoal(this, 450, 28.0F));
+        this.goalSelector.addGoal(3, new LungeGoal(this, 0.65, 0));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, livingEntity -> this.isBossFight()));
     }
 
@@ -177,6 +178,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         super.tick();
         this.breakBlocks();
         this.evaporate();
+        double motionY = this.getDeltaMovement().y();
+        if (!this.onGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
+            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.055, 0));
+        }
     }
 
     /**
@@ -390,11 +395,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
             return super.hurt(source, amount);
         }
         if (this.isReady()) {
-            if (source.getDirectEntity() instanceof LivingEntity attacker && this.level().getDifficulty() != Difficulty.PEACEFUL) {
+            if (source.getEntity() instanceof LivingEntity attacker && this.level().getDifficulty() != Difficulty.PEACEFUL) {
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) {
                     if (super.hurt(source, amount) && this.getHealth() > 0) {
                         if (!this.level().isClientSide() && !this.isBossFight()) {
                             this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"), false);
+                            this.setHealth(this.getMaxHealth());
                             this.setBossFight(true);
                             if (this.getDungeon() != null) {
                                 this.closeRoom();
@@ -434,7 +440,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public void reset() {
         this.setBossFight(false);
         this.setTarget(null);
-        this.setHealth(this.getMaxHealth());
         if (this.getDungeon() != null) {
             this.openRoom();
         }

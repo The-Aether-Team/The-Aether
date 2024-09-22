@@ -700,9 +700,13 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                 definition().with(sound("aether:entity/spirit/wake"))
                         .subtitle("subtitles.aether.entity.sun_spirit.activate")
         );
-        this.add(AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT,
+        this.add(AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT_FIRE,
                 definition().with(sound("minecraft:mob/ghast/fireball4"))
-                .subtitle("subtitles.aether.entity.sun_spirit.shoot")
+                        .subtitle("subtitles.aether.entity.sun_spirit.shoot_fire")
+        );
+        this.add(AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT_ICE,
+                definition().with(sound("aether:entity/zephyr/shoot"))
+                        .subtitle("subtitles.aether.entity.sun_spirit.shoot_ice")
         );
         this.add(AetherSoundEvents.ENTITY_SUN_SPIRIT_DEATH,
                 definition().with(sound("aether:entity/spirit/death"))

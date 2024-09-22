@@ -48,15 +48,26 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     @Override
     public void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(3, new LungeGoal(this, 0.65, 30));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, this::isAngryAt));
         this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, false));
     }
    
     public static AttributeSupplier.Builder createMobAttributes() {
         return createAttributes()
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.25)
                 .add(Attributes.FOLLOW_RANGE, 16.0)
                 .add(Attributes.ATTACK_DAMAGE, 10.0)
                 .add(Attributes.MAX_HEALTH, 50.0);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        double motionY = this.getDeltaMovement().y();
+        if (!this.onGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
+            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.0225, 0));
+        }
     }
 
     @Override
