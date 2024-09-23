@@ -132,9 +132,9 @@ The Aether is available in these languages thanks to the following contributors:
 | Italian                     | (it_it) | fabiross096                                                                                                |
 | Japanese                    | (ja_jp) | baguchan, falogonia, yukinosuke.tokyo                                                                      |
 | Kazakh                      | (kk_kz) | snowcore                                                                                                   |
-| Korean                      | (ko_kr) | minejango2, alligggg44, DataCenter1216, hyuzes, Cinam                                                      |
+| Korean                      | (ko_kr) | minejango2, alligggg44, DataCenter1216, hyuzes, Cinam, smoong951                                           |
 | Lithuanian                  | (lt_lt) | WaryRGMCA                                                                                                  |
-| Malay                       | (ms_my) | thedoodlerhoodler2244                                                                                      |
+| Malay                       | (ms_my) | HoodyP                                                                                                     |
 | Mexican Spanish             | (es_mx) | Aer-ink, Kidi, Looxond                                                                                     |
 | Polish                      | (pl_pl) | DarkKnightComes, Cinex20, damianek1984, mati.makosie, Pufferfish                                           |
 | Romanian                    | (ro_ro) | lucatatar321, gigelciobanu205                                                                              |
@@ -147,6 +147,7 @@ The Aether is available in these languages thanks to the following contributors:
 | Turkish                     | (tr_tr) | Dragunovi, egeyesss                                                                                        |
 | Ukrainian                   | (uk_ua) | Nerkin, un_roman                                                                                           |
 | Upside Down British English | (en_ud) | magiczocker                                                                                                |
+| Vietnamese                  | (vi_vn) | godkyo98                                                                                                   |
 | Welsh                       | (cy_gb) | Plague von Karma                                                                                           |
 
 If you are interested in contributing translations to The Aether, check out our [Crowdin](https://translate.aether.devaether.com/) and our [Discord](https://discord.gg/aethermod)! If you have contributed translations in the past and your name is missing from the above list, please contact us.
