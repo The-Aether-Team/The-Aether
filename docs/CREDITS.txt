@@ -56,6 +56,10 @@ GizmoTheMoonPig
 - Fixes to aether1 and aether2 music naming.
 - FIxes to Moa Skins GUI issues.
 
+indrada
+- Fixes to menu theme switching failing in edge cases.
+- Fixes to Aerwhales and Zephyrs spawning in enclosed spaces.
+
 InsomniaKitten
 - Providing the accessory inventory texture.
 
@@ -95,6 +99,9 @@ muzikbike
 parasdice
 - Contribution of the beta Lootr Mimic texture.
 
+rhysdh540
+- Contribution of Machete plugin code for JAR file optimization within the Gradle buildscript.
+
 saintselect
 - Integration for JEI.
 - Converting entity audio files from stereo to mono.
@@ -122,4 +129,3 @@ Zepalesque
 - Changes to EggLayEvent to use ItemStack.
 - Implementation of a custom Aether Grass bonemeal feature.
 - Implementation of an advancement sound override registry.
-- Implementation of priority system for advancement sound override registry.
