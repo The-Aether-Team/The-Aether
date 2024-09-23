@@ -56,6 +56,10 @@ GizmoTheMoonPig
 - Fixes to aether1 and aether2 music naming.
 - FIxes to Moa Skins GUI issues.
 
+indrada
+- Fixes to menu theme switching failing in edge cases.
+- Fixes to Aerwhales and Zephyrs spawning in enclosed spaces.
+
 InsomniaKitten
 - Providing the accessory inventory texture.
 
@@ -94,6 +98,9 @@ muzikbike
 
 parasdice
 - Contribution of the beta Lootr Mimic texture.
+
+rhysdh540
+- Contribution of Machete plugin code for JAR file optimization within the Gradle buildscript.
 
 saintselect
 - Integration for JEI.
