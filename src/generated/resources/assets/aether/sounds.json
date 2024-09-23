@@ -539,11 +539,17 @@
     ],
     "subtitle": "subtitles.aether.entity.sun_spirit.interact"
   },
-  "entity.sun_spirit.shoot": {
+  "entity.sun_spirit.shoot_fire": {
     "sounds": [
       "mob/ghast/fireball4"
     ],
-    "subtitle": "subtitles.aether.entity.sun_spirit.shoot"
+    "subtitle": "subtitles.aether.entity.sun_spirit.shoot_fire"
+  },
+  "entity.sun_spirit.shoot_ice": {
+    "sounds": [
+      "aether:entity/zephyr/shoot"
+    ],
+    "subtitle": "subtitles.aether.entity.sun_spirit.shoot_ice"
   },
   "entity.swet.attack": {
     "sounds": [

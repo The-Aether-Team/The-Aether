@@ -327,6 +327,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         if (this.getAwakenSound() != null) {
             this.playSound(this.getAwakenSound(), 2.5F, 1.0F / (this.getRandom().nextFloat() * 0.2F + 0.9F));
         }
+        this.setHealth(this.getMaxHealth());
         this.setAwake(true);
         this.setBossFight(true);
         if (this.getDungeon() != null) {
@@ -343,7 +344,6 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         this.setAwake(false);
         this.setBossFight(false);
         this.setTarget(null);
-        this.setHealth(this.getMaxHealth());
         if (this.getDungeon() != null) {
             this.setPos(this.getDungeon().originCoordinates());
             this.openRoom();
