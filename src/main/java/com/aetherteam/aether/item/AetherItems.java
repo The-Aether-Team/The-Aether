@@ -75,7 +75,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class AetherItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Aether.MODID);
 
-    public static final Rarity AETHER_LOOT = Rarity.create("aether.loot", ChatFormatting.GREEN);
+    public static final Rarity AETHER_LOOT = Rarity.create("rarity.aether.loot.name", ChatFormatting.GREEN);
 
     public static final Component BRONZE_DUNGEON_TOOLTIP = Component.translatable("aether.dungeon.bronze_dungeon").withStyle(Style.EMPTY.withItalic(true).withColor(TextColor.parseColor("#D9AB7E").result().get()));
     public static final Component SILVER_DUNGEON_TOOLTIP = Component.translatable("aether.dungeon.silver_dungeon").withStyle(Style.EMPTY.withItalic(true).withColor(TextColor.parseColor("#E0E0E0").result().get()));
