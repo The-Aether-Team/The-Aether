@@ -173,6 +173,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addGeneric("block.aether.swet_banner", "Swet Banner");
 
         this.addGeneric("loot", "Aether Loot");
+        this.add("rarity.aether.loot.name", "Aether Loot");
 
         this.addItem(AetherItems.SKYROOT_PICKAXE, "Skyroot Pickaxe");
         this.addItem(AetherItems.SKYROOT_AXE, "Skyroot Axe");
