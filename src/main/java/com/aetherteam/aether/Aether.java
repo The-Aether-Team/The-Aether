@@ -416,7 +416,7 @@ public class Aether {
                 source.accept(Pack.create(
                     "builtin/aether_tooltips",
                     Component.translatable("pack.aether.tooltips.title"),
-                    false,
+                    ModList.get().isLoaded("aether_genesis"),
                     new PathPackResources.PathResourcesSupplier(resourcePath, true),
                     new Pack.Info(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
                     Pack.Position.TOP,
