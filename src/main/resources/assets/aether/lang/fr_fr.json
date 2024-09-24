@@ -82,6 +82,7 @@
   "lore.item.aether.zanite_ring": "Un anneau en zanite, qui permet au joueur de miner les blocs plus vite.",
   "lore.item.aether.zanite_shovel": "Une pelle plutôt basique, similaire à celle en fer. L'efficacité est de plus en plus remarquable.",
   "lore.item.aether.zanite_sword": "Une épée plutôt basique, similaire à celle en fer. L'efficacité est de plus en plus remarquable.",
+  "rarity.aether.loot.name": "Butin de l'Aether",
   "subtitles.aether.block.aercloud.blue_aercloud_bounce": "Rebondissements sur un aéronuage bleu",
   "subtitles.aether.entity.fire_minion.death": "Minion de feu qui meurt",
   "subtitles.aether.entity.fire_minion.hurt": "Minion de feu prenant des dégâts",
