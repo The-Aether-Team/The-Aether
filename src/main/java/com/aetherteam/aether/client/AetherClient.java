@@ -10,11 +10,13 @@ import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.cumulus.CumulusConfig;
+import com.aetherteam.nitrogen.event.listeners.TooltipListeners;
 import com.google.common.reflect.Reflection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,6 +41,7 @@ public class AetherClient {
             AetherAtlases.registerWoodTypeAtlases();
             registerGuiFactories();
             registerItemModelProperties();
+            registerTooltipOverrides();
         });
         registerLoreOverrides();
         autoApplyPacks();
@@ -75,6 +78,30 @@ public class AetherClient {
 
         ItemProperties.register(AetherItems.HAMMER_OF_KINGBDOGZ.get(), new ResourceLocation(Aether.MODID, "named"), // Easter Egg texture.
                 (stack, world, living, i) -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
+    }
+
+    public static void registerTooltipOverrides() {
+        TooltipListeners.PREDICATES.put(AetherItems.BLUE_GUMMY_SWET, (player, stack, components, component) -> {
+            if (AetherConfig.SERVER.healing_gummy_swets.get() && component.getContents() instanceof TranslatableContents contents && contents.getKey().endsWith(".1")) {
+                return Component.translatable(contents.getKey() + ".health");
+            } else {
+                return component;
+            }
+        });
+        TooltipListeners.PREDICATES.put(AetherItems.GOLDEN_GUMMY_SWET, (player, stack, components, component) -> {
+            if (AetherConfig.SERVER.healing_gummy_swets.get() && component.getContents() instanceof TranslatableContents contents && contents.getKey().endsWith(".1")) {
+                return Component.translatable(contents.getKey() + ".health");
+            } else {
+                return component;
+            }
+        });
+        TooltipListeners.PREDICATES.put(AetherItems.LIFE_SHARD, (player, stack, components, component) -> {
+            if (component.getContents() instanceof TranslatableContents contents && contents.getKey().endsWith(".1")) {
+                return Component.translatable(contents.getKey(), AetherConfig.SERVER.maximum_life_shards.get());
+            } else {
+                return component;
+            }
+        });
     }
 
     /**

@@ -1317,6 +1317,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackTitle("curios", "Aether Curios Override");
         this.addPackTitle("freezing", "Aether Temporary Freezing");
         this.addPackTitle("ruined_portal", "Aether Ruined Portals");
+        this.addPackTitle("tooltips", "Aether Item Tooltips");
 
         this.addPackDescription("mod", "Aether Resources");
         this.addPackDescription("125", "The classic look of the Aether from 1.2.5");
@@ -1327,6 +1328,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackDescription("curios", "Replace Accessories Menu with Curios' menu");
         this.addPackDescription("freezing", "Ice Accessories create temporary blocks");
         this.addPackDescription("ruined_portal", "Generate ruined glowstone portals");
+        this.addPackDescription("tooltips", "Add item ability tooltips");
 
         this.addMenuTitle("minecraft_left", "Minecraft (Left)");
         this.addMenuTitle("the_aether", "The Aether");
