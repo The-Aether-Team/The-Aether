@@ -186,6 +186,7 @@ public class Aether {
         this.setupCTMFixPack(event);
         this.setupTipsPack(event);
         this.setupColorblindPack(event);
+        this.setupTooltipsPack(event);
 
         // Data Packs
         this.setupCuriosTagsPack(event);
@@ -306,6 +307,28 @@ public class Aether {
                     PackSource.BUILT_IN,
                     false)
                 ));
+        }
+    }
+
+    /**
+     * A built-in resource pack to include ability tooltips for items.<br><br>
+     */
+    private void setupTooltipsPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/tooltips");
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.tooltips.description"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion()));
+            event.addRepositorySource((packConsumer, packConstructor) ->
+                    packConsumer.accept(packConstructor.create(
+                            "builtin/aether_tooltips",
+                            Component.translatable("pack.aether.tooltips.title"),
+                            ModList.get().isLoaded("aether_genesis"),
+                            () -> pack,
+                            metadata,
+                            Pack.Position.TOP,
+                            PackSource.BUILT_IN,
+                            false)
+                    ));
         }
     }
 
