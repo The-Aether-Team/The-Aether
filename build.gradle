@@ -197,9 +197,7 @@ tasks.named('jar', Jar).configure {
     archiveClassifier = 'no-embeds'
 }
 
-reobfJar {
-    dependsOn 'optimizeOutputsOfJar'
-}
+tasks.reobfJar.dependsOn('optimizeOutputsOfJar')
 
 tasks.named('jarJar', JarJar).configure {
     archiveClassifier = ''
