@@ -175,6 +175,10 @@ machete {
     jij.enabled = true
 }
 
+reobfJar {
+    dependsOn 'optimizeOutputsOfJar'
+}
+
 sourceJar {
     dependsOn 'optimizeOutputsOfJar'
 }
