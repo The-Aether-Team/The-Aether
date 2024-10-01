@@ -180,8 +180,8 @@ sourceJar {
 }
 
 project.afterEvaluate {
-    reobfJar {
-        dependsOn 'optimizeOutputsOfJar'
+    optimizeOutputsOfJar {
+        dependsOn 'reobfJar'
     }
 }
 
