@@ -5,10 +5,11 @@ Additions
 - Added spawn prevention methods for Swets and Aechor Plants. The former can be stopped with a Swet Banner, and the latter can be stopped by planting Purple or White Flowers around.
 - Added many new sounds in places they were previously missing: Valkyries, Cockatrices, Sun Spirit, Blue Aerclouds, Aether Portals, and more.
 - Added boss fight music.
+- Added a new piece of the Bronze Dungeon that can be found on the surface of islands to indicate that a dungeon can be found below.
 - Added a recipe for smelting a Victory Medal into a Gold Nugget.
 - Added repairing recipes for Crossbows and Flint and Steel
 - Added Lootr compatibility.
-- Added Quark compatibility for Flamerangs working against the Slider.
+- Added Quark compatibility for Flamerangs working against the Slider and for Runic Etchings to recolor enchantment glints on Gloves.
 - Added a new `"Aether Item Tooltips"` resource pack that can be enabled to detail item abilities in an item's tooltip.
 - Added a new client config option `"Reposition attack message above hotbar"` for moving the notification of using the wrong tool against the Slider from the chat section to above the hotbar instead.
 - Added a new server config option `"Configure Sun Altar dimensions"` for listing what dimensions the Sun Altar can be used in.
@@ -60,11 +61,13 @@ Fixes
 - Fix Cloud Minions having unlimited speed potential.
 - Fix incorrect glove position in first-person.
 - Fix Moas not checking if they're saddled before running some mount behavior.
+- Fix mobs not spawning with accessories.
 - Fix some issues with winged mobs' pathfinding.
 - Fix some issues with mobs failing to pathfind when first spawned.
 - Fix Darts having weird behavior when shot inside liquid.
 - Fix a crash when switching menu themes.
 - Fix Ruined Aether Portals not using addons' custom grass blocks in custom biomes.
+- Fix a rare issue with music overlapping.
 - Fix a rare crash from Bronze Dungeon generation.
 - Fix a rare crash when fighting the Valkyrie Queen.
 - Fix a server crash from AetherArmorMaterials.
