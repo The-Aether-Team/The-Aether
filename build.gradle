@@ -175,6 +175,8 @@ machete {
     jij.enabled = true
 }
 
+tasks.optimizeOutputsOfJar.dependsOn('reobfJar')
+
 sourceJar {
     dependsOn 'optimizeOutputsOfJar'
 }
@@ -196,8 +198,6 @@ tasks.named('jar', Jar).configure {
 
     archiveClassifier = 'no-embeds'
 }
-
-tasks.reobfJar.dependsOn('optimizeOutputsOfJar')
 
 tasks.named('jarJar', JarJar).configure {
     archiveClassifier = ''
