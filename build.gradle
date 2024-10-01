@@ -173,6 +173,12 @@ sourceJar {
     dependsOn 'optimizeOutputsOfJar'
 }
 
+project.afterEvaluate {
+    optimizeOutputsOfJar {
+        dependsOn 'reobfJar'
+    }
+}
+
 tasks.named('jar', Jar).configure {
     manifest {
         attributes([
