@@ -9,11 +9,11 @@ orbs:
 jobs:
   publish:
     machine:
-      image: ubuntu-2204:2024.05.1
+      image: ubuntu-2204:2023.02.1
     resource_class: large
     environment:
-      _JAVA_OPTIONS: -Xmx3200m
-      GRADLE_OPTS: -Dorg.gradle.daemon=false
+      _JAVA_OPTIONS: -Xmx9600m
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.logging.level=info
     steps:
       - setup
       - run: |

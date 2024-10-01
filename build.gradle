@@ -179,10 +179,6 @@ sourceJar {
     dependsOn 'optimizeOutputsOfJar'
 }
 
-reobfJar {
-    dependsOn 'optimizeOutputsOfJar'
-}
-
 tasks.named('jar', Jar).configure {
     manifest {
         attributes([
