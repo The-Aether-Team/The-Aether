@@ -179,8 +179,10 @@ sourceJar {
     dependsOn 'optimizeOutputsOfJar'
 }
 
-reobfJar {
-    dependsOn 'optimizeOutputsOfJar'
+project.afterEvaluate {
+    reobfJar {
+        dependsOn 'optimizeOutputsOfJar'
+    }
 }
 
 tasks.named('jar', Jar).configure {
