@@ -9,7 +9,7 @@ orbs:
 jobs:
   publish:
     machine:
-      image: ubuntu-2204:2022.07.1
+      image: ubuntu-2204:2024.05.1
     resource_class: large
     environment:
       _JAVA_OPTIONS: -Xmx3200m
