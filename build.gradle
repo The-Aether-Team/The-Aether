@@ -175,11 +175,11 @@ machete {
     jij.enabled = true
 }
 
-tasks.optimizeOutputsOfJar.dependsOn('reobfJar')
-
-sourceJar {
-    dependsOn 'optimizeOutputsOfJar'
-}
+//tasks.optimizeOutputsOfJar.dependsOn('reobfJar')
+//
+//sourceJar {
+//    dependsOn 'optimizeOutputsOfJar'
+//}
 
 tasks.named('jar', Jar).configure {
     manifest {
