@@ -392,15 +392,15 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                 ).subtitle("subtitles.block.generic.footsteps")
         );
         this.add(AetherSoundEvents.ENTITY_MOA_AMBIENT,
-                definition().with(sound("aether:entity/moa/death"))
+                definition().with(sound("aether:entity/moa/say"))
                 .subtitle("subtitles.aether.entity.moa.ambient")
         );
         this.add(AetherSoundEvents.ENTITY_MOA_DEATH,
-                definition().with(sound("aether:entity/moa/hurt"))
+                definition().with(sound("aether:entity/moa/death"))
                 .subtitle("subtitles.aether.entity.moa.death")
         );
         this.add(AetherSoundEvents.ENTITY_MOA_HURT,
-                definition().with(sound("aether:entity/moa/say"))
+                definition().with(sound("aether:entity/moa/hurt"))
                 .subtitle("subtitles.aether.entity.moa.hurt")
         );
         this.add(AetherSoundEvents.ENTITY_MOA_SADDLE,

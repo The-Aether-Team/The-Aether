@@ -295,13 +295,13 @@
   },
   "entity.moa.ambient": {
     "sounds": [
-      "aether:entity/moa/death"
+      "aether:entity/moa/say"
     ],
     "subtitle": "subtitles.aether.entity.moa.ambient"
   },
   "entity.moa.death": {
     "sounds": [
-      "aether:entity/moa/hurt"
+      "aether:entity/moa/death"
     ],
     "subtitle": "subtitles.aether.entity.moa.death"
   },
@@ -319,7 +319,7 @@
   },
   "entity.moa.hurt": {
     "sounds": [
-      "aether:entity/moa/say"
+      "aether:entity/moa/hurt"
     ],
     "subtitle": "subtitles.aether.entity.moa.hurt"
   },
