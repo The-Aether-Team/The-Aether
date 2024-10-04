@@ -922,6 +922,14 @@
       }
     ]
   },
+  "item.music_disc.sliders_wrath": {
+    "sounds": [
+      {
+        "name": "aether:item/records/sliders_wrath",
+        "stream": true
+      }
+    ]
+  },
   "item.swet_ball.use": {
     "sounds": [
       "mob/slime/big1",
