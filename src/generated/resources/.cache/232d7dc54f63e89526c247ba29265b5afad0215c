@@ -1,4 +1,4 @@
-// 1.20.4	2024-10-03T16:43:13.1826567	Tags for minecraft:item mod id aether
+// 1.20.4	2024-10-04T11:37:47.2771164	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -16,7 +16,7 @@ d520be56403df209dca245912dc672e8c5c3bf0e data/aether/tags/items/aether_dirt.json
 f9a76a30f0eda4e77d73593fb077e89632e058ac data/aether/tags/items/angelic_blocks.json
 4c3f53ffa001534a8db6e1a65a1bdefc3fa0142f data/aether/tags/items/book_of_lore_materials.json
 d9dcb253fe96193998f03751892165ee5f5c1924 data/aether/tags/items/boss_doorway_dungeon_blocks.json
-499e32dd1fed37572283bfff6d2f07da393e730f data/aether/tags/items/bronze_dungeon_loot.json
+d6782e9bdc660f763f8e94fed34e24252e78ba41 data/aether/tags/items/bronze_dungeon_loot.json
 ac1d9421f0295d2b3a733f9b307cb39c2a63629d data/aether/tags/items/candy_cane_repairing.json
 c365c56c9363907f546b5d4778b8608912fa27c9 data/aether/tags/items/crafts_skyroot_planks.json
 321cad0c802b794f364a9ba5a34536ecc36271ec data/aether/tags/items/darts.json

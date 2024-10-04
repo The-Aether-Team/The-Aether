@@ -141,6 +141,7 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.SWET_CAPE.get(),
                 AetherItems.SHIELD_OF_REPULSION.get(),
                 AetherItems.MUSIC_DISC_AETHER_TUNE.get(),
+                AetherItems.MUSIC_DISC_SLIDERS_WRATH.get(),
                 AetherItems.CLOUD_STAFF.get(),
                 AetherItems.LIGHTNING_KNIFE.get(),
                 AetherItems.PHOENIX_BOW.get(),
