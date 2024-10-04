@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-19T10:40:11.0956437	Loot Tables
+// 1.20.4	2024-10-04T10:20:49.4464637	Loot Tables
 6fd07ff3ea848d0b3b26cbf2b2d5c37dd5dc8b9a data/aether/loot_tables/advancements/enter_aether.json
 a2337d3e3c05d3efabc3f907351bfe480fd09caa data/aether/loot_tables/blocks/aerogel.json
 cb18a05b606bd3951085b27c35172c0e9867f0b0 data/aether/loot_tables/blocks/aerogel_slab.json
@@ -137,7 +137,7 @@ a1b60e449be97bda514ff546733eb09e3259c1cb data/aether/loot_tables/chests/dungeon/
 22900fede72d4f2f6d456e83b7f680ce274e38e4 data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_neptune.json
 9a38be52bb1aeba35899f1f215b2e4d68465e84f data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_reward.json
 ce433ef9d921e6d8773b3429fee5a40a3b87cfdf data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_trash.json
-c7848d2cce1e02df4fbb4838109c3b490514f4a8 data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_treasure.json
+dae789339a7b4bbd56475cea556c88d594441afd data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_treasure.json
 a48566c3c74d316e869050234d0fc9445d886bf1 data/aether/loot_tables/chests/dungeon/gold/gold_dungeon_reward.json
 5a34c1b604b4e16c9da78cb4d717be88fc9b44a3 data/aether/loot_tables/chests/dungeon/gold/gold_dungeon_treasure.json
 3e5e72488de4103fd240ba39ba8bfd9aa6d31bf1 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon.json

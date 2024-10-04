@@ -6,17 +6,19 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aether:valkyrie_lance",
-          "weight": 3
+          "name": "aether:valkyrie_lance"
         },
         {
           "type": "minecraft:item",
-          "name": "aether:hammer_of_kingbdogz",
-          "weight": 3
+          "name": "aether:hammer_of_kingbdogz"
         },
         {
           "type": "minecraft:item",
-          "name": "aether:sentry_boots",
+          "name": "aether:sentry_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:music_disc_sliders_wrath",
           "weight": 3
         }
       ],
