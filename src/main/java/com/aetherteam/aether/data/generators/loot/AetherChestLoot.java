@@ -133,9 +133,10 @@ public class AetherChestLoot implements LootTableSubProvider {
         );
         builder.accept(AetherLoot.BRONZE_DUNGEON_TREASURE, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootItem.lootTableItem(AetherItems.VALKYRIE_LANCE.get()).setWeight(3))
-                        .add(LootItem.lootTableItem(AetherItems.HAMMER_OF_KINGBDOGZ.get()).setWeight(3))
-                        .add(LootItem.lootTableItem(AetherItems.SENTRY_BOOTS.get()).setWeight(3))
+                        .add(LootItem.lootTableItem(AetherItems.VALKYRIE_LANCE.get()).setWeight(1))
+                        .add(LootItem.lootTableItem(AetherItems.HAMMER_OF_KINGBDOGZ.get()).setWeight(1))
+                        .add(LootItem.lootTableItem(AetherItems.SENTRY_BOOTS.get()).setWeight(1))
+                        .add(LootItem.lootTableItem(AetherItems.MUSIC_DISC_SLIDERS_WRATH.get()).setWeight(3))
                 )
         );
         builder.accept(AetherLoot.BRONZE_DUNGEON_NEPTUNE, LootTable.lootTable()

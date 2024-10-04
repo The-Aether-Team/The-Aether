@@ -273,6 +273,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherItems.VICTORY_MEDAL.get());
                 output.accept(AetherItems.MUSIC_DISC_AETHER_TUNE.get());
                 output.accept(AetherItems.MUSIC_DISC_ASCENDING_DAWN.get());
+                output.accept(AetherItems.MUSIC_DISC_SLIDERS_WRATH.get());
                 output.accept(AetherItems.AETHER_PORTAL_FRAME.get());
             }).build());
     public static RegistryObject<CreativeModeTab> AETHER_ARMOR_AND_ACCESSORIES = CREATIVE_MODE_TABS.register("armor_and_accessories", () -> CreativeModeTab.builder()

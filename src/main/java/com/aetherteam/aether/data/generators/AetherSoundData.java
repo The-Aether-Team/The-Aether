@@ -282,6 +282,9 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         this.add(AetherSoundEvents.ITEM_MUSIC_DISC_KLEPTO,
                 definition().with(sound("aether:item/records/klepto").stream())
         );
+        this.add(AetherSoundEvents.ITEM_MUSIC_DISC_SLIDERS_WRATH,
+                definition().with(sound("aether:item/records/sliders_wrath").stream())
+        );
 
 
         //Entities
