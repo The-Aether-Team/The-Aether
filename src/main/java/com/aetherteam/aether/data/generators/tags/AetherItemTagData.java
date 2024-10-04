@@ -396,7 +396,8 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(),
                 AetherItems.MUSIC_DISC_CHINCHILLA.get(),
                 AetherItems.MUSIC_DISC_HIGH.get(),
-                AetherItems.MUSIC_DISC_KLEPTO.get());
+                AetherItems.MUSIC_DISC_KLEPTO.get(),
+                AetherItems.MUSIC_DISC_SLIDERS_WRATH.get());
         this.tag(ItemTags.BOOKSHELF_BOOKS).add(AetherItems.BOOK_OF_LORE.get());
         this.tag(ItemTags.BEACON_PAYMENT_ITEMS).add(
                 AetherItems.ZANITE_GEMSTONE.get(),
