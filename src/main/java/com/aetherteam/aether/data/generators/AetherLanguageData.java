@@ -328,6 +328,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
         this.addItem(AetherItems.MUSIC_DISC_KLEPTO, "Blackened Music Disc");
         this.addDiscDesc(AetherItems.MUSIC_DISC_KLEPTO, "sunsette - klepto");
+        this.addItem(AetherItems.MUSIC_DISC_SLIDERS_WRATH, "Carved Music Disc");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_SLIDERS_WRATH, "sunsette - Slider's Wrath");
 
         this.addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         this.addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");

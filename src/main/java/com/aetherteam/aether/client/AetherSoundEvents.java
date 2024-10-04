@@ -58,6 +58,7 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_CHINCHILLA = register("item.music_disc.chinchilla");
 	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_HIGH = register("item.music_disc.high");
 	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_KLEPTO = register("item.music_disc.klepto");
+	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_SLIDERS_WRATH = register("item.music_disc.sliders_wrath");
 
 	public static final RegistryObject<SoundEvent> ENTITY_PHYG_AMBIENT = register("entity.phyg.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_PHYG_DEATH = register("entity.phyg.death");
