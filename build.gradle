@@ -180,6 +180,8 @@ project.afterEvaluate {
     optimizeOutputsOfJar {
         dependsOn 'reobfJar'
     }
+
+    tasks.modrinth.mustRunAfter('optimizeOutputsOfJar')
 }
 
 tasks.named('jar', Jar).configure {
@@ -269,8 +271,6 @@ modrinth {
         optional.project "starlight-forge"
     }
 }
-
-tasks.modrinth.mustRunAfter('optimizeOutputsOfJar')
 
 mixin {
     config "${project.mod_id}.mixins.json"
