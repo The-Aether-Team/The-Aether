@@ -268,10 +268,7 @@ modrinth {
         embedded.version "cumulus", "${project.cumulus_version}"
         optional.project "starlight-forge"
     }
-}
-
-modrinth {
-    dependsOn 'optimizeOutputsOfJar'
+    autoAddDependsOn = true
 }
 
 mixin {
