@@ -182,7 +182,7 @@ project.afterEvaluate {
     }
 }
 
-tasks.modrinth.dependsOn('optimizeOutputsOfJar')
+tasks.modrinth.dependsOn('optimizeOutputsOfJarJar')
 
 tasks.named('jar', Jar).configure {
     manifest {
