@@ -166,6 +166,8 @@ tasks.named('jarJar', JarJar).configure {
     archiveClassifier = ''
 }
 
+tasks.modrinth.dependsOn('optimizeOutputsOfJarJar')
+
 compileJava {
     options.incremental = false
 }
