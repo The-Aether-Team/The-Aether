@@ -181,7 +181,7 @@ project.afterEvaluate {
         dependsOn 'reobfJar'
     }
 
-    tasks.modrinth.mustRunAfter('optimizeOutputsOfJar')
+    tasks.modrinth.dependsOn('optimizeOutputsOfJar')
 }
 
 tasks.named('jar', Jar).configure {
