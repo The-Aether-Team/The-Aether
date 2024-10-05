@@ -180,9 +180,9 @@ project.afterEvaluate {
     optimizeOutputsOfJar {
         dependsOn 'reobfJar'
     }
-
-    tasks.modrinth.dependsOn('optimizeOutputsOfJar')
 }
+
+tasks.modrinth.dependsOn('optimizeOutputsOfJar')
 
 tasks.named('jar', Jar).configure {
     manifest {
