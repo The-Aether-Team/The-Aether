@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
  * Adapted to Nitrogen packet system.
  */
 public record OpenInventoryPacket(ItemStack carryStack) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "open_vanilla_inventory");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "open_vanilla_inventory");
 
     @Override
     public ResourceLocation id() {

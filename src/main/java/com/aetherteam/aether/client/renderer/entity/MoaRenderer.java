@@ -21,9 +21,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
-    private static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/white_moa.png");
-    private static final ResourceLocation MOS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/mos.png");
-    private static final ResourceLocation RAPTOR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/raptor.png");
+    private static final ResourceLocation DEFAULT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/white_moa.png");
+    private static final ResourceLocation MOS_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/mos.png");
+    private static final ResourceLocation RAPTOR_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/raptor.png");
 
     public MoaRenderer(EntityRendererProvider.Context context) {
         super(context, new MoaModel(context.bakeLayer(AetherModelLayers.MOA)), 0.7F);

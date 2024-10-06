@@ -20,22 +20,22 @@ import net.minecraft.resources.ResourceLocation;
 
 @REIPluginCommon
 public class AetherREIServerPlugin implements REIServerPlugin {
-    public static final CategoryIdentifier<PlacementBanRecipeDisplay<BlockBanRecipe>> BLOCK_PLACEMENT_BAN = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "block_placement_ban"));
-    public static final CategoryIdentifier<PlacementBanRecipeDisplay<ItemBanRecipe>> ITEM_PLACEMENT_BAN = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "item_placement_ban"));
+    public static final CategoryIdentifier<PlacementBanRecipeDisplay<BlockBanRecipe>> BLOCK_PLACEMENT_BAN = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "block_placement_ban"));
+    public static final CategoryIdentifier<PlacementBanRecipeDisplay<ItemBanRecipe>> ITEM_PLACEMENT_BAN = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "item_placement_ban"));
 
-    public static final CategoryIdentifier<BlockStateRecipeDisplay<AccessoryFreezableRecipe>> ACCESSORY_FREEZABLE = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "accessory_freezable"));
-    public static final CategoryIdentifier<BlockStateRecipeDisplay<AmbrosiumRecipe>> AMBROSIUM_ENCHANTING = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "ambrosium_enchanting"));
-    public static final CategoryIdentifier<BlockStateRecipeDisplay<IcestoneFreezableRecipe>> ICESTONE_FREEZABLE = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "icestone_freezable"));
+    public static final CategoryIdentifier<BlockStateRecipeDisplay<AccessoryFreezableRecipe>> ACCESSORY_FREEZABLE = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "accessory_freezable"));
+    public static final CategoryIdentifier<BlockStateRecipeDisplay<AmbrosiumRecipe>> AMBROSIUM_ENCHANTING = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "ambrosium_enchanting"));
+    public static final CategoryIdentifier<BlockStateRecipeDisplay<IcestoneFreezableRecipe>> ICESTONE_FREEZABLE = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "icestone_freezable"));
 
-    public static final CategoryIdentifier<BlockStateRecipeDisplay<PlacementConversionRecipe>> PLACEMENT_CONVERSION = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "placement_conversion"));
-    public static final CategoryIdentifier<BlockStateRecipeDisplay<SwetBallRecipe>> SWET_BALL_CONVERSION = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "swet_ball_conversion"));
+    public static final CategoryIdentifier<BlockStateRecipeDisplay<PlacementConversionRecipe>> PLACEMENT_CONVERSION = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "placement_conversion"));
+    public static final CategoryIdentifier<BlockStateRecipeDisplay<SwetBallRecipe>> SWET_BALL_CONVERSION = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "swet_ball_conversion"));
 
-    public static final CategoryIdentifier<FuelDisplay> AETHER_FUEL = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "fuel"));
+    public static final CategoryIdentifier<FuelDisplay> AETHER_FUEL = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "fuel"));
 
-    public static final CategoryIdentifier<AetherCookingRecipeDisplay<AltarRepairRecipe>> ALTAR_REPAIR = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "repairing"));
-    public static final CategoryIdentifier<AetherCookingRecipeDisplay<EnchantingRecipe>> ALTAR_ENCHANTING = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "enchanting"));
-    public static final CategoryIdentifier<AetherCookingRecipeDisplay<FreezingRecipe>> FREEZING = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "freezing"));
-    public static final CategoryIdentifier<AetherCookingRecipeDisplay<IncubationRecipe>> INCUBATING = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "incubating"));
+    public static final CategoryIdentifier<AetherCookingRecipeDisplay<AltarRepairRecipe>> ALTAR_REPAIR = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "repairing"));
+    public static final CategoryIdentifier<AetherCookingRecipeDisplay<EnchantingRecipe>> ALTAR_ENCHANTING = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "enchanting"));
+    public static final CategoryIdentifier<AetherCookingRecipeDisplay<FreezingRecipe>> FREEZING = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "freezing"));
+    public static final CategoryIdentifier<AetherCookingRecipeDisplay<IncubationRecipe>> INCUBATING = CategoryIdentifier.of(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "incubating"));
 
     @Override
     public void registerDisplaySerializer(DisplaySerializerRegistry registry) {

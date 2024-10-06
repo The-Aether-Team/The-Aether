@@ -36,6 +36,6 @@ public abstract class SilverDungeonPiece extends AetherTemplateStructurePiece {
     }
 
     protected static ResourceLocation makeLocation(String name) {
-        return new ResourceLocation(Aether.MODID, "silver_dungeon/" + name);
+        return ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver_dungeon/" + name);
     }
 }

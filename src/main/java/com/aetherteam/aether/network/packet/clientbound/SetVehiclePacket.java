@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
  * Sets a passenger to ride a vehicle. Called from {@link com.aetherteam.aether.event.hooks.DimensionHooks#entityFell}.
  */
 public record SetVehiclePacket(int passengerID, int vehicleID) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "set_mount");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "set_mount");
 
     @Override
     public ResourceLocation id() {

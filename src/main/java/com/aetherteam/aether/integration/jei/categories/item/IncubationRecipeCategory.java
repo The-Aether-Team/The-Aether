@@ -19,8 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class IncubationRecipeCategory extends AbstractAetherCookingRecipeCategory<IncubationRecipe> implements IRecipeCategory<IncubationRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "incubation");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/incubator.png");
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "incubation");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/menu/incubator.png");
     public static final RecipeType<IncubationRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "incubation", IncubationRecipe.class);
 
     public IncubationRecipeCategory(IGuiHelper guiHelper) {

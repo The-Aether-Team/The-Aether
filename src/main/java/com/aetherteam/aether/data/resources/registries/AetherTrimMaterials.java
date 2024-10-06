@@ -22,7 +22,7 @@ public class AetherTrimMaterials {
     public static final ResourceKey<TrimMaterial> GOLDEN_AMBER = createKey("golden_amber");
 
     private static ResourceKey<TrimMaterial> createKey(String name) {
-        return ResourceKey.create(Registries.TRIM_MATERIAL, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(Registries.TRIM_MATERIAL, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
     public static void bootstrap(BootstapContext<TrimMaterial> context) {

@@ -27,7 +27,7 @@ public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
     protected ResourceLocation GLOVES_TEXTURE;
 
     public GlovesItem(ArmorMaterial material, double punchDamage, String glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
-        this(material, punchDamage, new ResourceLocation(Aether.MODID, glovesName), glovesSound, properties);
+        this(material, punchDamage, ResourceLocation.fromNamespaceAndPath(Aether.MODID, glovesName), glovesSound, properties);
     }
 
     public GlovesItem(ArmorMaterial material, double punchDamage, ResourceLocation glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {

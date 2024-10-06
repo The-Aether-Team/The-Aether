@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(TippableArrowRenderer.class)
 public class TippableArrowRendererMixin {
     @Unique
-    private static final ResourceLocation FLAMING_ARROW_LOCATION = new ResourceLocation(Aether.MODID, "textures/entity/projectile/flaming_arrow.png");
+    private static final ResourceLocation FLAMING_ARROW_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/projectile/flaming_arrow.png");
 
     /**
      * Changes the texture for any arrows if they are marked as Phoenix Arrows by {@link PhoenixArrowAttachment}.

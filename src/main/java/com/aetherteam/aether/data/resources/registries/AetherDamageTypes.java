@@ -40,7 +40,7 @@ public class AetherDamageTypes {
     }
 
     private static ResourceKey<DamageType> createKey(String name) {
-        return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
     public static DamageSource damageSource(Level level, ResourceKey<DamageType> key) {

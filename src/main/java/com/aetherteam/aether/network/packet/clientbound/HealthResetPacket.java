@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Player;
  * Sets the player's Life Shard data and refreshes the modifier and health values. This is called by {@link com.aetherteam.aether.command.PlayerCapabilityCommand}.
  */
 public record HealthResetPacket(int entityID, int value) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "reset_health");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "reset_health");
 
     @Override
     public ResourceLocation id() {

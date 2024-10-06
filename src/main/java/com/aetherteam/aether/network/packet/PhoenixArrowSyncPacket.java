@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  * Sync packet for values in the {@link PhoenixArrowAttachment} class.
  */
 public class PhoenixArrowSyncPacket extends SyncEntityPacket<PhoenixArrowAttachment> {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "sync_phoenix_arrow_attachment");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "sync_phoenix_arrow_attachment");
 
     public PhoenixArrowSyncPacket(Quartet<Integer, String, INBTSynchable.Type, Object> values) {
         super(values);

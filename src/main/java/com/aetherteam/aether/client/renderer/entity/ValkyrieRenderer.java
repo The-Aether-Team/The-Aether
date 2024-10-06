@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public class ValkyrieRenderer extends MobRenderer<Valkyrie, ValkyrieModel<Valkyrie>> {
-    private static final ResourceLocation VALKYRIE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/valkyrie/valkyrie.png");
+    private static final ResourceLocation VALKYRIE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/valkyrie/valkyrie.png");
 
     public ValkyrieRenderer(EntityRendererProvider.Context context) {
         super(context, new ValkyrieModel<>(context.bakeLayer(AetherModelLayers.VALKYRIE)), 0.3F);

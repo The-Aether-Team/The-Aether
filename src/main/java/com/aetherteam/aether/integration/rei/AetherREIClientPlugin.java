@@ -43,8 +43,8 @@ import java.util.List;
 
 @REIPluginClient
 public class AetherREIClientPlugin implements REIClientPlugin {
-    private static final ResourceLocation LIT_PROGRESS_TRANSPARENT_TEXTURE = new ResourceLocation(Aether.MODID, "menu/lit_progress_transparent");
-    private static final ResourceLocation LIT_PROGRESS_BACKGROUND_TEXTURE = new ResourceLocation(Aether.MODID, "menu/lit_progress_background");
+    private static final ResourceLocation LIT_PROGRESS_TRANSPARENT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "menu/lit_progress_transparent");
+    private static final ResourceLocation LIT_PROGRESS_BACKGROUND_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "menu/lit_progress_background");
 
     public static List<FuelRecipe> getFuelRecipes() {
         List<FuelRecipe> fuelRecipes = new ArrayList<>();

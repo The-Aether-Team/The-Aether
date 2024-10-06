@@ -17,7 +17,7 @@ public class ClientHaloPacket {
      * Applies the Halo perk to a player on the client.
      */
     public record Apply(UUID playerUUID, Halo halo) implements BasePacket {
-        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "apply_halo");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "apply_halo");
 
         @Override
         public ResourceLocation id() {
@@ -48,7 +48,7 @@ public class ClientHaloPacket {
      * Removes the Halo perk from a player on the client.
      */
     public record Remove(UUID playerUUID) implements BasePacket {
-        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "remove_halo");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "remove_halo");
 
         @Override
         public ResourceLocation id() {
@@ -77,7 +77,7 @@ public class ClientHaloPacket {
      * Syncs Halo perk data for all players to the client.
      */
     public record Sync(Map<UUID, Halo> halos) implements BasePacket {
-        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "sync_halo");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "sync_halo");
 
         @Override
         public ResourceLocation id() {

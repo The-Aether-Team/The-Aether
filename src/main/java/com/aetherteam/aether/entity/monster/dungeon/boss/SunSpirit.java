@@ -583,7 +583,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Nullable
     @Override
     public ResourceLocation getBossBarTexture() {
-        return new ResourceLocation(Aether.MODID, "boss_bar/sun_spirit");
+        return ResourceLocation.fromNamespaceAndPath(Aether.MODID, "boss_bar/sun_spirit");
     }
 
     /**
@@ -592,7 +592,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Nullable
     @Override
     public ResourceLocation getBossBarBackgroundTexture() {
-        return new ResourceLocation(Aether.MODID, "boss_bar/sun_spirit_background");
+        return ResourceLocation.fromNamespaceAndPath(Aether.MODID, "boss_bar/sun_spirit_background");
     }
 
     /**

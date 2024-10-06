@@ -13,7 +13,7 @@ public class AetherNoises {
     public static final ResourceKey<NoiseParameters> VEGETATION = createKey("vegetation");
 
     private static ResourceKey<NoiseParameters> createKey(String name) {
-        return ResourceKey.create(Registries.NOISE, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(Registries.NOISE, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
     public static void bootstrap(BootstapContext<NoiseParameters> context) {

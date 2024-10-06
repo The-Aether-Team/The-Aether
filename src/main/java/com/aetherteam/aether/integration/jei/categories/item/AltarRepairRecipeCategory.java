@@ -19,8 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class AltarRepairRecipeCategory extends AbstractAetherCookingRecipeCategory<AltarRepairRecipe> implements IRecipeCategory<AltarRepairRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "repairing");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "repairing");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/menu/altar.png");
     public static final RecipeType<AltarRepairRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "repairing", AltarRepairRecipe.class);
 
     public AltarRepairRecipeCategory(IGuiHelper guiHelper) {

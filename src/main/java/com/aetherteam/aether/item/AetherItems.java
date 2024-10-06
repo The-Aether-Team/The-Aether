@@ -228,9 +228,9 @@ public class AetherItems {
     // Misc
     public static final DeferredItem<Item> VICTORY_MEDAL = ITEMS.register("victory_medal", () -> new Item(new Item.Properties().stacksTo(10).rarity(AETHER_LOOT)));
 
-    public static final DeferredItem<Item> BRONZE_DUNGEON_KEY = ITEMS.register("bronze_dungeon_key", () -> new DungeonKeyItem(new ResourceLocation(Aether.MODID, "bronze"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
-    public static final DeferredItem<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key", () -> new DungeonKeyItem(new ResourceLocation(Aether.MODID, "silver"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
-    public static final DeferredItem<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key", () -> new DungeonKeyItem(new ResourceLocation(Aether.MODID, "gold"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
+    public static final DeferredItem<Item> BRONZE_DUNGEON_KEY = ITEMS.register("bronze_dungeon_key", () -> new DungeonKeyItem(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
+    public static final DeferredItem<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key", () -> new DungeonKeyItem(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
+    public static final DeferredItem<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key", () -> new DungeonKeyItem(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "gold"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
 
     public static final DeferredItem<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune", () -> new RecordItem(1, AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 2980));
     public static final DeferredItem<Item> MUSIC_DISC_ASCENDING_DAWN = ITEMS.register("music_disc_ascending_dawn", () -> new RecordItem(2, AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 7000));

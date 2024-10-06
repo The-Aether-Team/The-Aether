@@ -125,7 +125,7 @@ public class BronzeDungeonStructure extends Structure {
                 generator.getBaseColumn(maxX, minZ, heightAccessor, random),
                 generator.getBaseColumn(maxX, maxZ, heightAccessor, random)
         };
-        int roomHeight = checkRoomHeight(templateManager, new ResourceLocation(Aether.MODID, "bronze_dungeon/boss_room"));
+        int roomHeight = checkRoomHeight(templateManager, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze_dungeon/boss_room"));
         int height = heightAccessor.getMinBuildHeight();
         int maxHeight = heightAccessor.getMaxBuildHeight() - belowTop;
         int thickness = roomHeight + 2;

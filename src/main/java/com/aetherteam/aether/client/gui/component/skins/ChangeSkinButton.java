@@ -7,8 +7,8 @@ import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.resources.ResourceLocation;
 
 public class ChangeSkinButton extends Button {
-    public static final WidgetSprites APPLY_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/apply_button"), new ResourceLocation(Aether.MODID, "skins/apply_button_disabled"), new ResourceLocation(Aether.MODID, "skins/apply_button_highlighted"));
-    public static final WidgetSprites REMOVE_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/remove_button"), new ResourceLocation(Aether.MODID, "skins/remove_button_disabled"), new ResourceLocation(Aether.MODID, "skins/remove_button_highlighted"));
+    public static final WidgetSprites APPLY_WIDGET = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/apply_button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/apply_button_disabled"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/apply_button_highlighted"));
+    public static final WidgetSprites REMOVE_WIDGET = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/remove_button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/remove_button_disabled"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/remove_button_highlighted"));
 
     private final ButtonType buttonType;
 

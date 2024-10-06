@@ -90,9 +90,9 @@ public class GlowstoneRuinedPortalStructure extends Structure {
             pieceProperties.replaceWithHolystone = setup3.replaceWithHolystone();
             ResourceLocation location;
             if (worldGenRandom.nextFloat() < 0.05F) {
-                location = new ResourceLocation(Aether.MODID, STRUCTURE_LOCATION_GIANT_PORTALS[worldGenRandom.nextInt(STRUCTURE_LOCATION_GIANT_PORTALS.length)]);
+                location = ResourceLocation.fromNamespaceAndPath(Aether.MODID, STRUCTURE_LOCATION_GIANT_PORTALS[worldGenRandom.nextInt(STRUCTURE_LOCATION_GIANT_PORTALS.length)]);
             } else {
-                location = new ResourceLocation(Aether.MODID, STRUCTURE_LOCATION_PORTALS[worldGenRandom.nextInt(STRUCTURE_LOCATION_PORTALS.length)]);
+                location = ResourceLocation.fromNamespaceAndPath(Aether.MODID, STRUCTURE_LOCATION_PORTALS[worldGenRandom.nextInt(STRUCTURE_LOCATION_PORTALS.length)]);
             }
 
             StructureTemplate template = context.structureTemplateManager().getOrCreate(location);

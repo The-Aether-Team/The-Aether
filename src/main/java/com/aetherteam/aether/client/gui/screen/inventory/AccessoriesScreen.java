@@ -51,12 +51,12 @@ import javax.annotation.Nullable;
  * Modified to register slots for Aether accessories only.
  */
 public class AccessoriesScreen extends EffectRenderingInventoryScreen<AccessoriesMenu> implements RecipeUpdateListener, RecipeBookBehavior<AccessoriesMenu, AccessoriesScreen> {
-    public static final WidgetSprites ACCESSORIES_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "inventory/accessories_button"), new ResourceLocation(Aether.MODID, "inventory/accessories_button_highlighted"));
-    public static final WidgetSprites SKINS_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/skins_button"), new ResourceLocation(Aether.MODID, "skins/skins_button_highlighted"));
-    public static final WidgetSprites CUSTOMIZATION_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "customization/customization_button"), new ResourceLocation(Aether.MODID, "customization/customization_button_highlighted"));
+    public static final WidgetSprites ACCESSORIES_BUTTON = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "inventory/accessories_button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "inventory/accessories_button_highlighted"));
+    public static final WidgetSprites SKINS_BUTTON = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/skins_button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/skins_button_highlighted"));
+    public static final WidgetSprites CUSTOMIZATION_BUTTON = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "customization/customization_button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "customization/customization_button_highlighted"));
 
-    private static final ResourceLocation ACCESSORIES_INVENTORY = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories.png");
-    private static final ResourceLocation ACCESSORIES_INVENTORY_CREATIVE = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories_creative.png");
+    private static final ResourceLocation ACCESSORIES_INVENTORY = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/inventory/accessories.png");
+    private static final ResourceLocation ACCESSORIES_INVENTORY_CREATIVE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/inventory/accessories_creative.png");
     private static final ResourceLocation CURIO_INVENTORY = new ResourceLocation(CuriosConstants.MOD_ID, "textures/gui/curios/inventory.png");
     private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
 

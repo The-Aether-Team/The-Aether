@@ -19,8 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class EnchantingRecipeCategory extends AbstractAetherCookingRecipeCategory<EnchantingRecipe> implements IRecipeCategory<EnchantingRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "enchanting");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "enchanting");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/menu/altar.png");
     public static final RecipeType<EnchantingRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "enchanting", EnchantingRecipe.class);
 
     public EnchantingRecipeCategory(IGuiHelper guiHelper) {

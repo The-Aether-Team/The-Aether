@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
  * Swings the player's hand when feeding a Moa.
  */
 public record MoaInteractPacket(int playerID, boolean mainHand) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "interact_with_moa");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "interact_with_moa");
 
     @Override
     public ResourceLocation id() {

@@ -639,7 +639,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Nullable
     @Override
     public ResourceLocation getBossBarTexture() {
-        return new ResourceLocation(Aether.MODID, "boss_bar/valkyrie_queen");
+        return ResourceLocation.fromNamespaceAndPath(Aether.MODID, "boss_bar/valkyrie_queen");
     }
 
     /**
@@ -648,7 +648,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Nullable
     @Override
     public ResourceLocation getBossBarBackgroundTexture() {
-        return new ResourceLocation(Aether.MODID, "boss_bar/valkyrie_queen_background");
+        return ResourceLocation.fromNamespaceAndPath(Aether.MODID, "boss_bar/valkyrie_queen_background");
     }
 
     /**

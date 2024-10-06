@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
  * This packet is sent to the server whenever the player chooses an important action in the NPC dialogue.
  */
 public record NpcPlayerInteractPacket(int entityID, byte interactionID) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "set_npc_interaction_action");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "set_npc_interaction_action");
 
     @Override
     public ResourceLocation id() {

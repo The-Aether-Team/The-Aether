@@ -8,7 +8,7 @@ import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.resources.ResourceLocation;
 
 public class RefreshButton extends Button {
-    public static final WidgetSprites REFRESH_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/refresh_button"), new ResourceLocation(Aether.MODID, "skins/refresh_button_highlighted"), new ResourceLocation(Aether.MODID, "skins/refresh_button_highlighted"));
+    public static final WidgetSprites REFRESH_WIDGET = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/refresh_button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/refresh_button_highlighted"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/refresh_button_highlighted"));
 
     public static final int reboundMax = 1200;
     public static int reboundTimer = 0;

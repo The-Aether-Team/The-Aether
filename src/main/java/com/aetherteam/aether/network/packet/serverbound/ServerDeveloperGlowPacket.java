@@ -16,7 +16,7 @@ public class ServerDeveloperGlowPacket {
      * Applies the Developer Glow perk to a player on the server.
      */
     public record Apply(UUID playerUUID, DeveloperGlow developerGlow) implements BasePacket {
-        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "apply_developer_glow_server");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "apply_developer_glow_server");
 
         @Override
         public ResourceLocation id() {
@@ -47,7 +47,7 @@ public class ServerDeveloperGlowPacket {
      * Removes the Developer Glow perk from a player on the server.
      */
     public record Remove(UUID playerUUID) implements BasePacket {
-        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "remove_developer_glow_server");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "remove_developer_glow_server");
 
         @Override
         public ResourceLocation id() {

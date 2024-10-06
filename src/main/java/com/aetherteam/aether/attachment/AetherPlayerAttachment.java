@@ -121,7 +121,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
     private float savedHealth = 0.0F;
     private int lifeShards;
 
-    private static final ResourceLocation LOGOMARKS = new ResourceLocation(Aether.MODID, "logomarks");
+    private static final ResourceLocation LOGOMARKS = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "logomarks");
     private static final Style DISCORD = Style.EMPTY.withColor(5793266).withUnderlined(true).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/aethermod")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("https://discord.gg/aethermod")));
     private static final Style PATREON = Style.EMPTY.withColor(16728653).withUnderlined(true).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.patreon.com/TheAetherTeam")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("https://www.patreon.com/TheAetherTeam")));
     private boolean canShowPatreonMessage = true;

@@ -27,6 +27,6 @@ public class AetherAtlases {
     }
 
     public static Material getChestMaterial(String chestName) {
-        return new Material(Sheets.CHEST_SHEET, new ResourceLocation(Aether.MODID, "entity/tiles/chest/" + chestName));
+        return new Material(Sheets.CHEST_SHEET, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "entity/tiles/chest/" + chestName));
     }
 }

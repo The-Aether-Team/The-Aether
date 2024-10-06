@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Player;
  * Opens {@link SunAltarScreen} from {@link com.aetherteam.aether.block.utility.SunAltarBlock}.
  */
 public record OpenSunAltarPacket(Component name, int timeScale) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "open_sun_altar");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "open_sun_altar");
 
     @Override
     public ResourceLocation id() {

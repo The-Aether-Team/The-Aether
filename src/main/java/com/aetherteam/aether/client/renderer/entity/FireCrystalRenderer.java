@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 public class FireCrystalRenderer extends AbstractCrystalRenderer<FireCrystal> {
-    private static final ResourceLocation FIRE_CRYSTAL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/crystals/fire_ball.png");
+    private static final ResourceLocation FIRE_CRYSTAL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/projectile/crystals/fire_ball.png");
 
     public FireCrystalRenderer(EntityRendererProvider.Context context) {
         super(context, new CrystalModel<>(context.bakeLayer(AetherModelLayers.CLOUD_CRYSTAL)));

@@ -48,7 +48,7 @@ public class GoldBossRoom extends GoldDungeonPiece {
             if (entity instanceof RandomizableContainerBlockEntity container) {
                 container.setLootTable(AetherLoot.GOLD_DUNGEON_REWARD, random.nextLong());
             }
-            TreasureChestBlockEntity.setDungeonType(level, chest, new ResourceLocation(Aether.MODID, "gold"));
+            TreasureChestBlockEntity.setDungeonType(level, chest, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "gold"));
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
         }
     }

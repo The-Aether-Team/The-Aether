@@ -28,7 +28,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  */
 public class SilverDungeonRoom extends SilverDungeonPiece {
     public SilverDungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation, Holder<StructureProcessorList> processors) {
-        super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), manager, name, SilverDungeonRoom.makeSettings(manager, rotation, new ResourceLocation(Aether.MODID, "silver_dungeon/" + name)), pos, processors);
+        super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), manager, name, SilverDungeonRoom.makeSettings(manager, rotation, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver_dungeon/" + name)), pos, processors);
         this.setOrientation(rotation.rotate(Direction.SOUTH));
     }
 

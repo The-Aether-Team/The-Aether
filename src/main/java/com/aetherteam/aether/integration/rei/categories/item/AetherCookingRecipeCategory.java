@@ -29,10 +29,10 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRecipeCategory<AetherCookingRecipeDisplay<R>> {
-    private static final ResourceLocation LIT_PROGRESS_TEXTURE = new ResourceLocation(Aether.MODID, "menu/lit_progress");
-    private static final ResourceLocation BURN_PROGRESS_TEXTURE = new ResourceLocation(Aether.MODID, "menu/burn_progress");
-    private static final ResourceLocation INCUBATION_PROGRESS_TEXTURE = new ResourceLocation(Aether.MODID, "menu/incubation_progress");
-    private static final ResourceLocation INCUBATION_PROGRESS_BACKGROUND_TEXTURE = new ResourceLocation(Aether.MODID, "menu/incubation_progress_background");
+    private static final ResourceLocation LIT_PROGRESS_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "menu/lit_progress");
+    private static final ResourceLocation BURN_PROGRESS_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "menu/burn_progress");
+    private static final ResourceLocation INCUBATION_PROGRESS_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "menu/incubation_progress");
+    private static final ResourceLocation INCUBATION_PROGRESS_BACKGROUND_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "menu/incubation_progress_background");
 
     protected final Supplier<WidgetWithBounds> fuelIndicator;
     protected final Supplier<WidgetWithBounds> animatedProgressArrow;

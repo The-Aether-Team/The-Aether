@@ -16,20 +16,20 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class AetherMoaTypes {
-    public static final ResourceKey<Registry<MoaType>> MOA_TYPE_REGISTRY_KEY = ResourceKey.createRegistryKey(new ResourceLocation(Aether.MODID, "moa_type"));
+    public static final ResourceKey<Registry<MoaType>> MOA_TYPE_REGISTRY_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "moa_type"));
 
     public static final ResourceKey<MoaType> BLUE = createKey("blue");
     public static final ResourceKey<MoaType> WHITE = createKey("white");
     public static final ResourceKey<MoaType> BLACK = createKey("black");
 
     private static ResourceKey<MoaType> createKey(String name) {
-        return ResourceKey.create(AetherMoaTypes.MOA_TYPE_REGISTRY_KEY, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(AetherMoaTypes.MOA_TYPE_REGISTRY_KEY, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
     public static void bootstrap(BootstapContext<MoaType> context) {
-        context.register(BLUE, new MoaType(new ItemStack(AetherItems.BLUE_MOA_EGG.get()), 3, 0.155F, 100, new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/blue_moa.png"), new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png")));
-        context.register(WHITE, new MoaType(new ItemStack(AetherItems.WHITE_MOA_EGG.get()), 4, 0.155F, 50, new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/white_moa.png"), new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png")));
-        context.register(BLACK, new MoaType(new ItemStack(AetherItems.BLACK_MOA_EGG.get()), 8, 0.155F, 25, new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/black_moa.png"), new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/black_moa_saddle.png")));
+        context.register(BLUE, new MoaType(new ItemStack(AetherItems.BLUE_MOA_EGG.get()), 3, 0.155F, 100, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/blue_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png")));
+        context.register(WHITE, new MoaType(new ItemStack(AetherItems.WHITE_MOA_EGG.get()), 4, 0.155F, 50, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/white_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png")));
+        context.register(BLACK, new MoaType(new ItemStack(AetherItems.BLACK_MOA_EGG.get()), 8, 0.155F, 25, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/black_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/black_moa_saddle.png")));
     }
 
     @Nullable

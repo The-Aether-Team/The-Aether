@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
  * Sets the {@link Aerbunny#DATA_PUFFINESS_ID} value to 11. This is needed in a packet for precise animation syncing.
  */
 public record AerbunnyPuffPacket(int entityID) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "aerbunny_puff");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "aerbunny_puff");
 
     @Override
     public ResourceLocation id() {

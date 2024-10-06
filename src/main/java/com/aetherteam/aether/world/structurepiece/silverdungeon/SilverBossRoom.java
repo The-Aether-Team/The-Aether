@@ -62,7 +62,7 @@ public class SilverBossRoom extends SilverDungeonPiece {
             if (entity instanceof RandomizableContainerBlockEntity container) {
                 container.setLootTable(AetherLoot.SILVER_DUNGEON_REWARD, random.nextLong());
             }
-            TreasureChestBlockEntity.setDungeonType(level, chest, new ResourceLocation(Aether.MODID, "silver"));
+            TreasureChestBlockEntity.setDungeonType(level, chest, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver"));
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
         }
     }

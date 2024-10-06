@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
  * Communicates whether a language entry for lore exists from the client to the server.
  */
 public record LoreExistsPacket(int playerID, ItemStack itemStack, boolean exists) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "check_for_lore_entry");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "check_for_lore_entry");
 
     @Override
     public ResourceLocation id() {

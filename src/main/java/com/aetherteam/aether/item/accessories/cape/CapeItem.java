@@ -11,7 +11,7 @@ public class CapeItem extends AccessoryItem implements SlotIdentifierHolder {
     protected ResourceLocation CAPE_LOCATION;
 
     public CapeItem(String capeLocation, Properties properties) {
-        this(new ResourceLocation(Aether.MODID, capeLocation), properties);
+        this(ResourceLocation.fromNamespaceAndPath(Aether.MODID, capeLocation), properties);
     }
 
     public CapeItem(ResourceLocation capeLocation, Properties properties) {

@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
  * Called by mounts to sync their step height modifier to the server. This fixes a movement bug where step height occasionally would not work otherwise.
  */
 public record StepHeightPacket(int entityID) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "sync_step_height");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "sync_step_height");
 
     @Override
     public ResourceLocation id() {

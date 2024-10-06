@@ -12,8 +12,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.vehicle.Boat;
 
 public class SkyrootBoatRenderer extends BoatRenderer {
-    private static final ResourceLocation SKYROOT_BOAT = new ResourceLocation(Aether.MODID, "textures/entity/miscellaneous/boat/skyroot.png");
-    private static final ResourceLocation SKYROOT_CHEST_BOAT = new ResourceLocation(Aether.MODID, "textures/entity/miscellaneous/chest_boat/skyroot.png");
+    private static final ResourceLocation SKYROOT_BOAT = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/miscellaneous/boat/skyroot.png");
+    private static final ResourceLocation SKYROOT_CHEST_BOAT = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/miscellaneous/chest_boat/skyroot.png");
     private final Pair<ResourceLocation, ListModel<Boat>> skyrootBoatResource;
 
     public SkyrootBoatRenderer(EntityRendererProvider.Context context, boolean chest) {

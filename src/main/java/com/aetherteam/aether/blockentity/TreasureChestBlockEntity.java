@@ -71,7 +71,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     protected TreasureChestBlockEntity(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
         super(tileEntityType, pos, state);
-        this.kind = new ResourceLocation(Aether.MODID, "bronze");
+        this.kind = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze");
         this.locked = true;
     }
 
@@ -251,7 +251,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     public void load(CompoundTag tag) {
         super.load(tag);
         this.locked = !tag.contains("Locked") || tag.getBoolean("Locked");
-        this.kind = tag.contains("Kind") ? new ResourceLocation(tag.getString("Kind")) : new ResourceLocation(Aether.MODID, "bronze");
+        this.kind = tag.contains("Kind") ? new ResourceLocation(tag.getString("Kind")) : ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze");
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
             ContainerHelper.loadAllItems(tag, this.items);

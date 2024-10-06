@@ -17,10 +17,10 @@ import net.minecraft.util.Mth;
 import org.joml.Vector3f;
 
 public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
-    private static final ResourceLocation SLIDER_ASLEEP_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/slider/slider_asleep.png");
-    private static final ResourceLocation SLIDER_ASLEEP_CRITICAL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/slider/slider_asleep_critical.png");
-    private static final ResourceLocation SLIDER_AWAKE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/slider/slider_awake.png");
-    private static final ResourceLocation SLIDER_AWAKE_CRITICAL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/slider/slider_awake_critical.png");
+    private static final ResourceLocation SLIDER_ASLEEP_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/slider/slider_asleep.png");
+    private static final ResourceLocation SLIDER_ASLEEP_CRITICAL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/slider/slider_asleep_critical.png");
+    private static final ResourceLocation SLIDER_AWAKE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/slider/slider_awake.png");
+    private static final ResourceLocation SLIDER_AWAKE_CRITICAL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/slider/slider_awake_critical.png");
 
     public SliderRenderer(EntityRendererProvider.Context context) {
         super(context, new SliderModel(context.bakeLayer(AetherModelLayers.SLIDER)), 0.7F);

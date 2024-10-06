@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
  * Stores Cloud Minions to {@link AetherPlayerAttachment} when summoned.
  */
 public record CloudMinionPacket(int entityID, int rightCloudMinionID, int leftCloudMinionID) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "add_cloud_minions");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "add_cloud_minions");
 
     @Override
     public ResourceLocation id() {

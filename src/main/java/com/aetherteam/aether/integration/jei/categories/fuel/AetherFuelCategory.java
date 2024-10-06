@@ -12,8 +12,8 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.List;
 
 public class AetherFuelCategory extends AbstractFuelCategory {
-    public static final ResourceLocation ICON_TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/sprites/menu/lit_progress_transparent.png");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
+    public static final ResourceLocation ICON_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/sprites/menu/lit_progress_transparent.png");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/menu/altar.png");
     public static final RecipeType<FuelRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "fuel", FuelRecipe.class);
 
     public AetherFuelCategory(IGuiHelper helper) {

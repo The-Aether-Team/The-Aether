@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
  * Handles syncing {@link HammerProjectile} damage to the server.
  */
 public record HammerProjectileLaunchPacket(int targetID, int projectileID) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "launch_hammer_projectile");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "launch_hammer_projectile");
 
     @Override
     public ResourceLocation id() {

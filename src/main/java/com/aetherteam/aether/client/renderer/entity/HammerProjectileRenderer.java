@@ -15,8 +15,8 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
-    public static final ResourceLocation KINGBDOGZ_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/kingbdogz_wave.png");
-    public static final ResourceLocation JEB_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/jeb_wave.png");
+    public static final ResourceLocation KINGBDOGZ_WAVE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/projectile/kingbdogz_wave.png");
+    public static final ResourceLocation JEB_WAVE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/projectile/jeb_wave.png");
 
     public HammerProjectileRenderer(EntityRendererProvider.Context context) {
         super(context);

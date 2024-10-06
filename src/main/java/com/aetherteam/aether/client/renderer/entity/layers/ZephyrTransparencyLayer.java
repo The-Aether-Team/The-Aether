@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 
 public class ZephyrTransparencyLayer extends RenderLayer<Zephyr, EntityModel<Zephyr>> {
-    private static final ResourceLocation ZEPHYR_TRANSPARENCY_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_layer.png");
+    private static final ResourceLocation ZEPHYR_TRANSPARENCY_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_layer.png");
     private final ZephyrModel transparency;
 
     public ZephyrTransparencyLayer(RenderLayerParent<Zephyr, EntityModel<Zephyr>> entityRenderer, ZephyrModel transparencyModel) {

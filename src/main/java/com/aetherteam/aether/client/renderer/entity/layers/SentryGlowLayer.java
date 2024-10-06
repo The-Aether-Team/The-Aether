@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public class SentryGlowLayer extends EyesLayer<Sentry, SlimeModel<Sentry>> {
-    private static final RenderType SENTRY_EYE = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/eye.png"));
+    private static final RenderType SENTRY_EYE = RenderType.eyes(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/sentry/eye.png"));
 
     public SentryGlowLayer(RenderLayerParent<Sentry, SlimeModel<Sentry>> entityRenderer) {
         super(entityRenderer);

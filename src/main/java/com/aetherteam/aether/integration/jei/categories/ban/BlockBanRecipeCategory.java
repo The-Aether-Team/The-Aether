@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 
 public class BlockBanRecipeCategory extends AbstractPlacementBanRecipeCategory<BlockState, BlockStateIngredient, BlockBanRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "block_placement_ban");
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "block_placement_ban");
     public static final RecipeType<BlockBanRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "block_placement_ban", BlockBanRecipe.class);
 
     public BlockBanRecipeCategory(IGuiHelper guiHelper, IPlatformFluidHelper<?> fluidHelper) {

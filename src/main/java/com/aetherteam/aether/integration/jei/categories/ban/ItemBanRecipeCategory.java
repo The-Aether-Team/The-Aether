@@ -15,7 +15,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class ItemBanRecipeCategory extends AbstractPlacementBanRecipeCategory<ItemStack, Ingredient, ItemBanRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "item_placement_ban");
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "item_placement_ban");
     public static final RecipeType<ItemBanRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "item_placement_ban", ItemBanRecipe.class);
 
     public ItemBanRecipeCategory(IGuiHelper guiHelper, IPlatformFluidHelper<?> fluidHelper) {

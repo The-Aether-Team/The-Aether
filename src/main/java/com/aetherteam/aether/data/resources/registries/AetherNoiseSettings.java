@@ -15,7 +15,7 @@ public class AetherNoiseSettings {
     public static final ResourceKey<NoiseGeneratorSettings> SKYLANDS = createKey("skylands");
 
     private static ResourceKey<NoiseGeneratorSettings> createKey(String name) {
-        return ResourceKey.create(Registries.NOISE_SETTINGS, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(Registries.NOISE_SETTINGS, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
     public static void bootstrap(BootstapContext<NoiseGeneratorSettings> context) {

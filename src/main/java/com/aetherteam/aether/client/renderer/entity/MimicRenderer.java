@@ -12,9 +12,9 @@ import net.neoforged.fml.ModList;
 import java.util.Calendar;
 
 public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/normal.png");
-    private static final ResourceLocation XMAS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/christmas.png");
-    private static final ResourceLocation LOOTR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/lootr.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/mimic/normal.png");
+    private static final ResourceLocation XMAS_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/mimic/christmas.png");
+    private static final ResourceLocation LOOTR_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/mimic/lootr.png");
 
     private boolean isChristmas;
 

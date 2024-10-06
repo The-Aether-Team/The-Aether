@@ -49,6 +49,6 @@ public abstract class BronzeDungeonPiece extends AetherTemplateStructurePiece {
     }
 
     protected static ResourceLocation makeLocation(String name) {
-        return new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name);
+        return ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze_dungeon/" + name);
     }
 }

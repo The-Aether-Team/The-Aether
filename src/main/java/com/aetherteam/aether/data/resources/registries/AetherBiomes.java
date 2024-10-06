@@ -18,7 +18,7 @@ public class AetherBiomes {
     public static final ResourceKey<Biome> SKYROOT_FOREST = createKey("skyroot_forest");
 
     private static ResourceKey<Biome> createKey(String name) {
-        return ResourceKey.create(Registries.BIOME, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
     public static void bootstrap(BootstapContext<Biome> context) {

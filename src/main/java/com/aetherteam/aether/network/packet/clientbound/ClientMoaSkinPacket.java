@@ -17,7 +17,7 @@ public abstract class ClientMoaSkinPacket {
      * Applies a Moa Skin for a player on the client.
      */
     public record Apply(UUID playerUUID, MoaData moaSkinData) implements BasePacket {
-        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "apply_moa_skin");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "apply_moa_skin");
 
         @Override
         public ResourceLocation id() {
@@ -48,7 +48,7 @@ public abstract class ClientMoaSkinPacket {
      * Removes a Moa Skin for a player on the client.
      */
     public record Remove(UUID playerUUID) implements BasePacket {
-        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "remove_moa_skin");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "remove_moa_skin");
 
         @Override
         public ResourceLocation id() {
@@ -77,7 +77,7 @@ public abstract class ClientMoaSkinPacket {
      * Syncs Moa Skin data for all players to the client.
      */
     public record Sync(Map<UUID, MoaData> moaSkinsData) implements BasePacket {
-        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "sync_moa_skin");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "sync_moa_skin");
 
         @Override
         public ResourceLocation id() {

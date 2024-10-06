@@ -21,7 +21,7 @@ public class AetherMenus {
     public static final DeferredRegister<Menu> MENUS = DeferredRegister.create(Cumulus.MENU_REGISTRY_KEY, Aether.MODID);
 
     // Icons
-    private static final ResourceLocation THE_AETHER_ICON = new ResourceLocation(Aether.MODID, "textures/gui/menu_api/menu_icon_aether.png");
+    private static final ResourceLocation THE_AETHER_ICON = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/menu_api/menu_icon_aether.png");
 
     // Names
     private static final Component MINECRAFT_LEFT_NAME = Component.translatable("aether.menu_title.minecraft_left");
@@ -29,15 +29,15 @@ public class AetherMenus {
     private static final Component THE_AETHER_LEFT_NAME = Component.translatable("aether.menu_title.the_aether_left");
 
     // Backgrounds
-    private static final ResourceLocation THE_AETHER_REGULAR_BACKGROUND = new ResourceLocation(Aether.MODID, "textures/gui/title/options_background.png");
-    private static final ResourceLocation THE_AETHER_DARK_BACKGROUND = new ResourceLocation(Aether.MODID, "textures/gui/title/light_sentry_background.png");
-    private static final ResourceLocation THE_AETHER_HEADER_SEPARATOR = new ResourceLocation(Aether.MODID, "textures/gui/title/header_separator.png");
-    private static final ResourceLocation THE_AETHER_FOOTER_SEPARATOR = new ResourceLocation(Aether.MODID, "textures/gui/title/footer_separator.png");
+    private static final ResourceLocation THE_AETHER_REGULAR_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/options_background.png");
+    private static final ResourceLocation THE_AETHER_DARK_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/light_sentry_background.png");
+    private static final ResourceLocation THE_AETHER_HEADER_SEPARATOR = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/header_separator.png");
+    private static final ResourceLocation THE_AETHER_FOOTER_SEPARATOR = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/footer_separator.png");
     private static final WidgetSprites THE_AETHER_TAB_BUTTON = new WidgetSprites(
-            new ResourceLocation(Aether.MODID, "title/tab_selected"),
-            new ResourceLocation(Aether.MODID, "title/tab"),
-            new ResourceLocation(Aether.MODID, "title/tab_selected_highlighted"),
-            new ResourceLocation(Aether.MODID, "title/tab_highlighted"));
+            ResourceLocation.fromNamespaceAndPath(Aether.MODID, "title/tab_selected"),
+            ResourceLocation.fromNamespaceAndPath(Aether.MODID, "title/tab"),
+            ResourceLocation.fromNamespaceAndPath(Aether.MODID, "title/tab_selected_highlighted"),
+            ResourceLocation.fromNamespaceAndPath(Aether.MODID, "title/tab_highlighted"));
     private static final Menu.Background THE_AETHER_BACKGROUND = new Menu.Background()
             .regularBackground(THE_AETHER_REGULAR_BACKGROUND)
             .darkBackground(THE_AETHER_DARK_BACKGROUND)

@@ -180,7 +180,7 @@ public class GoldDungeonStructure extends Structure {
      * @return The {@link Integer} for the first available height to place at.
      */
     private int tunnelFromBossRoom(StructureTemplateManager templateManager, StructurePiecesBuilder builder, StructurePiece room, ChunkGenerator chunkGenerator, LevelHeightAccessor heightAccessor, RandomState randomState) {
-        StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/tunnel"));
+        StructureTemplate template = templateManager.getOrCreate(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "gold_dungeon/tunnel"));
         int width = template.getSize().getX();
         Rotation rotation = room.getRotation();
         Direction direction = rotation.rotate(Direction.SOUTH);
@@ -195,13 +195,13 @@ public class GoldDungeonStructure extends Structure {
     }
 
     private Vec3i getStubOffset(StructureTemplateManager templateManager) {
-        StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/stub"));
+        StructureTemplate template = templateManager.getOrCreate(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "gold_dungeon/stub"));
         Vec3i size = template.getSize();
         return new Vec3i(size.getX() / -2, size.getY() / -2, size.getZ() / -2);
     }
 
     private Vec3i getBossRoomOffset(StructureTemplateManager templateManager, Direction direction) {
-        StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/boss_room"));
+        StructureTemplate template = templateManager.getOrCreate(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "gold_dungeon/boss_room"));
         Vec3i size = template.getSize();
         Vec3i offset = new Vec3i(size.getX() / -2, size.getY() / -2, (size.getZ()) / -2);
         return offset.relative(direction, -1);

@@ -46,14 +46,14 @@ import java.util.Map;
 import java.util.UUID;
 
 public class MoaSkinsScreen extends Screen {
-    public static final ResourceLocation MOA_SKINS_GUI = new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/skins.png");
-    public static final ResourceLocation LOCK_SPRITE = new ResourceLocation(Aether.MODID, "skins/lock");
-    public static final ResourceLocation SLOT_SELECTED_SPRITE = new ResourceLocation(Aether.MODID, "skins/slot_selected");
+    public static final ResourceLocation MOA_SKINS_GUI = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/perks/skins/skins.png");
+    public static final ResourceLocation LOCK_SPRITE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/lock");
+    public static final ResourceLocation SLOT_SELECTED_SPRITE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/slot_selected");
 
-    public static final WidgetSprites SLOT_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/slot"), new ResourceLocation(Aether.MODID, "skins/slot_disabled"), new ResourceLocation(Aether.MODID, "skins/slot_highlighted"));
-    public static final WidgetSprites SCROLL_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/scroll"), new ResourceLocation(Aether.MODID, "skins/scroll_disabled"), new ResourceLocation(Aether.MODID, "skins/scroll"));
-    public static final WidgetSprites PERMANENT_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/permanent"), new ResourceLocation(Aether.MODID, "skins/permanent_highlighted"));
-    public static final WidgetSprites TEMPORARY_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/temporary"), new ResourceLocation(Aether.MODID, "skins/temporary_highlighted"));
+    public static final WidgetSprites SLOT_WIDGET = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/slot"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/slot_disabled"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/slot_highlighted"));
+    public static final WidgetSprites SCROLL_WIDGET = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/scroll"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/scroll_disabled"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/scroll"));
+    public static final WidgetSprites PERMANENT_WIDGET = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/permanent"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/permanent_highlighted"));
+    public static final WidgetSprites TEMPORARY_WIDGET = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/temporary"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/temporary_highlighted"));
 
     private static final String PATREON_LINK = "https://www.patreon.com/TheAetherTeam";
     private static final String HELP_LINK = "https://github.com/The-Aether-Team/.github/wiki/Patreon-Guide";

@@ -45,7 +45,7 @@ public class AetherStructureProcessorLists {
     public static final ResourceKey<StructureProcessorList> GOLD_BOSS_ROOM = createKey("gold_boss_room");
 
     private static ResourceKey<StructureProcessorList> createKey(String name) {
-        return ResourceKey.create(Registries.PROCESSOR_LIST, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(Registries.PROCESSOR_LIST, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
     private static final AxisAlignedLinearPosTest ON_FLOOR = new AxisAlignedLinearPosTest(1.0F, 0.0F, 0, 1, Direction.Axis.Y);

@@ -16,7 +16,7 @@ import net.minecraft.world.entity.player.Player;
  * @see com.aetherteam.aether.client.event.hooks.GuiHooks#drawAetherTravelMessage(Screen, GuiGraphics)
  */
 public record LeavingAetherPacket(boolean playerLeavingAether) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "leave_aether");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "leave_aether");
 
     @Override
     public ResourceLocation id() {

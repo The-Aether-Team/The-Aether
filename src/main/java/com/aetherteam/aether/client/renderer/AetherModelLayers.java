@@ -74,7 +74,7 @@ public class AetherModelLayers {
     }
 
     private static ModelLayerLocation register(String name, String type) {
-        return register(new ResourceLocation(Aether.MODID, name), type);
+        return register(ResourceLocation.fromNamespaceAndPath(Aether.MODID, name), type);
     }
 
     private static ModelLayerLocation register(ResourceLocation location, String type) {

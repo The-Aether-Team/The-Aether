@@ -54,7 +54,7 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> GOLD_DUNGEON_ISLAND_FOLIAGE = createKey("gold_dungeon_island_foliage");
 
     private static ResourceKey<PlacedFeature> createKey(String name) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {

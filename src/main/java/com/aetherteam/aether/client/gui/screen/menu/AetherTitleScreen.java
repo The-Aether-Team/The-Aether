@@ -35,9 +35,9 @@ import java.util.function.Predicate;
 
 public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavior {
     private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
-    private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
+    private static final ResourceLocation AETHER_LOGO = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/aether.png");
     public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU, 20, 600, true);
-    private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation(Aether.MODID, "textures/gui/title/panorama/panorama")));
+    private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/panorama/panorama")));
     private AetherModUpdateIndicator modUpdateNotification;
     private boolean alignedLeft;
     private int rows;

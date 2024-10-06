@@ -73,7 +73,7 @@ public class AetherConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> GOLD_DUNGEON_ISLAND_FOLIAGE_CONFIGURATION = createKey("gold_dungeon_island_foliage");
 
     private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
     /**

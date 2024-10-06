@@ -13,7 +13,7 @@ public class PendantItem extends AccessoryItem implements SlotIdentifierHolder {
     protected ResourceLocation PENDANT_LOCATION;
 
     public PendantItem(String pendantLocation, Supplier<? extends SoundEvent> pendantSound, Properties properties) {
-        this(new ResourceLocation(Aether.MODID, pendantLocation), pendantSound, properties);
+        this(ResourceLocation.fromNamespaceAndPath(Aether.MODID, pendantLocation), pendantSound, properties);
     }
 
     public PendantItem(ResourceLocation pendantLocation, Supplier<? extends SoundEvent> pendantSound, Properties properties) {

@@ -28,8 +28,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class PlayerHaloLayer<T extends Player, M extends PlayerModel<T>> extends RenderLayer<T, M> {
-    private static final ResourceLocation PLAYER_HALO_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/perks/halo.png");
-    private static final ResourceLocation PLAYER_HALO_GRAYSCALE_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/perks/halo_grayscale.png");
+    private static final ResourceLocation PLAYER_HALO_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/models/perks/halo.png");
+    private static final ResourceLocation PLAYER_HALO_GRAYSCALE_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/models/perks/halo_grayscale.png");
     private final HaloModel<Player> playerHalo;
 
     public PlayerHaloLayer(RenderLayerParent<T, M> entityRenderer, EntityModelSet modelSet) {

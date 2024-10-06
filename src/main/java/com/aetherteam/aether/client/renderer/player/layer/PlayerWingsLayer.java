@@ -19,7 +19,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
 public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extends RenderLayer<T, M> {
-    private static final ResourceLocation VALKYRIE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/valkyrie/valkyrie.png");
+    private static final ResourceLocation VALKYRIE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/valkyrie/valkyrie.png");
     private final ValkyrieWingsModel<Player> wings;
 
     public PlayerWingsLayer(RenderLayerParent<T, M> entityRenderer, EntityModelSet modelSet) {

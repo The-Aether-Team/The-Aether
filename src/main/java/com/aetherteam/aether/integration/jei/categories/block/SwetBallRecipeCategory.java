@@ -11,8 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class SwetBallRecipeCategory extends AbstractBiomeParameterRecipeCategory<SwetBallRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "swet_ball_conversion");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/jei_render.png");
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "swet_ball_conversion");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/menu/jei_render.png");
     public static final RecipeType<SwetBallRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "swet_ball_conversion", SwetBallRecipe.class);
 
     public SwetBallRecipeCategory(IGuiHelper guiHelper, IPlatformFluidHelper<?> fluidHelper) {

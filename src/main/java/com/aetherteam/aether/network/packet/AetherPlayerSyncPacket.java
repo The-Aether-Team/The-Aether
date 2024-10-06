@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  * Sync packet for values in the {@link AetherPlayerAttachment} class.
  */
 public class AetherPlayerSyncPacket extends SyncEntityPacket<AetherPlayerAttachment> {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "sync_aether_player_attachment");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "sync_aether_player_attachment");
 
     public AetherPlayerSyncPacket(Quartet<Integer, String, INBTSynchable.Type, Object> values) {
         super(values);

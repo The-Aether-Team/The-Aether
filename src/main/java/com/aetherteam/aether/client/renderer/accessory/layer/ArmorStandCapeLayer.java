@@ -31,7 +31,7 @@ import java.util.Optional;
  * Modified to check for capes in the Armor Stand's slots, as well as remove rotational fields and instead keep rotations constant.
  */
 public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel> {
-    private static final ResourceLocation SWUFF_CAPE_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
+    private static final ResourceLocation SWUFF_CAPE_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
 
     private final CapeModel cape;
 

@@ -7,10 +7,10 @@ import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
 import net.minecraft.resources.ResourceLocation;
 
 public class ShieldOfRepulsionItem extends AccessoryItem implements SlotIdentifierHolder {
-    private static final ResourceLocation SHIELD_OF_REPULSION = new ResourceLocation(Aether.MODID, "textures/models/accessory/shield_of_repulsion/shield_of_repulsion_accessory.png");
-    private static final ResourceLocation SHIELD_OF_REPULSION_INACTIVE = new ResourceLocation(Aether.MODID, "textures/models/accessory/shield_of_repulsion/shield_of_repulsion_inactive_accessory.png");
-    private static final ResourceLocation SHIELD_OF_REPULSION_SLIM = new ResourceLocation(Aether.MODID, "textures/models/accessory/shield_of_repulsion/shield_of_repulsion_slim_accessory.png");
-    private static final ResourceLocation SHIELD_OF_REPULSION_SLIM_INACTIVE = new ResourceLocation(Aether.MODID, "textures/models/accessory/shield_of_repulsion/shield_of_repulsion_slim_inactive_accessory.png");
+    private static final ResourceLocation SHIELD_OF_REPULSION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/models/accessory/shield_of_repulsion/shield_of_repulsion_accessory.png");
+    private static final ResourceLocation SHIELD_OF_REPULSION_INACTIVE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/models/accessory/shield_of_repulsion/shield_of_repulsion_inactive_accessory.png");
+    private static final ResourceLocation SHIELD_OF_REPULSION_SLIM = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/models/accessory/shield_of_repulsion/shield_of_repulsion_slim_accessory.png");
+    private static final ResourceLocation SHIELD_OF_REPULSION_SLIM_INACTIVE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/models/accessory/shield_of_repulsion/shield_of_repulsion_slim_inactive_accessory.png");
 
     public ShieldOfRepulsionItem(Properties properties) {
         super(properties);

@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
-    private static final ResourceLocation TEXTURE_LORE_BACKING = new ResourceLocation(Aether.MODID, "textures/gui/menu/lore_backing.png");
-    private static final ResourceLocation TEXTURE_LORE_BOOK = new ResourceLocation(Aether.MODID, "textures/gui/menu/lore_book.png");
+    private static final ResourceLocation TEXTURE_LORE_BACKING = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/menu/lore_backing.png");
+    private static final ResourceLocation TEXTURE_LORE_BOOK = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/menu/lore_book.png");
 
     private final Map<Integer, List<FormattedCharSequence>> pages = new HashMap<>();
 

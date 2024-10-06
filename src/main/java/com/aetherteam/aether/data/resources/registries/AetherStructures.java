@@ -45,7 +45,7 @@ public class AetherStructures {
     public static final ResourceKey<Structure> GOLD_DUNGEON = createKey("gold_dungeon");
 
     private static ResourceKey<Structure> createKey(String name) {
-        return ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
     public static void bootstrap(BootstapContext<Structure> context) {

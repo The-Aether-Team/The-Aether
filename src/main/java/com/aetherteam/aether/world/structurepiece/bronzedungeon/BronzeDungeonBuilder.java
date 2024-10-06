@@ -66,10 +66,10 @@ public class BronzeDungeonBuilder {
         this.random = context.random();
         this.processors = processors;
 
-        Vec3i nodeSize = context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/chest_room")).getSize();
+        Vec3i nodeSize = context.structureTemplateManager().getOrCreate(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze_dungeon/chest_room")).getSize();
         this.nodeWidth = nodeSize.getX();
 
-        Vec3i edgeSize = context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/square_tunnel")).getSize();
+        Vec3i edgeSize = context.structureTemplateManager().getOrCreate(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze_dungeon/square_tunnel")).getSize();
         this.edgeWidth = edgeSize.getX();
         this.edgeLength = edgeSize.getZ();
 
@@ -86,7 +86,7 @@ public class BronzeDungeonBuilder {
     public void initializeDungeon(BlockPos startPos, Structure.GenerationContext genContext, StructurePiecesBuilder builder) {
         ROOM_OPTIONS = ROOM_OPTIONS_BUILDER.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, (e) -> e.getValue().build()));
 
-        StructureTemplate bossTemplate = this.context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/boss_room"));
+        StructureTemplate bossTemplate = this.context.structureTemplateManager().getOrCreate(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze_dungeon/boss_room"));
 
         Rotation rotation = getBossRoomRotation(startPos, startPos.offset(bossTemplate.getSize()));
         if (rotation == null) { // The space may not be big enough for multiple rooms. If so, stop trying.
@@ -247,7 +247,7 @@ public class BronzeDungeonBuilder {
      * @return Whether the tunnel should stop generating, as a {@link Boolean}.
      */
     public boolean buildTunnelFromRoom(StructurePiece connectedRoom, List<StructurePiece> list, Rotation rotation, Direction direction, BlockPos origin) {
-        StructureTemplate template = this.manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/entrance"));
+        StructureTemplate template = this.manager.getOrCreate(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze_dungeon/entrance"));
         BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(connectedRoom.getBoundingBox(), direction, template.getSize().getX());
         BronzeDungeonPiece entrance = this.chooseRoom("entrance", startPos, rotation, this.processors.roomSettings());
         list.add(entrance);
@@ -377,7 +377,7 @@ public class BronzeDungeonBuilder {
      */
     @Nullable
     private Rotation getBossRoomRotation(BlockPos minPos, BlockPos maxPos) {
-        StructureTemplate template = this.context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/chest_room"));
+        StructureTemplate template = this.context.structureTemplateManager().getOrCreate(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze_dungeon/chest_room"));
         RandomSource random = this.context.random();
         BoundingBox bossBox = new BoundingBox(minPos.getX(), minPos.getY() + 1, minPos.getZ(), maxPos.getX(), maxPos.getY(), maxPos.getZ());
 

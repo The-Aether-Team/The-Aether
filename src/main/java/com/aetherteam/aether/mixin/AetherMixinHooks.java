@@ -29,7 +29,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 public class AetherMixinHooks {
-    private static final ResourceLocation SWUFF_CAPE_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
+    private static final ResourceLocation SWUFF_CAPE_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
 
     /**
      * Checks whether a cape accessory is visible.

@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
  * Updates the time on the server, then updates that time for all players in the Aether.
  */
 public record SunAltarUpdatePacket(long dayTime, int timeScale) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "update_sun_altar");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "update_sun_altar");
 
     @Override
     public ResourceLocation id() {

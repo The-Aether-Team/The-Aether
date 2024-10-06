@@ -23,7 +23,7 @@ public class AetherStructureSets {
     public static final ResourceKey<StructureSet> SILVER_AND_GOLD_DUNGEONS = createKey("silver_and_gold_dungeons");
 
     private static ResourceKey<StructureSet> createKey(String name) {
-        return ResourceKey.create(Registries.STRUCTURE_SET, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(Registries.STRUCTURE_SET, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
     /**

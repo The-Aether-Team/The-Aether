@@ -13,9 +13,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 
 public abstract class AbstractAetherCookingRecipeCategory<T> extends AbstractRecipeCategory<T> {
-    public static final ResourceLocation FLAME_TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/sprites/menu/lit_progress.png");
-    public static final ResourceLocation ARROW_TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/sprites/menu/burn_progress.png");
-    public static final ResourceLocation INCUBATION_PROGRESS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/sprites/menu/incubation_progress.png");
+    public static final ResourceLocation FLAME_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/sprites/menu/lit_progress.png");
+    public static final ResourceLocation ARROW_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/sprites/menu/burn_progress.png");
+    public static final ResourceLocation INCUBATION_PROGRESS_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/sprites/menu/incubation_progress.png");
     protected final IDrawable fuelIndicator;
     protected final IDrawableAnimated animatedProgressArrow;
 

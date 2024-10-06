@@ -9,7 +9,7 @@ import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.resources.ResourceLocation;
 
 public class LorePageButton extends Button {
-    private static final WidgetSprites BUTTON_TEXTURES = new WidgetSprites(new ResourceLocation(Aether.MODID, "menu/lore_button"), new ResourceLocation(Aether.MODID, "menu/lore_button_disabled"), new ResourceLocation(Aether.MODID, "menu/lore_button_highlighted"));
+    private static final WidgetSprites BUTTON_TEXTURES = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "menu/lore_button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "menu/lore_button_disabled"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "menu/lore_button_highlighted"));
 
     public LorePageButton(Builder builder) {
         super(builder.createNarration(DEFAULT_NARRATION));

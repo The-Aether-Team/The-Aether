@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
  * Adapted to Nitrogen packet system.
  */
 public record ClientGrabItemPacket(ItemStack stack) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "grab_from_accessories_inventory");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "grab_from_accessories_inventory");
 
     @Override
     public ResourceLocation id() {

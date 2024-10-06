@@ -13,8 +13,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public class SliderGlowLayer extends EyesLayer<Slider, SliderModel> {
-    private static final RenderType SLIDER_AWAKE_GLOW = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/slider/slider_awake_glow.png"));
-    private static final RenderType SLIDER_AWAKE_CRITICAL_GLOW = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/slider/slider_awake_critical_glow.png"));
+    private static final RenderType SLIDER_AWAKE_GLOW = RenderType.eyes(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/slider/slider_awake_glow.png"));
+    private static final RenderType SLIDER_AWAKE_CRITICAL_GLOW = RenderType.eyes(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/slider/slider_awake_critical_glow.png"));
 
     public SliderGlowLayer(RenderLayerParent<Slider, SliderModel> pRenderer) {
         super(pRenderer);

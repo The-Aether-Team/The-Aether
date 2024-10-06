@@ -37,7 +37,7 @@ import java.util.Objects;
 public class AetherJEIPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(Aether.MODID, "jei");
+        return ResourceLocation.fromNamespaceAndPath(Aether.MODID, "jei");
     }
 
     @Override

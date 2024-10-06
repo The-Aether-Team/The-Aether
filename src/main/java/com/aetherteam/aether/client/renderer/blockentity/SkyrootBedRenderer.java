@@ -27,7 +27,7 @@ import net.minecraft.world.level.block.state.properties.BedPart;
  * Stripped down to only use what is necessary.
  */
 public class SkyrootBedRenderer implements BlockEntityRenderer<SkyrootBedBlockEntity> {
-    private static final ResourceLocation BED_LOCATION = new ResourceLocation(Aether.MODID, "textures/entity/tiles/bed/skyroot_bed.png");
+    private static final ResourceLocation BED_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/tiles/bed/skyroot_bed.png");
     private final ModelPart headRoot;
     private final ModelPart footRoot;
 

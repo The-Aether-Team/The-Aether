@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 public class GoldenSwetRenderer extends SwetRenderer {
-    private static final ResourceLocation GOLDEN_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/swet/swet_golden.png");
+    private static final ResourceLocation GOLDEN_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/swet/swet_golden.png");
 
     public GoldenSwetRenderer(EntityRendererProvider.Context context) {
         super(context);

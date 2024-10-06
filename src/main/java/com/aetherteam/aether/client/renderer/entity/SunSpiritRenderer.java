@@ -11,8 +11,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 
 public class SunSpiritRenderer extends MobRenderer<SunSpirit, SunSpiritModel<SunSpirit>> {
-    private static final ResourceLocation SUN_SPIRIT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sun_spirit/sun_spirit.png");
-    private static final ResourceLocation FROZEN_SPIRIT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sun_spirit/frozen_sun_spirit.png");
+    private static final ResourceLocation SUN_SPIRIT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/sun_spirit/sun_spirit.png");
+    private static final ResourceLocation FROZEN_SPIRIT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/sun_spirit/frozen_sun_spirit.png");
 
     public SunSpiritRenderer(EntityRendererProvider.Context context) {
         super(context, new SunSpiritModel<>(context.bakeLayer(AetherModelLayers.SUN_SPIRIT)), 0.8F);

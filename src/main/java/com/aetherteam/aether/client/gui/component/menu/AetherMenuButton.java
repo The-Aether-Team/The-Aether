@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class AetherMenuButton extends Button {
-    private static final WidgetSprites AETHER_WIDGETS = new WidgetSprites(new ResourceLocation(Aether.MODID, "title/button"), new ResourceLocation(Aether.MODID, "title/button_highlighted"));
+    private static final WidgetSprites AETHER_WIDGETS = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "title/button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "title/button_highlighted"));
     private static final int BUTTON_WIDTH = 400;
     private static final int BUTTON_HEIGHT = 40;
     private static final int BUTTON_SEPARATION = 50;

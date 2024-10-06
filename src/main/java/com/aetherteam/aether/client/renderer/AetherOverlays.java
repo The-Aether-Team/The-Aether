@@ -35,38 +35,38 @@ import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
 import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
 
 public class AetherOverlays {
-    private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/inebriation_vignette.png");
-    private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/remedy_vignette.png");
-    private static final ResourceLocation TEXTURE_SHIELD_OF_REPULSION_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/shield_of_repulsion_vignette.png");
+    private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/blur/inebriation_vignette.png");
+    private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/blur/remedy_vignette.png");
+    private static final ResourceLocation TEXTURE_SHIELD_OF_REPULSION_VIGNETTE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/blur/shield_of_repulsion_vignette.png");
 
-    private static final ResourceLocation TEXTURE_COOLDOWN_BAR = new ResourceLocation(Aether.MODID, "hud/cooldown");
-    private static final ResourceLocation TEXTURE_COOLDOWN_BAR_BACKGROUND = new ResourceLocation(Aether.MODID, "hud/cooldown_background");
+    private static final ResourceLocation TEXTURE_COOLDOWN_BAR = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/cooldown");
+    private static final ResourceLocation TEXTURE_COOLDOWN_BAR_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/cooldown_background");
 
-    private static final ResourceLocation TEXTURE_JUMPS = new ResourceLocation(Aether.MODID, "hud/jumps");
-    private static final ResourceLocation TEXTURE_JUMPS_BACKGROUND = new ResourceLocation(Aether.MODID, "hud/jumps_background");
+    private static final ResourceLocation TEXTURE_JUMPS = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/jumps");
+    private static final ResourceLocation TEXTURE_JUMPS_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/jumps_background");
 
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_full");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_half");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_FULL_BLINKING = new ResourceLocation(Aether.MODID, "hud/heart/shard_full_blinking");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_HALF_BLINKING = new ResourceLocation(Aether.MODID, "hud/heart/shard_half_blinkin");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_poisoned_full");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_poisoned_half");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_FULL_BLINKING = new ResourceLocation(Aether.MODID, "hud/heart/shard_poisoned_full_blinking");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_HALF_BLINKING = new ResourceLocation(Aether.MODID, "hud/heart/shard_poisoned_half_blinking");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_withered_full");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_withered_half");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_FULL_BLINKING = new ResourceLocation(Aether.MODID, "hud/heart/shard_withered_full_blinking");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_HALF_BLINKING = new ResourceLocation(Aether.MODID, "hud/heart/shard_withered_half_blinking");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_ABSORBING_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_absorbing_full");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_ABSORBING_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_absorbing_half");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_FROZEN_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_frozen_full");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_FROZEN_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_frozen_half");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_FULL = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_full");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_HALF = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_half");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_FULL_BLINKING = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_full_blinking");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_HALF_BLINKING = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_half_blinkin");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_FULL = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_poisoned_full");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_HALF = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_poisoned_half");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_FULL_BLINKING = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_poisoned_full_blinking");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_HALF_BLINKING = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_poisoned_half_blinking");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_FULL = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_withered_full");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_HALF = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_withered_half");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_FULL_BLINKING = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_withered_full_blinking");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_HALF_BLINKING = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_withered_half_blinking");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_ABSORBING_FULL = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_absorbing_full");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_ABSORBING_HALF = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_absorbing_half");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_FROZEN_FULL = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_frozen_full");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_FROZEN_HALF = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_frozen_half");
 
     /**
      * @see AetherClient#eventSetup()
      */
     public static void registerOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAboveAll(new ResourceLocation(Aether.MODID, "aether_portal_overlay"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "aether_portal_overlay"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -74,7 +74,7 @@ public class AetherOverlays {
                 renderAetherPortalOverlay(pStack, minecraft, window, player, partialTicks);
             }
         });
-        event.registerAboveAll(new ResourceLocation(Aether.MODID, "inebriation_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "inebriation_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -82,7 +82,7 @@ public class AetherOverlays {
                 renderInebriationOverlay(pStack, minecraft, window, player);
             }
         });
-        event.registerAboveAll(new ResourceLocation(Aether.MODID, "remedy_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "remedy_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -90,7 +90,7 @@ public class AetherOverlays {
                 renderRemedyOverlay(pStack, minecraft, window, player);
             }
         });
-        event.registerAboveAll(new ResourceLocation(Aether.MODID, "shield_of_repulsion_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "shield_of_repulsion_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -98,7 +98,7 @@ public class AetherOverlays {
                 renderRepulsionOverlay(pStack, minecraft, window, player);
             }
         });
-        event.registerAboveAll(new ResourceLocation(Aether.MODID, "hammer_cooldown"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hammer_cooldown"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -106,7 +106,7 @@ public class AetherOverlays {
                 renderHammerCooldownOverlay(pStack, minecraft, window, player);
             }
         });
-        event.registerAboveAll(new ResourceLocation(Aether.MODID, "moa_jumps"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "moa_jumps"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -114,7 +114,7 @@ public class AetherOverlays {
                 renderMoaJumps(pStack, window, player);
             }
         });
-        event.registerAbove(new ResourceLocation("player_health"), new ResourceLocation(Aether.MODID, "silver_life_shard_hearts"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAbove(new ResourceLocation("player_health"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver_life_shard_hearts"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {

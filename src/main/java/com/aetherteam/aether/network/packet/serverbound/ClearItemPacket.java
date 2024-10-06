@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
  * Clears the item currently held by the player's mouse in a container GUI.
  */
 public record ClearItemPacket(int playerID) implements BasePacket {
-    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "clear_held_item");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "clear_held_item");
 
     @Override
     public ResourceLocation id() {

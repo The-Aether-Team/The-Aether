@@ -19,7 +19,7 @@ import net.minecraft.world.item.DyeColor;
  * [CODE COPY] - {@link net.minecraft.client.renderer.entity.layers.SheepFurLayer}.
  */
 public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel> {
-    private static final ResourceLocation SHEEPUFF_WOOL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff_wool.png");
+    private static final ResourceLocation SHEEPUFF_WOOL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff_wool.png");
     private final SheepuffWoolModel wool;
     private final SheepuffWoolModel puffed;
 

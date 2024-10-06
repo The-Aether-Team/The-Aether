@@ -31,7 +31,7 @@ public abstract class BossInfoPacket implements BasePacket {
      * Adds a boss bar for the client.
      */
     public static class Display extends BossInfoPacket {
-        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "add_custom_bossbar");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "add_custom_bossbar");
 
         public Display(UUID bossEvent, int entityID) {
             super(bossEvent, entityID);
@@ -58,7 +58,7 @@ public abstract class BossInfoPacket implements BasePacket {
      * Removes a boss bar for the client.
      */
     public static class Remove extends BossInfoPacket {
-        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "remove_custom_bossbar");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "remove_custom_bossbar");
 
         public Remove(UUID bossEvent, int entityID) {
             super(bossEvent, entityID);

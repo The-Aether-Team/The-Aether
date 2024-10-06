@@ -61,7 +61,7 @@ public class AetherLoot {
     public static final ResourceLocation EVIL_WHIRLWIND_JUNK = register("selectors/evil_whirlwind_junk");
 
     private static ResourceLocation register(String id) {
-        return register(new ResourceLocation(Aether.MODID, id));
+        return register(ResourceLocation.fromNamespaceAndPath(Aether.MODID, id));
     }
 
     private static ResourceLocation register(ResourceLocation id) {

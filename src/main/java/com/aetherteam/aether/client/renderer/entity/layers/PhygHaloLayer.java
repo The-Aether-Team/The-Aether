@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public class PhygHaloLayer extends RenderLayer<Phyg, PigModel<Phyg>> {
-    private static final ResourceLocation HALO_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/perks/halo.png");
+    private static final ResourceLocation HALO_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/models/perks/halo.png");
     private final HaloModel<Phyg> phygHalo;
 
     public PhygHaloLayer(RenderLayerParent<Phyg, PigModel<Phyg>> entityRenderer, HaloModel<Phyg> haloModel) {
