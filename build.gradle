@@ -5,28 +5,31 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.97'
+    id 'net.neoforged.gradle.userdev' version "${neogradle_version}"
     id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
     id "io.github.p03w.machete" version "2.0.1"
 }
 
-version = "${mc_version}-${mod_version}-neoforge"
-group = 'com.aetherteam.aether'
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+version = "${minecraft_version}-${mod_version}-neoforge"
+group = mod_group
 
 base {
     archivesName = mod_id
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
 runs {
     configureEach {
-        workingDirectory project.file('run')
-        systemProperty "${mod_id}.iside", 'true'
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
         systemProperty  'forge.logging.console.level', 'info'
 
         modSource project.sourceSets.main
@@ -59,16 +62,11 @@ processResources {
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${project.neoforge_version}"
+    implementation "net.neoforged:neoforge:${neo_version}"
 
     implementation "com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}"
     implementation "com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}"
-
-    implementation "top.theillusivec4.curios:curios-neoforge:${project.curios_version}+${project.mc_version}"
-
-    compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}"
-
-//    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
+    implementation "io.wispforest:accessories-neoforge:${project.accessories_version}+${project.minecraft_version}"
 
     jarJar("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}") {
         jarJar.ranged(it, "[${project.nitrogen_version},)")
@@ -80,15 +78,18 @@ dependencies {
         jarJar.pin(it, "${project.cumulus_version}")
     }
 
-    jarJar("top.theillusivec4.curios:curios-neoforge:${project.curios_version}+${project.mc_version}") {
-        jarJar.ranged(it, "[${project.curios_version},)")
-        jarJar.pin(it, "${project.curios_version}+${project.mc_version}")
+    jarJar("io.wispforest:accessories-neoforge:${project.accessories_version}+${project.minecraft_version}") {
+        jarJar.ranged(it, "[${project.accessories_version}+${project.minecraft_version},)")
+        jarJar.pin(it, "${project.accessories_version}+${project.minecraft_version}")
     }
 
-    compileOnly("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}")
-    compileOnly("mezz.jei:jei-${mc_version}-neoforge:${project.jei_version}")
+    runtimeOnly "io.github.flemmli97:debugutils:${project.minecraft_version}-${project.debugutils_version}-neoforge"
 
-    runtimeOnly compileOnly("mezz.jei:jei-${mc_version}-neoforge:${project.jei_version}")
+
+//    compileOnly("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}")
+//    compileOnly("mezz.jei:jei-${mc_version}-neoforge:${project.jei_version}")
+
+//    runtimeOnly compileOnly("mezz.jei:jei-${mc_version}-neoforge:${project.jei_version}")
 
 //    compileOnly "com.blamejared.crafttweaker:CraftTweaker-neoforge-${project.crafttweaker_version}"
 
@@ -97,9 +98,9 @@ dependencies {
 
 //    compileOnly "curse.maven:colytra-280200:${project.colytra_version}"
 //    compileOnly "curse.maven:curious-elytra-317716:${project.curiouselytra_version}"
-    compileOnly "curse.maven:jade-324717:${project.jade_version}"
+//    compileOnly "curse.maven:jade-324717:${project.jade_version}"
 //    runtimeOnly "curse.maven:jade-324717:${project.jade_version}"
-    compileOnly "curse.maven:lootr-361276:${project.lootr_version}"
+//    compileOnly "curse.maven:lootr-361276:${project.lootr_version}"
 
 //    runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
@@ -109,10 +110,10 @@ dependencies {
 //    runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
 //    runtimeOnly "dev.architectury:architectury-neoforge:$architectury_version"
 
-    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:$rei_version"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:$rei_version"
-    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
-    compileOnly "dev.architectury:architectury-neoforge:$architectury_version"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:$rei_version"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:$rei_version"
+//    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
+//    compileOnly "dev.architectury:architectury-neoforge:$architectury_version"
 }
 
 repositories {
@@ -120,11 +121,16 @@ repositories {
     maven { url = "https://maven.blamejared.com" }
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://cursemaven.com" }
+    maven { url = "https://dvs1.progwml6.com/files/maven/" }
     maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
+    maven { url = "https://maven.wispforest.io" }
+    maven { url = "https://maven.wispforest.io/releases" }
+    maven { url = "https://maven.shedaniel.me/" }
+    maven { url = "https://maven.fabricmc.net" }
+    maven { url = "https://maven.su5ed.dev/releases" }
+    maven { url = "https://maven.architectury.dev/" }
     maven githubPackage.invoke("The-Aether-Team/Nitrogen")
     maven githubPackage.invoke("The-Aether-Team/Cumulus")
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://maven.architectury.dev/" }
     mavenLocal()
 }
 
@@ -140,29 +146,41 @@ machete {
     jij.enabled = true
 }
 
-tasks.named('jar', Jar).configure {
-    manifest {
-        attributes([
-                "Specification-Title"     : project.mod_name,
-                "Specification-Vendor"    : "The Aether Team",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : project.mod_name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "The Aether Team",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+        mod_id                 : mod_id,
+        mod_name               : mod_name,
+        mod_version            : mod_version,
+        mod_license            : mod_license,
+        mod_url                : mod_url,
+        mod_tracker            : mod_tracker,
+        mod_credits            : mod_credits,
+        mod_authors            : mod_authors,
+        mod_description        : mod_description,
+        minecraft_version      : minecraft_version,
+        minecraft_version_range: minecraft_version_range,
+        neo_version            : neo_version,
+        neo_version_range      : neo_version_range,
+        loader_version_range   : loader_version_range
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
     }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+    options.compilerArgs << "-Xmaxerrs" << "9000"
+}
+
+tasks.named('jar', Jar).configure {
     archiveClassifier = 'no-embeds'
 }
 
 tasks.named('jarJar', JarJar).configure {
     archiveClassifier = ''
-}
-
-tasks.modrinth.dependsOn('optimizeOutputsOfJarJar')
-
-compileJava {
-    options.incremental = false
 }
 
 tasks.register('sourceJar', Jar) {
@@ -171,12 +189,21 @@ tasks.register('sourceJar', Jar) {
     archiveClassifier = 'sources'
 }
 
+compileJava {
+    options.incremental = false
+}
+
+build {
+    dependsOn 'jarJar'
+}
+
+tasks.modrinth.dependsOn('optimizeOutputsOfJarJar')
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             artifactId project.archivesBaseName
             artifact project.tasks.jarJar
-//            artifact project.jar
             artifact project.sourceJar
         }
     }
@@ -195,16 +222,16 @@ publishing {
 curseforge {
     project {
         apiKey = System.getenv("CURSEFORGE_TOKEN")
-        id = "${project.curseforge_id}"
-        releaseType = "${project.version_type}"
+        id = "${curseforge_id}"
+        releaseType = "${version_type}"
         changelog = file("$rootDir/docs/CHANGELOG.md")
         changelogType = "markdown"
-        addGameVersion("${project.mc_version}")
+        addGameVersion("${minecraft_version}")
         addGameVersion("NeoForge")
         mainArtifact(tasks.jarJar) {
             displayName = "${project.mod_name} - ${version}"
             relations {
-                embeddedLibrary "curios"
+//                embeddedLibrary "curios"
                 embeddedLibrary "cumulus"
             }
         }
@@ -213,29 +240,20 @@ curseforge {
 
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
-    projectId = "${project.modrinth_id}"
+    projectId = "${modrinth_id}"
     versionNumber = "${version}"
-    versionType = "${project.version_type}"
-    versionName = "${project.mod_name} - ${version}"
+    versionType = "${version_type}"
+    versionName = "${mod_name} - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jarJar
-    gameVersions = ["${project.mc_version}"]
+    gameVersions = ["${minecraft_version}"]
     loaders = ["neoforge"]
     dependencies {
-        embedded.version "curios", "${project.curios_version}+${project.mc_version}"
+//        embedded.version "curios", "${project.curios_version}+${project.mc_version}"
         embedded.version "cumulus", "${project.cumulus_version}"
     }
 }
 
-build {
-    dependsOn 'jarJar'
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-}
-
-// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
 idea {
     module {
         downloadSources = true

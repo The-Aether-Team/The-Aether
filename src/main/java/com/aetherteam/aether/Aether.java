@@ -79,6 +79,7 @@ import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
@@ -91,8 +92,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
@@ -111,7 +112,7 @@ public class Aether {
 
     public static final TriviaGenerator TRIVIA_READER = new TriviaGenerator();
 
-    public Aether(IEventBus bus, Dist dist) {
+    public Aether(ModContainer mod, IEventBus bus, Dist dist) {
         bus.addListener(AetherData::dataSetup);
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerCapabilities);
@@ -160,9 +161,9 @@ public class Aether {
         AetherBlocks.registerWoodTypes(); // Registered this early to avoid bugs with WoodTypes and signs.
 
         DIRECTORY.toFile().mkdirs(); // Ensures the Aether's config folder is generated.
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AetherConfig.SERVER_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
+        mod.registerConfig(ModConfig.Type.SERVER, AetherConfig.SERVER_SPEC);
+        mod.registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
+        mod.registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 
         if (dist == Dist.CLIENT) {
             AetherClient.clientInit(bus);
@@ -188,8 +189,8 @@ public class Aether {
         });
     }
 
-    public void registerPackets(RegisterPayloadHandlerEvent event) {
-        IPayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
+    public void registerPackets(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
 
         // CLIENTBOUND
         registrar.play(AetherTravelPacket.ID, AetherTravelPacket::decode, payload -> payload.client(AetherTravelPacket::handle));

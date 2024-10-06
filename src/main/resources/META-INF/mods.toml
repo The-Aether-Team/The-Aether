@@ -1,39 +1,31 @@
 modLoader = "javafml"
-loaderVersion = "[1,)"
-license = "Assets: All Rights Reserved; Code: LGPL-3.0"
-issueTrackerURL = "https://github.com/The-Aether-Team/The-Aether/issues"
+loaderVersion = "${loader_version_range}"
+license = "${mod_license}"
+issueTrackerURL = "${mod_tracker}"
 
 [[mods]]
-modId = "aether"
-version = "${file.jarVersion}"
-displayName = "The Aether"
-updateJSONURL = "https://github.com/The-Aether-Team/The-Aether/raw/1.20.2-develop/update.json"
-displayURL = "https://modrinth.com/mod/aether"
-logoFile = "aether.png"
-credits = "The Aether Team, former Aether Team Collaborators for their prior work on The Aether Mod, Modding Legacy for their work on Aether Legacy, GitHub contributors for their additional help, and C4 for Curios API, the source code of which can be found at https://github.com/TheIllusiveC4/Curios"
-authors = "AlphaMode, bconlon, Burning Cactus, Drullkus, Hugo Payn, Jaryt, Oscar Payn, quek, Raptor, reetam, RENREN, sunsette"
-description = '''
-    The Aether Team presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer. The Aether is a dimension of floating islands high in the sky. Ascend through a Glowstone portal and begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons!
-'''
+    modId = "${mod_id}"
+    version = "${mod_version}"
+    displayName = "${mod_name}"
+    updateJSONURL = "${mod_update}"
+    displayURL = "${mod_url}"
+    logoFile = "${mod_name}.png"
+    credits = "${mod_credits}"
+    authors = "${mod_authors}"
+    description = '''${mod_description}'''
 
-[[dependencies.aether]]
-    modId="neoforge"
+[[dependencies.${mod_id}]]
+    modId = "neoforge"
     type = "required"
-    versionRange="[20.4.167,)"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.aether]]
-    modId = "curios"
-    type = "required"
-    versionRange = "[7.3.0+1.20.4,)"
+    versionRange = "${neo_version_range}"
     ordering = "NONE"
     side = "BOTH"
-[[dependencies.aether]]
-    modId="minecraft"
+[[dependencies.${mod_id}]]
+    modId = "minecraft"
     type = "required"
-    versionRange="[1.20.4]"
-    ordering="NONE"
-    side="BOTH"
+    versionRange="${minecraft_version_range}"
+    ordering = "NONE"
+    side = "BOTH"
 
 [[mixins]]
-    config="aether.mixins.json"
+    config = "${mod_id}.mixins.json"
