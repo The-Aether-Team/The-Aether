@@ -9,7 +9,6 @@ plugins {
     id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
-    id "io.github.p03w.machete" version "2.0.1"
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -134,18 +133,6 @@ repositories {
     mavenLocal()
 }
 
-machete {
-    additionalTasks.add("jarJar")
-
-    png.enabled = true
-    png.alpha = true
-    png.expectReunpack = true
-
-    json.enabled = true
-
-    jij.enabled = true
-}
-
 tasks.withType(ProcessResources).configureEach {
     var replaceProperties = [
         mod_id                 : mod_id,
@@ -196,8 +183,6 @@ compileJava {
 build {
     dependsOn 'jarJar'
 }
-
-tasks.modrinth.dependsOn('optimizeOutputsOfJarJar')
 
 publishing {
     publications {
