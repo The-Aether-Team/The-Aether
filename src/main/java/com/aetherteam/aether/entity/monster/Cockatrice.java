@@ -138,7 +138,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
             this.setEntityOnGround(true);
         }
 
-        AttributeInstance gravity = this.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
+        AttributeInstance gravity = this.getAttribute(Attributes.GRAVITY);
         if (gravity != null) {
             double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1); // Entity isn't allowed to fall too slowly from gravity.
             if (this.getDeltaMovement().y() < fallSpeed) {
@@ -163,7 +163,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
      * [CODE COPY] - {@link MountableAnimal#jumpFromGround()}.
      */
     @Override
-    protected void jumpFromGround() {
+    public void jumpFromGround() {
         super.jumpFromGround();
         this.setEntityOnGround(false);
     }

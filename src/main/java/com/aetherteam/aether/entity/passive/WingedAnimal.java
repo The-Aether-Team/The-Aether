@@ -3,6 +3,7 @@ package com.aetherteam.aether.entity.passive;
 import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -39,7 +40,7 @@ public abstract class WingedAnimal extends MountableAnimal {
     @Override
     public void tick() {
         super.tick();
-        AttributeInstance gravity = this.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
+        AttributeInstance gravity = this.getAttribute(Attributes.GRAVITY);
         if (gravity != null) {
             double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1); // Entity isn't allowed to fall too slowly from gravity.
             if (this.getDeltaMovement().y() < fallSpeed && !this.playerTriedToCrouch()) {
