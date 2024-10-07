@@ -39,11 +39,11 @@ public class MimicModel extends EntityModel<Mimic> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.upperBody.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.lowerBody.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.leftLeg.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.rightLeg.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        this.upperBody.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.lowerBody.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.leftLeg.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.rightLeg.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 
     @Override

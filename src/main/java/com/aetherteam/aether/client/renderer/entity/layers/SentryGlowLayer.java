@@ -37,7 +37,7 @@ public class SentryGlowLayer extends EyesLayer<Sentry, SlimeModel<Sentry>> {
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Sentry sentry, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         VertexConsumer consumer = buffer.getBuffer(this.renderType());
         if (sentry.isAwake()) {
-            this.getParentModel().renderToBuffer(poseStack, consumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.getParentModel().renderToBuffer(poseStack, consumer, 15728640, OverlayTexture.NO_OVERLAY);
         }
     }
 

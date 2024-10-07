@@ -77,14 +77,14 @@ public class AerbunnyModel extends EntityModel<Aerbunny> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.body.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        this.head.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.body.render(poseStack, consumer, packedLight, packedOverlay, color);
         poseStack.pushPose();
         float a = 1.0F + this.puffiness * 0.5F;
         poseStack.translate(0.0F, 1.0F, 0.0F);
         poseStack.scale(a, a, a);
-        this.puff.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.puff.render(poseStack, consumer, packedLight, packedOverlay, color);
         poseStack.popPose();
     }
 }

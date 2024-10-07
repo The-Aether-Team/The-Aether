@@ -47,7 +47,7 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
             var data = entity.getData(AetherDataAttachments.AETHER_PLAYER);
             this.setupWingRotation(entity, Mth.lerp(partialTicks, data.getWingRotationO(), data.getWingRotation()));
             VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(VALKYRIE_TEXTURE));
-            this.wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
         }
     }
 

@@ -43,7 +43,7 @@ public class ZephyrTransparencyLayer extends RenderLayer<Zephyr, EntityModel<Zep
             this.transparency.prepareMobModel(zephyr, limbSwing, limbSwingAmount, partialTicks);
             this.transparency.setupAnim(zephyr, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
             VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(ZEPHYR_TRANSPARENCY_TEXTURE));
-            this.transparency.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(zephyr, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+            this.transparency.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(zephyr, 0.0F));
         }
     }
 }

@@ -35,14 +35,15 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
      *
      * @param aerwhale     The {@link Aerwhale} entity.
      * @param poseStack    The rendering {@link PoseStack}.
-     * @param ageInTicks   The {@link Float} for the entity's age in ticks.
-     * @param rotationYaw  The {@link Float} for the rotation yaw.
-     * @param partialTicks The {@link Float} for the game's partial ticks.
+     * @param bob          The {@link Float} for the entity's animation bob.
+     * @param yBodyRot     The {@link Float} for the rotation yaw.
+     * @param partialTick  The {@link Float} for the game's partial ticks.
+     * @param scale        The {@link Float} for the render scale.
      */
     @Override
-    protected void setupRotations(Aerwhale aerwhale, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
-        super.setupRotations(aerwhale, poseStack, ageInTicks, rotationYaw, partialTicks);
-        poseStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTicks, aerwhale.getXRotOData(), aerwhale.getXRotData())));
+    protected void setupRotations(Aerwhale aerwhale, PoseStack poseStack, float bob, float yBodyRot, float partialTick, float scale) {
+        super.setupRotations(aerwhale, poseStack, bob, yBodyRot, partialTick, scale);
+        poseStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTick, aerwhale.getXRotOData(), aerwhale.getXRotData())));
     }
 
     @Override

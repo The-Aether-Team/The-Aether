@@ -41,7 +41,7 @@ public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel> {
                     woolModel.prepareMobModel(sheepuff, limbSwing, limbSwingAmount, partialTicks);
                     woolModel.setupAnim(sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     VertexConsumer consumer = buffer.getBuffer(RenderType.outline(SHEEPUFF_WOOL_TEXTURE));
-                    woolModel.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(sheepuff, 0.0F), 0.0F, 0.0F, 0.0F, 1.0F);
+                    woolModel.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(sheepuff, 0.0F), -16777216);
                 }
             } else {
                 float f;

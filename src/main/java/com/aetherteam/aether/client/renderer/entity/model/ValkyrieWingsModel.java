@@ -33,8 +33,8 @@ public class ValkyrieWingsModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.rightWing.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.leftWing.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        this.rightWing.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.leftWing.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

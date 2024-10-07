@@ -38,18 +38,19 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel> {
      *
      * @param aerbunny     The {@link Aerbunny} entity.
      * @param poseStack    The rendering {@link PoseStack}.
-     * @param ageInTicks   The {@link Float} for the entity's age in ticks.
-     * @param rotationYaw  The {@link Float} for the rotation yaw.
-     * @param partialTicks The {@link Float} for the game's partial ticks.
+     * @param bob          The {@link Float} for the entity's animation bob.
+     * @param yBodyRot     The {@link Float} for the rotation yaw.
+     * @param partialTick  The {@link Float} for the game's partial ticks.
+     * @param scale        The {@link Float} for the render scale.
      */
     @Override
-    protected void setupRotations(Aerbunny aerbunny, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
-        super.setupRotations(aerbunny, poseStack, ageInTicks, rotationYaw, partialTicks);
+    protected void setupRotations(Aerbunny aerbunny, PoseStack poseStack, float bob, float yBodyRot, float partialTick, float scale) {
+        super.setupRotations(aerbunny, poseStack, bob, yBodyRot, partialTick, scale);
         if (!aerbunny.onGround()) {
             if (aerbunny.getDeltaMovement().y() > 0.5) {
-                poseStack.mulPose(Axis.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, 15.0F)));
+                poseStack.mulPose(Axis.XN.rotationDegrees(Mth.rotLerp(partialTick, 0.0F, 15.0F)));
             } else if (aerbunny.getDeltaMovement().y() < -0.5) {
-                poseStack.mulPose(Axis.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, -15.0F)));
+                poseStack.mulPose(Axis.XN.rotationDegrees(Mth.rotLerp(partialTick, 0.0F, -15.0F)));
             } else {
                 poseStack.mulPose(Axis.XN.rotationDegrees((float) (aerbunny.getDeltaMovement().y() * 30.0)));
             }

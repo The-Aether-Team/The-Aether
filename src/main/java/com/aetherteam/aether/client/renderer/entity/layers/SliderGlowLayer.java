@@ -38,7 +38,7 @@ public class SliderGlowLayer extends EyesLayer<Slider, SliderModel> {
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Slider slider, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         VertexConsumer consumer = buffer.getBuffer(this.renderType(slider));
         if (slider.isAwake()) {
-            this.getParentModel().renderToBuffer(poseStack, consumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.getParentModel().renderToBuffer(poseStack, consumer, 15728640, OverlayTexture.NO_OVERLAY);
         }
     }
 

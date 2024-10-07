@@ -44,7 +44,7 @@ public class MoaEmissiveLayer extends RenderLayer<Moa, MoaModel> {
         if (moaSkin != null && !moa.isInvisible()) {
             RenderType renderType = RenderType.eyes(moaSkin);
             VertexConsumer vertexConsumer = buffer.getBuffer(renderType);
-            this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY);
         }
     }
 

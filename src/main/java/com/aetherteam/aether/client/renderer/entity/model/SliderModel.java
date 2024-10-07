@@ -27,7 +27,7 @@ public class SliderModel extends EntityModel<Slider> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.slider.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        this.slider.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

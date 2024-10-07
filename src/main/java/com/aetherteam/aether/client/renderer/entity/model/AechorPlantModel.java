@@ -176,8 +176,8 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.stem.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        this.stem.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.head.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

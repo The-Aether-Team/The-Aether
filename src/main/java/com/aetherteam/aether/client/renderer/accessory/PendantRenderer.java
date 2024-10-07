@@ -29,6 +29,6 @@ public class PendantRenderer implements ICurioRenderer {
         PendantItem pendantItem = (PendantItem) stack.getItem();
         ICurioRenderer.followBodyRotations(slotContext.entity(), this.pendant);
         VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(pendantItem.getPendantTexture()), false, stack.isEnchanted());
-        this.pendant.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.pendant.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
     }
 }

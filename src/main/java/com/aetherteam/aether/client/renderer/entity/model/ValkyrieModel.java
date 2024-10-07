@@ -161,13 +161,13 @@ public class ValkyrieModel<T extends AbstractValkyrie> extends HumanoidModel<T> 
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        super.renderToBuffer(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.rightFrontSkirt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.leftFrontSkirt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.rightBackSkirt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.leftBackSkirt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.rightSideSkirt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.leftSideSkirt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        super.renderToBuffer(poseStack, consumer, packedLight, packedOverlay, color);
+        this.rightFrontSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.leftFrontSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.rightBackSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.leftBackSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.rightSideSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.leftSideSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

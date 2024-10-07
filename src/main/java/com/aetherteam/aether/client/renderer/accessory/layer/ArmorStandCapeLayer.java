@@ -66,7 +66,7 @@ public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel
                                     poseStack.mulPose(Axis.ZP.rotationDegrees(0.0F));
                                     poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
                                     VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entitySolid(texture));
-                                    this.cape.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                                    this.cape.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY);
                                     poseStack.popPose();
                                 }
                             }

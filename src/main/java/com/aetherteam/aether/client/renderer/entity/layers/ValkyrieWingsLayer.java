@@ -43,7 +43,7 @@ public class ValkyrieWingsLayer<T extends AbstractValkyrie> extends RenderLayer<
         this.setupWingRotation(valkyrie, ageInTicks);
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(this.wingsLocation));
         if (!valkyrie.isInvisible()) {
-            this.wings.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(valkyrie, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+            this.wings.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(valkyrie, 0.0F));
         }
     }
 

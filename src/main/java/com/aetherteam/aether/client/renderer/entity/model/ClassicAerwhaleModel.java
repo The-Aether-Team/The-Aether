@@ -48,13 +48,13 @@ public class ClassicAerwhaleModel extends EntityModel<Aerwhale> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.middleBody.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.backBody.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.backFinRight.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.backFinLeft.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.rightFin.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.leftFin.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        this.middleBody.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.head.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.backBody.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.backFinRight.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.backFinLeft.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.rightFin.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.leftFin.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

@@ -36,7 +36,7 @@ public class SwetOuterLayer extends RenderLayer<Swet, SlimeModel<Swet>> {
             this.getParentModel().copyPropertiesTo(this.outer);
             this.outer.prepareMobModel(swet, limbSwing, limbSwingAmount, partialTicks);
             this.outer.setupAnim(swet, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-            this.outer.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(swet, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+            this.outer.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(swet, 0.0F));
         }
     }
 }

@@ -88,7 +88,7 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
         ICurioRenderer.followHeadRotations(slotContext.entity(), model.head);
         ICurioRenderer.followBodyRotations(slotContext.entity(), model);
         VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, false);
-        model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
     }
 
     /**
@@ -198,7 +198,7 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
     private void renderShieldOnHand(ModelPart shieldArm, PoseStack poseStack, int packedLight, VertexConsumer consumer) {
         shieldArm.visible = true;
         shieldArm.xRot = 0.0F;
-        shieldArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        shieldArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
     }
 
     /**
@@ -215,7 +215,7 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
         dummySleeve.visible = true;
         dummyArm.xRot = 0.0F;
         dummySleeve.xRot = 0.0F;
-        dummyArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        dummySleeve.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        dummyArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
+        dummySleeve.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
     }
 }

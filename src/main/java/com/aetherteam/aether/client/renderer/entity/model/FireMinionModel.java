@@ -11,7 +11,7 @@ public class FireMinionModel<T extends Entity> extends SunSpiritModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.base.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        this.base.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

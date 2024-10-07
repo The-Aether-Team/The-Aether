@@ -89,16 +89,16 @@ public class ZephyrModel extends EntityModel<Zephyr> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.rightFace.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.leftFace.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.mouth.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.body.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.bodyRightSideFront.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.bodyRightSideBack.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.bodyLeftSideFront.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.bodyLeftSideBack.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.cloudButt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.tailBase.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        this.rightFace.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.leftFace.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.mouth.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.body.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.bodyRightSideFront.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.bodyRightSideBack.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.bodyLeftSideFront.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.bodyLeftSideBack.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.cloudButt.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.tailBase.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

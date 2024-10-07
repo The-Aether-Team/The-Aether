@@ -39,18 +39,19 @@ public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
      *
      * @param slider       The {@link Slider} entity.
      * @param poseStack    The rendering {@link PoseStack}.
-     * @param ageInTicks   The {@link Float} for the entity's age in ticks.
-     * @param rotationYaw  The {@link Float} for the rotation yaw.
-     * @param partialTicks The {@link Float} for the game's partial ticks.
+     * @param bob          The {@link Float} for the entity's animation bob.
+     * @param yBodyRot     The {@link Float} for the rotation yaw.
+     * @param partialTick  The {@link Float} for the game's partial ticks.
+     * @param scale        The {@link Float} for the render scale.
      */
     @Override
-    protected void setupRotations(Slider slider, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
+    protected void setupRotations(Slider slider, PoseStack poseStack, float bob, float yBodyRot, float partialTick, float scale) {
         if (!Minecraft.getInstance().isPaused()) {
             if (slider.getHurtAngle() != 0) {
                 poseStack.mulPose(Axis.of(new Vector3f(slider.getHurtAngleX(), 0.0F, -slider.getHurtAngleZ())).rotationDegrees(slider.getHurtAngle() * -15.0F));
             }
             if (slider.getHurtAngle() > 0.0) {
-                slider.setHurtAngle(Mth.lerp(partialTicks, slider.getHurtAngle(), slider.getHurtAngle() * 0.78F));
+                slider.setHurtAngle(Mth.lerp(partialTick, slider.getHurtAngle(), slider.getHurtAngle() * 0.78F));
             }
             if (LivingEntityRenderer.isEntityUpsideDown(slider)) {
                 poseStack.translate(0.0, slider.getBbHeight() + 0.1F, 0.0);

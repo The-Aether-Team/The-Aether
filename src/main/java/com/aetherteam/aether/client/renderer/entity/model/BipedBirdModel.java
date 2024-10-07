@@ -89,11 +89,11 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.body.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.rightTailFeather.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.middleTailFeather.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.leftTailFeather.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
+        this.head.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.body.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.rightTailFeather.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.middleTailFeather.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.leftTailFeather.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

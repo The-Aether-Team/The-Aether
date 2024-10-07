@@ -50,7 +50,7 @@ public class MoaHatEmissiveLayer extends RenderLayer<Moa, MoaModel> {
             this.hat.prepareMobModel(moa, limbSwing, limbSwingAmount, partialTicks);
             this.hat.setupAnim(moa, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
             VertexConsumer consumer = buffer.getBuffer(renderType);
-            this.hat.renderToBuffer(poseStack, consumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.hat.renderToBuffer(poseStack, consumer, 15728640, OverlayTexture.NO_OVERLAY);
         }
     }
 

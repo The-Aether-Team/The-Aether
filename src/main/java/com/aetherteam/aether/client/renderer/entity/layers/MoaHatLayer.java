@@ -49,7 +49,7 @@ public class MoaHatLayer extends RenderLayer<Moa, MoaModel> {
             this.hat.prepareMobModel(moa, limbSwing, limbSwingAmount, partialTicks);
             this.hat.setupAnim(moa, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
             VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(texture));
-            this.hat.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.hat.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
         }
     }
 
