@@ -84,35 +84,18 @@ dependencies {
 
     runtimeOnly "io.github.flemmli97:debugutils:${project.minecraft_version}-${project.debugutils_version}-neoforge"
 
+    compileOnly "mezz.jei:jei-${project.minecraft_version}-common-api:${project.jei_version}"
+    compileOnly "mezz.jei:jei-${project.minecraft_version}-neoforge:${project.jei_version}"
 
-//    compileOnly("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}")
-//    compileOnly("mezz.jei:jei-${mc_version}-neoforge:${project.jei_version}")
-
-//    runtimeOnly compileOnly("mezz.jei:jei-${mc_version}-neoforge:${project.jei_version}")
-
-//    compileOnly "com.blamejared.crafttweaker:CraftTweaker-neoforge-${project.crafttweaker_version}"
-
-//    runtimeOnly "net.darkhax.bookshelf:Bookshelf-Forge-1.20.1:20.0.5"
-//    runtimeOnly "net.darkhax.tips:Tips-Forge-1.20.1:12.0.3"
-
-//    compileOnly "curse.maven:colytra-280200:${project.colytra_version}"
-//    compileOnly "curse.maven:curious-elytra-317716:${project.curiouselytra_version}"
-//    compileOnly "curse.maven:jade-324717:${project.jade_version}"
-//    runtimeOnly "curse.maven:jade-324717:${project.jade_version}"
-//    compileOnly "curse.maven:lootr-361276:${project.lootr_version}"
-
-//    runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
+    compileOnly "curse.maven:jade-324717:${project.jade_version}"
+    compileOnly "curse.maven:lootr-361276:${project.lootr_version}"
 
 //    implementation fileTree(dir: 'libs', include: '*.jar')
 
-//    runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
-//    runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
-//    runtimeOnly "dev.architectury:architectury-neoforge:$architectury_version"
-
-//    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:$rei_version"
-//    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:$rei_version"
-//    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
-//    compileOnly "dev.architectury:architectury-neoforge:$architectury_version"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
+    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+    compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
 }
 
 repositories {
