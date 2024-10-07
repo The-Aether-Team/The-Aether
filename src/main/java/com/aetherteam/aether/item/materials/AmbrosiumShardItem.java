@@ -87,7 +87,7 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
      * @return A use duration of 16 as an {@link Integer} if the Ambrosium Shard is edible according to {@link AetherConfig.Server#edible_ambrosium}, otherwise 0.
      */
     @Override
-    public int getUseDuration(ItemStack stack) {
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return AetherConfig.SERVER.edible_ambrosium.get() ? 16 : 0;
     }
 }

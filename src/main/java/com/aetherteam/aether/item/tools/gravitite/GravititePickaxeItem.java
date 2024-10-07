@@ -9,7 +9,7 @@ import net.minecraft.world.item.context.UseOnContext;
 
 public class GravititePickaxeItem extends PickaxeItem implements GravititeTool {
     public GravititePickaxeItem() {
-        super(AetherItemTiers.GRAVITITE, 1, -2.8F, new Item.Properties());
+        super(AetherItemTiers.GRAVITITE,  new Item.Properties().attributes(PickaxeItem.createAttributes(AetherItemTiers.GRAVITITE, 1.0F, -2.8F)));
     }
 
     /**

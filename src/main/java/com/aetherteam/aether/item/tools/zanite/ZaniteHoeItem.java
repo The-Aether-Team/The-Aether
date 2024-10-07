@@ -11,6 +11,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
  */
 public class ZaniteHoeItem extends HoeItem implements ZaniteTool {
     public ZaniteHoeItem() {
-        super(AetherItemTiers.ZANITE, -2, -1.0F, new Item.Properties());
+        super(AetherItemTiers.ZANITE, new Item.Properties().attributes(HoeItem.createAttributes(AetherItemTiers.ZANITE, -2.0F, -1.0F)));
     }
 }

@@ -13,7 +13,7 @@ import net.minecraft.world.item.SwordItem;
 
 public class VampireBladeItem extends SwordItem {
     public VampireBladeItem() {
-        super(AetherItemTiers.VAMPIRE, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+        super(AetherItemTiers.VAMPIRE, new Item.Properties().rarity(AetherItems.AETHER_LOOT).attributes(SwordItem.createAttributes(AetherItemTiers.VAMPIRE, 3.0F, -2.4F)));
     }
 
     /**

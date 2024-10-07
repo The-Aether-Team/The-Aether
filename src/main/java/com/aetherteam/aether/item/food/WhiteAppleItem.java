@@ -28,7 +28,7 @@ public class WhiteAppleItem extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (!level.isClientSide()) {
-            user.addEffect(new MobEffectInstance(AetherEffects.REMEDY.get(), 300, 0, false, false, true));
+            user.addEffect(new MobEffectInstance(AetherEffects.REMEDY, 300, 0, false, false, true));
         }
         if (user instanceof Player player) {
             if (player instanceof ServerPlayer serverPlayer) {

@@ -9,7 +9,7 @@ import net.minecraft.world.item.context.UseOnContext;
 
 public class GravititeHoeItem extends HoeItem implements GravititeTool {
     public GravititeHoeItem() {
-        super(AetherItemTiers.GRAVITITE, -3, 0, new Item.Properties());
+        super(AetherItemTiers.GRAVITITE, new Item.Properties().attributes(HoeItem.createAttributes(AetherItemTiers.GRAVITITE, -3.0F, 0.0F)));
     }
 
     /**

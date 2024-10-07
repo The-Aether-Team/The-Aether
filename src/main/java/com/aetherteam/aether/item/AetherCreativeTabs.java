@@ -405,12 +405,12 @@ public class AetherCreativeTabs {
     public static void buildCreativeModeTabs(BuildCreativeModeTabContentsEvent event) {
         ResourceKey<CreativeModeTab> tab = event.getTabKey();
         if (tab == CreativeModeTabs.COMBAT) {
-            event.getEntries().putAfter(new ItemStack(Items.LEATHER_BOOTS), new ItemStack(AetherItems.LEATHER_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            event.getEntries().putAfter(new ItemStack(Items.CHAINMAIL_BOOTS), new ItemStack(AetherItems.CHAINMAIL_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            event.getEntries().putAfter(new ItemStack(Items.IRON_BOOTS), new ItemStack(AetherItems.IRON_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            event.getEntries().putAfter(new ItemStack(Items.GOLDEN_BOOTS), new ItemStack(AetherItems.GOLDEN_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            event.getEntries().putAfter(new ItemStack(Items.DIAMOND_BOOTS), new ItemStack(AetherItems.DIAMOND_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            event.getEntries().putAfter(new ItemStack(Items.NETHERITE_BOOTS), new ItemStack(AetherItems.NETHERITE_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.LEATHER_BOOTS), new ItemStack(AetherItems.LEATHER_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.CHAINMAIL_BOOTS), new ItemStack(AetherItems.CHAINMAIL_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.IRON_BOOTS), new ItemStack(AetherItems.IRON_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.GOLDEN_BOOTS), new ItemStack(AetherItems.GOLDEN_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.DIAMOND_BOOTS), new ItemStack(AetherItems.DIAMOND_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.NETHERITE_BOOTS), new ItemStack(AetherItems.NETHERITE_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
     }
 }

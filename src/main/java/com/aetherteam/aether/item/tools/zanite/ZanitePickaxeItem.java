@@ -11,6 +11,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
  */
 public class ZanitePickaxeItem extends PickaxeItem implements ZaniteTool {
     public ZanitePickaxeItem() {
-        super(AetherItemTiers.ZANITE, 1, -2.8F, new Item.Properties());
+        super(AetherItemTiers.ZANITE, new Item.Properties().attributes(PickaxeItem.createAttributes(AetherItemTiers.ZANITE, 1.0F, -2.8F)));
     }
 }

@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 
 public class HammerOfKingbdogzItem extends SwordItem {
     public HammerOfKingbdogzItem() {
-        super(AetherItemTiers.HAMMER_OF_KINGBDOGZ, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+        super(AetherItemTiers.HAMMER_OF_KINGBDOGZ, new Item.Properties().rarity(AetherItems.AETHER_LOOT).attributes(SwordItem.createAttributes(AetherItemTiers.HAMMER_OF_KINGBDOGZ, 3.0F, -2.4F)));
     }
 
     /**

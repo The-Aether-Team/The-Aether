@@ -10,6 +10,6 @@ import net.minecraft.world.item.Item;
  */
 public class SkyrootAxeItem extends AxeItem implements SkyrootTool {
     public SkyrootAxeItem() {
-        super(AetherItemTiers.SKYROOT, 6.0F, -3.2F, new Item.Properties());
+        super(AetherItemTiers.SKYROOT, new Item.Properties().attributes(AxeItem.createAttributes(AetherItemTiers.SKYROOT, 6.0F, -3.2F)));
     }
 }

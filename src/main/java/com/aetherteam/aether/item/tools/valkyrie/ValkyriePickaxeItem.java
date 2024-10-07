@@ -13,7 +13,7 @@ import net.minecraft.world.item.PickaxeItem;
 
 public class ValkyriePickaxeItem extends PickaxeItem implements ValkyrieTool {
     public ValkyriePickaxeItem() {
-        super(AetherItemTiers.VALKYRIE, 1, -3.1F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+        super(AetherItemTiers.VALKYRIE, new Item.Properties().rarity(AetherItems.AETHER_LOOT).attributes(PickaxeItem.createAttributes(AetherItemTiers.VALKYRIE, 1.0F, -3.1F)));
     }
 
     @Override

@@ -4,12 +4,14 @@ import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -32,6 +34,7 @@ public class Parachute extends Entity {
      */
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
+
     }
 
     @Override
@@ -68,7 +71,7 @@ public class Parachute extends Entity {
                 z *= 0.25F; // Backwards movement is slowed.
             }
             Vec3 travelVec = new Vec3(x, passenger.yya, z);
-            AttributeInstance gravity = passenger.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
+            AttributeInstance gravity = passenger.getAttribute(Attributes.GRAVITY);
             double gravityModifier = gravity != null ? gravity.getValue() : 0.08;
 
             Vec3 movement = this.calculateMovement(travelVec);

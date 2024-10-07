@@ -11,6 +11,6 @@ import net.neoforged.neoforge.event.level.BlockEvent;
  */
 public class HolystoneHoeItem extends HoeItem implements HolystoneTool {
     public HolystoneHoeItem() {
-        super(AetherItemTiers.HOLYSTONE, -1, -2.0F, new Item.Properties());
+        super(AetherItemTiers.HOLYSTONE,  new Item.Properties().attributes(HoeItem.createAttributes(AetherItemTiers.HOLYSTONE, -1.0F, -2.0F)));
     }
 }

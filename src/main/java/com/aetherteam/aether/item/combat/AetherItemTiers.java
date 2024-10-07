@@ -1,8 +1,10 @@
 package com.aetherteam.aether.item.combat;
 
 import com.aetherteam.aether.AetherTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 
 import java.util.function.Supplier;
 

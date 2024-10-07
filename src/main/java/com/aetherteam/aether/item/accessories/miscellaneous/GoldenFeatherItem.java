@@ -2,6 +2,7 @@ package com.aetherteam.aether.item.accessories.miscellaneous;
 
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.item.accessories.abilities.SlowFallAccessory;
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
@@ -11,8 +12,8 @@ public class GoldenFeatherItem extends AccessoryItem implements SlowFallAccessor
     }
 
     @Override
-    public void curioTick(SlotContext slotContext, ItemStack stack) {
-        this.handleSlowFall(slotContext.entity());
+    public void tick(ItemStack stack, SlotReference reference) {
+        this.handleSlowFall(reference.entity());
     }
 
     @Override

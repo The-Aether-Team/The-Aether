@@ -5,6 +5,7 @@ import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.block.AccessoryFreezableRecipe;
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.commands.CacheableFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,10 +25,10 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
     /**
      * Freezes blocks around the wearer in a radius of 1.9 as long as they aren't flying or in spectator. This also damages the Ice accessory for every 3 blocks frozen.
      *
-     * @param context The {@link SlotContext} of the Curio.
-     * @param stack   The Curio {@link ItemStack}.
+     * @param context The {@link SlotReference} of the accessory.
+     * @param stack   The accessory {@link ItemStack}.
      */
-    default void freezeTick(SlotContext context, ItemStack stack) {
+    default void freezeTick(SlotReference context, ItemStack stack) {
         LivingEntity livingEntity = context.entity();
         if (!(livingEntity instanceof Player player) || (!player.getAbilities().flying && !player.isSpectator())) {
             int damage = this.freezeBlocks(livingEntity.level(), livingEntity.blockPosition(), stack, 1.9F);

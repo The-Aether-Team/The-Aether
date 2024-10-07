@@ -14,7 +14,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 public class FlamingSwordItem extends SwordItem {
     public FlamingSwordItem() {
-        super(AetherItemTiers.FLAMING, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+        super(AetherItemTiers.FLAMING, new Item.Properties().rarity(AetherItems.AETHER_LOOT).attributes(SwordItem.createAttributes(AetherItemTiers.FLAMING, 3.0F, -2.4F)));
     }
 
     /**

@@ -8,7 +8,7 @@ import net.minecraft.world.item.SwordItem;
 
 public class GravititeSwordItem extends SwordItem implements GravititeWeapon {
     public GravititeSwordItem() {
-        super(AetherItemTiers.GRAVITITE, 3, -2.4F, new Item.Properties());
+        super(AetherItemTiers.GRAVITITE, new Item.Properties().attributes(SwordItem.createAttributes(AetherItemTiers.GRAVITITE, 3.0F, -2.4F)));
     }
 
     @Override

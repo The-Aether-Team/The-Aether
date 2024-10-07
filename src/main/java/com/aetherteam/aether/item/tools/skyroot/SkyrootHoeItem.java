@@ -10,6 +10,6 @@ import net.minecraft.world.item.Item;
  */
 public class SkyrootHoeItem extends HoeItem implements SkyrootTool {
     public SkyrootHoeItem() {
-        super(AetherItemTiers.SKYROOT, 0, -3.0F, new Item.Properties());
+        super(AetherItemTiers.SKYROOT, new Item.Properties().attributes(HoeItem.createAttributes(AetherItemTiers.SKYROOT, 0.0F, -3.0F)));
     }
 }

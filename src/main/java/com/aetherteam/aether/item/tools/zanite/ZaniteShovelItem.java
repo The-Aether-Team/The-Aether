@@ -11,6 +11,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
  */
 public class ZaniteShovelItem extends ShovelItem implements ZaniteTool {
     public ZaniteShovelItem() {
-        super(AetherItemTiers.ZANITE, 1.5F, -3.0F, new Item.Properties());
+        super(AetherItemTiers.ZANITE, new Item.Properties().attributes(ShovelItem.createAttributes(AetherItemTiers.ZANITE, 1.5F, -3.0F)));
     }
 }

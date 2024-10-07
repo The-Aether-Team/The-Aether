@@ -13,7 +13,7 @@ import net.minecraft.world.item.ShovelItem;
 
 public class ValkyrieShovelItem extends ShovelItem implements ValkyrieTool {
     public ValkyrieShovelItem() {
-        super(AetherItemTiers.VALKYRIE, 1.5F, -3.3F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+        super(AetherItemTiers.VALKYRIE, new Item.Properties().rarity(AetherItems.AETHER_LOOT).attributes(ShovelItem.createAttributes(AetherItemTiers.VALKYRIE, 1.5F, -3.3F)));
     }
 
     @Override

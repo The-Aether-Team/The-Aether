@@ -10,6 +10,6 @@ import net.minecraft.world.item.PickaxeItem;
  */
 public class SkyrootPickaxeItem extends PickaxeItem implements SkyrootTool {
     public SkyrootPickaxeItem() {
-        super(AetherItemTiers.SKYROOT, 1, -2.8F, new Item.Properties());
+        super(AetherItemTiers.SKYROOT, new Item.Properties().attributes(PickaxeItem.createAttributes(AetherItemTiers.SKYROOT, 1.0F, -2.8F)));
     }
 }

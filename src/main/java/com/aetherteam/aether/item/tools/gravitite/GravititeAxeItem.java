@@ -9,7 +9,7 @@ import net.minecraft.world.item.context.UseOnContext;
 
 public class GravititeAxeItem extends AxeItem implements GravititeTool {
     public GravititeAxeItem() {
-        super(AetherItemTiers.GRAVITITE, 5.0F, -3.0F, new Item.Properties());
+        super(AetherItemTiers.GRAVITITE, new Item.Properties().attributes(AxeItem.createAttributes(AetherItemTiers.GRAVITITE, 5.0F, -3.0F)));
     }
 
     /**
