@@ -2,7 +2,7 @@ package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.DensityFunction;
@@ -15,7 +15,7 @@ public class AetherDensityFunctions {
         return ResourceKey.create(Registries.DENSITY_FUNCTION, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
-    public static void bootstrap(BootstapContext<DensityFunction> context) {
+    public static void bootstrap(BootstrapContext<DensityFunction> context) {
         context.register(BASE_3D_NOISE_AETHER, BlendedNoise.createUnseeded(
                 0.25, // xz scale
                 0.25, // y scale

@@ -44,7 +44,7 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
     }
 
     private static void vertex(VertexConsumer consumer, Matrix4f matrix, Matrix3f normals, int packedLight, float offsetX, float offsetY, float textureX, float textureY) {
-        consumer.vertex(matrix, offsetX - 0.5F, offsetY - 0.25F, 0.0F).color(255, 255, 255, 255).uv(textureX, textureY).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(packedLight).normal(normals, 0.0F, 1.0F, 0.0F).endVertex();
+        consumer.addVertex(matrix, offsetX - 0.5F, offsetY - 0.25F, 0.0F).setColor(255, 255, 255, 255).setUv(textureX, textureY).setOverlay(OverlayTexture.NO_OVERLAY).setLight(packedLight).setNormal(normals, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.processor;
 
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class BossRoomProcessor extends StructureProcessor {
     public static final BossRoomProcessor INSTANCE = new BossRoomProcessor();
 
-    public static final Codec<BossRoomProcessor> CODEC = Codec.unit(BossRoomProcessor.INSTANCE);
+    public static final MapCodec<BossRoomProcessor> CODEC = MapCodec.unit(BossRoomProcessor.INSTANCE);
 
     @Override
     public StructureTemplate.StructureEntityInfo processEntity(LevelReader level, BlockPos seedPos, StructureTemplate.StructureEntityInfo rawEntityInfo, StructureTemplate.StructureEntityInfo entityInfo, StructurePlaceSettings placementSettings, StructureTemplate template) {

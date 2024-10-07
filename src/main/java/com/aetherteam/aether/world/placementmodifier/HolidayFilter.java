@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.placementmodifier;
 
 import com.aetherteam.aether.AetherConfig;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
@@ -14,7 +14,7 @@ import java.util.Calendar;
  * A {@link PlacementFilter} to prevent limit generation of this feature to the holidays, dependent on certain configs.
  */
 public class HolidayFilter extends PlacementFilter {
-    public static final Codec<HolidayFilter> CODEC = Codec.unit(HolidayFilter::new);
+    public static final MapCodec<HolidayFilter> CODEC = MapCodec.unit(HolidayFilter::new);
 
     @Override
     protected boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {

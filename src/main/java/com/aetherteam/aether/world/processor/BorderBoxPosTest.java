@@ -1,6 +1,7 @@
 package com.aetherteam.aether.world.processor;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -12,7 +13,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.PosRuleTestTy
  * The codec can accept 3 ints for the size of the room.
  */
 public class BorderBoxPosTest extends PosRuleTest {
-    public static final Codec<BorderBoxPosTest> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<BorderBoxPosTest> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("baseX").orElse(0).forGetter(o -> o.baseX),
             Codec.INT.fieldOf("baseY").orElse(0).forGetter(o -> o.baseY),
             Codec.INT.fieldOf("baseZ").orElse(0).forGetter(o -> o.baseZ),

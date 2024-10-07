@@ -69,17 +69,17 @@ public class ServerPerkData<T> {
     private final Function<MinecraftServer, Map<UUID, T>> savedMap;
     private final TriConsumer<MinecraftServer, UUID, T> modify;
     private final BiConsumer<MinecraftServer, UUID> remove;
-    private final BiFunction<UUID, T, BasePacket> applyPacket;
-    private final Function<UUID, BasePacket> removePacket;
-    private final Function<Map<UUID, T>, BasePacket> syncPacket;
+    private final BiFunction<UUID, T, CustomPacketPayload> applyPacket;
+    private final Function<UUID, CustomPacketPayload> removePacket;
+    private final Function<Map<UUID, T>, CustomPacketPayload> syncPacket;
     private final Function<T, Predicate<User>> verificationPredicate;
 
     public ServerPerkData(Function<ServerPerkData<T>, Function<MinecraftServer, Map<UUID, T>>> savedMap,
                           Function<ServerPerkData<T>, TriConsumer<MinecraftServer, UUID, T>> modify,
                           Function<ServerPerkData<T>, BiConsumer<MinecraftServer, UUID>> remove,
-                          Function<ServerPerkData<T>, BiFunction<UUID, T, BasePacket>> applyPacket,
-                          Function<ServerPerkData<T>, Function<UUID, BasePacket>> removePacket,
-                          Function<ServerPerkData<T>, Function<Map<UUID, T>, BasePacket>> syncPacket,
+                          Function<ServerPerkData<T>, BiFunction<UUID, T, CustomPacketPayload>> applyPacket,
+                          Function<ServerPerkData<T>, Function<UUID, CustomPacketPayload>> removePacket,
+                          Function<ServerPerkData<T>, Function<Map<UUID, T>, CustomPacketPayload>> syncPacket,
                           Function<ServerPerkData<T>, Function<T, Predicate<User>>> verificationPredicate) {
         this.savedMap = savedMap.apply(this);
         this.modify = modify.apply(this);
@@ -114,7 +114,7 @@ public class ServerPerkData<T> {
         if (storedUsers.containsKey(uuid)) { // Checks if User exists.
             User user = storedUsers.get(uuid);
             if (user != null && this.getVerificationPredicate(perk).test(user)) { // Checks verification requirement to have the perk that is trying to be applied.
-                PacketDistributor.sendToAll(this.getApplyPacket(uuid, perk)); // Send to clients.
+                PacketDistributor.sendToAllPlayers(this.getApplyPacket(uuid, perk)); // Send to clients.
                 this.modifySavedData(server, uuid, perk); // Save to world.
             }
         }
@@ -127,7 +127,7 @@ public class ServerPerkData<T> {
      * @param uuid   The {@link UUID} of the player.
      */
     public void removePerk(MinecraftServer server, UUID uuid) {
-        PacketDistributor.sendToAll(this.getRemovePacket(uuid)); // Send to clients.
+        PacketDistributor.sendToAllPlayers(this.getRemovePacket(uuid)); // Send to clients.
         this.removeSavedData(server, uuid); // Save to world.
     }
 
@@ -198,7 +198,7 @@ public class ServerPerkData<T> {
      * @param perk The perk data type.
      * @return The packet.
      */
-    protected BasePacket getApplyPacket(UUID uuid, T perk) {
+    protected CustomPacketPayload getApplyPacket(UUID uuid, T perk) {
         return this.applyPacket.apply(uuid, perk);
     }
 
@@ -208,7 +208,7 @@ public class ServerPerkData<T> {
      * @param uuid The player {@link UUID}.
      * @return The packet.
      */
-    protected BasePacket getRemovePacket(UUID uuid) {
+    protected CustomPacketPayload getRemovePacket(UUID uuid) {
         return this.removePacket.apply(uuid);
     }
 
@@ -218,7 +218,7 @@ public class ServerPerkData<T> {
      * @param serverPerkData A {@link Map} of {@link UUID}s and a perk data type.
      * @return The packet.
      */
-    protected BasePacket getSyncPacket(Map<UUID, T> serverPerkData) {
+    protected CustomPacketPayload getSyncPacket(Map<UUID, T> serverPerkData) {
         return this.syncPacket.apply(serverPerkData);
     }
 

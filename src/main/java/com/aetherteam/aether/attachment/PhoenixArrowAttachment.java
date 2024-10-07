@@ -74,7 +74,7 @@ public class PhoenixArrowAttachment implements INBTSynchable {
     }
 
     @Override
-    public BasePacket getSyncPacket(int entityID, String key, Type type, Object value) {
+    public CustomPacketPayload getSyncPacket(int entityID, String key, Type type, Object value) {
         return new PhoenixArrowSyncPacket(entityID, key, type, value);
     }
 }

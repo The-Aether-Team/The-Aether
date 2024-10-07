@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.treedecorator;
 
 import com.aetherteam.aether.AetherTags;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
@@ -20,7 +20,7 @@ import java.util.List;
  * Decorates blocks around Holiday Trees.
  */
 public class HolidayTreeDecorator extends TreeDecorator {
-    public static final Codec<HolidayTreeDecorator> CODEC = BlockStateProvider.CODEC.fieldOf("provider").xmap(HolidayTreeDecorator::new, (instance) -> instance.provider).codec();
+    public static final MapCodec<HolidayTreeDecorator> CODEC = BlockStateProvider.CODEC.fieldOf("provider").xmap(HolidayTreeDecorator::new, (instance) -> instance.provider);
     private final BlockStateProvider provider;
 
     public HolidayTreeDecorator(BlockStateProvider provider) {

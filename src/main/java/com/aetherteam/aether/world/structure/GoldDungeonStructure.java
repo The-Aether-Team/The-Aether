@@ -5,6 +5,7 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.world.BlockLogicUtil;
 import com.aetherteam.aether.world.structurepiece.golddungeon.*;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +38,7 @@ import javax.xml.catalog.CatalogFeatures.Feature;
 import java.util.Optional;
 
 public class GoldDungeonStructure extends Structure {
-    public static final Codec<GoldDungeonStructure> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+    public static final MapCodec<GoldDungeonStructure> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             settingsCodec(builder),
             Codec.INT.fieldOf("stubcount").forGetter(o -> o.stubIslandCount),
             Codec.INT.fieldOf("belowTerrain").forGetter(o -> o.belowTerrain),

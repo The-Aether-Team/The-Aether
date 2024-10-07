@@ -1,6 +1,6 @@
 package com.aetherteam.aether.world.processor;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 public class NoReplaceProcessor extends StructureProcessor {
     public static final NoReplaceProcessor AIR = new NoReplaceProcessor(Blocks.AIR);
 
-    public static final Codec<NoReplaceProcessor> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<NoReplaceProcessor> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("baseblock").forGetter(o -> o.baseBlock)
     ).apply(instance, NoReplaceProcessor::new));
 

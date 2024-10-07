@@ -190,16 +190,16 @@ public class DimensionHooks {
                         if (entity.level().dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) { // We display the Descending GUI text to the player if they're about to return to the Overworld.
                             displayAetherTravel = true;
                             playerLeavingAether = true;
-                            PacketDistributor.sendToAll(new AetherTravelPacket(true));
-                            PacketDistributor.sendToAll(new LeavingAetherPacket(true));
+                            PacketDistributor.sendToAllPlayers(new AetherTravelPacket(true));
+                            PacketDistributor.sendToAllPlayers(new LeavingAetherPacket(true));
                         } else if (entity.level().dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) { // We display the Ascending GUI text to the player if they're about to enter the Aether.
                             displayAetherTravel = true;
                             playerLeavingAether = false;
-                            PacketDistributor.sendToAll(new AetherTravelPacket(true));
-                            PacketDistributor.sendToAll(new LeavingAetherPacket(false));
+                            PacketDistributor.sendToAllPlayers(new AetherTravelPacket(true));
+                            PacketDistributor.sendToAllPlayers(new LeavingAetherPacket(false));
                         } else { // Don't display any text if not travelling between the Aether and Overworld or vice-versa.
                             displayAetherTravel = false;
-                            PacketDistributor.sendToAll(new AetherTravelPacket(false));
+                            PacketDistributor.sendToAllPlayers(new AetherTravelPacket(false));
                         }
                     }
                 }

@@ -3,7 +3,7 @@ package com.aetherteam.aether.world.processor;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.world.BlockLogicUtil;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 public class VerticalGradientProcessor extends StructureProcessor {
     public static final VerticalGradientProcessor INSTANCE = new VerticalGradientProcessor();
 
-    public static final Codec<VerticalGradientProcessor> CODEC = Codec.unit(VerticalGradientProcessor.INSTANCE);
+    public static final MapCodec<VerticalGradientProcessor> CODEC = MapCodec.unit(VerticalGradientProcessor.INSTANCE);
 
     @Nullable
     @Override

@@ -5,7 +5,7 @@ import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -26,7 +26,7 @@ public class AetherMoaTypes {
         return ResourceKey.create(AetherMoaTypes.MOA_TYPE_REGISTRY_KEY, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
     }
 
-    public static void bootstrap(BootstapContext<MoaType> context) {
+    public static void bootstrap(BootstrapContext<MoaType> context) {
         context.register(BLUE, new MoaType(new ItemStack(AetherItems.BLUE_MOA_EGG.get()), 3, 0.155F, 100, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/blue_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png")));
         context.register(WHITE, new MoaType(new ItemStack(AetherItems.WHITE_MOA_EGG.get()), 4, 0.155F, 50, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/white_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png")));
         context.register(BLACK, new MoaType(new ItemStack(AetherItems.BLACK_MOA_EGG.get()), 8, 0.155F, 25, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/black_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/black_moa_saddle.png")));

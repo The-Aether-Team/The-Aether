@@ -1,7 +1,8 @@
 package com.aetherteam.aether.world.trunkplacer;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class GoldenOakTrunkPlacer extends TrunkPlacer {
-    public static final Codec<GoldenOakTrunkPlacer> CODEC = RecordCodecBuilder.create((instance) -> trunkPlacerParts(instance).apply(instance, GoldenOakTrunkPlacer::new));
+    public static final MapCodec<GoldenOakTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec((instance) -> trunkPlacerParts(instance).apply(instance, GoldenOakTrunkPlacer::new));
 
     public GoldenOakTrunkPlacer(int height, int heightRandA, int heightRandB) {
         super(height, heightRandA, heightRandB);

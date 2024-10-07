@@ -3,8 +3,9 @@ package com.aetherteam.aether.data.generators.loot;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.loot.functions.WhirlwindSpawnEntity;
 import net.minecraft.advancements.critereon.EntityTypePredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.LootTableSubProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
@@ -16,9 +17,9 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.function.BiConsumer;
 
-public class AetherSelectorLoot implements LootTableSubProvider {
+public record AetherSelectorLoot(HolderLookup.Provider registries) implements LootTableSubProvider {
     @Override
-    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> builder) {
         builder.accept(AetherLoot.WHIRLWIND_JUNK, LootTable.lootTable()
                 .withPool(whirlwindLoot())
         );

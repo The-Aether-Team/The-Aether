@@ -2,6 +2,7 @@ package com.aetherteam.aether.world.structure;
 
 import com.aetherteam.aether.world.structurepiece.LargeAercloudChunk;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 import java.util.*;
 
 public class LargeAercloudStructure extends Structure {
-    public static final Codec<LargeAercloudStructure> CODEC = RecordCodecBuilder.create((p_229075_) -> p_229075_.group(settingsCodec(p_229075_),
+    public static final MapCodec<LargeAercloudStructure> CODEC = RecordCodecBuilder.mapCodec((p_229075_) -> p_229075_.group(settingsCodec(p_229075_),
             BlockStateProvider.CODEC.fieldOf("blocks").forGetter(structure -> structure.blocks),
             Codec.INT.fieldOf("size").forGetter(structure -> structure.size),
             Codec.INT.fieldOf("rangeY").forGetter(o -> o.rangeY)

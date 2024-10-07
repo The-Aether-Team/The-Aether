@@ -123,7 +123,7 @@ public class AetherBlocks {
     public static final DeferredBlock<FlowerPotBlock> POTTED_BERRY_BUSH_STEM = BLOCKS.register("potted_berry_bush_stem", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, BERRY_BUSH_STEM, Block.Properties.ofFullCopy(Blocks.FLOWER_POT)));
 
     public static final DeferredBlock<Block> PURPLE_FLOWER = register("purple_flower", () -> new FlowerBlock(AetherEffects.INEBRIATION, 12, Block.Properties.ofFullCopy(Blocks.DANDELION)));
-    public static final DeferredBlock<Block> WHITE_FLOWER = register("white_flower", () -> new FlowerBlock(() -> MobEffects.SLOW_FALLING, 4, Block.Properties.ofFullCopy(Blocks.DANDELION)));
+    public static final DeferredBlock<Block> WHITE_FLOWER = register("white_flower", () -> new FlowerBlock(MobEffects.SLOW_FALLING, 4, Block.Properties.ofFullCopy(Blocks.DANDELION)));
     public static final DeferredBlock<FlowerPotBlock> POTTED_PURPLE_FLOWER = BLOCKS.register("potted_purple_flower", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, PURPLE_FLOWER, Block.Properties.ofFullCopy(Blocks.FLOWER_POT)));
     public static final DeferredBlock<FlowerPotBlock> POTTED_WHITE_FLOWER = BLOCKS.register("potted_white_flower", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, WHITE_FLOWER, Block.Properties.ofFullCopy(Blocks.FLOWER_POT)));
 
@@ -198,21 +198,21 @@ public class AetherBlocks {
     public static final DeferredBlock<WallBlock> AEROGEL_WALL = register("aerogel_wall", () -> new AerogelWallBlock(Block.Properties.of().mapColor(MapColor.DIAMOND).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).strength(1.0F, 2000.0F).sound(SoundType.METAL).requiresCorrectToolForDrops().isViewBlocking(AetherBlocks::never)));
 
     public static final DeferredBlock<StairBlock> SKYROOT_STAIRS = register("skyroot_stairs",
-            () -> new StairBlock(() -> SKYROOT_PLANKS.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.SKYROOT_PLANKS.get())));
+            () -> new StairBlock(SKYROOT_PLANKS.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.SKYROOT_PLANKS.get())));
     public static final DeferredBlock<StairBlock> CARVED_STAIRS = register("carved_stairs",
-            () -> new StairBlock(() -> CARVED_STONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.CARVED_STONE.get())));
+            () -> new StairBlock(CARVED_STONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.CARVED_STONE.get())));
     public static final DeferredBlock<StairBlock> ANGELIC_STAIRS = register("angelic_stairs",
-            () -> new StairBlock(() -> ANGELIC_STONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.ANGELIC_STONE.get())));
+            () -> new StairBlock(ANGELIC_STONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.ANGELIC_STONE.get())));
     public static final DeferredBlock<StairBlock> HELLFIRE_STAIRS = register("hellfire_stairs",
-            () -> new StairBlock(() -> HELLFIRE_STONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.HELLFIRE_STONE.get())));
+            () -> new StairBlock(HELLFIRE_STONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.HELLFIRE_STONE.get())));
     public static final DeferredBlock<StairBlock> HOLYSTONE_STAIRS = register("holystone_stairs",
-            () -> new StairBlock(() -> HOLYSTONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.HOLYSTONE.get())));
+            () -> new StairBlock(HOLYSTONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.HOLYSTONE.get())));
     public static final DeferredBlock<StairBlock> MOSSY_HOLYSTONE_STAIRS = register("mossy_holystone_stairs",
-            () -> new StairBlock(() -> MOSSY_HOLYSTONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.MOSSY_HOLYSTONE.get())));
+            () -> new StairBlock(MOSSY_HOLYSTONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.MOSSY_HOLYSTONE.get())));
     public static final DeferredBlock<StairBlock> ICESTONE_STAIRS = register("icestone_stairs",
-            () -> new IcestoneStairsBlock(() -> ICESTONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.ICESTONE.get())));
+            () -> new IcestoneStairsBlock(ICESTONE.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.ICESTONE.get())));
     public static final DeferredBlock<StairBlock> HOLYSTONE_BRICK_STAIRS = register("holystone_brick_stairs",
-            () -> new StairBlock(() -> HOLYSTONE_BRICKS.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.HOLYSTONE_BRICKS.get())));
+            () -> new StairBlock(HOLYSTONE_BRICKS.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.HOLYSTONE_BRICKS.get())));
     public static final DeferredBlock<StairBlock> AEROGEL_STAIRS = register("aerogel_stairs",
             () -> new AerogelStairsBlock(() -> AEROGEL.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.AEROGEL.get()).isViewBlocking(AetherBlocks::never)));
 

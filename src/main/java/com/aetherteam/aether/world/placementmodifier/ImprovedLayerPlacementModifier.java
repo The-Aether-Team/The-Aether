@@ -1,6 +1,7 @@
 package com.aetherteam.aether.world.placementmodifier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -20,7 +21,7 @@ import java.util.stream.Stream;
  * Improved to support custom parameters for the heightmap type and the vertical space necessary for the feature to place.
  */
 public class ImprovedLayerPlacementModifier extends PlacementModifier {
-    public static final Codec<ImprovedLayerPlacementModifier> CODEC = RecordCodecBuilder.create((codec) -> codec.group(
+    public static final MapCodec<ImprovedLayerPlacementModifier> CODEC = RecordCodecBuilder.mapCodec((codec) -> codec.group(
             Heightmap.Types.CODEC.fieldOf("heightmap").forGetter((modifier) -> modifier.heightmap),
             IntProvider.codec(0, 256).fieldOf("count").forGetter((modifier) -> modifier.count),
             Codec.INT.optionalFieldOf("verticalBounds", Integer.MIN_VALUE).forGetter((modifier) -> modifier.verticalBounds)

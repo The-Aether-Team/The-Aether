@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.processor;
 
 import com.aetherteam.aether.block.AetherBlockStateProperties;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 public class DoubleDropsProcessor extends StructureProcessor {
     public static final DoubleDropsProcessor INSTANCE = new DoubleDropsProcessor();
 
-    public static final Codec<DoubleDropsProcessor> CODEC = Codec.unit(DoubleDropsProcessor.INSTANCE);
+    public static final MapCodec<DoubleDropsProcessor> CODEC = MapCodec.unit(DoubleDropsProcessor.INSTANCE);
 
     @Nullable
     @Override

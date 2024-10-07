@@ -5,6 +5,7 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeDungeonBuilder;
 import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeProcessorSettings;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -28,7 +29,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import java.util.Optional;
 
 public class BronzeDungeonStructure extends Structure {
-    public static final Codec<BronzeDungeonStructure> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+    public static final MapCodec<BronzeDungeonStructure> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             settingsCodec(builder),
             Codec.INT.fieldOf("maxrooms").forGetter(o -> o.maxRooms),
             Codec.INT.fieldOf("aboveBottom").forGetter(o -> o.aboveBottom),

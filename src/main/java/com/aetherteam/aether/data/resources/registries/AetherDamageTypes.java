@@ -2,7 +2,7 @@ package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageEffects;
@@ -27,7 +27,7 @@ public class AetherDamageTypes {
     public static final ResourceKey<DamageType> INEBRIATION = createKey("inebriation");
     public static final ResourceKey<DamageType> THUNDER_CRYSTAL = createKey("thunder_crystal");
 
-    public static void bootstrap(BootstapContext<DamageType> context) {
+    public static void bootstrap(BootstrapContext<DamageType> context) {
         context.register(ARMOR_PIERCING_ATTACK, new DamageType("mob", 0.1F));
         context.register(CLOUD_CRYSTAL, new DamageType("aether.cloud_crystal", 0.1F));
         context.register(CRUSH, new DamageType("aether.crush", 0.1F));

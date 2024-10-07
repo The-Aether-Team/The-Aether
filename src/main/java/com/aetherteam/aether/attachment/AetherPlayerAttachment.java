@@ -1044,7 +1044,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
     }
 
     @Override
-    public BasePacket getSyncPacket(int entityID, String key, Type type, Object value) {
+    public CustomPacketPayload getSyncPacket(int entityID, String key, Type type, Object value) {
         return new AetherPlayerSyncPacket(entityID, key, type, value);
     }
 }

@@ -4,7 +4,7 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ChunkAccessAccessor;
 import com.aetherteam.aether.world.BlockLogicUtil;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.WorldGenRegion;
@@ -32,7 +32,7 @@ import java.util.function.Function;
 public class SurfaceRuleProcessor extends StructureProcessor {
     public static final SurfaceRuleProcessor INSTANCE = new SurfaceRuleProcessor();
 
-    public static final Codec<SurfaceRuleProcessor> CODEC = Codec.unit(SurfaceRuleProcessor.INSTANCE);
+    public static final MapCodec<SurfaceRuleProcessor> CODEC = MapCodec.unit(SurfaceRuleProcessor.INSTANCE);
 
     /**
      * Warning for "deprecation" is suppressed because using {@link CarvingContext#topMaterial(Function, ChunkAccess, BlockPos, boolean)} is necessary.

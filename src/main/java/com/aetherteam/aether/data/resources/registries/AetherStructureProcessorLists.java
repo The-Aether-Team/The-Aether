@@ -16,7 +16,7 @@ import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverDungeonPie
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -50,7 +50,7 @@ public class AetherStructureProcessorLists {
 
     private static final AxisAlignedLinearPosTest ON_FLOOR = new AxisAlignedLinearPosTest(1.0F, 0.0F, 0, 1, Direction.Axis.Y);
 
-    public static void bootstrap(BootstapContext<StructureProcessorList> context) {
+    public static void bootstrap(BootstrapContext<StructureProcessorList> context) {
         register(context, BRONZE_ROOM, List.of(
             BronzeDungeonPiece.BRONZE_DUNGEON_STONE,
             BronzeDungeonPiece.TRAPPED_CARVED_STONE,
@@ -100,7 +100,7 @@ public class AetherStructureProcessorLists {
 
     }
 
-    private static void register(BootstapContext<StructureProcessorList> context, ResourceKey<StructureProcessorList> key, List<StructureProcessor> processors) {
+    private static void register(BootstrapContext<StructureProcessorList> context, ResourceKey<StructureProcessorList> key, List<StructureProcessor> processors) {
         context.register(key, new StructureProcessorList(processors));
     }
 }

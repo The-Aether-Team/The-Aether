@@ -4,6 +4,7 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.providers.AetherBlockLootSubProvider;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.mixin.mixins.common.accessor.BlockLootAccessor;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -21,8 +22,8 @@ import java.util.stream.Stream;
 public class AetherBlockLoot extends AetherBlockLootSubProvider {
     private static final Set<Item> EXPLOSION_RESISTANT = Stream.of(AetherBlocks.TREASURE_CHEST.get()).map(ItemLike::asItem).collect(Collectors.toSet());
 
-    public AetherBlockLoot() {
-        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags());
+    public AetherBlockLoot(HolderLookup.Provider registries) {
+        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), registries);
     }
 
     @Override

@@ -5,14 +5,18 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.loot.conditions.ConfigEnabled;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableSubProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.LootTableReference;
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -20,14 +24,14 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.function.BiConsumer;
 
-public class AetherChestLoot implements LootTableSubProvider {
+public record AetherChestLoot(HolderLookup.Provider registries) implements LootTableSubProvider {
     @Override
-    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> builder) {
         builder.accept(AetherLoot.BRONZE_DUNGEON, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootTableReference.lootTableReference(AetherLoot.BRONZE_DUNGEON_LOOT).setWeight(8))
-                        .add(LootTableReference.lootTableReference(AetherLoot.BRONZE_DUNGEON_DISC).setWeight(1))
-                        .add(LootTableReference.lootTableReference(AetherLoot.BRONZE_DUNGEON_TRASH).setWeight(1))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.BRONZE_DUNGEON_LOOT).setWeight(8))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.BRONZE_DUNGEON_DISC).setWeight(1))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.BRONZE_DUNGEON_TRASH).setWeight(1))
                 )
         );
         builder.accept(AetherLoot.BRONZE_DUNGEON_LOOT, LootTable.lootTable()
@@ -93,13 +97,13 @@ public class AetherChestLoot implements LootTableSubProvider {
         );
         builder.accept(AetherLoot.BRONZE_DUNGEON_REWARD, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootTableReference.lootTableReference(AetherLoot.BRONZE_DUNGEON_NEPTUNE).setWeight(1))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.BRONZE_DUNGEON_NEPTUNE).setWeight(1))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootTableReference.lootTableReference(AetherLoot.BRONZE_DUNGEON_TREASURE).setWeight(1))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.BRONZE_DUNGEON_TREASURE).setWeight(1))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 2.0F))
-                        .add(LootTableReference.lootTableReference(AetherLoot.BRONZE_DUNGEON_GUMMIES).setWeight(1))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.BRONZE_DUNGEON_GUMMIES).setWeight(1))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(3.0F, 5.0F))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_HELMET.get()).setWeight(2))
@@ -119,7 +123,7 @@ public class AetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.GOLDEN_AMBER.get()).setWeight(3))
                         .add(LootItem.lootTableItem(AetherItems.VALKYRIE_LANCE.get()).setWeight(1))
                         .add(LootItem.lootTableItem(AetherItems.HAMMER_OF_KINGBDOGZ.get()).setWeight(1))
-                        .add(LootTableReference.lootTableReference(AetherLoot.BRONZE_DUNGEON_NEPTUNE).setWeight(8))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.BRONZE_DUNGEON_NEPTUNE).setWeight(8))
                         .add(LootItem.lootTableItem(AetherItems.SENTRY_BOOTS.get()).setWeight(1))
                         .add(LootItem.lootTableItem(AetherBlocks.SENTRY_STONE.get()).setWeight(1))
                         .add(LootItem.lootTableItem(AetherBlocks.CARVED_STONE.get()).setWeight(1))
@@ -157,9 +161,9 @@ public class AetherChestLoot implements LootTableSubProvider {
 
         builder.accept(AetherLoot.SILVER_DUNGEON, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_LOOT).setWeight(8))
-                        .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_DISC).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_TRASH).setWeight(1))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.SILVER_DUNGEON_LOOT).setWeight(8))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.SILVER_DUNGEON_DISC).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.SILVER_DUNGEON_TRASH).setWeight(1))
                 )
         );
         builder.accept(AetherLoot.SILVER_DUNGEON_LOOT, LootTable.lootTable()
@@ -240,19 +244,19 @@ public class AetherChestLoot implements LootTableSubProvider {
         );
         builder.accept(AetherLoot.SILVER_DUNGEON_REWARD, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_VALKYRIE).setWeight(1))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.SILVER_DUNGEON_VALKYRIE).setWeight(1))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(2.0F, 3.0F))
-                        .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_TREASURE).setWeight(1))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.SILVER_DUNGEON_TREASURE).setWeight(1))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(2.0F, 3.0F))
-                        .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_GUMMIES).setWeight(1))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.SILVER_DUNGEON_GUMMIES).setWeight(1))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(6.0F, 10.0F))
                         .add(LootItem.lootTableItem(AetherItems.LIGHTNING_SWORD.get()).setWeight(4))
                         .add(LootItem.lootTableItem(AetherItems.HOLY_SWORD.get()).setWeight(4))
                         .add(LootItem.lootTableItem(AetherItems.INVISIBILITY_CLOAK.get()).setWeight(6))
-                        .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_GRAVITITE).setWeight(3))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.SILVER_DUNGEON_GRAVITITE).setWeight(3))
                         .add(LootItem.lootTableItem(AetherItems.ENCHANTED_DART_SHOOTER.get()).setWeight(8))
                         .add(LootItem.lootTableItem(AetherItems.POISON_DART_SHOOTER.get()).setWeight(6))
                         .add(LootItem.lootTableItem(Items.GOLDEN_SWORD).setWeight(4))
@@ -265,13 +269,13 @@ public class AetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.ENCHANTED_BERRY.get()).setWeight(8).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 8.0F))))
                         .add(LootItem.lootTableItem(AetherItems.BLUE_BERRY.get()).setWeight(8).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 10.0F))))
                         .add(LootItem.lootTableItem(AetherBlocks.ANGELIC_STONE.get()).setWeight(2))
-                        .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_VALKYRIE).setWeight(10))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.SILVER_DUNGEON_VALKYRIE).setWeight(10))
                         .add(LootItem.lootTableItem(AetherItems.REGENERATION_STONE.get()).setWeight(3))
                 )
         );
         builder.accept(AetherLoot.SILVER_DUNGEON_TREASURE, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_VALKYRIE).setWeight(8))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.SILVER_DUNGEON_VALKYRIE).setWeight(8))
                         .add(LootItem.lootTableItem(AetherItems.LIGHTNING_SWORD.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.HOLY_SWORD.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.INVISIBILITY_CLOAK.get()).setWeight(1))
@@ -293,7 +297,7 @@ public class AetherChestLoot implements LootTableSubProvider {
         );
         builder.accept(AetherLoot.SILVER_DUNGEON_VALKYRIE, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_CAPE_CONFIG).setWeight(3))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.SILVER_DUNGEON_CAPE_CONFIG).setWeight(3))
                         .add(LootItem.lootTableItem(AetherItems.VALKYRIE_HELMET.get()).setWeight(4))
                         .add(LootItem.lootTableItem(AetherItems.VALKYRIE_CHESTPLATE.get()).setWeight(4))
                         .add(LootItem.lootTableItem(AetherItems.VALKYRIE_LEGGINGS.get()).setWeight(4))
@@ -320,13 +324,13 @@ public class AetherChestLoot implements LootTableSubProvider {
 
         builder.accept(AetherLoot.GOLD_DUNGEON_REWARD, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootTableReference.lootTableReference(AetherLoot.GOLD_DUNGEON_TREASURE))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.GOLD_DUNGEON_TREASURE))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(5.0F, 8.0F))
                         .add(LootItem.lootTableItem(AetherItems.IRON_BUBBLE.get()).setWeight(12))
                         .add(LootItem.lootTableItem(AetherItems.VAMPIRE_BLADE.get()).setWeight(12))
                         .add(LootItem.lootTableItem(AetherItems.PIG_SLAYER.get()).setWeight(12))
-                        .add(LootTableReference.lootTableReference(AetherLoot.GOLD_DUNGEON_TREASURE).setWeight(2))
+                        .add(NestedLootTable.lootTableReference(AetherLoot.GOLD_DUNGEON_TREASURE).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.LIFE_SHARD.get()).setWeight(1))
                         .add(LootItem.lootTableItem(AetherItems.GRAVITITE_HELMET.get()).setWeight(5))
                         .add(LootItem.lootTableItem(AetherItems.GRAVITITE_CHESTPLATE.get()).setWeight(5))
@@ -373,16 +377,16 @@ public class AetherChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(Items.WATER_BUCKET).setWeight(40))
                         .add(LootItem.lootTableItem(AetherItems.BLUE_BERRY.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 12.0F))))
                         .add(LootItem.lootTableItem(Items.IRON_NUGGET).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 24.0F))))
-                        .add(LootItem.lootTableItem(Items.IRON_SWORD).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
-                        .add(LootItem.lootTableItem(Items.IRON_AXE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
-                        .add(LootItem.lootTableItem(Items.IRON_HOE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
-                        .add(LootItem.lootTableItem(Items.IRON_SHOVEL).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
-                        .add(LootItem.lootTableItem(Items.IRON_PICKAXE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
-                        .add(LootItem.lootTableItem(Items.IRON_BOOTS).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
-                        .add(LootItem.lootTableItem(Items.IRON_CHESTPLATE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
-                        .add(LootItem.lootTableItem(Items.IRON_HELMET).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
-                        .add(LootItem.lootTableItem(Items.IRON_LEGGINGS).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
-                        .add(LootItem.lootTableItem(AetherItems.IRON_GLOVES.get()).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+                        .add(LootItem.lootTableItem(Items.IRON_SWORD).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)))
+                        .add(LootItem.lootTableItem(Items.IRON_AXE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)))
+                        .add(LootItem.lootTableItem(Items.IRON_HOE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)))
+                        .add(LootItem.lootTableItem(Items.IRON_SHOVEL).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)))
+                        .add(LootItem.lootTableItem(Items.IRON_PICKAXE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)))
+                        .add(LootItem.lootTableItem(Items.IRON_BOOTS).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)))
+                        .add(LootItem.lootTableItem(Items.IRON_CHESTPLATE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)))
+                        .add(LootItem.lootTableItem(Items.IRON_HELMET).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)))
+                        .add(LootItem.lootTableItem(Items.IRON_LEGGINGS).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)))
+                        .add(LootItem.lootTableItem(AetherItems.IRON_GLOVES.get()).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)))
                         .add(LootItem.lootTableItem(Items.IRON_HORSE_ARMOR).setWeight(5))
                         .add(LootItem.lootTableItem(Items.HEAVY_WEIGHTED_PRESSURE_PLATE).setWeight(5))
                         .add(LootItem.lootTableItem(AetherItems.ENCHANTED_BERRY.get()).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 6.0F))))

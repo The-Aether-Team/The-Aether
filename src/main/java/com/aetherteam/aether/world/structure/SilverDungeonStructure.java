@@ -9,6 +9,7 @@ import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverDungeonBui
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverProcessorSettings;
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverTemplePiece;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,7 +36,7 @@ import net.minecraft.world.phys.AABB;
 import java.util.*;
 
 public class SilverDungeonStructure extends Structure {
-    public static final Codec<SilverDungeonStructure> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+    public static final MapCodec<SilverDungeonStructure> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             settingsCodec(builder),
             Codec.INT.fieldOf("maxY").forGetter(o -> o.maxY),
             Codec.INT.fieldOf("belowTerrain").forGetter(o -> o.belowTerrain),

@@ -4,7 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.data.resources.builders.AetherBiomeBuilders;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -31,7 +31,7 @@ public class AetherDimensions {
     // Time in ticks of how long a day/night cycle lasts.
     public static final int AETHER_TICKS_PER_DAY = (24000) * 3; // too scared to call Level.TICKS_PER_DAY because of static init problems, but just know this is Level.TICKS_PER_DAY * 3
 
-    public static void bootstrapDimensionType(BootstapContext<DimensionType> context) {
+    public static void bootstrapDimensionType(BootstrapContext<DimensionType> context) {
         context.register(AETHER_DIMENSION_TYPE, new DimensionType(
                 OptionalLong.empty(),
                 true,
@@ -50,7 +50,7 @@ public class AetherDimensions {
                 new DimensionType.MonsterSettings(false, false, UniformInt.of(0, 7), 0)));
     }
 
-    public static void bootstrapLevelStem(BootstapContext<LevelStem> context) {
+    public static void bootstrapLevelStem(BootstrapContext<LevelStem> context) {
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
         HolderGetter<NoiseGeneratorSettings> noiseSettings = context.lookup(Registries.NOISE_SETTINGS);
         HolderGetter<DimensionType> dimensionTypes = context.lookup(Registries.DIMENSION_TYPE);

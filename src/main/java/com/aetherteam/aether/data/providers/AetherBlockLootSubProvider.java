@@ -8,6 +8,7 @@ import com.aetherteam.aether.loot.functions.SpawnXP;
 import com.aetherteam.aether.mixin.mixins.common.accessor.BlockLootAccessor;
 import com.aetherteam.nitrogen.data.providers.NitrogenBlockLootSubProvider;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -21,7 +22,6 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
-import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -34,8 +34,8 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.Set;
 
 public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubProvider {
-    public AetherBlockLootSubProvider(Set<Item> items, FeatureFlagSet flags) {
-        super(items, flags);
+    public AetherBlockLootSubProvider(Set<Item> items, FeatureFlagSet flags, HolderLookup.Provider registries) {
+        super(items, flags, registries);
     }
 
     public void dropDoubleWithSilk(Block block, ItemLike drop) {
@@ -71,11 +71,11 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
     }
 
     public LootTable.Builder droppingWithChancesAndSkyrootSticks(Block block, Block sapling, float... chances) {
-        return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, chances)))
+        return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.holderOrThrow(Enchantments.FORTUNE), chances)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(BlockLootAccessor.aether$hasShearsOrSilkTouch().invert())
                         .add(this.applyExplosionDecay(block,
                                         LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                                .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.holderOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .apply(DoubleDrops.builder());
     }
 
@@ -84,19 +84,19 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(BlockLootAccessor.aether$hasShearsOrSilkTouch().invert())
                         .add(this.applyExplosionCondition(block,
                                         LootItem.lootTableItem(Items.GOLDEN_APPLE))
-                                .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.00005F, 0.000055555557F, 0.0000625F, 0.00008333334F, 0.00025F))));
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.holderOrThrow(Enchantments.FORTUNE), 0.00005F, 0.000055555557F, 0.0000625F, 0.00008333334F, 0.00025F))));
     }
 
     public LootTable.Builder droppingDoubleItemsWithFortune(Block block, Item item) {
         return createSilkTouchDispatchTable(block, this.applyExplosionDecay(block, LootItem.lootTableItem(item)
-                .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))
+                .apply(ApplyBonusCount.addOreBonusCount(this.registries.holderOrThrow(Enchantments.FORTUNE)))))
                 .apply(DoubleDrops.builder());
     }
 
     public LootTable.Builder droppingWithSkyrootSticks(Block block) {
         return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionDecay(block,
                         LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F)))
+                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.holderOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F)))
                 .apply(DoubleDrops.builder());
     }
 
@@ -105,7 +105,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(BlockLootAccessor.aether$hasShearsOrSilkTouch().invert())
                         .add(this.applyExplosionDecay(block,
                                         LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                                .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.holderOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .apply(DoubleDrops.builder());
     }
 
@@ -119,7 +119,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
                         .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
                         .when(BlockLootAccessor.aether$hasSilkTouch().invert())
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
-                        .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))
+                        .apply(ApplyBonusCount.addOreBonusCount(this.registries.holderOrThrow(Enchantments.FORTUNE))))))
                 .apply(DoubleDrops.builder());
     }
 
@@ -127,7 +127,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
         return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(this.applyExplosionDecay(block, LootItem.lootTableItem(drop)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
-                        .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
+                        .apply(ApplyBonusCount.addUniformBonusCount(this.registries.holderOrThrow(Enchantments.FORTUNE))))
                 .when(BlockLootAccessor.aether$hasSilkTouch().invert())
                 .apply(DoubleDrops.builder())
         ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
@@ -143,7 +143,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
         return LootTable.lootTable().withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(LootItem.lootTableItem(block)
                         .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                        .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                        .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY) //todo
                                 .copy("Locked", "BlockEntityTag.Locked")
                                 .copy("Kind", "BlockEntityTag.Kind"))))
         );

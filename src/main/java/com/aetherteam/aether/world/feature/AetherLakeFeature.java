@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.feature;
 
 import com.aetherteam.aether.world.configuration.AetherLakeConfiguration;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;

@@ -5,6 +5,7 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.world.structurepiece.GlowstoneRuinedPortalPiece;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -36,8 +37,8 @@ public class GlowstoneRuinedPortalStructure extends Structure {
     private static final String[] STRUCTURE_LOCATION_GIANT_PORTALS = new String[]{"ruined_portal/giant_portal_1", "ruined_portal/giant_portal_2", "ruined_portal/giant_portal_3"};
 
     private final List<Setup> setups;
-    public static final Codec<GlowstoneRuinedPortalStructure> CODEC = RecordCodecBuilder.create((codec) -> codec.group(settingsCodec(codec),
-                    ExtraCodecs.nonEmptyList(Setup.CODEC.listOf()).fieldOf("setups").forGetter((structure) -> structure.setups))
+    public static final MapCodec<GlowstoneRuinedPortalStructure> CODEC = RecordCodecBuilder.mapCodec((codec) -> codec.group(settingsCodec(codec),
+                    ExtraCodecs.nonEmptyList(Setup.CODEC.codec().listOf()).fieldOf("setups").forGetter((structure) -> structure.setups))
             .apply(codec, GlowstoneRuinedPortalStructure::new));
 
     public GlowstoneRuinedPortalStructure(Structure.StructureSettings settings, List<Setup> setups) {
@@ -194,7 +195,7 @@ public class GlowstoneRuinedPortalStructure extends Structure {
     }
 
     public record Setup(GlowstoneRuinedPortalPiece.VerticalPlacement placement, float airPocketProbability, float mossiness, boolean overgrown, boolean vines, boolean replaceWithHolystone, float weight) {
-        public static final Codec<Setup> CODEC = RecordCodecBuilder.create((codec) -> codec.group(
+        public static final MapCodec<Setup> CODEC = RecordCodecBuilder.mapCodec((codec) -> codec.group(
                 GlowstoneRuinedPortalPiece.VerticalPlacement.CODEC.fieldOf("placement").forGetter(Setup::placement),
                 Codec.floatRange(0.0F, 1.0F).fieldOf("air_pocket_probability").forGetter(Setup::airPocketProbability),
                 Codec.floatRange(0.0F, 1.0F).fieldOf("mossiness").forGetter(Setup::mossiness),

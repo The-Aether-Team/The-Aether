@@ -56,7 +56,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
                     var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
                     if (data.isWearingInvisibilityCloak()) {
                         player.setInvisible(true);
-                        PacketDistributor.sendToAll(new SetInvisibilityPacket(player.getId(), true));
+                        PacketDistributor.sendToAllPlayers(new SetInvisibilityPacket(player.getId(), true));
                     }
                 } else {
                     livingEntity.setInvisible(true);
@@ -66,7 +66,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
                     var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
                     if (!data.isWearingInvisibilityCloak()) {
                         player.setInvisible(false);
-                        PacketDistributor.sendToAll(new SetInvisibilityPacket(player.getId(), false));
+                        PacketDistributor.sendToAllPlayers(new SetInvisibilityPacket(player.getId(), false));
                     }
                 }
             }

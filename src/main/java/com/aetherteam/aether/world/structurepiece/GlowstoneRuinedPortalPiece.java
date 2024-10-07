@@ -12,6 +12,7 @@ import com.aetherteam.aether.world.processor.GlowstonePortalAgeProcessor;
 import com.aetherteam.aether.world.processor.HolystoneReplaceProcessor;
 import com.aetherteam.aether.world.processor.SurfaceRuleProcessor;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -53,7 +54,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
     public GlowstoneRuinedPortalPiece(StructureTemplateManager structureTemplateManager, CompoundTag tag) {
         super(AetherStructurePieceTypes.RUINED_PORTAL.get(), tag, structureTemplateManager, (location) -> makeSettings(structureTemplateManager, tag, location));
         this.verticalPlacement = VerticalPlacement.byName(tag.getString("VerticalPlacement"));
-        this.properties = Properties.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Properties"))).getOrThrow(true, Aether.LOGGER::error);
+        this.properties = Properties.CODEC.codec().parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Properties"))).getOrThrow(true, Aether.LOGGER::error);
     }
 
     public GlowstoneRuinedPortalPiece(StructurePieceSerializationContext context, CompoundTag tag) {
@@ -69,7 +70,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
         tag.putString("Rotation", this.placeSettings.getRotation().name());
         tag.putString("Mirror", this.placeSettings.getMirror().name());
         tag.putString("VerticalPlacement", this.verticalPlacement.getName());
-        Properties.CODEC.encodeStart(NbtOps.INSTANCE, this.properties).resultOrPartial(Aether.LOGGER::error).ifPresent((propertiesTag) -> tag.put("Properties", propertiesTag));
+        Properties.CODEC.codec().encodeStart(NbtOps.INSTANCE, this.properties).resultOrPartial(Aether.LOGGER::error).ifPresent((propertiesTag) -> tag.put("Properties", propertiesTag));
     }
 
     /**
@@ -78,7 +79,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
     private static StructurePlaceSettings makeSettings(StructureTemplateManager structureTemplateManager, CompoundTag tag, ResourceLocation location) {
         StructureTemplate structuretemplate = structureTemplateManager.getOrCreate(location);
         BlockPos blockpos = new BlockPos(structuretemplate.getSize().getX() / 2, 0, structuretemplate.getSize().getZ() / 2);
-        return makeSettings(Mirror.valueOf(tag.getString("Mirror")), Rotation.valueOf(tag.getString("Rotation")), blockpos, Properties.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Properties"))).getOrThrow(true, Aether.LOGGER::error));
+        return makeSettings(Mirror.valueOf(tag.getString("Mirror")), Rotation.valueOf(tag.getString("Rotation")), blockpos, Properties.CODEC.codec().parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Properties"))).getOrThrow(true, Aether.LOGGER::error));
     }
 
     /**
@@ -326,7 +327,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
     }
 
     public static class Properties {
-        public static final Codec<Properties> CODEC = RecordCodecBuilder.create((codec) ->
+        public static final MapCodec<Properties> CODEC = RecordCodecBuilder.mapCodec((codec) ->
                 codec.group(
                         Codec.FLOAT.fieldOf("mossiness").forGetter((properties) -> properties.mossiness),
                         Codec.BOOL.fieldOf("air_pocket").forGetter((properties) -> properties.airPocket),

@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.trunkplacer;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class CrystalTreeTrunkPlacer extends StraightTrunkPlacer {
-    public static final Codec<CrystalTreeTrunkPlacer> CODEC = RecordCodecBuilder.create((instance) -> trunkPlacerParts(instance).apply(instance, CrystalTreeTrunkPlacer::new));
+    public static final MapCodec<CrystalTreeTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec((instance) -> trunkPlacerParts(instance).apply(instance, CrystalTreeTrunkPlacer::new));
 
     public CrystalTreeTrunkPlacer(int height, int heightRandA, int heightRandB) {
         super(height, heightRandA, heightRandB);
