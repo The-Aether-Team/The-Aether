@@ -31,7 +31,7 @@ public class Parachute extends Entity {
      * Necessary to define, even if empty.
      */
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
     }
 
     @Override

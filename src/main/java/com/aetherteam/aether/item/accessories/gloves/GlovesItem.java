@@ -6,6 +6,7 @@ import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -16,21 +17,20 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
-import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.UUID;
 import java.util.function.Supplier;
 
 public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
-    protected final ArmorMaterial material;
+    protected final Holder<ArmorMaterial> material;
     protected final double damage;
     protected ResourceLocation GLOVES_TEXTURE;
 
-    public GlovesItem(ArmorMaterial material, double punchDamage, String glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
+    public GlovesItem(Holder<ArmorMaterial> material, double punchDamage, String glovesName, Holder<SoundEvent> glovesSound, Properties properties) {
         this(material, punchDamage, ResourceLocation.fromNamespaceAndPath(Aether.MODID, glovesName), glovesSound, properties);
     }
 
-    public GlovesItem(ArmorMaterial material, double punchDamage, ResourceLocation glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
+    public GlovesItem(Holder<ArmorMaterial> material, double punchDamage, ResourceLocation glovesName, Holder<SoundEvent> glovesSound, Properties properties) {
         super(glovesSound, properties);
         this.material = material;
         this.damage = punchDamage;
@@ -58,7 +58,7 @@ public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
         return this.material.getRepairIngredient().test(material) || super.isValidRepairItem(item, material);
     }
 
-    public ArmorMaterial getMaterial() {
+    public Holder<ArmorMaterial> getMaterial() {
         return this.material;
     }
 

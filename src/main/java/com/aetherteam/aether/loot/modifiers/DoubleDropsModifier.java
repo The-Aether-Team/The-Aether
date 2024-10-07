@@ -4,6 +4,7 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.combat.abilities.weapon.SkyrootWeapon;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.entity.Entity;
@@ -16,7 +17,7 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 
 public class DoubleDropsModifier extends LootModifier {
-    public static final Codec<DoubleDropsModifier> CODEC = RecordCodecBuilder.create((instance) -> LootModifier.codecStart(instance).apply(instance, DoubleDropsModifier::new));
+    public static final MapCodec<DoubleDropsModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> LootModifier.codecStart(instance).apply(instance, DoubleDropsModifier::new));
 
     public DoubleDropsModifier(LootItemCondition[] conditions) {
         super(conditions);
@@ -31,7 +32,7 @@ public class DoubleDropsModifier extends LootModifier {
      */
     @Override
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> lootStacks, LootContext context) {
-        Entity entity = context.getParamOrNull(LootContextParams.DIRECT_KILLER_ENTITY);
+        Entity entity = context.getParamOrNull(LootContextParams.DIRECT_ATTACKING_ENTITY);
         Entity target = context.getParamOrNull(LootContextParams.THIS_ENTITY);
         ObjectArrayList<ItemStack> newStacks = new ObjectArrayList<>(lootStacks);
         if (entity instanceof LivingEntity livingEntity && target != null) {
@@ -47,7 +48,7 @@ public class DoubleDropsModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return DoubleDropsModifier.CODEC;
     }
 }

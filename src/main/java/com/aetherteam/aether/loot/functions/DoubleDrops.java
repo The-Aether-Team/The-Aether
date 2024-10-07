@@ -2,6 +2,7 @@ package com.aetherteam.aether.loot.functions;
 
 import com.aetherteam.aether.item.tools.abilities.SkyrootTool;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import java.util.List;
 
 public class DoubleDrops extends LootItemConditionalFunction {
-    public static final Codec<DoubleDrops> CODEC = RecordCodecBuilder.create(instance -> commonFields(instance).apply(instance, DoubleDrops::new));
+    public static final MapCodec<DoubleDrops> CODEC = RecordCodecBuilder.mapCodec(instance -> commonFields(instance).apply(instance, DoubleDrops::new));
 
     protected DoubleDrops(List<LootItemCondition> conditions) {
         super(conditions);

@@ -52,11 +52,11 @@ public class CloudMinion extends FlyingMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_OWNER_ID, 0);
-        this.getEntityData().define(DATA_IS_RIGHT_ID, true);
-        this.getEntityData().define(DATA_LIFESPAN_ID, 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_OWNER_ID, 0);
+        builder.define(DATA_IS_RIGHT_ID, true);
+        builder.define(DATA_LIFESPAN_ID, 0);
     }
 
     @Override

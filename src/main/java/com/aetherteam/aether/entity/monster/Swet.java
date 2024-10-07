@@ -5,9 +5,11 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.MountableMob;
+import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -30,6 +32,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -80,12 +83,12 @@ public class Swet extends Slime implements MountableMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_PLAYER_JUMPED_ID, false);
-        this.getEntityData().define(DATA_MOUNT_JUMPING_ID, false);
-        this.getEntityData().define(DATA_MID_JUMP_ID, false);
-        this.getEntityData().define(DATA_WATER_DAMAGE_SCALE_ID, 0.0F);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_PLAYER_JUMPED_ID, false);
+        builder.define(DATA_MOUNT_JUMPING_ID, false);
+        builder.define(DATA_MID_JUMP_ID, false);
+        builder.define(DATA_WATER_DAMAGE_SCALE_ID, 0.0F);
     }
 
     /**
@@ -135,7 +138,7 @@ public class Swet extends Slime implements MountableMob {
                         BlockPos offsetPos = pos.offset(xOffset, yOffset, zOffset);
                         if (level.getBlockState(offsetPos).is(Blocks.BLACK_BANNER)) {
                             if (level.getBlockEntity(offsetPos) instanceof BannerBlockEntity bannerBlockEntity) {
-                                if (AetherBlocks.SWET_BANNER_PATTERN.toListTag().equals(BannerBlockEntity.getItemPatterns(bannerBlockEntity.getItem()))) {
+                                if (ItemStack.matches(bannerBlockEntity.getItem(), AetherItems.createSwetBannerItemStack(level.holderLookup(Registries.BANNER_PATTERN)))) {
                                     return true;
                                 }
                             }

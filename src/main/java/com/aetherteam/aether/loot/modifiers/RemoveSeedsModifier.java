@@ -2,6 +2,7 @@ package com.aetherteam.aether.loot.modifiers;
 
 import com.aetherteam.aether.AetherTags;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
@@ -15,7 +16,7 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 
 public class RemoveSeedsModifier extends LootModifier {
-    public static final Codec<RemoveSeedsModifier> CODEC = RecordCodecBuilder.create((instance) -> LootModifier.codecStart(instance).apply(instance, RemoveSeedsModifier::new));
+    public static final MapCodec<RemoveSeedsModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> LootModifier.codecStart(instance).apply(instance, RemoveSeedsModifier::new));
 
     public RemoveSeedsModifier(LootItemCondition[] conditions) {
         super(conditions);
@@ -38,7 +39,7 @@ public class RemoveSeedsModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return RemoveSeedsModifier.CODEC;
     }
 }

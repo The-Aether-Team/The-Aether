@@ -58,11 +58,11 @@ public class Aerwhale extends FlyingMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_X_ROT_O_ID, this.getXRot());
-        this.getEntityData().define(DATA_X_ROT_ID, this.getXRot());
-        this.getEntityData().define(DATA_Y_ROT_ID, this.getYRot());
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_X_ROT_O_ID, this.getXRot());
+        builder.define(DATA_X_ROT_ID, this.getXRot());
+        builder.define(DATA_Y_ROT_ID, this.getYRot());
     }
 
     /**

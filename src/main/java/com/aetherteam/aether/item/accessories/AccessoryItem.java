@@ -2,44 +2,52 @@ package com.aetherteam.aether.item.accessories;
 
 import com.aetherteam.aether.block.dispenser.AetherDispenseBehaviors;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import io.wispforest.accessories.api.Accessory;
+import io.wispforest.accessories.api.SoundEventData;
+import io.wispforest.accessories.api.slot.SlotReference;
+import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.DispenserBlock;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio;
-import top.theillusivec4.curios.api.type.capability.ICurioItem;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.Supplier;
 
-public class AccessoryItem extends Item implements ICurioItem, Vanishable {
-    private final Supplier<? extends SoundEvent> soundEventSupplier;
+public class AccessoryItem extends Item implements Accessory { // Vanishable
+    private final Holder<SoundEvent> soundEventSupplier;
 
     public AccessoryItem(Properties properties) {
         this(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC, properties);
     }
 
-    public AccessoryItem(Supplier<? extends SoundEvent> soundEventSupplier, Properties properties) {
+    public AccessoryItem(Holder<SoundEvent> soundEventSupplier, Properties properties) {
         super(properties);
         this.soundEventSupplier = soundEventSupplier;
         DispenserBlock.registerBehavior(this, AetherDispenseBehaviors.DISPENSE_ACCESSORY_BEHAVIOR); // Behavior to allow accessories to be equipped from a Dispenser.
     }
 
     @Override
-    public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
+    public boolean canEquipFromUse(ItemStack stack) {
         return true;
     }
 
     @Override
-    public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
-        return new ICurio.SoundInfo(this.soundEventSupplier.get(), 1.0F, 1.0F);
+    public @Nullable SoundEventData getEquipSound(ItemStack stack, SlotReference reference) {
+        return new SoundEventData(this.soundEventSupplier, 1.0F, 1.0F);
     }
 
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return super.canApplyAtEnchantingTable(stack, enchantment) || enchantment == Enchantments.BINDING_CURSE;
-    }
+//    @Override //todo enchantments
+//    public ItemStack applyEnchantments(ItemStack stack, List<EnchantmentInstance> enchantments) {
+//        return super.applyEnchantments(stack, enchantments);
+//    }
+//
+//    @Override
+//    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+//        return super.canApplyAtEnchantingTable(stack, enchantment) || enchantment == Enchantments.BINDING_CURSE;
+//    }
 }

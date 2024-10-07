@@ -80,9 +80,9 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_ENTITY_ON_GROUND_ID, true);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_ENTITY_ON_GROUND_ID, true);
     }
 
     /**

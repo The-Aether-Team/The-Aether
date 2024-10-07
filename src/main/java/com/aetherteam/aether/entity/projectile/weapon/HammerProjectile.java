@@ -38,8 +38,8 @@ public class HammerProjectile extends ThrowableProjectile {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.getEntityData().define(DATA_JEB_ID, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(DATA_JEB_ID, false);
     }
 
     @Override

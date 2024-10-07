@@ -2,6 +2,7 @@ package com.aetherteam.aether.loot.modifiers;
 
 import com.aetherteam.aether.AetherTags;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
@@ -16,7 +17,7 @@ import net.neoforged.neoforge.common.loot.LootModifier;
 import java.util.Optional;
 
 public class EnchantedGrassModifier extends LootModifier {
-    public static final Codec<EnchantedGrassModifier> CODEC = RecordCodecBuilder.create((instance) -> LootModifier.codecStart(instance)
+    public static final MapCodec<EnchantedGrassModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> LootModifier.codecStart(instance)
             .and(ItemStack.CODEC.fieldOf("item").forGetter((modifier) -> modifier.item))
             .apply(instance, EnchantedGrassModifier::new));
 
@@ -48,7 +49,7 @@ public class EnchantedGrassModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return EnchantedGrassModifier.CODEC;
     }
 }

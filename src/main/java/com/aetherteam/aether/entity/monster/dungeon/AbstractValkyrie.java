@@ -73,7 +73,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     @Override
     public void defineSynchedData() {
-        super.defineSynchedData();
+        super.defineSynchedData(builder);
         this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
     }
 

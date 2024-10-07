@@ -145,12 +145,12 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     @Override
     public void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_AWAKE_ID, false);
-        this.getEntityData().define(DATA_BOSS_NAME_ID, Component.literal("Slider"));
-        this.getEntityData().define(DATA_HURT_ANGLE_ID, 0.0F);
-        this.getEntityData().define(DATA_HURT_ANGLE_X_ID, 0.0F);
-        this.getEntityData().define(DATA_HURT_ANGLE_Z_ID, 0.0F);
+        super.defineSynchedData(builder);
+        builder.define(DATA_AWAKE_ID, false);
+        builder.define(DATA_BOSS_NAME_ID, Component.literal("Slider"));
+        builder.define(DATA_HURT_ANGLE_ID, 0.0F);
+        builder.define(DATA_HURT_ANGLE_X_ID, 0.0F);
+        builder.define(DATA_HURT_ANGLE_Z_ID, 0.0F);
     }
 
     /**

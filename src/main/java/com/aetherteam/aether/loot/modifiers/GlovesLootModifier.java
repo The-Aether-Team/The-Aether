@@ -1,6 +1,7 @@
 package com.aetherteam.aether.loot.modifiers;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GlovesLootModifier extends LootModifier {
-    public static final Codec<GlovesLootModifier> CODEC = RecordCodecBuilder.create(instance -> codecStart(instance)
+    public static final MapCodec<GlovesLootModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> codecStart(instance)
             .and(ItemStack.CODEC.fieldOf("gloves").forGetter(modifier -> modifier.glovesStack))
             .and(ArmorMaterials.CODEC.fieldOf("armor_material").forGetter(modifier -> modifier.armorMaterial))
             .apply(instance, GlovesLootModifier::new));
@@ -85,7 +86,7 @@ public class GlovesLootModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return GlovesLootModifier.CODEC;
     }
 }

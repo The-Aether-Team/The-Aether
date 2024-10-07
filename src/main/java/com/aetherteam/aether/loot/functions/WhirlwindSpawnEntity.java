@@ -1,6 +1,7 @@
 package com.aetherteam.aether.loot.functions;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.EntityTypePredicate;
 import net.minecraft.core.HolderSet;
@@ -19,7 +20,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class WhirlwindSpawnEntity extends LootItemConditionalFunction {
-    public static final Codec<WhirlwindSpawnEntity> CODEC = RecordCodecBuilder.create(instance -> commonFields(instance)
+    public static final MapCodec<WhirlwindSpawnEntity> CODEC = RecordCodecBuilder.mapCodec(instance -> commonFields(instance)
             .and(EntityTypePredicate.CODEC.fieldOf("entity").forGetter(whirlwindSpawnEntity -> whirlwindSpawnEntity.entityType))
             .and(IntProvider.CODEC.fieldOf("count").forGetter(whirlwindSpawnEntity -> whirlwindSpawnEntity.count))
             .apply(instance, WhirlwindSpawnEntity::new)

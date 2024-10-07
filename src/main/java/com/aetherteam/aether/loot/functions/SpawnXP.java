@@ -1,6 +1,7 @@
 package com.aetherteam.aether.loot.functions;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -15,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class SpawnXP extends LootItemConditionalFunction {
-    public static final Codec<SpawnXP> CODEC = RecordCodecBuilder.create(instance -> commonFields(instance).apply(instance, SpawnXP::new));
+    public static final MapCodec<SpawnXP> CODEC = RecordCodecBuilder.mapCodec(instance -> commonFields(instance).apply(instance, SpawnXP::new));
 
     protected SpawnXP(List<LootItemCondition> conditions) {
         super(conditions);

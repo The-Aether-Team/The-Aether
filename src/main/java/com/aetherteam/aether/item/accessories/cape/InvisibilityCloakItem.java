@@ -7,13 +7,13 @@ import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LivingEntityAccessor;
 import com.aetherteam.aether.network.packet.clientbound.SetInvisibilityPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
-import top.theillusivec4.curios.api.SlotContext;
 
 /**
  * Additional invisibility behavior is handled with {@link com.aetherteam.aether.client.event.listeners.abilities.AccessoryAbilityClientListener#onRenderPlayer(RenderPlayerEvent.Pre)}
@@ -26,8 +26,8 @@ public class InvisibilityCloakItem extends AccessoryItem {
     }
 
     @Override
-    public void curioTick(SlotContext slotContext, ItemStack stack) {
-        LivingEntity livingEntity = slotContext.entity();
+    public void tick(ItemStack stack, SlotReference reference) {
+        LivingEntity livingEntity = reference.entity();
         if (livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
             if (AetherKeys.INVISIBILITY_TOGGLE.consumeClick()) {
                 var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
@@ -74,8 +74,8 @@ public class InvisibilityCloakItem extends AccessoryItem {
     }
 
     @Override
-    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        LivingEntity livingEntity = slotContext.entity();
+    public void onUnequip(ItemStack stack, SlotReference reference) {
+        LivingEntity livingEntity = reference.entity();
         if (!livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
             player.getData(AetherDataAttachments.AETHER_PLAYER).setSynched(player.getId(), INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", false);
         }

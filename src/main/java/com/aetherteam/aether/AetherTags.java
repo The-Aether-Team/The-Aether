@@ -11,7 +11,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
-import top.theillusivec4.curios.api.CuriosApi;
 
 public class AetherTags {
     public static class Blocks {
@@ -142,23 +141,12 @@ public class AetherTags {
         public static final TagKey<Item> ACCESSORIES_MISCELLANEOUS = tag("accessories_miscellaneous");
         public static final TagKey<Item> ACCESSORIES_SHIELDS = tag("accessories_shields");
 
-        public static final TagKey<Item> AETHER_RING = curio("aether_ring");
-        public static final TagKey<Item> AETHER_PENDANT = curio("aether_pendant");
-        public static final TagKey<Item> AETHER_GLOVES = curio("aether_gloves");
-        public static final TagKey<Item> AETHER_CAPE = curio("aether_cape");
-        public static final TagKey<Item> AETHER_ACCESSORY = curio("aether_accessory");
-        public static final TagKey<Item> AETHER_SHIELD = curio("aether_shield");
-
         public static final TagKey<Item> ACCESSORIES = tag("accessories");
 
         public static final TagKey<Item> RANDOMIUM_BLACKLIST = moddedTag("randomium", "blacklist");
 
         private static TagKey<Item> tag(String name) {
             return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
-        }
-
-        private static TagKey<Item> curio(String name) {
-            return TagKey.create(Registries.ITEM, ResourceLocation.withDefaultNamespace(CuriosApi.MODID, name));
         }
 
         private static TagKey<Item> moddedTag(String modid, String name) {

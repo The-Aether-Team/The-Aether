@@ -4,7 +4,6 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.accessories.abilities.FreezingAccessory;
 import net.minecraft.world.item.ItemStack;
-import top.theillusivec4.curios.api.SlotContext;
 
 public class IcePendantItem extends PendantItem implements FreezingAccessory {
     public IcePendantItem(Properties properties) {

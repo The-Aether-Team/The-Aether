@@ -41,13 +41,13 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_SADDLE_ID, false);
-        this.getEntityData().define(DATA_PLAYER_JUMPED_ID, false);
-        this.getEntityData().define(DATA_MOUNT_JUMPING_ID, false);
-        this.getEntityData().define(DATA_PLAYER_CROUCHED_ID, false);
-        this.getEntityData().define(DATA_ENTITY_ON_GROUND_ID, true);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_SADDLE_ID, false);
+        builder.define(DATA_PLAYER_JUMPED_ID, false);
+        builder.define(DATA_MOUNT_JUMPING_ID, false);
+        builder.define(DATA_PLAYER_CROUCHED_ID, false);
+        builder.define(DATA_ENTITY_ON_GROUND_ID, true);
     }
 
     /**

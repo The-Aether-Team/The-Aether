@@ -70,9 +70,9 @@ public abstract class AbstractWhirlwind extends Mob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_COLOR_ID, this.getDefaultColor());
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_COLOR_ID, this.getDefaultColor());
     }
 
     /**

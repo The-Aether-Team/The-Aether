@@ -70,11 +70,11 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_SIZE_ID, 0);
-        this.getEntityData().define(DATA_POISON_REMAINING_ID, 0);
-        this.getEntityData().define(DATA_TARGETING_ENTITY_ID, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_SIZE_ID, 0);
+        builder.define(DATA_POISON_REMAINING_ID, 0);
+        builder.define(DATA_TARGETING_ENTITY_ID, false);
     }
 
     /**

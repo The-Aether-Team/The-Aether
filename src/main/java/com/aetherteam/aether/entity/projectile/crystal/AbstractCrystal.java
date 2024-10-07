@@ -33,7 +33,7 @@ public abstract class AbstractCrystal extends Projectile {
      * Necessary to define, even if empty.
      */
     @Override
-    protected void defineSynchedData() { }
+    protected void defineSynchedData(SynchedEntityData.Builder builder) { }
 
     /**
      * [CODE COPY] - {@link ThrowableProjectile#tick()}.<br><br>

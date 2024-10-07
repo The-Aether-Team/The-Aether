@@ -53,19 +53,27 @@ import com.aetherteam.aether.item.tools.zanite.ZaniteAxeItem;
 import com.aetherteam.aether.item.tools.zanite.ZaniteHoeItem;
 import com.aetherteam.aether.item.tools.zanite.ZanitePickaxeItem;
 import com.aetherteam.aether.item.tools.zanite.ZaniteShovelItem;
+import io.wispforest.accessories.api.AccessoriesAPI;
+import io.wispforest.accessories.api.Accessory;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
@@ -137,37 +145,37 @@ public class AetherItems {
     public static final DeferredItem<BowItem> PHOENIX_BOW = ITEMS.register("phoenix_bow", PhoenixBowItem::new);
 
     // Armor
-    public static final DeferredItem<Item> ZANITE_HELMET = ITEMS.register("zanite_helmet", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.HELMET, new Item.Properties()));
-    public static final DeferredItem<Item> ZANITE_CHESTPLATE = ITEMS.register("zanite_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-    public static final DeferredItem<Item> ZANITE_LEGGINGS = ITEMS.register("zanite_leggings", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-    public static final DeferredItem<Item> ZANITE_BOOTS = ITEMS.register("zanite_boots", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.BOOTS, new Item.Properties()));
+    public static final DeferredItem<Item> ZANITE_HELMET = ITEMS.register("zanite_helmet", () -> new ArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final DeferredItem<Item> ZANITE_CHESTPLATE = ITEMS.register("zanite_chestplate", () -> new ArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final DeferredItem<Item> ZANITE_LEGGINGS = ITEMS.register("zanite_leggings", () -> new ArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final DeferredItem<Item> ZANITE_BOOTS = ITEMS.register("zanite_boots", () -> new ArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.BOOTS, new Item.Properties()));
 
-    public static final DeferredItem<Item> GRAVITITE_HELMET = ITEMS.register("gravitite_helmet", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.HELMET, new Item.Properties()));
-    public static final DeferredItem<Item> GRAVITITE_CHESTPLATE = ITEMS.register("gravitite_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-    public static final DeferredItem<Item> GRAVITITE_LEGGINGS = ITEMS.register("gravitite_leggings", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-    public static final DeferredItem<Item> GRAVITITE_BOOTS = ITEMS.register("gravitite_boots", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.BOOTS, new Item.Properties()));
+    public static final DeferredItem<Item> GRAVITITE_HELMET = ITEMS.register("gravitite_helmet", () -> new ArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final DeferredItem<Item> GRAVITITE_CHESTPLATE = ITEMS.register("gravitite_chestplate", () -> new ArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final DeferredItem<Item> GRAVITITE_LEGGINGS = ITEMS.register("gravitite_leggings", () -> new ArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final DeferredItem<Item> GRAVITITE_BOOTS = ITEMS.register("gravitite_boots", () -> new ArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.BOOTS, new Item.Properties()));
 
-    public static final DeferredItem<Item> VALKYRIE_HELMET = ITEMS.register("valkyrie_helmet", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT)));
-    public static final DeferredItem<Item> VALKYRIE_CHESTPLATE = ITEMS.register("valkyrie_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT)));
-    public static final DeferredItem<Item> VALKYRIE_LEGGINGS = ITEMS.register("valkyrie_leggings", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT)));
-    public static final DeferredItem<Item> VALKYRIE_BOOTS = ITEMS.register("valkyrie_boots", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> VALKYRIE_HELMET = ITEMS.register("valkyrie_helmet", () -> new ArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> VALKYRIE_CHESTPLATE = ITEMS.register("valkyrie_chestplate", () -> new ArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> VALKYRIE_LEGGINGS = ITEMS.register("valkyrie_leggings", () -> new ArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> VALKYRIE_BOOTS = ITEMS.register("valkyrie_boots", () -> new ArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
 
-    public static final DeferredItem<Item> NEPTUNE_HELMET = ITEMS.register("neptune_helmet", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT)));
-    public static final DeferredItem<Item> NEPTUNE_CHESTPLATE = ITEMS.register("neptune_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT)));
-    public static final DeferredItem<Item> NEPTUNE_LEGGINGS = ITEMS.register("neptune_leggings", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT)));
-    public static final DeferredItem<Item> NEPTUNE_BOOTS = ITEMS.register("neptune_boots", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> NEPTUNE_HELMET = ITEMS.register("neptune_helmet", () -> new ArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> NEPTUNE_CHESTPLATE = ITEMS.register("neptune_chestplate", () -> new ArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> NEPTUNE_LEGGINGS = ITEMS.register("neptune_leggings", () -> new ArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> NEPTUNE_BOOTS = ITEMS.register("neptune_boots", () -> new ArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
 
-    public static final DeferredItem<Item> PHOENIX_HELMET = ITEMS.register("phoenix_helmet", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
-    public static final DeferredItem<Item> PHOENIX_CHESTPLATE = ITEMS.register("phoenix_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
-    public static final DeferredItem<Item> PHOENIX_LEGGINGS = ITEMS.register("phoenix_leggings", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
-    public static final DeferredItem<Item> PHOENIX_BOOTS = ITEMS.register("phoenix_boots", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
+    public static final DeferredItem<Item> PHOENIX_HELMET = ITEMS.register("phoenix_helmet", () -> new ArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
+    public static final DeferredItem<Item> PHOENIX_CHESTPLATE = ITEMS.register("phoenix_chestplate", () -> new ArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
+    public static final DeferredItem<Item> PHOENIX_LEGGINGS = ITEMS.register("phoenix_leggings", () -> new ArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
+    public static final DeferredItem<Item> PHOENIX_BOOTS = ITEMS.register("phoenix_boots", () -> new ArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
 
-    public static final DeferredItem<Item> OBSIDIAN_HELMET = ITEMS.register("obsidian_helmet", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT)));
-    public static final DeferredItem<Item> OBSIDIAN_CHESTPLATE = ITEMS.register("obsidian_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT)));
-    public static final DeferredItem<Item> OBSIDIAN_LEGGINGS = ITEMS.register("obsidian_leggings", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT)));
-    public static final DeferredItem<Item> OBSIDIAN_BOOTS = ITEMS.register("obsidian_boots", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> OBSIDIAN_HELMET = ITEMS.register("obsidian_helmet", () -> new ArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> OBSIDIAN_CHESTPLATE = ITEMS.register("obsidian_chestplate", () -> new ArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> OBSIDIAN_LEGGINGS = ITEMS.register("obsidian_leggings", () -> new ArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> OBSIDIAN_BOOTS = ITEMS.register("obsidian_boots", () -> new ArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
 
-    public static final DeferredItem<Item> SENTRY_BOOTS = ITEMS.register("sentry_boots", () -> new AetherArmorItem(AetherArmorMaterials.SENTRY, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
+    public static final DeferredItem<Item> SENTRY_BOOTS = ITEMS.register("sentry_boots", () -> new ArmorItem(AetherArmorMaterials.SENTRY, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
 
     // Food
     public static final DeferredItem<Item> BLUE_BERRY = ITEMS.register("blue_berry", () -> new Item(new Item.Properties().food(AetherFoods.BLUE_BERRY)));
@@ -191,11 +199,11 @@ public class AetherItems {
     public static final DeferredItem<Item> ICE_PENDANT = ITEMS.register("ice_pendant", () -> new IcePendantItem(new Item.Properties().durability(250)));
 
     public static final DeferredItem<Item> LEATHER_GLOVES = ITEMS.register("leather_gloves", () -> new LeatherGlovesItem(0.25, new Item.Properties().durability(59)));
-    public static final DeferredItem<Item> CHAINMAIL_GLOVES = ITEMS.register("chainmail_gloves", () -> new GlovesItem(ArmorMaterials.CHAIN, 0.35, "chainmail_gloves", () -> SoundEvents.ARMOR_EQUIP_CHAIN, new Item.Properties().durability(131)));
-    public static final DeferredItem<Item> IRON_GLOVES = ITEMS.register("iron_gloves", () -> new GlovesItem(ArmorMaterials.IRON, 0.5, "iron_gloves", () -> SoundEvents.ARMOR_EQUIP_IRON, new Item.Properties().durability(250)));
+    public static final DeferredItem<Item> CHAINMAIL_GLOVES = ITEMS.register("chainmail_gloves", () -> new GlovesItem(ArmorMaterials.CHAIN, 0.35, "chainmail_gloves", SoundEvents.ARMOR_EQUIP_CHAIN, new Item.Properties().durability(131)));
+    public static final DeferredItem<Item> IRON_GLOVES = ITEMS.register("iron_gloves", () -> new GlovesItem(ArmorMaterials.IRON, 0.5, "iron_gloves", SoundEvents.ARMOR_EQUIP_IRON, new Item.Properties().durability(250)));
     public static final DeferredItem<Item> GOLDEN_GLOVES = ITEMS.register("golden_gloves", () -> new GoldGlovesItem(0.25, new Item.Properties().durability(32)));
-    public static final DeferredItem<Item> DIAMOND_GLOVES = ITEMS.register("diamond_gloves", () -> new GlovesItem(ArmorMaterials.DIAMOND, 0.75, "diamond_gloves", () -> SoundEvents.ARMOR_EQUIP_DIAMOND, new Item.Properties().durability(1561)));
-    public static final DeferredItem<Item> NETHERITE_GLOVES = ITEMS.register("netherite_gloves", () -> new GlovesItem(ArmorMaterials.NETHERITE, 1.0, "netherite_gloves", () -> SoundEvents.ARMOR_EQUIP_NETHERITE, new Item.Properties().durability(2031).fireResistant()));
+    public static final DeferredItem<Item> DIAMOND_GLOVES = ITEMS.register("diamond_gloves", () -> new GlovesItem(ArmorMaterials.DIAMOND, 0.75, "diamond_gloves", SoundEvents.ARMOR_EQUIP_DIAMOND, new Item.Properties().durability(1561)));
+    public static final DeferredItem<Item> NETHERITE_GLOVES = ITEMS.register("netherite_gloves", () -> new GlovesItem(ArmorMaterials.NETHERITE, 1.0, "netherite_gloves", SoundEvents.ARMOR_EQUIP_NETHERITE, new Item.Properties().durability(2031).fireResistant()));
     public static final DeferredItem<Item> ZANITE_GLOVES = ITEMS.register("zanite_gloves", () -> new ZaniteGlovesItem(0.5, new Item.Properties().durability(250)));
     public static final DeferredItem<Item> GRAVITITE_GLOVES = ITEMS.register("gravitite_gloves", () -> new GlovesItem(AetherArmorMaterials.GRAVITITE, 0.75, "gravitite_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_GRAVITITE, new Item.Properties().durability(1561)));
     public static final DeferredItem<Item> VALKYRIE_GLOVES = ITEMS.register("valkyrie_gloves", () -> new GlovesItem(AetherArmorMaterials.VALKYRIE, 1.0, "valkyrie_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_VALKYRIE, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).durability(1561)));
@@ -292,6 +300,11 @@ public class AetherItems {
     public static final DeferredItem<SpawnEggItem> SUN_SPIRIT_SPAWN_EGG = ITEMS.register("sun_spirit_spawn_egg", () -> new DeferredSpawnEggItem(AetherEntityTypes.SUN_SPIRIT, 0xFEF500, 0xFF6D01, new Item.Properties()));
     public static final DeferredItem<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new DeferredSpawnEggItem(AetherEntityTypes.ZEPHYR, 0xDFDFDF, 0x99CFE8, new Item.Properties()));
 
+    public static void registerAccessories() {
+        AccessoriesAPI.registerAccessory(AetherItems.ZANITE_GLOVES.get(), (Accessory) AetherItems.ZANITE_GLOVES.get());
+        AccessoriesAPI.registerAccessory(AetherItems.GRAVITITE_GLOVES.get(), (Accessory) AetherItems.GRAVITITE_GLOVES.get());
+    }
+
     /**
      * Sets up the possible replacements for vanilla buckets to Skyroot buckets.
      *
@@ -308,12 +321,21 @@ public class AetherItems {
         SkyrootBucketItem.REPLACEMENTS.put(() -> Items.TADPOLE_BUCKET, AetherItems.SKYROOT_TADPOLE_BUCKET);
     }
 
-    public static ItemStack createSwetBannerItemStack() {
-        ItemStack bannerStack = new ItemStack(Items.BLACK_BANNER).setHoverName(Component.translatable("aether.block.aether.swet_banner").withStyle(ChatFormatting.GOLD));
-        CompoundTag tag = new CompoundTag();
-        tag.put("Patterns", AetherBlocks.SWET_BANNER_PATTERN.toListTag());
-        BlockItem.setBlockEntityData(bannerStack, BlockEntityType.BANNER, tag);
-        bannerStack.hideTooltipPart(ItemStack.TooltipPart.ADDITIONAL);
+    public static ItemStack createSwetBannerItemStack(HolderGetter<BannerPattern> patternRegistry) {
+        ItemStack bannerStack = new ItemStack(Items.BLACK_BANNER);
+        BannerPatternLayers layers = new BannerPatternLayers.Builder()
+            .addIfRegistered(patternRegistry, BannerPatterns.STRIPE_DOWNLEFT, DyeColor.CYAN)
+            .addIfRegistered(patternRegistry, BannerPatterns.STRIPE_BOTTOM, DyeColor.CYAN)
+            .addIfRegistered(patternRegistry, BannerPatterns.STRIPE_LEFT, DyeColor.CYAN)
+            .addIfRegistered(patternRegistry, BannerPatterns.HALF_HORIZONTAL, DyeColor.BLACK)
+            .addIfRegistered(patternRegistry, BannerPatterns.STRAIGHT_CROSS, DyeColor.CYAN)
+            .addIfRegistered(patternRegistry, BannerPatterns.BORDER, DyeColor.WHITE)
+            .addIfRegistered(patternRegistry, BannerPatterns.GRADIENT_UP, DyeColor.LIGHT_BLUE)
+            .addIfRegistered(patternRegistry, BannerPatterns.GRADIENT, DyeColor.LIGHT_BLUE)
+            .build();
+        bannerStack.set(DataComponents.BANNER_PATTERNS, layers);
+        bannerStack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+        bannerStack.set(DataComponents.ITEM_NAME, Component.translatable("aether.block.aether.swet_banner").withStyle(ChatFormatting.GOLD));
         return bannerStack;
     }
 }

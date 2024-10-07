@@ -126,18 +126,18 @@ public class Moa extends MountableAnimal implements WingedBird {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_MOA_UUID_ID, Optional.empty());
-        this.getEntityData().define(DATA_MOA_TYPE_ID, "");
-        this.getEntityData().define(DATA_RIDER_UUID, Optional.empty());
-        this.getEntityData().define(DATA_LAST_RIDER_UUID, Optional.empty());
-        this.getEntityData().define(DATA_REMAINING_JUMPS_ID, 0);
-        this.getEntityData().define(DATA_HUNGRY_ID, false);
-        this.getEntityData().define(DATA_AMOUNT_FED_ID, 0);
-        this.getEntityData().define(DATA_PLAYER_GROWN_ID, false);
-        this.getEntityData().define(DATA_SITTING_ID, false);
-        this.getEntityData().define(DATA_FOLLOWING_ID, Optional.empty());
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_MOA_UUID_ID, Optional.empty());
+        builder.define(DATA_MOA_TYPE_ID, "");
+        builder.define(DATA_RIDER_UUID, Optional.empty());
+        builder.define(DATA_LAST_RIDER_UUID, Optional.empty());
+        builder.define(DATA_REMAINING_JUMPS_ID, 0);
+        builder.define(DATA_HUNGRY_ID, false);
+        builder.define(DATA_AMOUNT_FED_ID, 0);
+        builder.define(DATA_PLAYER_GROWN_ID, false);
+        builder.define(DATA_SITTING_ID, false);
+        builder.define(DATA_FOLLOWING_ID, Optional.empty());
     }
 
     /**

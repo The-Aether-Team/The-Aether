@@ -78,10 +78,10 @@ public class Aerbunny extends AetherAnimal {
 
     @Override
     public void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_PUFFINESS_ID, 0);
-        this.getEntityData().define(DATA_AFRAID_TIME_ID, 0);
-        this.getEntityData().define(DATA_FAST_FALLING_ID, false);
+        super.defineSynchedData(builder);
+        builder.define(DATA_PUFFINESS_ID, 0);
+        builder.define(DATA_AFRAID_TIME_ID, 0);
+        builder.define(DATA_FAST_FALLING_ID, false);
     }
 
     /**

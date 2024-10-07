@@ -131,10 +131,10 @@ public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_WOOL_COLOR_ID, (byte) 0);
-        this.getEntityData().define(DATA_PUFFED_ID, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_WOOL_COLOR_ID, (byte) 0);
+        builder.define(DATA_PUFFED_ID, false);
     }
 
     @Override

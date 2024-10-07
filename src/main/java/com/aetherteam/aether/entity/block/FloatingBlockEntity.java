@@ -90,8 +90,8 @@ public class FloatingBlockEntity extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.getEntityData().define(DATA_START_POS, BlockPos.ZERO);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(DATA_START_POS, BlockPos.ZERO);
     }
 
     @Override

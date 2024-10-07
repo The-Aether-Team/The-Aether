@@ -2,6 +2,7 @@ package com.aetherteam.aether.loot.functions;
 
 import com.aetherteam.aether.entity.block.TntPresent;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -18,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class SpawnTNT extends LootItemConditionalFunction {
-    public static final Codec<SpawnTNT> CODEC = RecordCodecBuilder.create(instance -> commonFields(instance).apply(instance, SpawnTNT::new));
+    public static final MapCodec<SpawnTNT> CODEC = RecordCodecBuilder.mapCodec(instance -> commonFields(instance).apply(instance, SpawnTNT::new));
 
     protected SpawnTNT(List<LootItemCondition> conditions) {
         super(conditions);

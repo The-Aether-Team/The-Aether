@@ -38,8 +38,8 @@ public class TntPresent extends Entity implements TraceableEntity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.getEntityData().define(DATA_FUSE_ID, 80);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(DATA_FUSE_ID, 80);
     }
 
     @Override
