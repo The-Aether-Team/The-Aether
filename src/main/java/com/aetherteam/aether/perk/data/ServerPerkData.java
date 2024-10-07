@@ -9,8 +9,8 @@ import com.aetherteam.aether.perk.types.Halo;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
-import com.aetherteam.nitrogen.network.BasePacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.PacketDistributor;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -97,7 +97,7 @@ public class ServerPerkData<T> {
      */
     public void syncFromServer(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
-            PacketRelay.sendToPlayer(this.getSyncPacket(this.getServerPerkData(serverPlayer.getServer())), serverPlayer); // Send to client.
+            PacketDistributor.sendToPlayer(this.getSyncPacket(this.getServerPerkData(serverPlayer.getServer())), serverPlayer); // Send to client.
         }
     }
 
@@ -114,7 +114,7 @@ public class ServerPerkData<T> {
         if (storedUsers.containsKey(uuid)) { // Checks if User exists.
             User user = storedUsers.get(uuid);
             if (user != null && this.getVerificationPredicate(perk).test(user)) { // Checks verification requirement to have the perk that is trying to be applied.
-                PacketRelay.sendToAll(this.getApplyPacket(uuid, perk)); // Send to clients.
+                PacketDistributor.sendToAll(this.getApplyPacket(uuid, perk)); // Send to clients.
                 this.modifySavedData(server, uuid, perk); // Save to world.
             }
         }
@@ -127,7 +127,7 @@ public class ServerPerkData<T> {
      * @param uuid   The {@link UUID} of the player.
      */
     public void removePerk(MinecraftServer server, UUID uuid) {
-        PacketRelay.sendToAll(this.getRemovePacket(uuid)); // Send to clients.
+        PacketDistributor.sendToAll(this.getRemovePacket(uuid)); // Send to clients.
         this.removeSavedData(server, uuid); // Save to world.
     }
 

@@ -193,53 +193,53 @@ public class Aether {
         PayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
 
         // CLIENTBOUND
-        registrar.play(AetherTravelPacket.ID, AetherTravelPacket::decode, payload -> payload.client(AetherTravelPacket::handle));
-        registrar.play(BossInfoPacket.Display.ID, BossInfoPacket.Display::decode, payload -> payload.client(BossInfoPacket.Display::handle));
-        registrar.play(BossInfoPacket.Remove.ID, BossInfoPacket.Remove::decode, payload -> payload.client(BossInfoPacket.Remove::handle));
-        registrar.play(ClientDeveloperGlowPacket.Apply.ID, ClientDeveloperGlowPacket.Apply::decode, payload -> payload.client(ClientDeveloperGlowPacket.Apply::handle));
-        registrar.play(ClientDeveloperGlowPacket.Remove.ID, ClientDeveloperGlowPacket.Remove::decode, payload -> payload.client(ClientDeveloperGlowPacket.Remove::handle));
-        registrar.play(ClientDeveloperGlowPacket.Sync.ID, ClientDeveloperGlowPacket.Sync::decode, payload -> payload.client(ClientDeveloperGlowPacket.Sync::handle));
-        registrar.play(ClientGrabItemPacket.ID, ClientGrabItemPacket::decode, payload -> payload.client(ClientGrabItemPacket::handle));
-        registrar.play(ClientHaloPacket.Apply.ID, ClientHaloPacket.Apply::decode, payload -> payload.client(ClientHaloPacket.Apply::handle));
-        registrar.play(ClientHaloPacket.Remove.ID, ClientHaloPacket.Remove::decode, payload -> payload.client(ClientHaloPacket.Remove::handle));
-        registrar.play(ClientHaloPacket.Sync.ID, ClientHaloPacket.Sync::decode, payload -> payload.client(ClientHaloPacket.Sync::handle));
-        registrar.play(ClientMoaSkinPacket.Apply.ID, ClientMoaSkinPacket.Apply::decode, payload -> payload.client(ClientMoaSkinPacket.Apply::handle));
-        registrar.play(ClientMoaSkinPacket.Remove.ID, ClientMoaSkinPacket.Remove::decode, payload -> payload.client(ClientMoaSkinPacket.Remove::handle));
-        registrar.play(ClientMoaSkinPacket.Sync.ID, ClientMoaSkinPacket.Sync::decode, payload -> payload.client(ClientMoaSkinPacket.Sync::handle));
-        registrar.play(CloudMinionPacket.ID, CloudMinionPacket::decode, payload -> payload.client(CloudMinionPacket::handle));
-        registrar.play(HealthResetPacket.ID, HealthResetPacket::decode, payload -> payload.client(HealthResetPacket::handle));
-        registrar.play(LeavingAetherPacket.ID, LeavingAetherPacket::decode, payload -> payload.client(LeavingAetherPacket::handle));
-        registrar.play(MoaInteractPacket.ID, MoaInteractPacket::decode, payload -> payload.client(MoaInteractPacket::handle));
-        registrar.play(OpenSunAltarPacket.ID, OpenSunAltarPacket::decode, payload -> payload.client(OpenSunAltarPacket::handle));
-        registrar.play(PortalTravelSoundPacket.ID, PortalTravelSoundPacket::decode, payload -> payload.client(PortalTravelSoundPacket::handle));
-        registrar.play(QueenDialoguePacket.ID, QueenDialoguePacket::decode, payload -> payload.client(QueenDialoguePacket::handle));
-        registrar.play(RemountAerbunnyPacket.ID, RemountAerbunnyPacket::decode, payload -> payload.client(RemountAerbunnyPacket::handle));
-        registrar.play(SetInvisibilityPacket.ID, SetInvisibilityPacket::decode, payload -> payload.client(SetInvisibilityPacket::handle));
-        registrar.play(SetVehiclePacket.ID, SetVehiclePacket::decode, payload -> payload.client(SetVehiclePacket::handle));
-        registrar.play(ToolDebuffPacket.ID, ToolDebuffPacket::decode, payload -> payload.client(ToolDebuffPacket::handle));
-        registrar.play(ZephyrSnowballHitPacket.ID, ZephyrSnowballHitPacket::decode, payload -> payload.client(ZephyrSnowballHitPacket::handle));
+        registrar.playToClient(AetherTravelPacket.TYPE, AetherTravelPacket.STREAM_CODEC, AetherTravelPacket::execute);
+        registrar.playToClient(BossInfoPacket.Display.TYPE, BossInfoPacket.Display.STREAM_CODEC, BossInfoPacket.Display::execute);
+        registrar.playToClient(BossInfoPacket.Remove.TYPE, BossInfoPacket.Remove.STREAM_CODEC, BossInfoPacket.Remove::execute);
+        registrar.playToClient(ClientDeveloperGlowPacket.Apply.TYPE, ClientDeveloperGlowPacket.Apply.STREAM_CODEC, ClientDeveloperGlowPacket.Apply::execute);
+        registrar.playToClient(ClientDeveloperGlowPacket.Remove.TYPE, ClientDeveloperGlowPacket.Remove.STREAM_CODEC, ClientDeveloperGlowPacket.Remove::execute);
+        registrar.playToClient(ClientDeveloperGlowPacket.Sync.TYPE, ClientDeveloperGlowPacket.Sync.STREAM_CODEC, ClientDeveloperGlowPacket.Sync::execute);
+        registrar.playToClient(ClientGrabItemPacket.TYPE, ClientGrabItemPacket.STREAM_CODEC, ClientGrabItemPacket::execute);
+        registrar.playToClient(ClientHaloPacket.Apply.TYPE, ClientHaloPacket.Apply.STREAM_CODEC, ClientHaloPacket.Apply::execute);
+        registrar.playToClient(ClientHaloPacket.Remove.TYPE, ClientHaloPacket.Remove.STREAM_CODEC, ClientHaloPacket.Remove::execute);
+        registrar.playToClient(ClientHaloPacket.Sync.TYPE, ClientHaloPacket.Sync.STREAM_CODEC, ClientHaloPacket.Sync::execute);
+        registrar.playToClient(ClientMoaSkinPacket.Apply.TYPE, ClientMoaSkinPacket.Apply.STREAM_CODEC, ClientMoaSkinPacket.Apply::execute);
+        registrar.playToClient(ClientMoaSkinPacket.Remove.TYPE, ClientMoaSkinPacket.Remove.STREAM_CODEC, ClientMoaSkinPacket.Remove::execute);
+        registrar.playToClient(ClientMoaSkinPacket.Sync.TYPE, ClientMoaSkinPacket.Sync.STREAM_CODEC, ClientMoaSkinPacket.Sync::execute);
+        registrar.playToClient(CloudMinionPacket.TYPE, CloudMinionPacket.STREAM_CODEC, CloudMinionPacket::execute);
+        registrar.playToClient(HealthResetPacket.TYPE, HealthResetPacket.STREAM_CODEC, HealthResetPacket::execute);
+        registrar.playToClient(LeavingAetherPacket.TYPE, LeavingAetherPacket.STREAM_CODEC, LeavingAetherPacket::execute);
+        registrar.playToClient(MoaInteractPacket.TYPE, MoaInteractPacket.STREAM_CODEC, MoaInteractPacket::execute);
+        registrar.playToClient(OpenSunAltarPacket.TYPE, OpenSunAltarPacket.STREAM_CODEC, OpenSunAltarPacket::execute);
+        registrar.playToClient(PortalTravelSoundPacket.TYPE, PortalTravelSoundPacket.STREAM_CODEC, PortalTravelSoundPacket::execute);
+        registrar.playToClient(QueenDialoguePacket.TYPE, QueenDialoguePacket.STREAM_CODEC, QueenDialoguePacket::execute);
+        registrar.playToClient(RemountAerbunnyPacket.TYPE, RemountAerbunnyPacket.STREAM_CODEC, RemountAerbunnyPacket::execute);
+        registrar.playToClient(SetInvisibilityPacket.TYPE, SetInvisibilityPacket.STREAM_CODEC, SetInvisibilityPacket::execute);
+        registrar.playToClient(SetVehiclePacket.TYPE, SetVehiclePacket.STREAM_CODEC, SetVehiclePacket::execute);
+        registrar.playToClient(ToolDebuffPacket.TYPE, ToolDebuffPacket.STREAM_CODEC, ToolDebuffPacket::execute);
+        registrar.playToClient(ZephyrSnowballHitPacket.TYPE, ZephyrSnowballHitPacket.STREAM_CODEC, ZephyrSnowballHitPacket::execute);
 
         // SERVERBOUND
-        registrar.play(AerbunnyPuffPacket.ID, AerbunnyPuffPacket::decode, payload -> payload.server(AerbunnyPuffPacket::handle));
-        registrar.play(ClearItemPacket.ID, ClearItemPacket::decode, payload -> payload.server(ClearItemPacket::handle));
-        registrar.play(HammerProjectileLaunchPacket.ID, HammerProjectileLaunchPacket::decode, payload -> payload.server(HammerProjectileLaunchPacket::handle));
-        registrar.play(LoreExistsPacket.ID, LoreExistsPacket::decode, payload -> payload.server(LoreExistsPacket::handle));
-        registrar.play(NpcPlayerInteractPacket.ID, NpcPlayerInteractPacket::decode, payload -> payload.server(NpcPlayerInteractPacket::handle));
-        registrar.play(OpenAccessoriesPacket.ID, OpenAccessoriesPacket::decode, payload -> payload.server(OpenAccessoriesPacket::handle));
-        registrar.play(OpenInventoryPacket.ID, OpenInventoryPacket::decode, payload -> payload.server(OpenInventoryPacket::handle));
-        registrar.play(ServerDeveloperGlowPacket.Apply.ID, ServerDeveloperGlowPacket.Apply::decode, payload -> payload.server(ServerDeveloperGlowPacket.Apply::handle));
-        registrar.play(ServerDeveloperGlowPacket.Remove.ID, ServerDeveloperGlowPacket.Remove::decode, payload -> payload.server(ServerDeveloperGlowPacket.Remove::handle));
-        registrar.play(ServerHaloPacket.Apply.ID, ServerHaloPacket.Apply::decode, payload -> payload.server(ServerHaloPacket.Apply::handle));
-        registrar.play(ServerHaloPacket.Remove.ID, ServerHaloPacket.Remove::decode, payload -> payload.server(ServerHaloPacket.Remove::handle));
-        registrar.play(ServerMoaSkinPacket.Apply.ID, ServerMoaSkinPacket.Apply::decode, payload -> payload.server(ServerMoaSkinPacket.Apply::handle));
-        registrar.play(ServerMoaSkinPacket.Remove.ID, ServerMoaSkinPacket.Remove::decode, payload -> payload.server(ServerMoaSkinPacket.Remove::handle));
-        registrar.play(StepHeightPacket.ID, StepHeightPacket::decode, payload -> payload.server(StepHeightPacket::handle));
-        registrar.play(SunAltarUpdatePacket.ID, SunAltarUpdatePacket::decode, payload -> payload.server(SunAltarUpdatePacket::handle));
+        registrar.playToServer(AerbunnyPuffPacket.TYPE, AerbunnyPuffPacket.STREAM_CODEC, AerbunnyPuffPacket::execute);
+        registrar.playToServer(ClearItemPacket.TYPE, ClearItemPacket.STREAM_CODEC, ClearItemPacket::execute);
+        registrar.playToServer(HammerProjectileLaunchPacket.TYPE, HammerProjectileLaunchPacket.STREAM_CODEC, HammerProjectileLaunchPacket::execute);
+        registrar.playToServer(LoreExistsPacket.TYPE, LoreExistsPacket.STREAM_CODEC, LoreExistsPacket::execute);
+        registrar.playToServer(NpcPlayerInteractPacket.TYPE, NpcPlayerInteractPacket.STREAM_CODEC, NpcPlayerInteractPacket::execute);
+        registrar.playToServer(OpenAccessoriesPacket.TYPE, OpenAccessoriesPacket.STREAM_CODEC, OpenAccessoriesPacket::execute);
+        registrar.playToServer(OpenInventoryPacket.TYPE, OpenInventoryPacket.STREAM_CODEC, OpenInventoryPacket::execute);
+        registrar.playToServer(ServerDeveloperGlowPacket.Apply.TYPE, ServerDeveloperGlowPacket.Apply.STREAM_CODEC, ServerDeveloperGlowPacket.Apply::execute);
+        registrar.playToServer(ServerDeveloperGlowPacket.Remove.TYPE, ServerDeveloperGlowPacket.Remove.STREAM_CODEC, ServerDeveloperGlowPacket.Remove::execute);
+        registrar.playToServer(ServerHaloPacket.Apply.TYPE, ServerHaloPacket.Apply.STREAM_CODEC, ServerHaloPacket.Apply::execute);
+        registrar.playToServer(ServerHaloPacket.Remove.TYPE, ServerHaloPacket.Remove.STREAM_CODEC, ServerHaloPacket.Remove::execute);
+        registrar.playToServer(ServerMoaSkinPacket.Apply.TYPE, ServerMoaSkinPacket.Apply.STREAM_CODEC, ServerMoaSkinPacket.Apply::execute);
+        registrar.playToServer(ServerMoaSkinPacket.Remove.TYPE, ServerMoaSkinPacket.Remove.STREAM_CODEC, ServerMoaSkinPacket.Remove::execute);
+        registrar.playToServer(StepHeightPacket.TYPE, StepHeightPacket.STREAM_CODEC, StepHeightPacket::execute);
+        registrar.playToServer(SunAltarUpdatePacket.TYPE, SunAltarUpdatePacket.STREAM_CODEC, SunAltarUpdatePacket::execute);
 
         // BOTH
-        registrar.play(AetherPlayerSyncPacket.ID, AetherPlayerSyncPacket::decode, AetherPlayerSyncPacket::handle);
-        registrar.play(AetherTimeSyncPacket.ID, AetherTimeSyncPacket::decode, AetherTimeSyncPacket::handle);
-        registrar.play(PhoenixArrowSyncPacket.ID, PhoenixArrowSyncPacket::decode, PhoenixArrowSyncPacket::handle);
+        registrar.playBidirectional(AetherPlayerSyncPacket.TYPE, AetherPlayerSyncPacket.STREAM_CODEC, AetherPlayerSyncPacket::execute);
+        registrar.playBidirectional(AetherTimeSyncPacket.TYPE, AetherTimeSyncPacket.STREAM_CODEC, AetherTimeSyncPacket::execute);
+        registrar.playBidirectional(PhoenixArrowSyncPacket.TYPE, PhoenixArrowSyncPacket.STREAM_CODEC, PhoenixArrowSyncPacket::execute);
     }
 
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -322,10 +322,10 @@ public class Aether {
         PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, baseResourcePath, false);
         List<PathPackResources> mergedPacks = List.of(pack, basePack);
         Pack.ResourcesSupplier resourcesSupplier = new CombinedPackResources.CombinedResourcesSupplier(new PackMetadataSection(Component.translatable(description), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES)), mergedPacks, sourcePath);
-        Pack.Info info = Pack.readPackInfo(name, resourcesSupplier, SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
+        Pack.Metadata info = Pack.readPackInfo(name, resourcesSupplier, SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
         if (info != null) {
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
+                    source.accept(Pack.readMetaAndCreate(
                             name,
                             Component.translatable(title),
                             false,
@@ -347,12 +347,12 @@ public class Aether {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ctm_fix");
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ctm.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
+                    source.accept(Pack.readMetaAndCreate(
                             "builtin/aether_ctm_fix",
                             Component.translatable("pack.aether.ctm.title"),
                             true,
                             new PathPackResources.PathResourcesSupplier(resourcePath, true),
-                            new Pack.Info(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true),
+                            new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true),
                             Pack.Position.TOP,
                             false,
                             PackSource.BUILT_IN)
@@ -370,12 +370,12 @@ public class Aether {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/tips");
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.tips.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
+                    source.accept(Pack.readMetaAndCreate(
                             "builtin/aether_tips",
                             Component.translatable("pack.aether.tips.title"),
                             false,
                             new PathPackResources.PathResourcesSupplier(resourcePath, true),
-                            new Pack.Info(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
+                            new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
                             Pack.Position.TOP,
                             false,
                             PackSource.BUILT_IN)
@@ -392,12 +392,12 @@ public class Aether {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/colorblind");
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.colorblind.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
+                    source.accept(Pack.readMetaAndCreate(
                             "builtin/aether_colorblind",
                             Component.translatable("pack.aether.colorblind.title"),
                             false,
                             new PathPackResources.PathResourcesSupplier(resourcePath, true),
-                            new Pack.Info(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
+                            new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
                             Pack.Position.TOP,
                             false,
                             PackSource.BUILT_IN)
@@ -414,12 +414,12 @@ public class Aether {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/tooltips");
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.tooltips.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
-                source.accept(Pack.create(
+                source.accept(Pack.readMetaAndCreate(
                     "builtin/aether_tooltips",
                     Component.translatable("pack.aether.tooltips.title"),
                     ModList.get().isLoaded("aether_genesis"),
                     new PathPackResources.PathResourcesSupplier(resourcePath, true),
-                    new Pack.Info(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
+                    new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
                     Pack.Position.TOP,
                     false,
                     PackSource.BUILT_IN)
@@ -437,12 +437,12 @@ public class Aether {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/accessories");
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.accessories.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
+                    source.accept(Pack.readMetaAndCreate(
                             "builtin/aether_accessories",
                             Component.translatable("pack.aether.accessories.title"),
                             true,
                             new PathPackResources.PathResourcesSupplier(resourcePath, true),
-                            new Pack.Info(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true),
+                            new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true),
                             Pack.Position.TOP,
                             false,
                             PackSource.BUILT_IN)
@@ -460,12 +460,12 @@ public class Aether {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/curios_override");
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.curios.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
+                    source.accept(Pack.readMetaAndCreate(
                             "builtin/aether_curios_override",
                             Component.translatable("pack.aether.curios.title"),
                             true,
                             new PathPackResources.PathResourcesSupplier(resourcePath, true),
-                            new Pack.Info(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true),
+                            new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true),
                             Pack.Position.TOP,
                             false,
                             PackSource.BUILT_IN)
@@ -482,12 +482,12 @@ public class Aether {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/temporary_freezing");
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.freezing.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
+                    source.accept(Pack.readMetaAndCreate(
                             "builtin/aether_temporary_freezing",
                             Component.translatable("pack.aether.freezing.title"),
                             false,
-                            new PathPackResources.PathResourcesSupplier(resourcePath, true),
-                            new Pack.Info(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
+                            new PathPackResources.PathResourcesSupplier(resourcePath),
+                            new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
                             Pack.Position.TOP,
                             false,
                             create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_temporary_freezing_automatically.get()))
@@ -504,12 +504,12 @@ public class Aether {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ruined_portal");
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ruined_portal.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
+                    source.accept(Pack.readMetaAndCreate(
                             "builtin/aether_ruined_portal",
                             Component.translatable("pack.aether.ruined_portal.title"),
                             false,
                             new PathPackResources.PathResourcesSupplier(resourcePath, true),
-                            new Pack.Info(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
+                            new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
                             Pack.Position.TOP,
                             false,
                             create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_ruined_portal_automatically.get()))

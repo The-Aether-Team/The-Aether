@@ -68,7 +68,7 @@ public class IncubationBuilder implements RecipeBuilder {
         Advancement.Builder advancement$builder = recipeOutput.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(advancement$builder);
         this.criteria.forEach(advancement$builder::addCriterion);
-        recipeOutput.accept(id, new IncubationRecipe(this.group == null ? "" : this.group, this.ingredient, this.entity, Optional.ofNullable(this.tag), this.incubationTime), advancement$builder.build(new ResourceLocation(id.getNamespace(), "recipes/incubation/" + id.getPath())));
+        recipeOutput.accept(id, new IncubationRecipe(this.group == null ? "" : this.group, this.ingredient, this.entity, Optional.ofNullable(this.tag), this.incubationTime), advancement$builder.build(ResourceLocation.withDefaultNamespace(id.getNamespace(), "recipes/incubation/" + id.getPath())));
     }
 
     private void ensureValid(ResourceLocation id) {

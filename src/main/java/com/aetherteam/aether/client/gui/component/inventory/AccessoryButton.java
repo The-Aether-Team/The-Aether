@@ -3,7 +3,7 @@ package com.aetherteam.aether.client.gui.component.inventory;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.network.packet.serverbound.OpenInventoryPacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
@@ -35,9 +35,9 @@ public class AccessoryButton extends ImageButton {
                             InventoryScreen inventory = new InventoryScreen(player);
                             minecraft.setScreen(inventory);
                             player.inventoryMenu.setCarried(stack);
-                            PacketRelay.sendToServer(new OpenInventoryPacket(stack));
+                            PacketDistributor.sendToServer(new OpenInventoryPacket(stack));
                         } else {
-                            PacketRelay.sendToServer(new OpenAccessoriesPacket(stack));
+                            PacketDistributor.sendToServer(new OpenAccessoriesPacket(stack));
                         }
                     }
                 });

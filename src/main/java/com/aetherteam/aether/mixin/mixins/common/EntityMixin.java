@@ -8,7 +8,7 @@ import com.aetherteam.aether.event.hooks.DimensionHooks;
 import com.aetherteam.aether.item.combat.abilities.armor.PhoenixArmor;
 import com.aetherteam.aether.network.packet.clientbound.SetVehiclePacket;
 import com.aetherteam.aether.world.LevelUtil;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -85,7 +85,7 @@ public class EntityMixin {
                         if (nextPassenger != null) {
                             nextPassenger.startRiding(target);
                             if (target instanceof ServerPlayer serverPlayer) { // Fixes a desync between the server and client.
-                                PacketRelay.sendToPlayer(new SetVehiclePacket(nextPassenger.getId(), target.getId()), serverPlayer);
+                                PacketDistributor.sendToPlayer(new SetVehiclePacket(nextPassenger.getId(), target.getId()), serverPlayer);
                             }
                         }
                     }

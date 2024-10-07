@@ -10,7 +10,7 @@ import com.aetherteam.aether.perk.types.DeveloperGlow;
 import com.aetherteam.aether.perk.types.Halo;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -138,11 +138,11 @@ public class AetherCustomizationsScreen extends Screen {
                         // Propagate changes to the server for other players to see.
                         if (this.haloEnabled) {
                             if (this.getMinecraft().player != null) {
-                                PacketRelay.sendToServer(new ServerHaloPacket.Apply(this.getMinecraft().player.getUUID(), new Halo(this.haloColor)));
+                                PacketDistributor.sendToServer(new ServerHaloPacket.Apply(this.getMinecraft().player.getUUID(), new Halo(this.haloColor)));
                             }
                         } else {
                             if (this.getMinecraft().player != null) {
-                                PacketRelay.sendToServer(new ServerHaloPacket.Remove(this.getMinecraft().player.getUUID()));
+                                PacketDistributor.sendToServer(new ServerHaloPacket.Remove(this.getMinecraft().player.getUUID()));
                             }
                         }
                         this.customizations.save();
@@ -209,11 +209,11 @@ public class AetherCustomizationsScreen extends Screen {
                         // Propagate changes to the server for other players to see.
                         if (this.developerGlowEnabled) {
                             if (this.getMinecraft().player != null) {
-                                PacketRelay.sendToServer(new ServerDeveloperGlowPacket.Apply(this.getMinecraft().player.getUUID(), new DeveloperGlow(this.developerGlowColor)));
+                                PacketDistributor.sendToServer(new ServerDeveloperGlowPacket.Apply(this.getMinecraft().player.getUUID(), new DeveloperGlow(this.developerGlowColor)));
                             }
                         } else {
                             if (this.getMinecraft().player != null) {
-                                PacketRelay.sendToServer(new ServerDeveloperGlowPacket.Remove(this.getMinecraft().player.getUUID()));
+                                PacketDistributor.sendToServer(new ServerDeveloperGlowPacket.Remove(this.getMinecraft().player.getUUID()));
                             }
                         }
                         this.customizations.save();

@@ -5,7 +5,7 @@ import com.aetherteam.aether.client.gui.component.dialogue.DialogueChoiceCompone
 import com.aetherteam.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -120,7 +120,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
      * @see ValkyrieQueen#handleNpcInteraction(Player, byte)
      */
     private void finishChat(byte interactionID) {
-        PacketRelay.sendToServer(new NpcPlayerInteractPacket(this.valkyrieQueen.getId(), interactionID));
+        PacketDistributor.sendToServer(new NpcPlayerInteractPacket(this.valkyrieQueen.getId(), interactionID));
         super.onClose();
     }
 

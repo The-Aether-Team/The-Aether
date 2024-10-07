@@ -127,8 +127,8 @@ public class AetherMixinHooks {
      */
     public static String getIdentifierForItem(LivingEntity livingEntity, ItemStack stack) {
         if (AetherConfig.COMMON.use_curios_menu.get()) {
-            TagKey<Item> glovesTag = TagKey.create(Registries.ITEM, new ResourceLocation(CuriosConstants.MOD_ID, "hands"));
-            TagKey<Item> pendantTag = TagKey.create(Registries.ITEM, new ResourceLocation(CuriosConstants.MOD_ID, "necklace"));
+            TagKey<Item> glovesTag = TagKey.create(Registries.ITEM, ResourceLocation.withDefaultNamespace(CuriosConstants.MOD_ID, "hands"));
+            TagKey<Item> pendantTag = TagKey.create(Registries.ITEM, ResourceLocation.withDefaultNamespace(CuriosConstants.MOD_ID, "necklace"));
             if (stack.is(glovesTag)) {
                 return GlovesItem.getIdentifierStatic();
             } else if (stack.is(pendantTag) && (livingEntity.getType() == EntityType.PIGLIN || livingEntity.getType() == EntityType.ZOMBIFIED_PIGLIN)) {

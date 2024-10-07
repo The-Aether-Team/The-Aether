@@ -20,7 +20,7 @@ import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.loot.AetherLootContexts;
 import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -315,7 +315,7 @@ public class AbilityHooks {
             if (AetherConfig.SERVER.tools_debuff.get()) {
                 if (!player.level().isClientSide()) {
                     debuffTools = true;
-                    PacketRelay.sendToNear(new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.level().dimension());
+                    PacketDistributor.sendToNear(new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.level().dimension());
                 }
             }
             if (debuffTools) {

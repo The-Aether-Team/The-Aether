@@ -7,7 +7,7 @@ import com.aetherteam.aether.blockentity.SunAltarBlockEntity;
 import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.network.packet.clientbound.OpenSunAltarPacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -83,7 +83,7 @@ public class SunAltarBlock extends BaseEntityBlock {
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof SunAltarBlockEntity sunAltar) {
-                PacketRelay.sendToPlayer(new OpenSunAltarPacket(sunAltar.getName(), timeScale), serverPlayer);
+                PacketDistributor.sendToPlayer(new OpenSunAltarPacket(sunAltar.getName(), timeScale), serverPlayer);
             }
         }
     }

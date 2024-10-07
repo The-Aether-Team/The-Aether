@@ -5,7 +5,7 @@ import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.PlayerAccessor;
 import com.aetherteam.aether.network.packet.clientbound.ZephyrSnowballHitPacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -109,7 +109,7 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
                 entity.setDeltaMovement(entity.getDeltaMovement().x() + (this.getDeltaMovement().x() * 1.5), entity.getDeltaMovement().y(), entity.getDeltaMovement().z() + (this.getDeltaMovement().z() * 1.5));
                 if (livingEntity instanceof ServerPlayer player) {
                     if (!this.level().isClientSide()) { // Properly communicates the knockback to the client.
-                        PacketRelay.sendToPlayer(new ZephyrSnowballHitPacket(livingEntity.getId(), this.getDeltaMovement().x(), this.getDeltaMovement().z()), player);
+                        PacketDistributor.sendToPlayer(new ZephyrSnowballHitPacket(livingEntity.getId(), this.getDeltaMovement().x(), this.getDeltaMovement().z()), player);
                     }
                 }
             }

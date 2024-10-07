@@ -23,8 +23,8 @@ import com.aetherteam.aether.perk.data.ClientHaloPerkData;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
 import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
-import com.aetherteam.nitrogen.network.BasePacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.PacketDistributor;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.Minecraft;
@@ -517,7 +517,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
                 aerbunny.startRiding(player);
                 this.setMountedAerbunny(aerbunny);
                 if (player instanceof ServerPlayer serverPlayer) {
-                    PacketRelay.sendToPlayer(new RemountAerbunnyPacket(player.getId(), aerbunny.getId()), serverPlayer);
+                    PacketDistributor.sendToPlayer(new RemountAerbunnyPacket(player.getId(), aerbunny.getId()), serverPlayer);
                 }
             }
             this.setMountedAerbunnyTag(null);
@@ -1028,7 +1028,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
      */
     private void sendCloudMinionPacket(Player player, CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft) {
         if (player instanceof ServerPlayer serverPlayer && !player.level().isClientSide) {
-            PacketRelay.sendToPlayer(new CloudMinionPacket(player.getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
+            PacketDistributor.sendToPlayer(new CloudMinionPacket(player.getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
         }
     }
 

@@ -2,40 +2,38 @@ package com.aetherteam.aether.network.packet.serverbound;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
-import com.aetherteam.nitrogen.network.BasePacket;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
  * Handles syncing {@link HammerProjectile} damage to the server.
  */
-public record HammerProjectileLaunchPacket(int targetID, int projectileID) implements BasePacket {
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "launch_hammer_projectile");
+public record HammerProjectileLaunchPacket(int targetID, int projectileID) implements CustomPacketPayload {
+    public static final Type<HammerProjectileLaunchPacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "launch_hammer_projectile"));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, HammerProjectileLaunchPacket> STREAM_CODEC = StreamCodec.composite(
+        ByteBufCodecs.INT,
+        HammerProjectileLaunchPacket::targetID,
+        ByteBufCodecs.INT,
+        HammerProjectileLaunchPacket::projectileID,
+        HammerProjectileLaunchPacket::new);
 
     @Override
-    public ResourceLocation id() {
-        return ID;
+    public Type<HammerProjectileLaunchPacket> type() {
+        return TYPE;
     }
 
-    @Override
-    public void write(FriendlyByteBuf buf) {
-        buf.writeInt(this.targetID());
-        buf.writeInt(this.projectileID());
-    }
-
-    public static HammerProjectileLaunchPacket decode(FriendlyByteBuf buf) {
-        int targetID = buf.readInt();
-        int projectileID = buf.readInt();
-        return new HammerProjectileLaunchPacket(targetID, projectileID);
-    }
-
-    @Override
-    public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null) {
-            Entity target = playerEntity.level().getEntity(this.targetID());
-            Entity projectile = playerEntity.level().getEntity(this.projectileID());
+    public static void execute(HammerProjectileLaunchPacket payload, IPayloadContext context) {
+        Player playerEntity = context.player();
+        if (playerEntity.getServer() != null) {
+            Entity target = playerEntity.level().getEntity(payload.targetID());
+            Entity projectile = playerEntity.level().getEntity(payload.projectileID());
             if (projectile instanceof HammerProjectile hammerProjectile) {
                 hammerProjectile.launchTarget(target);
             }

@@ -30,7 +30,7 @@ import java.util.Calendar;
  * Stripped down to only use what is necessary.
  */
 public class ChestMimicRenderer implements BlockEntityRenderer<ChestMimicBlockEntity> {
-    private static final Material LOOTR_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("lootr", "chest"));
+    private static final Material LOOTR_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, ResourceLocation.withDefaultNamespace("lootr", "chest"));
     private final ModelPart lid;
     private final ModelPart bottom;
     private final ModelPart lock;

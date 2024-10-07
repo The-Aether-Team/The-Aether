@@ -3,7 +3,7 @@ package com.aetherteam.aether.command;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.network.packet.clientbound.HealthResetPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -59,7 +59,7 @@ public class PlayerCapabilityCommand {
                     attribute.removeModifier(data.getLifeShardHealthAttributeModifier().getId());
                 }
                 player.setHealth(player.getMaxHealth());
-                PacketRelay.sendToNear(new HealthResetPacket(player.getId(), value), player.getX(), player.getY(), player.getZ(), 5.0, level.dimension()); // Sync to client.
+                PacketDistributor.sendToNear(new HealthResetPacket(player.getId(), value), player.getX(), player.getY(), player.getZ(), 5.0, level.dimension()); // Sync to client.
                 source.sendSuccess(() -> Component.translatable("commands.aether.capability.player.life_shards.set", player.getDisplayName(), value), true);
             }
         }

@@ -7,7 +7,7 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.EntityAccessor;
 import com.aetherteam.aether.network.packet.clientbound.PortalTravelSoundPacket;
 import com.aetherteam.aether.world.AetherPoi;
 import com.aetherteam.aether.world.LevelUtil;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -58,7 +58,7 @@ public class AetherPortalForcer implements ITeleporter {
     @Override
     public boolean playTeleportSound(ServerPlayer player, ServerLevel sourceLevel, ServerLevel destinationLevel) {
         if (this.hasFrame) {
-            PacketRelay.sendToPlayer(new PortalTravelSoundPacket(), player);
+            PacketDistributor.sendToPlayer(new PortalTravelSoundPacket(), player);
         }
         return false;
     }

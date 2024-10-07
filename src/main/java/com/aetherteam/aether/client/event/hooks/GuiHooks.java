@@ -15,7 +15,7 @@ import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -75,7 +75,7 @@ public class GuiHooks {
     private static boolean areAccessoryTagsFilled() {
         boolean flag = true;
         for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
-            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, new ResourceLocation("curios", string))).spliterator().estimateSize() == 0) {
+            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, ResourceLocation.withDefaultNamespace("curios", string))).spliterator().estimateSize() == 0) {
                 flag = false;
             }
         }
@@ -279,7 +279,7 @@ public class GuiHooks {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null && minecraft.getOverlay() == null && minecraft.screen == null) {
             if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick()) {
-                PacketRelay.sendToServer(new OpenAccessoriesPacket(ItemStack.EMPTY));
+                PacketDistributor.sendToServer(new OpenAccessoriesPacket(ItemStack.EMPTY));
                 shouldAddButton = false; // The AccessoryButton is not added to menus opened with the key.
             }
         }

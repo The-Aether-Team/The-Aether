@@ -67,7 +67,7 @@ public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
     }
 
     public void setRenderTexture(String modId, String registryName) {
-        this.GLOVES_TEXTURE = new ResourceLocation(modId, "textures/models/accessory/gloves/" + registryName + "_accessory.png");
+        this.GLOVES_TEXTURE = ResourceLocation.fromNamespaceAndPath(modId, "textures/models/accessory/gloves/" + registryName + "_accessory.png");
     }
 
     public ResourceLocation getGlovesTexture() {

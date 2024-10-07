@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class MoaSaddleLayer extends RenderLayer<Moa, MoaModel> {
-    private static final ResourceLocation DEFAULT_LOCATION = new ResourceLocation("textures/entity/mobs/moa/black_moa_saddle.png");
+    private static final ResourceLocation DEFAULT_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/mobs/moa/black_moa_saddle.png");
     private final MoaModel saddle;
 
     public MoaSaddleLayer(RenderLayerParent<Moa, MoaModel> entityRenderer, MoaModel saddleModel) {

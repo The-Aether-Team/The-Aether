@@ -371,7 +371,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
         this.incubationTotalTime = tag.getInt("IncubationTotalTime");
         CompoundTag compoundtag = tag.getCompound("RecipesUsed");
         for (String string : compoundtag.getAllKeys()) {
-            this.recipesUsed.put(new ResourceLocation(string), compoundtag.getInt(string));
+            this.recipesUsed.put(ResourceLocation.withDefaultNamespace(string), compoundtag.getInt(string));
         }
     }
 

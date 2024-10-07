@@ -52,7 +52,7 @@ public abstract class AetherItemModelProvider extends NitrogenItemModelProvider 
             this.withExistingParent(name, this.mcLoc("item/generated"))
                     .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
                     .texture("layer1", this.modLoc("trims/items/gloves_trim_" + material));
-            builder.override().predicate(new ResourceLocation("trim_type"), (float) index).model(this.getExistingFile(this.modLoc("item/" + name))).end();
+            builder.override().predicate(ResourceLocation.withDefaultNamespace("trim_type"), (float) index).model(this.getExistingFile(this.modLoc("item/" + name))).end();
             index += 0.1;
         }
     }
@@ -69,7 +69,7 @@ public abstract class AetherItemModelProvider extends NitrogenItemModelProvider 
                     .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
                     .texture("layer1", this.modLoc("item/" + location + this.itemName(item) + "_overlay"))
                     .texture("layer2", this.modLoc("trims/items/gloves_trim_" + material));
-            builder.override().predicate(new ResourceLocation("trim_type"), (float) index).model(this.getExistingFile(this.modLoc("item/" + name))).end();
+            builder.override().predicate(ResourceLocation.withDefaultNamespace("trim_type"), (float) index).model(this.getExistingFile(this.modLoc("item/" + name))).end();
             index += 0.1;
         }
     }
@@ -96,7 +96,7 @@ public abstract class AetherItemModelProvider extends NitrogenItemModelProvider 
     }
 
     public void aercloudItem(Block block) {
-        this.withExistingParent(this.blockName(block), this.mcLoc("block/cube_all")).texture("all", this.texture(this.blockName(block), "natural/")).renderType(new ResourceLocation("translucent"));
+        this.withExistingParent(this.blockName(block), this.mcLoc("block/cube_all")).texture("all", this.texture(this.blockName(block), "natural/")).renderType(ResourceLocation.withDefaultNamespace("translucent"));
     }
 
     public void itemLockedDungeonBlock(Block block, Block baseBlock) {

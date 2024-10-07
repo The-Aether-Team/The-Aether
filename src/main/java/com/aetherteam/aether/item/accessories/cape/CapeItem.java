@@ -20,7 +20,7 @@ public class CapeItem extends AccessoryItem implements SlotIdentifierHolder {
     }
 
     public void setRenderTexture(String modId, String registryName) {
-        this.CAPE_LOCATION = new ResourceLocation(modId, "textures/models/accessory/capes/" + registryName + "_accessory.png");
+        this.CAPE_LOCATION = ResourceLocation.fromNamespaceAndPath(modId, "textures/models/accessory/capes/" + registryName + "_accessory.png");
     }
 
     public ResourceLocation getCapeTexture() {

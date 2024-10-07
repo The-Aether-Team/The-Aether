@@ -114,7 +114,7 @@ public class AetherOverlays {
                 renderMoaJumps(pStack, window, player);
             }
         });
-        event.registerAbove(new ResourceLocation("player_health"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver_life_shard_hearts"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAbove(ResourceLocation.withDefaultNamespace("player_health"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver_life_shard_hearts"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {

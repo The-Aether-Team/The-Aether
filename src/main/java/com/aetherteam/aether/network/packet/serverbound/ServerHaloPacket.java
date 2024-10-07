@@ -3,42 +3,39 @@ package com.aetherteam.aether.network.packet.serverbound;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.perk.types.Halo;
-import com.aetherteam.nitrogen.network.BasePacket;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class ServerHaloPacket {
     /**
      * Applies the Halo perk to a player on the server.
      */
-    public record Apply(UUID playerUUID, Halo halo) implements BasePacket {
-        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "add_halo_server");
+    public record Apply(UUID playerUUID, Halo halo) implements CustomPacketPayload {
+        public static final Type<ServerHaloPacket.Apply> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "add_halo_server"));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, ServerHaloPacket.Apply> STREAM_CODEC = StreamCodec.composite(
+            UUIDUtil.STREAM_CODEC,
+            ServerHaloPacket.Apply::playerUUID,
+            Halo.STREAM_CODEC,
+            ServerHaloPacket.Apply::halo,
+            ServerHaloPacket.Apply::new);
 
         @Override
-        public ResourceLocation id() {
-            return ID;
+        public Type<ServerHaloPacket.Apply> type() {
+            return TYPE;
         }
 
-        @Override
-        public void write(FriendlyByteBuf buf) {
-            buf.writeUUID(this.playerUUID());
-            Halo.write(buf, this.halo());
-        }
-
-        public static ServerHaloPacket.Apply decode(FriendlyByteBuf buf) {
-            UUID uuid = buf.readUUID();
-            Halo halo = Halo.read(buf);
-            return new ServerHaloPacket.Apply(uuid, halo);
-        }
-
-        @Override
-        public void execute(@Nullable Player playerEntity) {
-            if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null && this.halo() != null) {
-                ServerPerkData.HALO_INSTANCE.applyPerkWithVerification(playerEntity.getServer(), this.playerUUID(), this.halo());
+        public static void execute(ServerHaloPacket.Apply payload, IPayloadContext context) {
+            Player playerEntity = context.player();
+            if (playerEntity.getServer() != null && payload.playerUUID() != null && payload.halo() != null) {
+                ServerPerkData.HALO_INSTANCE.applyPerkWithVerification(playerEntity.getServer(), payload.playerUUID(), payload.halo());
             }
         }
     }
@@ -46,28 +43,23 @@ public class ServerHaloPacket {
     /**
      * Removes the Halo perk from a player on the server.
      */
-    public record Remove(UUID playerUUID) implements BasePacket {
-        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "remove_halo_server");
+    public record Remove(UUID playerUUID) implements CustomPacketPayload {
+        public static final Type<ServerHaloPacket.Remove> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "remove_halo_server"));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, ServerHaloPacket.Remove> STREAM_CODEC = StreamCodec.composite(
+            UUIDUtil.STREAM_CODEC,
+            ServerHaloPacket.Remove::playerUUID,
+            ServerHaloPacket.Remove::new);
 
         @Override
-        public ResourceLocation id() {
-            return ID;
+        public Type<ServerHaloPacket.Remove> type() {
+            return TYPE;
         }
 
-        @Override
-        public void write(FriendlyByteBuf buf) {
-            buf.writeUUID(this.playerUUID());
-        }
-
-        public static ServerHaloPacket.Remove decode(FriendlyByteBuf buf) {
-            UUID uuid = buf.readUUID();
-            return new ServerHaloPacket.Remove(uuid);
-        }
-
-        @Override
-        public void execute(@Nullable Player playerEntity) {
-            if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null) {
-                ServerPerkData.HALO_INSTANCE.removePerk(playerEntity.getServer(), this.playerUUID());
+        public static void execute(ServerHaloPacket.Remove payload, IPayloadContext context) {
+            Player playerEntity = context.player();
+            if (playerEntity.getServer() != null && payload.playerUUID() != null) {
+                ServerPerkData.HALO_INSTANCE.removePerk(playerEntity.getServer(), payload.playerUUID());
             }
         }
     }

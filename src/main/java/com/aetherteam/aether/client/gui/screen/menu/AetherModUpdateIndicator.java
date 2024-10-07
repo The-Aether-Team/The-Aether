@@ -14,7 +14,7 @@ import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion;
 import javax.annotation.Nullable;
 
 public class AetherModUpdateIndicator extends TitleScreenModUpdateIndicator {
-    private static final ResourceLocation VERSION_CHECK_ICONS = new ResourceLocation(NeoForgeVersion.MOD_ID, "textures/gui/version_check_icons.png");
+    private static final ResourceLocation VERSION_CHECK_ICONS = ResourceLocation.withDefaultNamespace(NeoForgeVersion.MOD_ID, "textures/gui/version_check_icons.png");
     private final AetherTitleScreen screen;
     @Nullable
     private VersionChecker.Status showNotification = null;

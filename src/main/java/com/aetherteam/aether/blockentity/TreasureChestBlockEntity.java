@@ -251,7 +251,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     public void load(CompoundTag tag) {
         super.load(tag);
         this.locked = !tag.contains("Locked") || tag.getBoolean("Locked");
-        this.kind = tag.contains("Kind") ? new ResourceLocation(tag.getString("Kind")) : ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze");
+        this.kind = tag.contains("Kind") ? ResourceLocation.withDefaultNamespace(tag.getString("Kind")) : ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze");
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
             ContainerHelper.loadAllItems(tag, this.items);

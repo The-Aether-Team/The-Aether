@@ -7,7 +7,7 @@ import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LivingEntityAccessor;
 import com.aetherteam.aether.network.packet.clientbound.SetInvisibilityPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -56,7 +56,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
                     var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
                     if (data.isWearingInvisibilityCloak()) {
                         player.setInvisible(true);
-                        PacketRelay.sendToAll(new SetInvisibilityPacket(player.getId(), true));
+                        PacketDistributor.sendToAll(new SetInvisibilityPacket(player.getId(), true));
                     }
                 } else {
                     livingEntity.setInvisible(true);
@@ -66,7 +66,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
                     var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
                     if (!data.isWearingInvisibilityCloak()) {
                         player.setInvisible(false);
-                        PacketRelay.sendToAll(new SetInvisibilityPacket(player.getId(), false));
+                        PacketDistributor.sendToAll(new SetInvisibilityPacket(player.getId(), false));
                     }
                 }
             }

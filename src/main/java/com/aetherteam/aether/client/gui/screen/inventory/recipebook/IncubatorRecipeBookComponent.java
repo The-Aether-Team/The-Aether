@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 
 public class IncubatorRecipeBookComponent extends RecipeBookComponent {
     private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(
-            new ResourceLocation("recipe_book/furnace_filter_enabled"),
-            new ResourceLocation("recipe_book/furnace_filter_disabled"),
-            new ResourceLocation("recipe_book/furnace_filter_enabled_highlighted"),
-            new ResourceLocation("recipe_book/furnace_filter_disabled_highlighted")
+            ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled"),
+            ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled"),
+            ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled_highlighted"),
+            ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled_highlighted")
     );
     private static final Component FILTER_NAME = Component.translatable("gui.aether.recipebook.toggleRecipes.incubatable");
     @Nullable

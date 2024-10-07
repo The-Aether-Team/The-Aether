@@ -2,7 +2,7 @@ package com.aetherteam.aether.entity.projectile.weapon;
 
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.network.packet.serverbound.HammerProjectileLaunchPacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -99,7 +99,7 @@ public class HammerProjectile extends ThrowableProjectile {
             this.launchTarget(target);
             this.level().broadcastEntityEvent(this, (byte) 70);
         } else {
-            PacketRelay.sendToServer(new HammerProjectileLaunchPacket(target.getId(), this.getId()));
+            PacketDistributor.sendToServer(new HammerProjectileLaunchPacket(target.getId(), this.getId()));
             this.spawnParticles();
         }
     }
@@ -117,7 +117,7 @@ public class HammerProjectile extends ThrowableProjectile {
             if (!this.level().isClientSide()) {
                 this.launchTarget(target);
             } else {
-                PacketRelay.sendToServer(new HammerProjectileLaunchPacket(target.getId(), this.getId()));
+                PacketDistributor.sendToServer(new HammerProjectileLaunchPacket(target.getId(), this.getId()));
             }
         }
         if (!this.level().isClientSide()) {

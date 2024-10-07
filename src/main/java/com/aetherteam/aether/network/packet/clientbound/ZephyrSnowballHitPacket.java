@@ -1,45 +1,41 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
  * Used to move the player on the client when they are hit by a ZephyrSnowBallEntity on the server.
  */
-public record ZephyrSnowballHitPacket(int entityID, double xSpeed, double zSpeed) implements BasePacket {
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "zephyr_snowball_knockback_player");
+public record ZephyrSnowballHitPacket(int entityID, double xSpeed, double zSpeed) implements CustomPacketPayload {
+    public static final Type<ZephyrSnowballHitPacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "zephyr_snowball_knockback_player"));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, ZephyrSnowballHitPacket> STREAM_CODEC = StreamCodec.composite(
+        ByteBufCodecs.INT,
+        ZephyrSnowballHitPacket::entityID,
+        ByteBufCodecs.DOUBLE,
+        ZephyrSnowballHitPacket::xSpeed,
+        ByteBufCodecs.DOUBLE,
+        ZephyrSnowballHitPacket::zSpeed,
+        ZephyrSnowballHitPacket::new);
 
     @Override
-    public ResourceLocation id() {
-        return ID;
+    public Type<ZephyrSnowballHitPacket> type() {
+        return TYPE;
     }
 
-    @Override
-    public void write(FriendlyByteBuf buf) {
-        buf.writeInt(this.entityID());
-        buf.writeDouble(this.xSpeed());
-        buf.writeDouble(this.zSpeed());
-    }
-
-    public static ZephyrSnowballHitPacket decode(FriendlyByteBuf buf) {
-        int entityID = buf.readInt();
-        double x = buf.readDouble();
-        double z = buf.readDouble();
-        return new ZephyrSnowballHitPacket(entityID, x, z);
-    }
-
-    @Override
-    public void execute(Player playerEntity) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level().getEntity(this.entityID()) instanceof LocalPlayer localPlayer) {
+    public static void execute(ZephyrSnowballHitPacket payload, IPayloadContext context) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level().getEntity(payload.entityID()) instanceof LocalPlayer localPlayer) {
             if (!localPlayer.isBlocking()) {
                 localPlayer.setDeltaMovement(localPlayer.getDeltaMovement().x(), localPlayer.getDeltaMovement().y() + 0.5, localPlayer.getDeltaMovement().z());
             }
-            localPlayer.setDeltaMovement(localPlayer.getDeltaMovement().x() + (this.xSpeed() * 1.5F), localPlayer.getDeltaMovement().y(), localPlayer.getDeltaMovement().z() + (this.zSpeed() * 1.5F));
+            localPlayer.setDeltaMovement(localPlayer.getDeltaMovement().x() + (payload.xSpeed() * 1.5F), localPlayer.getDeltaMovement().y(), localPlayer.getDeltaMovement().z() + (payload.zSpeed() * 1.5F));
         }
     }
 }

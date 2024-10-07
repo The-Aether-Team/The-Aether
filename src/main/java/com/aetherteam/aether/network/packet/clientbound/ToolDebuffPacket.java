@@ -2,37 +2,33 @@ package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
-import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
  * Stores a client value for whether tools are debuffed in the Aether for {@link com.aetherteam.aether.event.hooks.AbilityHooks.ToolHooks}.
  */
-public record ToolDebuffPacket(boolean debuffTools) implements BasePacket {
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "apply_tool_debuff");
+public record ToolDebuffPacket(boolean debuffTools) implements CustomPacketPayload {
+    public static final Type<ToolDebuffPacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "apply_tool_debuff"));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, ToolDebuffPacket> STREAM_CODEC = StreamCodec.composite(
+        ByteBufCodecs.BOOL,
+        ToolDebuffPacket::debuffTools,
+        ToolDebuffPacket::new);
 
     @Override
-    public ResourceLocation id() {
-        return ID;
+    public Type<ToolDebuffPacket> type() {
+        return TYPE;
     }
 
-    @Override
-    public void write(FriendlyByteBuf buf) {
-        buf.writeBoolean(this.debuffTools());
-    }
-
-    public static ToolDebuffPacket decode(FriendlyByteBuf buf) {
-        boolean debuffTools = buf.readBoolean();
-        return new ToolDebuffPacket(debuffTools);
-    }
-
-    @Override
-    public void execute(Player playerEntity) {
+    public static void execute(ToolDebuffPacket payload, IPayloadContext context) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            AbilityHooks.ToolHooks.debuffTools = this.debuffTools();
+            AbilityHooks.ToolHooks.debuffTools = payload.debuffTools();
         }
     }
 }

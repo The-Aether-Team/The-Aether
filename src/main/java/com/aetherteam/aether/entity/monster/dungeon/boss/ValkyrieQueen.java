@@ -19,7 +19,7 @@ import com.aetherteam.aether.network.packet.clientbound.BossInfoPacket;
 import com.aetherteam.aether.network.packet.clientbound.QueenDialoguePacket;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -282,7 +282,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
                             this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
-                            PacketRelay.sendToPlayer(new QueenDialoguePacket(this.getId()), serverPlayer);
+                            PacketDistributor.sendToPlayer(new QueenDialoguePacket(this.getId()), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                         }
                     }
@@ -512,7 +512,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        PacketRelay.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
+        PacketDistributor.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
             this.bossFight.addPlayer(player);
             AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), player);
@@ -527,7 +527,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
-        PacketRelay.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
+        PacketDistributor.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
         this.bossFight.removePlayer(player);
         AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), player);
     }

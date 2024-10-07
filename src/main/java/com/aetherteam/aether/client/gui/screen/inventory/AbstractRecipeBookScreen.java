@@ -18,7 +18,7 @@ import net.minecraft.world.inventory.Slot;
  * Cleaned up and made more abstract to mostly only have {@link RecipeBookComponent}-specific code.
  */
 public abstract class AbstractRecipeBookScreen<T extends RecipeBookMenu<Container>, S extends RecipeBookComponent> extends AbstractContainerScreen<T> implements RecipeUpdateListener, RecipeBookBehavior<T, AbstractRecipeBookScreen<T, S>> {
-    private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
+    private static final ResourceLocation RECIPE_BUTTON_LOCATION = ResourceLocation.withDefaultNamespace("textures/gui/recipe_button.png");
     protected final S recipeBookComponent;
     protected boolean widthTooNarrow;
 

@@ -11,7 +11,7 @@ import com.aetherteam.aether.network.packet.serverbound.ClearItemPacket;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -57,8 +57,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     private static final ResourceLocation ACCESSORIES_INVENTORY = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/inventory/accessories.png");
     private static final ResourceLocation ACCESSORIES_INVENTORY_CREATIVE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/inventory/accessories_creative.png");
-    private static final ResourceLocation CURIO_INVENTORY = new ResourceLocation(CuriosConstants.MOD_ID, "textures/gui/curios/inventory.png");
-    private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
+    private static final ResourceLocation CURIO_INVENTORY = ResourceLocation.withDefaultNamespace(CuriosConstants.MOD_ID, "textures/gui/curios/inventory.png");
+    private static final ResourceLocation RECIPE_BUTTON_LOCATION = ResourceLocation.withDefaultNamespace("textures/gui/recipe_button.png");
 
     private static final SimpleContainer DESTROY_ITEM_CONTAINER = new SimpleContainer(1);
     private final RecipeBookComponent recipeBookComponent = new RecipeBookComponent();
@@ -356,7 +356,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                     } else {
                         if (slot == this.destroyItemSlot && this.destroyItemSlot != null) {
                             this.getMenu().setCarried(ItemStack.EMPTY);
-                            PacketRelay.sendToServer(new ClearItemPacket(this.getMinecraft().player.getId()));
+                            PacketDistributor.sendToServer(new ClearItemPacket(this.getMinecraft().player.getId()));
                         }
                     }
                 }

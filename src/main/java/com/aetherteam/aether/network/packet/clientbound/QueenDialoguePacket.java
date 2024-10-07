@@ -2,34 +2,30 @@ package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.entity.monster.dungeon.boss.ValkyrieQueen;
-import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public record QueenDialoguePacket(int queenID) implements BasePacket {
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "open_valkyrie_queen_dialogue");
+public record QueenDialoguePacket(int queenID) implements CustomPacketPayload {
+    public static final Type<QueenDialoguePacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "open_valkyrie_queen_dialogue"));
 
-    @Override
-    public ResourceLocation id() {
-        return ID;
-    }
-
-    @Override
-    public void write(FriendlyByteBuf buf) {
-        buf.writeInt(this.queenID());
-    }
-
-    public static QueenDialoguePacket decode(FriendlyByteBuf buf) {
-        int queenID = buf.readInt();
-        return new QueenDialoguePacket(queenID);
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, QueenDialoguePacket> STREAM_CODEC = StreamCodec.composite(
+        ByteBufCodecs.INT,
+        QueenDialoguePacket::queenID,
+        QueenDialoguePacket::new);
 
     @Override
-    public void execute(Player playerEntity) {
+    public Type<QueenDialoguePacket> type() {
+        return TYPE;
+    }
+
+    public static void execute(QueenDialoguePacket payload, IPayloadContext context) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            if (Minecraft.getInstance().level.getEntity(this.queenID()) instanceof ValkyrieQueen valkyrieQueen) {
+            if (Minecraft.getInstance().level.getEntity(payload.queenID()) instanceof ValkyrieQueen valkyrieQueen) {
                 valkyrieQueen.openDialogueScreen();
             }
         }

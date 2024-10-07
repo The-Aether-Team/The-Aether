@@ -30,7 +30,7 @@ public class AetherAdvancementSoundOverrides {
 
     @Nullable
     public static AdvancementSoundOverride get(String id) {
-        return ADVANCEMENT_SOUND_OVERRIDE_REGISTRY.get(new ResourceLocation(id));
+        return ADVANCEMENT_SOUND_OVERRIDE_REGISTRY.get(ResourceLocation.withDefaultNamespace(id));
     }
 
     /**

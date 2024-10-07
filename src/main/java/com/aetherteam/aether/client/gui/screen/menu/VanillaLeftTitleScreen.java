@@ -24,7 +24,7 @@ import net.neoforged.neoforge.client.gui.TitleScreenModUpdateIndicator;
  * A left-aligned variant of Minecraft's title screen.
  */
 public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBehavior {
-    private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
+    private static final ResourceLocation PANORAMA_OVERLAY = ResourceLocation.withDefaultNamespace("textures/gui/title/background/panorama_overlay.png");
     private final PanoramaRenderer panorama = new PanoramaRenderer(TitleScreen.CUBE_MAP);
     private final boolean showMinceraftEasterEgg = (double) RandomSource.create().nextFloat() < 1.0E-4D;
     private TitleScreenModUpdateIndicator modUpdateNotification;

@@ -27,9 +27,9 @@ import org.joml.Vector3f;
 import javax.annotation.Nullable;
 
 public class AetherSkyRenderEffects extends DimensionSpecialEffects {
-    private static final ResourceLocation CLOUDS_LOCATION = new ResourceLocation("textures/environment/clouds.png");
-    private static final ResourceLocation MOON_LOCATION = new ResourceLocation("textures/environment/moon_phases.png");
-    private static final ResourceLocation SUN_LOCATION = new ResourceLocation("textures/environment/sun.png");
+    private static final ResourceLocation CLOUDS_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/clouds.png");
+    private static final ResourceLocation MOON_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/moon_phases.png");
+    private static final ResourceLocation SUN_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/sun.png");
 
     private final DimensionSpecialEffects OVERWORLD = new DimensionSpecialEffects.OverworldEffects();
 

@@ -16,7 +16,7 @@ public final class LevelUtil {
      * @see com.aetherteam.aether.event.hooks.DimensionHooks
      */
     public static ResourceKey<Level> destinationDimension() {
-        return ResourceKey.create(Registries.DIMENSION, new ResourceLocation(AetherConfig.SERVER.portal_destination_dimension_ID.get()));
+        return ResourceKey.create(Registries.DIMENSION, ResourceLocation.withDefaultNamespace(AetherConfig.SERVER.portal_destination_dimension_ID.get()));
     }
 
     /**
@@ -28,6 +28,6 @@ public final class LevelUtil {
      * @see com.aetherteam.aether.event.hooks.DimensionHooks
      */
     public static ResourceKey<Level> returnDimension() {
-        return ResourceKey.create(Registries.DIMENSION, new ResourceLocation(AetherConfig.SERVER.portal_return_dimension_ID.get()));
+        return ResourceKey.create(Registries.DIMENSION, ResourceLocation.withDefaultNamespace(AetherConfig.SERVER.portal_return_dimension_ID.get()));
     }
 }

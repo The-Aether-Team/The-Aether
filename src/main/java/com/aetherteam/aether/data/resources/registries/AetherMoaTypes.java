@@ -34,7 +34,7 @@ public class AetherMoaTypes {
 
     @Nullable
     public static ResourceKey<MoaType> getResourceKey(RegistryAccess registryAccess, String location) {
-        return getResourceKey(registryAccess, new ResourceLocation(location));
+        return getResourceKey(registryAccess, ResourceLocation.withDefaultNamespace(location));
     }
 
     @Nullable
@@ -54,7 +54,7 @@ public class AetherMoaTypes {
 
     @Nullable
     public static MoaType getMoaType(RegistryAccess registryAccess, String location) {
-        return getMoaType(registryAccess, new ResourceLocation(location));
+        return getMoaType(registryAccess, ResourceLocation.withDefaultNamespace(location));
     }
 
     @Nullable
@@ -66,7 +66,7 @@ public class AetherMoaTypes {
 
 //    @Nullable
 //    public static MoaType get(RegistryAccess registryAccess, String location) {
-//        return get(registryAccess, new ResourceLocation(location));
+//        return get(registryAccess, ResourceLocation.withDefaultNamespace(location));
 //    }
 //
 //    @Nullable
@@ -76,7 +76,7 @@ public class AetherMoaTypes {
 //
 //    @Nullable
 //    public static ResourceKey<MoaType> getKey(RegistryAccess registryAccess, String location) {
-//        return getKey(registryAccess, new ResourceLocation(location));
+//        return getKey(registryAccess, ResourceLocation.withDefaultNamespace(location));
 //    }
 //
 //    @Nullable

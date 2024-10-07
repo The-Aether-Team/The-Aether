@@ -13,7 +13,7 @@ import com.aetherteam.aether.network.packet.clientbound.AetherTravelPacket;
 import com.aetherteam.aether.network.packet.clientbound.LeavingAetherPacket;
 import com.aetherteam.aether.world.AetherLevelData;
 import com.aetherteam.aether.world.LevelUtil;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
@@ -190,16 +190,16 @@ public class DimensionHooks {
                         if (entity.level().dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) { // We display the Descending GUI text to the player if they're about to return to the Overworld.
                             displayAetherTravel = true;
                             playerLeavingAether = true;
-                            PacketRelay.sendToAll(new AetherTravelPacket(true));
-                            PacketRelay.sendToAll(new LeavingAetherPacket(true));
+                            PacketDistributor.sendToAll(new AetherTravelPacket(true));
+                            PacketDistributor.sendToAll(new LeavingAetherPacket(true));
                         } else if (entity.level().dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) { // We display the Ascending GUI text to the player if they're about to enter the Aether.
                             displayAetherTravel = true;
                             playerLeavingAether = false;
-                            PacketRelay.sendToAll(new AetherTravelPacket(true));
-                            PacketRelay.sendToAll(new LeavingAetherPacket(false));
+                            PacketDistributor.sendToAll(new AetherTravelPacket(true));
+                            PacketDistributor.sendToAll(new LeavingAetherPacket(false));
                         } else { // Don't display any text if not travelling between the Aether and Overworld or vice-versa.
                             displayAetherTravel = false;
-                            PacketRelay.sendToAll(new AetherTravelPacket(false));
+                            PacketDistributor.sendToAll(new AetherTravelPacket(false));
                         }
                     }
                 }

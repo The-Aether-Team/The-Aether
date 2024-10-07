@@ -6,7 +6,7 @@ import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.aether.perk.types.Halo;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.HashMap;
@@ -34,11 +34,11 @@ public class ClientHaloPerkData extends ClientPerkData<Halo> {
             if (haloEnabled) { // Checks whether the Halo is enabled in the options.
                 if (!userHaloData.containsKey(uuid) || userHaloData.get(uuid) == null || (haloColor != null && !userHaloData.get(uuid).hexColor().equals(haloColor))) { // A check to see if any options have changed.
                     if (PerkUtil.hasHalo().test(user)) { // Verifies whether the User can have the Halo.
-                        PacketRelay.sendToServer(new ServerHaloPacket.Apply(player.getUUID(), new Halo(haloColor))); // Send a modification packet to the server.
+                        PacketDistributor.sendToServer(new ServerHaloPacket.Apply(player.getUUID(), new Halo(haloColor))); // Send a modification packet to the server.
                     }
                 }
             } else { // Removes the Halo if it isn't enabled in the options.
-                PacketRelay.sendToServer(new ServerHaloPacket.Remove(player.getUUID())); // Send a removal packet to the server.
+                PacketDistributor.sendToServer(new ServerHaloPacket.Remove(player.getUUID())); // Send a removal packet to the server.
             }
         }
     }

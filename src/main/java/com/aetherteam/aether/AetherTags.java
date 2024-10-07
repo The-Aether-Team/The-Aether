@@ -158,11 +158,11 @@ public class AetherTags {
         }
 
         private static TagKey<Item> curio(String name) {
-            return TagKey.create(Registries.ITEM, new ResourceLocation(CuriosApi.MODID, name));
+            return TagKey.create(Registries.ITEM, ResourceLocation.withDefaultNamespace(CuriosApi.MODID, name));
         }
 
         private static TagKey<Item> moddedTag(String modid, String name) {
-            return TagKey.create(Registries.ITEM, new ResourceLocation(modid, name));
+            return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(modid, name));
         }
     }
 
