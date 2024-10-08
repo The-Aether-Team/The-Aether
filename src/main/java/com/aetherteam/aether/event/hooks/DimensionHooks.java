@@ -13,7 +13,6 @@ import com.aetherteam.aether.network.packet.clientbound.AetherTravelPacket;
 import com.aetherteam.aether.network.packet.clientbound.LeavingAetherPacket;
 import com.aetherteam.aether.world.AetherLevelData;
 import com.aetherteam.aether.world.LevelUtil;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
@@ -38,6 +37,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.entity.player.SleepingTimeCheckEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.SleepFinishedTimeEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.Optional;

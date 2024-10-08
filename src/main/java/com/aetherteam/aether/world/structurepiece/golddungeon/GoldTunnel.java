@@ -1,8 +1,6 @@
 package com.aetherteam.aether.world.structurepiece.golddungeon;
 
 
-import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
-import com.aetherteam.aether.world.processor.NoReplaceProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;

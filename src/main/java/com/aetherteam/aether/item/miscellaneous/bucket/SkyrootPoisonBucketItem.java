@@ -37,7 +37,7 @@ public class SkyrootPoisonBucketItem extends Item implements ConsumableItem {
     }
 
     @Override
-    public int getUseDuration(ItemStack stack) {
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return 32;
     }
 

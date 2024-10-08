@@ -15,7 +15,6 @@ import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
-import net.neoforged.neoforge.network.PacketDistributor;
 import com.aetherteam.nitrogen.network.packet.serverbound.TriggerUpdateInfoPacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -36,6 +35,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 

@@ -5,6 +5,7 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.BushBlockAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -12,13 +13,14 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.common.FarmlandWaterManager;
-import net.neoforged.neoforge.common.IPlantable;
-import net.neoforged.neoforge.common.PlantType;
+import net.neoforged.neoforge.common.util.TriState;
 
 public class AetherFarmBlock extends FarmBlock {
     public AetherFarmBlock(Properties properties) {
@@ -82,9 +84,7 @@ public class AetherFarmBlock extends FarmBlock {
      * [CODE COPY] - {@link FarmBlock#shouldMaintainFarmland(BlockGetter, BlockPos)}.
      */
     private static boolean shouldMaintainFarmland(BlockGetter level, BlockPos pos) {
-        BlockState plant = level.getBlockState(pos.above());
-        BlockState state = level.getBlockState(pos);
-        return plant.getBlock() instanceof IPlantable plantable && state.canSustainPlant(level, pos, Direction.UP, plantable);
+        return level.getBlockState(pos.above()).is(BlockTags.MAINTAINS_FARMLAND);
     }
 
     /**
@@ -103,9 +103,13 @@ public class AetherFarmBlock extends FarmBlock {
      * Chosen checks based on {@link net.minecraft.world.level.block.Block#canSustainPlant(BlockState, BlockGetter, BlockPos, Direction, IPlantable)}.
      */
     @Override
-    public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos, Direction direction, IPlantable plantable) {
-        PlantType type = plantable.getPlantType(level, pos.relative(direction));
-        return (plantable instanceof BushBlock bushBlock && ((BushBlockAccessor) bushBlock).callMayPlaceOn(state, level, pos)) || PlantType.CROP.equals(type) || PlantType.PLAINS.equals(type);
+    public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
+        Block plantBlock = plant.getBlock();
+        if ((plantBlock instanceof BushBlock bushBlock && ((BushBlockAccessor) bushBlock).callMayPlaceOn(Blocks.FARMLAND.defaultBlockState(), level, soilPosition))) {
+            return TriState.TRUE;
+        } else {
+            return super.canSustainPlant(state, level, soilPosition, facing, plant);
+        }
     }
 
     /**

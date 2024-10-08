@@ -9,8 +9,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.UUID;
-
 public class AgilityCapeItem extends CapeItem {
     /**
      * The unique identifier for the item's step height modifier.

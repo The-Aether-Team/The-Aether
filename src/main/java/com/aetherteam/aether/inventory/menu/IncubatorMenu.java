@@ -5,6 +5,7 @@ import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
 import com.aetherteam.aether.inventory.menu.slot.IncubatorFuelSlot;
 import com.aetherteam.aether.inventory.menu.slot.IncubatorItemSlot;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
+import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -13,11 +14,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 
-public class IncubatorMenu extends RecipeBookMenu<Container> {
+public class IncubatorMenu extends RecipeBookMenu<SingleRecipeInput, IncubationRecipe> {
     public final Container container;
     public final ContainerData data;
     public final Level level;
@@ -59,8 +60,8 @@ public class IncubatorMenu extends RecipeBookMenu<Container> {
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<? extends Recipe<Container>> recipe) {
-        return recipe.value().matches(this.container, this.level);
+    public boolean recipeMatches(RecipeHolder<IncubationRecipe> recipe) {
+        return recipe.value().matches(new SingleRecipeInput(this.container.getItem(0)), this.level);
     }
 
     @Override
@@ -128,7 +129,7 @@ public class IncubatorMenu extends RecipeBookMenu<Container> {
     }
 
     protected boolean canIncubate(ItemStack stack) {
-        return this.level.getRecipeManager().getRecipeFor(AetherRecipeTypes.INCUBATION.get(), new SimpleContainer(stack), this.level).isPresent();
+        return this.level.getRecipeManager().getRecipeFor(AetherRecipeTypes.INCUBATION.get(), new SingleRecipeInput(stack), this.level).isPresent();
     }
 
     public boolean isFuel(ItemStack stack) {

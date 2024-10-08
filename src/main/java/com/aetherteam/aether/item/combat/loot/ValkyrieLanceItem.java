@@ -12,8 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ToolAction;
-import net.neoforged.neoforge.common.ToolActions;
 
 public class ValkyrieLanceItem extends SwordItem implements ValkyrieTool {
     public ValkyrieLanceItem() {
@@ -32,6 +32,6 @@ public class ValkyrieLanceItem extends SwordItem implements ValkyrieTool {
 
     @Override
     public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
-        return ToolActions.DEFAULT_SWORD_ACTIONS.contains(toolAction) && toolAction != ToolActions.SWORD_SWEEP;
+        return ItemAbilities.DEFAULT_SWORD_ACTIONS.contains(toolAction) && toolAction != ItemAbilities.SWORD_SWEEP;
     }
 }

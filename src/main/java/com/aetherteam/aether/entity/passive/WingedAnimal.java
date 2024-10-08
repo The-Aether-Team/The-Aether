@@ -8,7 +8,6 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.NeoForgeMod;
 
 public abstract class WingedAnimal extends MountableAnimal {
     /**

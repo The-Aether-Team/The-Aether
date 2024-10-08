@@ -6,8 +6,6 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.world.processor.BorderBoxPosTest;
-import com.aetherteam.aether.world.processor.BossRoomProcessor;
-import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;

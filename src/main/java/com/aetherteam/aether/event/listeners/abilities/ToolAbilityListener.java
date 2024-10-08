@@ -41,14 +41,14 @@ public class ToolAbilityListener {
     }
 
     /**
-     * @see AbilityHooks.ToolHooks#setupToolActions(LevelAccessor, BlockPos, BlockState, ToolAction)
+     * @see AbilityHooks.ToolHooks#setupItemAbilities(LevelAccessor, BlockPos, BlockState, ToolAction)
      */
     public static void setupToolModifications(BlockEvent.BlockToolModificationEvent event) {
         LevelAccessor levelAccessor = event.getLevel();
         BlockPos pos = event.getPos();
         BlockState oldState = event.getState();
         ToolAction toolAction = event.getToolAction();
-        BlockState newState = AbilityHooks.ToolHooks.setupToolActions(levelAccessor, pos, oldState, toolAction);
+        BlockState newState = AbilityHooks.ToolHooks.setupItemAbilities(levelAccessor, pos, oldState, toolAction);
         if (newState != oldState && !event.isSimulated() && !event.isCanceled()) {
             event.setFinalState(newState);
         }

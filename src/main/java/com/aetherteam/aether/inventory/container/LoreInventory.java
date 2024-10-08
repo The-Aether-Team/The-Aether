@@ -4,12 +4,12 @@ import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
 import com.aetherteam.aether.advancement.LoreTrigger;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.network.packet.serverbound.LoreExistsPacket;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class LoreInventory extends SimpleContainer {
     private final Player player;

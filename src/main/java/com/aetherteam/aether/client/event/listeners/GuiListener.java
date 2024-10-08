@@ -11,10 +11,10 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.Tuple;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
-import net.neoforged.neoforge.event.TickEvent;
 
 import java.util.UUID;
 
@@ -67,10 +67,8 @@ public class GuiListener {
     /**
      * @see GuiHooks#handlePatreonRefreshRebound()
      */
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            GuiHooks.handlePatreonRefreshRebound();
-        }
+    public static void onClientTick(ClientTickEvent event) {
+        GuiHooks.handlePatreonRefreshRebound();
     }
 
     /**

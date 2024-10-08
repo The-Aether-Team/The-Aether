@@ -2,7 +2,6 @@ package com.aetherteam.aether.world.structurepiece.bronzedungeon;
 
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.loot.AetherLoot;
-import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;

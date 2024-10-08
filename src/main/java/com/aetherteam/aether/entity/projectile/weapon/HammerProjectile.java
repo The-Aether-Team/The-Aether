@@ -2,7 +2,6 @@ package com.aetherteam.aether.entity.projectile.weapon;
 
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.network.packet.serverbound.HammerProjectileLaunchPacket;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -17,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
 

@@ -6,8 +6,8 @@ import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.aether.perk.types.DeveloperGlow;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.HashMap;
 import java.util.Map;

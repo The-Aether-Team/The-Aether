@@ -4,11 +4,18 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.NetherPortalBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -150,5 +157,22 @@ public class AetherPortalShape {
 
     public boolean isComplete() {
         return this.isValid() && this.numPortalBlocks == this.width * this.height;
+    }
+
+    public static Vec3 findCollisionFreePosition(Vec3 pPos, ServerLevel pLevel, Entity pEntity, EntityDimensions pDimensions) {
+        if (!(pDimensions.width() > 4.0F) && !(pDimensions.height() > 4.0F)) {
+            double d0 = (double)pDimensions.height() / 2.0;
+            Vec3 vec3 = pPos.add(0.0, d0, 0.0);
+            VoxelShape voxelshape = Shapes.create(
+                AABB.ofSize(vec3, (double)pDimensions.width(), 0.0, (double)pDimensions.width()).expandTowards(0.0, 1.0, 0.0).inflate(1.0E-6)
+            );
+            Optional<Vec3> optional = pLevel.findFreePosition(
+                pEntity, voxelshape, vec3, (double)pDimensions.width(), (double)pDimensions.height(), (double)pDimensions.width()
+            );
+            Optional<Vec3> optional1 = optional.map(p_259019_ -> p_259019_.subtract(0.0, d0, 0.0));
+            return optional1.orElse(pPos);
+        } else {
+            return pPos;
+        }
     }
 }

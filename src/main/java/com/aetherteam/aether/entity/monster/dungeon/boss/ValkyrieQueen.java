@@ -19,7 +19,6 @@ import com.aetherteam.aether.network.packet.clientbound.BossInfoPacket;
 import com.aetherteam.aether.network.packet.clientbound.QueenDialoguePacket;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -65,6 +64,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;

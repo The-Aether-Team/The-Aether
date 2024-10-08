@@ -9,14 +9,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.DispenserBlock;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.function.Supplier;
 
 public class AccessoryItem extends Item implements Accessory { // Vanishable
     private final Holder<SoundEvent> soundEventSupplier;

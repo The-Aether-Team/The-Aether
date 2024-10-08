@@ -1,31 +1,16 @@
 package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.block.AetherBlocks;
-import com.aetherteam.aether.data.resources.builders.AetherStructureBuilders;
-import com.aetherteam.aether.world.processor.BossRoomProcessor;
-import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
-import com.aetherteam.aether.world.processor.NoReplaceProcessor;
-import com.aetherteam.aether.world.processor.SurfaceRuleProcessor;
-import com.aetherteam.aether.world.processor.VerticalGradientProcessor;
-import com.aetherteam.aether.world.structure.BronzeDungeonStructure;
+import com.aetherteam.aether.world.processor.*;
 import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeDungeonPiece;
 import com.aetherteam.aether.world.structurepiece.golddungeon.GoldDungeonPiece;
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverDungeonPiece;
-import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraft.world.level.levelgen.structure.templatesystem.AlwaysTrueTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.AxisAlignedLinearPosTest;
-import net.minecraft.world.level.levelgen.structure.templatesystem.ProcessorRule;
-import net.minecraft.world.level.levelgen.structure.templatesystem.ProtectedBlockProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.RandomBlockMatchTest;
-import net.minecraft.world.level.levelgen.structure.templatesystem.RuleProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 

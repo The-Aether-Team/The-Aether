@@ -4,7 +4,6 @@ package com.aetherteam.aether.world.structurepiece.golddungeon;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
 import com.aetherteam.aether.loot.AetherLoot;
-import com.aetherteam.aether.world.processor.BossRoomProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.aetherteam.aether.world.structurepiece.AetherTemplateStructurePiece;
 import net.minecraft.core.BlockPos;

@@ -14,6 +14,7 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -31,8 +32,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
-import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 
 public class AetherOverlays {
     private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/blur/inebriation_vignette.png");
@@ -65,60 +65,60 @@ public class AetherOverlays {
     /**
      * @see AetherClient#eventSetup()
      */
-    public static void registerOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "aether_portal_overlay"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+    public static void registerOverlays(RegisterGuiLayersEvent event) {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "aether_portal_overlay"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                renderAetherPortalOverlay(pStack, minecraft, window, player, partialTicks);
+                renderAetherPortalOverlay(guiGraphics, minecraft, window, player, partialTicks);
             }
         });
-        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "inebriation_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "inebriation_vignette"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                renderInebriationOverlay(pStack, minecraft, window, player);
+                renderInebriationOverlay(guiGraphics, minecraft, window, player);
             }
         });
-        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "remedy_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "remedy_vignette"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                renderRemedyOverlay(pStack, minecraft, window, player);
+                renderRemedyOverlay(guiGraphics, minecraft, window, player);
             }
         });
-        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "shield_of_repulsion_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "shield_of_repulsion_vignette"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                renderRepulsionOverlay(pStack, minecraft, window, player);
+                renderRepulsionOverlay(guiGraphics, minecraft, window, player);
             }
         });
-        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hammer_cooldown"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hammer_cooldown"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                renderHammerCooldownOverlay(pStack, minecraft, window, player);
+                renderHammerCooldownOverlay(guiGraphics, minecraft, window, player);
             }
         });
-        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "moa_jumps"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "moa_jumps"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                renderMoaJumps(pStack, window, player);
+                renderMoaJumps(guiGraphics, window, player);
             }
         });
-        event.registerAbove(ResourceLocation.withDefaultNamespace("player_health"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver_life_shard_hearts"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAbove(ResourceLocation.withDefaultNamespace("player_health"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver_life_shard_hearts"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                renderSilverLifeShardHearts(pStack, gui, player, screenWidth, screenHeight);
+                renderSilverLifeShardHearts(guiGraphics, gui, player, screenWidth, screenHeight);
             }
         });
     }
@@ -129,10 +129,10 @@ public class AetherOverlays {
      * Warning for "deprecation" is suppressed because vanilla calls {@link net.minecraft.client.renderer.block.BlockModelShaper#getParticleIcon(BlockState)} just fine.
      */
     @SuppressWarnings("deprecation")
-    private static void renderAetherPortalOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, Player player, float partialTicks) {
+    private static void renderAetherPortalOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, Player player, DeltaTracker partialTicks) {
         var handler = player.getData(AetherDataAttachments.AETHER_PLAYER);
         PoseStack poseStack = guiGraphics.pose();
-        float timeInPortal = handler.getPrevPortalAnimTime() + (handler.getPortalAnimTime() - handler.getPrevPortalAnimTime()) * partialTicks;
+        float timeInPortal = Mth.lerp(partialTicks.getGameTimeDeltaPartialTick(false), handler.getOldPortalIntensity(), handler.getPortalIntensity());
         if (timeInPortal > 0.0F) {
             if (timeInPortal < 1.0F) {
                 timeInPortal = timeInPortal * timeInPortal;
@@ -160,7 +160,7 @@ public class AetherOverlays {
      * @param player      The player that has the effect.
      */
     private static void renderInebriationOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, Player player) {
-        MobEffectInstance inebriation = player.getEffect(AetherEffects.INEBRIATION.get());
+        MobEffectInstance inebriation = player.getEffect(AetherEffects.INEBRIATION);
         double effectScale = minecraft.options.screenEffectScale().get();
         if (inebriation != null) {
             float inebriationDuration = (float) (inebriation.getDuration() % 50) / 50;
@@ -178,7 +178,7 @@ public class AetherOverlays {
      * @param player      The player that has the effect.
      */
     private static void renderRemedyOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, Player player) {
-        MobEffectInstance remedy = player.getEffect(AetherEffects.REMEDY.get());
+        MobEffectInstance remedy = player.getEffect(AetherEffects.REMEDY);
         double effectScale = minecraft.options.screenEffectScale().get();
         if (remedy != null) {
             int remedyStartDuration = player.getData(AetherDataAttachments.AETHER_PLAYER).getRemedyStartDuration();
@@ -291,7 +291,7 @@ public class AetherOverlays {
      * @param width       The {@link Integer} for the screen width.
      * @param height      The {@link Integer} for the screen height.
      */
-    private static void renderSilverLifeShardHearts(GuiGraphics guiGraphics, ExtendedGui gui, LocalPlayer player, int width, int height) {
+    private static void renderSilverLifeShardHearts(GuiGraphics guiGraphics, Gui gui, LocalPlayer player, int width, int height) {
         GuiAccessor guiAccessor = (GuiAccessor) gui;
         if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
             var aetherPlayer = player.getData(AetherDataAttachments.AETHER_PLAYER);

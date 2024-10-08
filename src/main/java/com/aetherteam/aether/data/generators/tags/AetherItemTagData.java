@@ -263,7 +263,7 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(Tags.Items.FENCES).add(AetherBlocks.SKYROOT_FENCE.get().asItem());
         this.tag(Tags.Items.EGGS).addTag(AetherTags.Items.MOA_EGGS);
         this.tag(Tags.Items.GEMS).add(AetherItems.ZANITE_GEMSTONE.get());
-        this.tag(Tags.Items.GLASS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get().asItem());
+        this.tag(Tags.Items.GLASS_BLOCKS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get().asItem());
         this.tag(Tags.Items.GLASS_PANES_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS_PANE.get().asItem());
         this.tag(Tags.Items.ORE_RATES_SINGULAR).add(
                 AetherBlocks.AMBROSIUM_ORE.get().asItem(),
@@ -274,41 +274,12 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherBlocks.ZANITE_ORE.get().asItem(),
                 AetherBlocks.GRAVITITE_ORE.get().asItem());
         this.tag(Tags.Items.RODS_WOODEN).add(AetherItems.SKYROOT_STICK.get());
-        this.tag(Tags.Items.SLIMEBALLS).addTag(AetherTags.Items.SWET_BALLS);
+        this.tag(Tags.Items.SLIME_BALLS).addTag(AetherTags.Items.SWET_BALLS);
         this.tag(Tags.Items.STORAGE_BLOCKS).add(
                 AetherBlocks.AMBROSIUM_BLOCK.get().asItem(),
                 AetherBlocks.ZANITE_BLOCK.get().asItem());
         this.tag(Tags.Items.TOOLS).addTag(AetherTags.Items.TOOLS_HAMMERS);
-        this.tag(Tags.Items.TOOLS_BOWS).add(AetherItems.PHOENIX_BOW.get());
-        this.tag(Tags.Items.ARMORS_HELMETS).add(
-                AetherItems.ZANITE_HELMET.get(),
-                AetherItems.GRAVITITE_HELMET.get(),
-                AetherItems.NEPTUNE_HELMET.get(),
-                AetherItems.PHOENIX_HELMET.get(),
-                AetherItems.OBSIDIAN_HELMET.get(),
-                AetherItems.VALKYRIE_HELMET.get());
-        this.tag(Tags.Items.ARMORS_CHESTPLATES).add(
-                AetherItems.ZANITE_CHESTPLATE.get(),
-                AetherItems.GRAVITITE_CHESTPLATE.get(),
-                AetherItems.NEPTUNE_CHESTPLATE.get(),
-                AetherItems.PHOENIX_CHESTPLATE.get(),
-                AetherItems.OBSIDIAN_CHESTPLATE.get(),
-                AetherItems.VALKYRIE_CHESTPLATE.get());
-        this.tag(Tags.Items.ARMORS_LEGGINGS).add(
-                AetherItems.ZANITE_LEGGINGS.get(),
-                AetherItems.GRAVITITE_LEGGINGS.get(),
-                AetherItems.NEPTUNE_LEGGINGS.get(),
-                AetherItems.PHOENIX_LEGGINGS.get(),
-                AetherItems.OBSIDIAN_LEGGINGS.get(),
-                AetherItems.VALKYRIE_LEGGINGS.get());
-        this.tag(Tags.Items.ARMORS_BOOTS).add(
-                AetherItems.ZANITE_BOOTS.get(),
-                AetherItems.GRAVITITE_BOOTS.get(),
-                AetherItems.NEPTUNE_BOOTS.get(),
-                AetherItems.PHOENIX_BOOTS.get(),
-                AetherItems.OBSIDIAN_BOOTS.get(),
-                AetherItems.VALKYRIE_BOOTS.get(),
-                AetherItems.SENTRY_BOOTS.get());
+        this.tag(Tags.Items.TOOLS_BOW).add(AetherItems.PHOENIX_BOW.get());
 
         this.tag(AetherTags.Items.RANDOMIUM_BLACKLIST).addTags(
                 AetherTags.Items.LOCKED_DUNGEON_BLOCKS,
@@ -385,13 +356,6 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.ENCHANTED_BERRY.get());
         this.tag(ItemTags.SIGNS).add(AetherBlocks.SKYROOT_SIGN.get().asItem());
         this.tag(ItemTags.HANGING_SIGNS).add(AetherBlocks.SKYROOT_HANGING_SIGN.get().asItem());
-        this.tag(ItemTags.MUSIC_DISCS).add(
-                AetherItems.MUSIC_DISC_AETHER_TUNE.get(),
-                AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(),
-                AetherItems.MUSIC_DISC_CHINCHILLA.get(),
-                AetherItems.MUSIC_DISC_HIGH.get(),
-                AetherItems.MUSIC_DISC_KLEPTO.get(),
-                AetherItems.MUSIC_DISC_SLIDERS_WRATH.get());
         this.tag(ItemTags.BOOKSHELF_BOOKS).add(AetherItems.BOOK_OF_LORE.get());
         this.tag(ItemTags.BEACON_PAYMENT_ITEMS).add(
                 AetherItems.ZANITE_GEMSTONE.get(),
@@ -439,6 +403,35 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.ZANITE_HOE.get(),
                 AetherItems.GRAVITITE_HOE.get(),
                 AetherItems.VALKYRIE_HOE.get());
+        this.tag(ItemTags.HEAD_ARMOR).add(
+            AetherItems.ZANITE_HELMET.get(),
+            AetherItems.GRAVITITE_HELMET.get(),
+            AetherItems.NEPTUNE_HELMET.get(),
+            AetherItems.PHOENIX_HELMET.get(),
+            AetherItems.OBSIDIAN_HELMET.get(),
+            AetherItems.VALKYRIE_HELMET.get());
+        this.tag(ItemTags.CHEST_ARMOR).add(
+            AetherItems.ZANITE_CHESTPLATE.get(),
+            AetherItems.GRAVITITE_CHESTPLATE.get(),
+            AetherItems.NEPTUNE_CHESTPLATE.get(),
+            AetherItems.PHOENIX_CHESTPLATE.get(),
+            AetherItems.OBSIDIAN_CHESTPLATE.get(),
+            AetherItems.VALKYRIE_CHESTPLATE.get());
+        this.tag(ItemTags.LEG_ARMOR).add(
+            AetherItems.ZANITE_LEGGINGS.get(),
+            AetherItems.GRAVITITE_LEGGINGS.get(),
+            AetherItems.NEPTUNE_LEGGINGS.get(),
+            AetherItems.PHOENIX_LEGGINGS.get(),
+            AetherItems.OBSIDIAN_LEGGINGS.get(),
+            AetherItems.VALKYRIE_LEGGINGS.get());
+        this.tag(ItemTags.FOOT_ARMOR).add(
+            AetherItems.ZANITE_BOOTS.get(),
+            AetherItems.GRAVITITE_BOOTS.get(),
+            AetherItems.NEPTUNE_BOOTS.get(),
+            AetherItems.PHOENIX_BOOTS.get(),
+            AetherItems.OBSIDIAN_BOOTS.get(),
+            AetherItems.VALKYRIE_BOOTS.get(),
+            AetherItems.SENTRY_BOOTS.get());
         this.tag(ItemTags.TRIMMABLE_ARMOR).add(
                 AetherItems.ZANITE_HELMET.get(),
                 AetherItems.ZANITE_CHESTPLATE.get(),

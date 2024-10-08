@@ -1,6 +1,5 @@
 package com.aetherteam.aether.world.structurepiece.silverdungeon;
 
-import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

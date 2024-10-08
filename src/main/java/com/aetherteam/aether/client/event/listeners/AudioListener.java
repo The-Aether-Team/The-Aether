@@ -6,8 +6,8 @@ import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundEngine;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
-import net.neoforged.neoforge.event.TickEvent;
 
 public class AudioListener {
     /**
@@ -34,10 +34,8 @@ public class AudioListener {
     /**
      * @see AudioHooks#tick()
      */
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            AudioHooks.tick();
-        }
+    public static void onClientTick(ClientTickEvent event) {
+        AudioHooks.tick();
     }
 
     /**

@@ -37,7 +37,7 @@ public class SkyrootBucketItem extends BucketItem {
      */
     public static final Map<Supplier<? extends Item>, Supplier<? extends Item>> REPLACEMENTS = new HashMap<>();
 
-    public SkyrootBucketItem(Supplier<? extends Fluid> supplier, Item.Properties properties) {
+    public SkyrootBucketItem(Fluid supplier, Item.Properties properties) {
         super(supplier, properties);
     }
 
@@ -53,9 +53,7 @@ public class SkyrootBucketItem extends BucketItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
-        BlockHitResult blockhitResult = getPlayerPOVHitResult(level, player, this.getFluid() == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
-        InteractionResultHolder<ItemStack> interactionResult = EventHooks.onBucketUse(player, level, heldStack, blockhitResult);
-        if (interactionResult != null) return interactionResult;
+        BlockHitResult blockhitResult = getPlayerPOVHitResult(level, player, this.content == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
         if (blockhitResult.getType() == HitResult.Type.MISS) {
             return InteractionResultHolder.pass(heldStack);
         } else if (blockhitResult.getType() != HitResult.Type.BLOCK) {
@@ -65,7 +63,7 @@ public class SkyrootBucketItem extends BucketItem {
             Direction direction = blockhitResult.getDirection();
             BlockPos relativePos = blockPos.relative(direction);
             if (level.mayInteract(player, blockPos) && player.mayUseItemAt(relativePos, direction, heldStack)) {
-                if (this.getFluid() == Fluids.EMPTY) {
+                if (this.content == Fluids.EMPTY) {
                     BlockState blockState = level.getBlockState(blockPos);
                     FluidState fluidState = level.getFluidState(blockPos);
                     if (blockState.getBlock() instanceof BucketPickup bucketPickup && (blockState.is(AetherTags.Blocks.ALLOWED_BUCKET_PICKUP) || fluidState.is(AetherTags.Fluids.ALLOWED_BUCKET_PICKUP))) {
@@ -114,8 +112,7 @@ public class SkyrootBucketItem extends BucketItem {
         for (Map.Entry<Supplier<? extends Item>, Supplier<? extends Item>> entry : REPLACEMENTS.entrySet()) {
             if (filledItem.get() == entry.getKey().get()) {
                 Item replacedItem = entry.getValue().get();
-                ItemStack newStack = new ItemStack(replacedItem);
-                newStack.setTag(filledStack.getTag());
+                ItemStack newStack = new ItemStack(replacedItem.builtInRegistryHolder(), 1, filledStack.getComponentsPatch());
                 return newStack;
             }
         }
@@ -134,6 +131,6 @@ public class SkyrootBucketItem extends BucketItem {
      * [CODE COPY] - {@link BucketItem#canBlockContainFluid(Player, Level, BlockPos, BlockState)}.
      */
     protected boolean canBlockContainFluid(Player player, Level level, BlockPos pos, BlockState state) {
-        return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(player, level, pos, state, this.getFluid());
+        return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(player, level, pos, state, this.content);
     }
 }

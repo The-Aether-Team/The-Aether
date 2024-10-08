@@ -38,7 +38,6 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
     private static final ResourceLocation AETHER_LOGO = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/aether.png");
     public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU, 20, 600, true);
     private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/panorama/panorama")));
-    private AetherModUpdateIndicator modUpdateNotification;
     private boolean alignedLeft;
     private int rows;
 
@@ -55,8 +54,6 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
     protected void init() {
         super.init();
         this.setupButtons();
-        this.modUpdateNotification = new AetherModUpdateIndicator(this);
-        this.modUpdateNotification.init();
     }
 
     public void setupButtons() {
@@ -167,10 +164,6 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
             }
         }
         TitleScreenBehavior.super.handleImageButtons(this, xOffset);
-
-        if (fadeAmount >= 1.0F) {
-            this.modUpdateNotification.render(guiGraphics, mouseX, mouseY, partialTicks);
-        }
     }
 
     /**

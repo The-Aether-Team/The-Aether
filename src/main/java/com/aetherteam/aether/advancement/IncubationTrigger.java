@@ -8,7 +8,6 @@ import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Optional;
@@ -28,8 +27,8 @@ public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.
 
     public record Instance(Optional<ContextAwarePredicate> player, Optional<ItemPredicate> item) implements SimpleInstance {
         public static final Codec<Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(IncubationTrigger.Instance::player),
-                        ExtraCodecs.strictOptionalField(ItemPredicate.CODEC, "item").forGetter(IncubationTrigger.Instance::item))
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(IncubationTrigger.Instance::player),
+                        ItemPredicate.CODEC.optionalFieldOf("item").forGetter(IncubationTrigger.Instance::item))
                 .apply(instance, IncubationTrigger.Instance::new));
 
         public static Criterion<Instance> forItem(ItemPredicate item) {
@@ -37,7 +36,7 @@ public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.
         }
 
         public boolean test(ItemStack stack) {
-            return this.item.isEmpty() || this.item.get().matches(stack);
+            return this.item.isEmpty() || this.item.get().test(stack);
         }
     }
 }

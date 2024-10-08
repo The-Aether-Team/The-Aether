@@ -1,10 +1,10 @@
 package com.aetherteam.aether.client.gui.component.inventory;
 
 import com.aetherteam.aether.network.packet.serverbound.SunAltarUpdatePacket;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class SunAltarSlider extends AbstractSliderButton {
     private final Level level;

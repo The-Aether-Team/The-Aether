@@ -6,7 +6,6 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -15,7 +14,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.EnumMap;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class AetherArmorMaterials {
     public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = net.neoforged.neoforge.registries.DeferredRegister.create(Registries.ARMOR_MATERIAL, Aether.MODID);

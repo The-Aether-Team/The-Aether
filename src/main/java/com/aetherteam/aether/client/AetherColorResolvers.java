@@ -6,7 +6,7 @@ import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.mixin.mixins.client.accessor.BlockColorsAccessor;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
@@ -51,7 +51,7 @@ public class AetherColorResolvers {
      * @see AetherClient#eventSetup()
      */
     public static void registerItemColor(RegisterColorHandlersEvent.Item event) {
-        event.register((color, itemProvider) -> itemProvider > 0 ? -1 : ((DyeableLeatherItem) color.getItem()).getColor(color), AetherItems.LEATHER_GLOVES.get());
+        event.register((color, itemProvider) -> itemProvider > 0 ? -1 : DyedItemColor.getOrDefault(color, -6265536), AetherItems.LEATHER_GLOVES.get());
         for (MoaEggItem moaEggItem : MoaEggItem.moaEggs()) {
             event.register((color, itemProvider) -> moaEggItem.getColor(), moaEggItem);
         }

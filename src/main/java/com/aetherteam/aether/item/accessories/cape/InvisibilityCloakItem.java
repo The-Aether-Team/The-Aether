@@ -8,12 +8,12 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.LivingEntityAccessor;
 import com.aetherteam.aether.network.packet.clientbound.SetInvisibilityPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import io.wispforest.accessories.api.slot.SlotReference;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
  * Additional invisibility behavior is handled with {@link com.aetherteam.aether.client.event.listeners.abilities.AccessoryAbilityClientListener#onRenderPlayer(RenderPlayerEvent.Pre)}

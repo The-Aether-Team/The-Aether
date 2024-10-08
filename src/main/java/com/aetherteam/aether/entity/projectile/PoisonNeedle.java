@@ -11,12 +11,12 @@ import net.minecraft.world.level.Level;
 
 public class PoisonNeedle extends AbstractDart {
     public PoisonNeedle(EntityType<? extends PoisonNeedle> type, Level level) {
-        super(type, level, ItemStack.EMPTY);
+        super(type, level);
         this.setBaseDamage(0.25);
     }
 
     public PoisonNeedle(Level level, LivingEntity shooter) {
-        super(AetherEntityTypes.POISON_NEEDLE.get(), level, shooter, ItemStack.EMPTY);
+        super(AetherEntityTypes.POISON_NEEDLE.get(), level, shooter);
         this.setBaseDamage(0.25);
     }
 
@@ -28,6 +28,6 @@ public class PoisonNeedle extends AbstractDart {
     @Override
     protected void doPostHurtEffects(LivingEntity living) {
         super.doPostHurtEffects(living);
-        living.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false, true));
+        living.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION, 500, 0, false, false, true));
     }
 }

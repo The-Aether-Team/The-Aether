@@ -8,8 +8,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 
-import java.util.function.Supplier;
-
 public class PendantItem extends AccessoryItem implements SlotIdentifierHolder {
     protected ResourceLocation PENDANT_LOCATION;
 

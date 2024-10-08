@@ -28,7 +28,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.NeoForgeMod;
 
 import java.util.EnumSet;
 import java.util.List;

@@ -20,7 +20,6 @@ import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.loot.AetherLootContexts;
 import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
-import net.neoforged.neoforge.network.PacketDistributor;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -47,9 +46,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.ToolAction;
-import net.neoforged.neoforge.common.ToolActions;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -58,6 +57,7 @@ import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
@@ -215,7 +215,7 @@ public class AbilityHooks {
 
     public static class ToolHooks {
         /**
-         * Blocks able to be stripped with {@link ToolActions#AXE_STRIP}, and the equivalent result block.
+         * Blocks able to be stripped with {@link ItemAbilities#AXE_STRIP}, and the equivalent result block.
          */
         public static final Map<Block, Block> STRIPPABLES = (new ImmutableMap.Builder<Block, Block>())
                 .put(AetherBlocks.SKYROOT_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
@@ -225,7 +225,7 @@ public class AbilityHooks {
                 .build();
 
         /**
-         * Blocks able to be flattened with {@link ToolActions#SHOVEL_FLATTEN}, and the equivalent result block.
+         * Blocks able to be flattened with {@link ItemAbilities#SHOVEL_FLATTEN}, and the equivalent result block.
          */
         public static final Map<Block, Block> FLATTENABLES = (new ImmutableMap.Builder<Block, Block>())
                 .put(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT_PATH.get())
@@ -234,7 +234,7 @@ public class AbilityHooks {
                 .build();
 
         /**
-         * Blocks able to be tilled with {@link ToolActions#HOE_TILL}, and the equivalent result block.
+         * Blocks able to be tilled with {@link ItemAbilities#HOE_TILL}, and the equivalent result block.
          */
         public static final Map<Block, Block> TILLABLES = (new ImmutableMap.Builder<Block, Block>())
                 .put(AetherBlocks.AETHER_DIRT.get(), AetherBlocks.AETHER_FARMLAND.get())
@@ -255,17 +255,17 @@ public class AbilityHooks {
          * @return The new {@link BlockState} of the block.
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#setupToolModifications(BlockEvent.BlockToolModificationEvent)
          */
-        public static BlockState setupToolActions(LevelAccessor accessor, BlockPos pos, BlockState old, ToolAction action) {
+        public static BlockState setupItemAbilities(LevelAccessor accessor, BlockPos pos, BlockState old, ToolAction action) {
             Block oldBlock = old.getBlock();
-            if (action == ToolActions.AXE_STRIP) {
+            if (action == ItemAbilities.AXE_STRIP) {
                 if (STRIPPABLES.containsKey(oldBlock)) {
                     return STRIPPABLES.get(oldBlock).withPropertiesOf(old);
                 }
-            } else if (action == ToolActions.SHOVEL_FLATTEN) {
+            } else if (action == ItemAbilities.SHOVEL_FLATTEN) {
                 if (FLATTENABLES.containsKey(oldBlock)) {
                     return FLATTENABLES.get(oldBlock).withPropertiesOf(old);
                 }
-            } else if (action == ToolActions.HOE_TILL) {
+            } else if (action == ItemAbilities.HOE_TILL) {
                 if (accessor.getBlockState(pos.above()).isAir()) {
                     if (TILLABLES.containsKey(oldBlock)) {
                         return TILLABLES.get(oldBlock).withPropertiesOf(old);
@@ -341,7 +341,7 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#doGoldenOakStripping(BlockEvent.BlockToolModificationEvent)
          */
         public static void stripGoldenOak(LevelAccessor accessor, BlockState state, ItemStack stack, ToolAction action, UseOnContext context) {
-            if (action == ToolActions.AXE_STRIP) {
+            if (action == ItemAbilities.AXE_STRIP) {
                 if (accessor instanceof Level level) {
                     if (state.is(AetherTags.Blocks.GOLDEN_OAK_LOGS) && stack.is(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)) {
                         if (level.getServer() != null && level instanceof ServerLevel serverLevel) {

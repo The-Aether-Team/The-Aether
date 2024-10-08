@@ -161,7 +161,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
     }
 
     @Override
-    public void equipSaddle(@Nullable SoundSource soundCategory) {
+    public void equipSaddle(ItemStack stack, @Nullable SoundSource soundCategory) {
         this.setSaddled(true);
         if (soundCategory != null && this.getSaddledSound() != null) {
             this.level().playSound(null, this, this.getSaddledSound(), soundCategory, 0.5F, 1.0F);

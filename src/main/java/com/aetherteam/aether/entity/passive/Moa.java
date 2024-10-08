@@ -23,8 +23,6 @@ import com.aetherteam.aether.network.packet.clientbound.MoaInteractPacket;
 import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
-import net.minecraft.world.level.pathfinder.PathType;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -56,9 +54,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -215,7 +213,7 @@ public class Moa extends MountableAnimal implements WingedBird {
     @Override
     public void tick() {
         super.tick();
-        AttributeInstance gravity = this.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
+        AttributeInstance gravity = this.getAttribute(Attributes.GRAVITY);
         if (gravity != null) {
             double max = this.isVehicle() ? -0.5 : -0.1;
             double fallSpeed = Math.max(gravity.getValue() * -1.25, max); // Entity isn't allowed to fall too slowly from gravity.
@@ -384,7 +382,7 @@ public class Moa extends MountableAnimal implements WingedBird {
                     this.setFollowing(null);
                 }
             } else { // Sits a tamed Moa down when right-clicked with a Nature Staff.
-                itemStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+                itemStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
                 this.setSitting(!this.isSitting());
                 this.spawnExplosionParticle();
             }

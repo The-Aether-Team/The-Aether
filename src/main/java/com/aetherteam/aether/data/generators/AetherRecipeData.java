@@ -326,7 +326,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Items.SADDLE, 1)
                 .define('L', Items.LEATHER)
-                .define('S', Items.STRINGS)
+                .define('S', Items.STRING)
                 .pattern("LLL")
                 .pattern("LSL")
                 .unlockedBy(getHasName(Items.LEATHER), has(Items.LEATHER))

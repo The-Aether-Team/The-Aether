@@ -56,8 +56,8 @@ public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T> 
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.leftWingInner.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.rightWingInner.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
+        this.leftWingInner.render(poseStack, buffer, packedLight, packedOverlay, color);
+        this.rightWingInner.render(poseStack, buffer, packedLight, packedOverlay, color);
     }
 }

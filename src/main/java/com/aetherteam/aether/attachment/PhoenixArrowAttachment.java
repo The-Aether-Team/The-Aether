@@ -2,9 +2,9 @@ package com.aetherteam.aether.attachment;
 
 import com.aetherteam.aether.network.packet.PhoenixArrowSyncPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.HitResult;

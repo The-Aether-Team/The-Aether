@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 public class FlamingSwordItem extends SwordItem {
@@ -21,7 +22,7 @@ public class FlamingSwordItem extends SwordItem {
      * @see Aether#eventSetup()
      * @see FlamingSwordItem#handleFlamingSwordAbility(LivingEntity, DamageSource)
      */
-    public static void onLivingDamage(LivingDamageEvent event) {
+    public static void onLivingDamage(LivingDamageEvent.Post event) {
         LivingEntity target = event.getEntity();
         DamageSource damageSource = event.getSource();
         handleFlamingSwordAbility(target, damageSource);
@@ -39,11 +40,11 @@ public class FlamingSwordItem extends SwordItem {
                 ItemStack heldStack = attacker.getMainHandItem();
                 if (heldStack.is(AetherItems.FLAMING_SWORD.get())) {
                     int defaultTime = 30;
-                    int fireAspectModifier = EnchantmentHelper.getFireAspect(attacker);
+                    int fireAspectModifier = EnchantmentHelper.getEnchantmentLevel(attacker.level().holderOrThrow(Enchantments.FIRE_ASPECT), attacker);
                     if (fireAspectModifier > 0) {
                         defaultTime += (fireAspectModifier * 4);
                     }
-                    target.setSecondsOnFire(defaultTime);
+                    target.setRemainingFireTicks(defaultTime);
                 }
             }
         }

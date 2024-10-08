@@ -48,7 +48,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.IShearable;
-import net.neoforged.neoforge.common.NeoForgeMod;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -165,7 +164,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
         super.tick();
         if (this.getPuffed()) {
             this.checkSlowFallDistance();
-            AttributeInstance gravity = this.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
+            AttributeInstance gravity = this.getAttribute(Attributes.GRAVITY);
             if (gravity != null) {
                 double fallSpeed = Math.max(gravity.getValue() * -0.625, -0.05);
                 if (this.getDeltaMovement().y() < fallSpeed) {

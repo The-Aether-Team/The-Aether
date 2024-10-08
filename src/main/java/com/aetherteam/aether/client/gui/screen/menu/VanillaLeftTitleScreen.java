@@ -18,7 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.neoforged.neoforge.client.ClientHooks;
-import net.neoforged.neoforge.client.gui.TitleScreenModUpdateIndicator;
 
 /**
  * A left-aligned variant of Minecraft's title screen.
@@ -27,7 +26,6 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
     private static final ResourceLocation PANORAMA_OVERLAY = ResourceLocation.withDefaultNamespace("textures/gui/title/background/panorama_overlay.png");
     private final PanoramaRenderer panorama = new PanoramaRenderer(TitleScreen.CUBE_MAP);
     private final boolean showMinceraftEasterEgg = (double) RandomSource.create().nextFloat() < 1.0E-4D;
-    private TitleScreenModUpdateIndicator modUpdateNotification;
 
     public VanillaLeftTitleScreen() {
         ((TitleScreenAccessor) this).aether$setFading(true);
@@ -56,9 +54,6 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
                         button.setY(80 + buttonCount * 25);
                         button.setWidth(200);
                         buttonCount++;
-                        if (button.getMessage().equals(Component.translatable("fml.menu.mods"))) {
-                            this.modUpdateNotification = TitleScreenModUpdateIndicator.init(this, button);
-                        }
                     }
                 }
             }
@@ -110,10 +105,6 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
             }
         }
         TitleScreenBehavior.super.handleImageButtons(this, xOffset);
-
-        if (fadeAmount >= 1.0F) {
-            this.modUpdateNotification.render(guiGraphics, mouseX, mouseY, partialTicks);
-        }
     }
 
     /**

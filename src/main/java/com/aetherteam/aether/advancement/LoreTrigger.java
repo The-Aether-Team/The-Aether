@@ -8,7 +8,6 @@ import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
@@ -29,8 +28,8 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
 
     public record Instance(Optional<ContextAwarePredicate> player, Optional<ItemPredicate> item) implements SimpleInstance {
         public static final Codec<LoreTrigger.Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(LoreTrigger.Instance::player),
-                        ExtraCodecs.strictOptionalField(ItemPredicate.CODEC, "item").forGetter(LoreTrigger.Instance::item))
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(LoreTrigger.Instance::player),
+                        ItemPredicate.CODEC.optionalFieldOf("item").forGetter(LoreTrigger.Instance::item))
                 .apply(instance, LoreTrigger.Instance::new));
 
         public static Criterion<Instance> forItem(ItemPredicate item) {
@@ -46,7 +45,7 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
         }
 
         public boolean test(ItemStack stack) {
-            return this.item.isEmpty() || this.item.get().matches(stack);
+            return this.item.isEmpty() || this.item.get().test(stack);
         }
     }
 }

@@ -5,7 +5,7 @@ import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.world.inventory.RecipeBookMenu;
 import net.minecraft.world.inventory.Slot;
 
-public interface RecipeBookBehavior<T extends RecipeBookMenu<?>, V extends AbstractContainerScreen<T> & RecipeUpdateListener> {
+public interface RecipeBookBehavior<T extends RecipeBookMenu<?, ?>, V extends AbstractContainerScreen<T> & RecipeUpdateListener> {
     default void containerTick(V screen) {
         screen.getRecipeBookComponent().tick();
     }

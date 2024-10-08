@@ -5,8 +5,8 @@ import com.aetherteam.aether.client.event.hooks.DimensionClientHooks;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.FogRenderer;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent;
-import net.neoforged.neoforge.event.TickEvent;
 import org.apache.commons.lang3.tuple.Triple;
 
 public class DimensionClientListener {
@@ -62,9 +62,7 @@ public class DimensionClientListener {
     /**
      * @see DimensionClientHooks#tickTime()
      */
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.START) {
-            DimensionClientHooks.tickTime();
-        }
+    public static void onClientTick(ClientTickEvent event) {
+        DimensionClientHooks.tickTime();
     }
 }

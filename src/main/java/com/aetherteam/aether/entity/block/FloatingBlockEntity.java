@@ -14,7 +14,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -22,6 +21,8 @@ import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
@@ -44,10 +45,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.util.ITeleporter;
 
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
@@ -68,6 +69,7 @@ public class FloatingBlockEntity extends Entity {
     private int floatDistance;
     @Nullable
     private CompoundTag blockData;
+    public boolean forceTickAfterTeleportToDuplicate;
     /**
      * Detects if this block was floated naturally or by a player's interaction. Naturally floated blocks are not able to drop as an item.
      */
@@ -117,7 +119,8 @@ public class FloatingBlockEntity extends Entity {
             }
 
             this.move(MoverType.SELF, this.getDeltaMovement());
-            if (!this.level().isClientSide() && this.level() instanceof ServerLevel serverLevel) {
+            this.handlePortal();
+            if (!this.level().isClientSide() && this.level() instanceof ServerLevel serverLevel && (this.isAlive() || this.forceTickAfterTeleportToDuplicate)) {
                 BlockPos blockPos1 = this.blockPosition();
                 boolean isConcrete = this.getBlockState().getBlock() instanceof ConcretePowderBlock;
                 boolean canConvert = isConcrete && this.level().getFluidState(blockPos1).is(FluidTags.WATER);
@@ -173,16 +176,14 @@ public class FloatingBlockEntity extends Entity {
                                     if (this.blockData != null && this.getBlockState().hasBlockEntity()) {
                                         BlockEntity blockEntity = this.level().getBlockEntity(blockPos1);
                                         if (blockEntity != null) {
-                                            CompoundTag tag = blockEntity.saveWithoutMetadata();
-                                            for (String string : this.blockData.getAllKeys()) {
-                                                Tag blockDataTag = this.blockData.get(string);
-                                                if (blockDataTag != null) {
-                                                    tag.put(string, blockDataTag.copy());
-                                                }
+                                            CompoundTag tag = blockEntity.saveWithoutMetadata(this.level().registryAccess());
+
+                                            for (String s : this.blockData.getAllKeys()) {
+                                                tag.put(s, this.blockData.get(s).copy());
                                             }
 
                                             try {
-                                                blockEntity.load(tag);
+                                                blockEntity.loadWithComponents(tag, this.level().registryAccess());
                                             } catch (Exception exception) {
                                                 Aether.LOGGER.error("Failed to load block entity from floating block", exception);
                                             }
@@ -285,8 +286,13 @@ public class FloatingBlockEntity extends Entity {
 
     @Nullable
     @Override
-    public Entity changeDimension(ServerLevel destination, ITeleporter teleporter) {
-        return null;
+    public Entity changeDimension(DimensionTransition transition) {
+        ResourceKey<Level> resourcekey = transition.newLevel().dimension();
+        ResourceKey<Level> resourcekey1 = this.level().dimension();
+        boolean flag = (resourcekey1 == Level.END || resourcekey == Level.END) && resourcekey1 != resourcekey;
+        Entity entity = super.changeDimension(transition);
+        this.forceTickAfterTeleportToDuplicate = entity != null && flag;
+        return entity;
     }
 
     @Override
@@ -303,7 +309,6 @@ public class FloatingBlockEntity extends Entity {
     public boolean displayFireAnimation() {
         return false;
     }
-
 
     @Override
     protected Entity.MovementEmission getMovementEmission() {
@@ -359,8 +364,8 @@ public class FloatingBlockEntity extends Entity {
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return new ClientboundAddEntityPacket(this, Block.getId(this.getBlockState()));
+    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entity) {
+        return new ClientboundAddEntityPacket(this, entity, Block.getId(this.getBlockState()));
     }
 
     @Override

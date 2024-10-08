@@ -23,23 +23,21 @@ import com.aetherteam.aether.perk.data.ClientHaloPerkData;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
 import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.neoforged.neoforge.network.PacketDistributor;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.*;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -49,6 +47,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nullable;
@@ -370,7 +369,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
                                 if (!level.isClientSide()) {
                                     level.addFreshEntity(parachute);
                                     player.startRiding(parachute);
-                                    stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
+                                    stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                                 }
                                 parachute.spawnExplosionParticle();
                                 break;
@@ -422,7 +421,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
 
     private void removeRemedyDuration(Player player) {
         if (this.remedyStartDuration > 0) {
-            if (!player.hasEffect(AetherEffects.REMEDY.get())) {
+            if (!player.hasEffect(AetherEffects.REMEDY)) {
                 this.remedyStartDuration = 0;
             }
         }

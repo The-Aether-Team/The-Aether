@@ -2,8 +2,8 @@ package com.aetherteam.aether.world.placementmodifier;
 
 import com.aetherteam.aether.data.ConfigSerializationUtil;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;

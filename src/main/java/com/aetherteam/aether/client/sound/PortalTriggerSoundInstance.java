@@ -1,6 +1,5 @@
 package com.aetherteam.aether.client.sound;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;

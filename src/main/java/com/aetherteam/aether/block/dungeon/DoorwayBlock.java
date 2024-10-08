@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
@@ -52,7 +52,6 @@ public class DoorwayBlock extends Block {
 
     /**
      * Toggles the block between invisible and not invisible if a creative player interacts with it.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
      *
      * @param state  The {@link BlockState} of the block.
      * @param level  The {@link Level} the block is in.
@@ -62,27 +61,24 @@ public class DoorwayBlock extends Block {
      * @param hit    The {@link BlockHitResult} of the interaction.
      * @return The {@link InteractionResult} of the interaction.
      */
-    @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (player.isCreative()) {
             BlockState newState = state.cycle(INVISIBLE);
             level.setBlock(pos, newState, 1 | 2);
             return InteractionResult.SUCCESS;
         } else {
-            return super.use(state, level, pos, player, hand, hit);
+            return super.useWithoutItem(state, level, pos, player, hit);
         }
     }
 
     /**
      * Spawns smoke particles when a player attempts to place anything inside the block.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
      *
      * @param state   The {@link BlockState} of the block.
      * @param context The {@link BlockPlaceContext} of the replacement attempt.
      * @return Whether the block can be replaced, as a {@link Boolean}.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
         boolean flag = super.canBeReplaced(state, context);
@@ -121,7 +117,6 @@ public class DoorwayBlock extends Block {
 
     /**
      * Creates a small hitbox for doorway blocks when invisible and hovered over by creative players.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
      *
      * @param state   The {@link BlockState} of the block.
      * @param level   The {@link Level} the block is in.
@@ -129,7 +124,6 @@ public class DoorwayBlock extends Block {
      * @param context The {@link CollisionContext} of the entity with the block.
      * @return The {@link VoxelShape} of the block.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (state.getValue(INVISIBLE)) {
@@ -141,10 +135,6 @@ public class DoorwayBlock extends Block {
         return super.getShape(state, level, pos, context);
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (context instanceof EntityCollisionContext entity && entity.getEntity() != null && this.blockedEntityTypeSupplier.get() != null && entity.getEntity().getType() == this.blockedEntityTypeSupplier.get()) {
@@ -164,17 +154,17 @@ public class DoorwayBlock extends Block {
     }
 
     /**
-     * Gets the {@link BlockPathTypes} corresponding to this block for mob navigation checks.
+     * Gets the {@link PathType} corresponding to this block for mob navigation checks.
      *
      * @param state The {@link BlockState} of the block.
      * @param level The {@link Level} the block is in.
      * @param pos   The {@link BlockPos} of the block.
      * @param mob   The {@link Mob} trying to pathfind in respect to this block.
-     * @return The {@link BlockPathTypes} corresponding to this block.
+     * @return The {@link PathType} corresponding to this block.
      */
     @Nullable
     @Override
-    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
+    public PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
         return AetherBlockPathTypes.BOSS_DOORWAY;
     }
 }

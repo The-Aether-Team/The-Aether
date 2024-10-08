@@ -11,7 +11,6 @@ import com.aetherteam.aether.network.packet.serverbound.ClearItemPacket;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
-import net.neoforged.neoforge.network.PacketDistributor;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

@@ -3,7 +3,6 @@ package com.aetherteam.aether.command;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.network.packet.clientbound.HealthResetPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
-import net.neoforged.neoforge.network.PacketDistributor;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -17,6 +16,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Collection;
 

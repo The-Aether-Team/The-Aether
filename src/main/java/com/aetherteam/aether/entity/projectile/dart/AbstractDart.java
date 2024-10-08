@@ -4,6 +4,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.mixin.mixins.common.accessor.PlayerAccessor;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -23,25 +24,22 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public abstract class AbstractDart extends AbstractArrow {
     private int ticksInAir = 0;
 
-    protected AbstractDart(EntityType<? extends AbstractDart> type, Level level, ItemStack pickupItem) {
-        super(type, level, pickupItem);
+    protected AbstractDart(EntityType<? extends AbstractDart> type, Level level) {
+        super(type, level);
     }
 
-    public AbstractDart(EntityType<? extends AbstractDart> type, Level level, LivingEntity shooter, ItemStack pickupItem) {
-        super(type, shooter, level, pickupItem);
+    public AbstractDart(EntityType<? extends AbstractDart> type, Level level, LivingEntity shooter, ItemStack pickupItem, @Nullable ItemStack firedFromWeapon) {
+        super(type, shooter, level, pickupItem, firedFromWeapon);
     }
 
-    protected AbstractDart(EntityType<? extends AbstractDart> type, Level level, Supplier<Item> pickupItem) {
-        super(type, level, new ItemStack(pickupItem.get()));
-    }
-
-    public AbstractDart(EntityType<? extends AbstractDart> type, Level level, LivingEntity shooter, Supplier<Item> pickupItem) {
-        super(type, shooter, level, new ItemStack(pickupItem.get()));
+    public AbstractDart(EntityType<? extends AbstractDart> type, Level level, LivingEntity shooter, Supplier<Item> pickupItem, @Nullable ItemStack firedFromWeapon) {
+        super(type, shooter, level, new ItemStack(pickupItem.get()), firedFromWeapon);
     }
 
     @Override
@@ -106,7 +104,7 @@ public abstract class AbstractDart extends AbstractArrow {
         boolean flag = entity.getType() == EntityType.ENDERMAN;
         int k = entity.getRemainingFireTicks();
         if (this.isOnFire() && !flag) {
-            entity.setSecondsOnFire(5);
+            entity.setRemainingFireTicks(5);
         }
 
         if (entity.hurt(damageSource, (float) i)) {
@@ -115,17 +113,10 @@ public abstract class AbstractDart extends AbstractArrow {
             }
 
             if (entity instanceof LivingEntity livingentity) {
-                if (this.getKnockback() > 0) {
-                    double d0 = Math.max(0.0, 1.0 - livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
-                    Vec3 vec3 = this.getDeltaMovement().multiply(1.0, 0.0, 1.0).normalize().scale((double) this.getKnockback() * 0.6 * d0);
-                    if (vec3.lengthSqr() > 0.0) {
-                        livingentity.push(vec3.x(), 0.1, vec3.z());
-                    }
-                }
+                this.doKnockback(livingentity, damageSource);
 
-                if (!this.level().isClientSide() && owner instanceof LivingEntity) {
-                    EnchantmentHelper.doPostHurtEffects(livingentity, owner);
-                    EnchantmentHelper.doPostDamageEffects((LivingEntity) owner, livingentity);
+                if (!this.level().isClientSide() && owner instanceof LivingEntity && this.level() instanceof ServerLevel serverlevel) {
+                    EnchantmentHelper.doPostAttackEffectsWithItemSource(serverlevel, livingentity, damageSource, this.getWeaponItem());
                 }
 
                 this.doPostHurtEffects(livingentity);

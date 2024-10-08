@@ -3,7 +3,6 @@ package com.aetherteam.aether.client.gui.component.inventory;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.network.packet.serverbound.OpenInventoryPacket;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
@@ -14,6 +13,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
  * [CODE COPY] - {@link top.theillusivec4.curios.client.gui.CuriosButton}.<br><br>

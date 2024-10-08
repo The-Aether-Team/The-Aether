@@ -9,7 +9,6 @@ import net.minecraft.world.entity.Entity;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.event.TickEvent;
 
 public class WorldPreviewListener {
     /**
@@ -55,10 +54,8 @@ public class WorldPreviewListener {
     /**
      * @see WorldPreviewHooks#tickMenuWhenPaused()
      */
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            WorldPreviewHooks.tickMenuWhenPaused();
-        }
+    public static void onClientTick(ClientTickEvent event) {
+        WorldPreviewHooks.tickMenuWhenPaused();
     }
 
     /**

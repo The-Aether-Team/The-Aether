@@ -13,8 +13,6 @@ import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 
-import java.util.function.Supplier;
-
 public class SkyrootMobBucketItem extends MobBucketItem {
     public SkyrootMobBucketItem(EntityType<?> entitySupplier, Fluid fluidSupplier, SoundEvent soundSupplier, Item.Properties properties) { //todo may crash
         super(entitySupplier, fluidSupplier, soundSupplier, properties);

@@ -19,7 +19,6 @@ import net.neoforged.api.distmarker.OnlyIn;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
 public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
     protected final Holder<ArmorMaterial> material;

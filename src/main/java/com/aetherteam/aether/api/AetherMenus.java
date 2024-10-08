@@ -30,7 +30,6 @@ public class AetherMenus {
 
     // Backgrounds
     private static final ResourceLocation THE_AETHER_REGULAR_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/options_background.png");
-    private static final ResourceLocation THE_AETHER_DARK_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/light_sentry_background.png");
     private static final ResourceLocation THE_AETHER_HEADER_SEPARATOR = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/header_separator.png");
     private static final ResourceLocation THE_AETHER_FOOTER_SEPARATOR = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/footer_separator.png");
     private static final WidgetSprites THE_AETHER_TAB_BUTTON = new WidgetSprites(
@@ -40,7 +39,6 @@ public class AetherMenus {
             ResourceLocation.fromNamespaceAndPath(Aether.MODID, "title/tab_highlighted"));
     private static final Menu.Background THE_AETHER_BACKGROUND = new Menu.Background()
             .regularBackground(THE_AETHER_REGULAR_BACKGROUND)
-            .darkBackground(THE_AETHER_DARK_BACKGROUND)
             .headerSeparator(THE_AETHER_HEADER_SEPARATOR)
             .footerSeparator(THE_AETHER_FOOTER_SEPARATOR)
             .tabButton(THE_AETHER_TAB_BUTTON);

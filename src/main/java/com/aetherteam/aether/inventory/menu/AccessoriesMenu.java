@@ -15,7 +15,6 @@ import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -187,8 +186,8 @@ public class AccessoriesMenu extends InventoryMenu {
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<? extends Recipe<CraftingContainer>> recipe) {
-        return recipe.value().matches(this.craftMatrix, this.player.level());
+    public boolean recipeMatches(RecipeHolder<CraftingRecipe> recipe) {
+        return recipe.value().matches(this.craftMatrix.asCraftInput(), this.player.level());
     }
 
     @Override

@@ -477,7 +477,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
         this.tag(Tags.Blocks.BOOKSHELVES).add(AetherBlocks.SKYROOT_BOOKSHELF.get());
         this.tag(Tags.Blocks.FENCE_GATES_WOODEN).add(AetherBlocks.SKYROOT_FENCE_GATE.get());
         this.tag(Tags.Blocks.FENCES_WOODEN).add(AetherBlocks.SKYROOT_FENCE.get());
-        this.tag(Tags.Blocks.GLASS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get());
+        this.tag(Tags.Blocks.GLASS_BLOCKS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get());
         this.tag(Tags.Blocks.GLASS_PANES_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS_PANE.get());
         this.tag(Tags.Blocks.ORE_RATES_SINGULAR).add(
                 AetherBlocks.AMBROSIUM_ORE.get(),
@@ -487,7 +487,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.AMBROSIUM_ORE.get(),
                 AetherBlocks.ZANITE_ORE.get(),
                 AetherBlocks.GRAVITITE_ORE.get());
-        this.tag(Tags.Blocks.STONE).addTag(AetherTags.Blocks.HOLYSTONE);
+        this.tag(Tags.Blocks.STONES).addTag(AetherTags.Blocks.HOLYSTONE);
         this.tag(Tags.Blocks.STORAGE_BLOCKS).add(
                 AetherBlocks.AMBROSIUM_BLOCK.get(),
                 AetherBlocks.ZANITE_BLOCK.get());

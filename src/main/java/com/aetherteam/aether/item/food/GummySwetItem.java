@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 public class GummySwetItem extends Item implements ConsumableItem {
     public GummySwetItem() {
@@ -30,7 +31,7 @@ public class GummySwetItem extends Item implements ConsumableItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
-        if (this.isEdible()) { // If AetherConfig.SERVER.healing_gummy_swets.get() is false.
+        if (this.getFoodProperties(heldStack, player) != null) { // If AetherConfig.SERVER.healing_gummy_swets.get() is false.
             FoodProperties foodProperties = this.getFoodProperties(heldStack, player);
             if (foodProperties != null && player.canEat(foodProperties.canAlwaysEat())) {
                 player.startUsingItem(hand);
@@ -59,7 +60,7 @@ public class GummySwetItem extends Item implements ConsumableItem {
      */
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
-        if (this.isEdible()) { // If AetherConfig.SERVER.healing_gummy_swets.get() is false.
+        if (this.getFoodProperties(stack, user) != null) { // If AetherConfig.SERVER.healing_gummy_swets.get() is false.
             return user.eat(level, stack); // Automatically handles the criteria trigger and stat awarding code.
         } else { // If AetherConfig.SERVER.healing_gummy_swets.get() is true.
             user.heal(user.getMaxHealth());
@@ -74,7 +75,7 @@ public class GummySwetItem extends Item implements ConsumableItem {
     }
 
     @Override
-    public int getUseDuration(ItemStack stack) {
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return 16;
     }
 
@@ -83,7 +84,10 @@ public class GummySwetItem extends Item implements ConsumableItem {
      * This is based on the difference of Gummy Swets being used to heal in b1.7.3 and being used for hunger in 1.2.5.
      */
     @Override
-    public boolean isEdible() {
-        return !AetherConfig.SERVER.healing_gummy_swets.get();
+    public @Nullable FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
+        if (AetherConfig.SERVER.healing_gummy_swets.get()) {
+            return null;
+        }
+        return super.getFoodProperties(stack, entity);
     }
 }

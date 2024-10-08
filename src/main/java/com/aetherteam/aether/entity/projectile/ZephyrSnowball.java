@@ -5,7 +5,6 @@ import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.PlayerAccessor;
 import com.aetherteam.aether.network.packet.clientbound.ZephyrSnowballHitPacket;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -26,6 +25,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ZephyrSnowball extends Fireball implements ItemSupplier {
     private int ticksInAir;

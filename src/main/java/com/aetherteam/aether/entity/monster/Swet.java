@@ -1,7 +1,6 @@
 package com.aetherteam.aether.entity.monster;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.MountableMob;

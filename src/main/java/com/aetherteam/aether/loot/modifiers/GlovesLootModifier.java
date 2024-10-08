@@ -1,6 +1,5 @@
 package com.aetherteam.aether.loot.modifiers;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -26,7 +25,6 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 
 import java.util.List;
-import java.util.Map;
 
 public class GlovesLootModifier extends LootModifier {
     public static final MapCodec<GlovesLootModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> codecStart(instance)
