@@ -89,7 +89,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
     }
 
     @Override
-    protected void jumpFromGround() {
+    public void jumpFromGround() {
         super.jumpFromGround();
         this.setEntityOnGround(false);
     }

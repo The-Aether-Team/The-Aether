@@ -24,15 +24,15 @@ public class PhoenixBowItem extends BowItem {
      * @return The original {@link AbstractArrow} (the Phoenix Bow doesn't modify it).
      */
     @Override
-    public AbstractArrow customArrow(AbstractArrow arrow, ItemStack stack) {
+    public AbstractArrow customArrow(AbstractArrow arrow, ItemStack projectileStack, ItemStack weaponStack) {
         var data = arrow.getData(AetherDataAttachments.PHOENIX_ARROW);
         data.setPhoenixArrow(true);
         int defaultTime = 20;
-        if (arrow.getOwner() instanceof LivingEntity livingEntity && EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAMING_ARROWS, livingEntity) > 0) {
+        if (arrow.getOwner() instanceof LivingEntity livingEntity && EnchantmentHelper.getEnchantmentLevel(livingEntity.level().holderOrThrow(Enchantments.FLAME), livingEntity) > 0) {
             defaultTime = 40;
         }
         data.setFireTime(defaultTime);
 
-        return super.customArrow(arrow, stack);
+        return super.customArrow(arrow, projectileStack, weaponStack);
     }
 }

@@ -149,7 +149,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     }
 
     @Override
-    public void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(DATA_IS_FROZEN, false);
         builder.define(DATA_FROZEN_DURATION, 0);

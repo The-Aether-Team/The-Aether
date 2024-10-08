@@ -32,7 +32,7 @@ public class LightningKnifeItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
         if (!level.isClientSide()) {
-            if (!player.getAbilities().instabuild && heldStack.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) == 0) { // Note: Lightning knives can't be enchanted with Infinity in survival, but we still implement the behavior.
+            if (!player.getAbilities().instabuild && heldStack.getEnchantmentLevel(level.holderOrThrow(Enchantments.INFINITY)) == 0) { // Note: Lightning knives can't be enchanted with Infinity in survival, but we still implement the behavior.
                 heldStack.shrink(1);
             }
             ThrownLightningKnife lightningKnife = new ThrownLightningKnife(player, level);

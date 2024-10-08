@@ -44,14 +44,14 @@ public class AetherDamageTypes {
     }
 
     public static DamageSource damageSource(Level level, ResourceKey<DamageType> key) {
-        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key));
+        return new DamageSource(level.holderOrThrow(key));
     }
 
     public static DamageSource entityDamageSource(Level level, ResourceKey<DamageType> key, @Nullable Entity entity) {
-        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key), entity);
+        return new DamageSource(level.holderOrThrow(key), entity);
     }
 
     public static DamageSource indirectEntityDamageSource(Level level, ResourceKey<DamageType> key, @Nullable Entity source, @Nullable Entity trueSource) {
-        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key), source, trueSource);
+        return new DamageSource(level.holderOrThrow(key), source, trueSource);
     }
 }

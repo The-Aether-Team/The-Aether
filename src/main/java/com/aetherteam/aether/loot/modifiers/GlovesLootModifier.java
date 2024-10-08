@@ -3,10 +3,15 @@ package com.aetherteam.aether.loot.modifiers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -26,13 +31,13 @@ import java.util.Map;
 public class GlovesLootModifier extends LootModifier {
     public static final MapCodec<GlovesLootModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> codecStart(instance)
             .and(ItemStack.CODEC.fieldOf("gloves").forGetter(modifier -> modifier.glovesStack))
-            .and(ArmorMaterials.CODEC.fieldOf("armor_material").forGetter(modifier -> modifier.armorMaterial))
+            .and(BuiltInRegistries.ARMOR_MATERIAL.holderByNameCodec().fieldOf("armor_material").forGetter(modifier -> modifier.armorMaterial))
             .apply(instance, GlovesLootModifier::new));
 
     public final ItemStack glovesStack;
-    public final ArmorMaterials armorMaterial;
+    public final Holder<ArmorMaterial> armorMaterial;
 
-    public GlovesLootModifier(LootItemCondition[] conditionsIn, ItemStack glovesStack, ArmorMaterials armorMaterial) {
+    public GlovesLootModifier(LootItemCondition[] conditionsIn, ItemStack glovesStack, Holder<ArmorMaterial> armorMaterial) {
         super(conditionsIn);
         this.glovesStack = glovesStack;
         this.armorMaterial = armorMaterial;
@@ -61,12 +66,12 @@ public class GlovesLootModifier extends LootModifier {
                         ItemStack gloves = this.glovesStack.copy();
                         int cost = 0;
                         boolean isTreasure = false;
-                        for (Map.Entry<Enchantment, Integer> enchantmentInfo : armorStack.getAllEnchantments().entrySet()) {
-                            Enchantment enchantment = enchantmentInfo.getKey();
+                        for (Object2IntMap.Entry<Holder<Enchantment>> enchantmentInfo : armorStack.getAllEnchantments().entrySet()) {
+                            Holder<Enchantment> enchantment = enchantmentInfo.getKey();
                             int level = enchantmentInfo.getValue();
-                            cost = Math.max(cost, enchantment.getMinCost(level));
+                            cost = Math.max(cost, enchantment.value().getMinCost(level));
                             if (!isTreasure) {
-                                isTreasure = enchantment.isTreasureOnly();
+                                isTreasure = enchantment.is(EnchantmentTags.TREASURE);
                             }
                             if (gloves.canApplyAtEnchantingTable(enchantment)) {
                                 gloves.enchant(enchantment, enchantmentInfo.getValue());

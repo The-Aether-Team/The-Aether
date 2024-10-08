@@ -161,7 +161,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     }
 
     @Override
-    public void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(DATA_IS_READY, false);
         builder.define(DATA_BOSS_NAME, Component.literal("Valkyrie Queen"));

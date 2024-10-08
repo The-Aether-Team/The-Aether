@@ -5,6 +5,7 @@ import com.aetherteam.aether.perk.types.Halo;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.aether.perk.types.MoaSkins;
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
@@ -26,7 +27,7 @@ public class PerkSavedData extends SavedData {
      * @return A {@link CompoundTag} with the data.
      */
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public CompoundTag save(CompoundTag tag, HolderLookup.Provider lookupProvider) {
         CompoundTag storedSkinDataTag = new CompoundTag();
         for (Map.Entry<UUID, MoaData> moaDataEntry : this.storedSkinData.entrySet()) {
             CompoundTag moaDataEntryTag = new CompoundTag();
@@ -69,7 +70,7 @@ public class PerkSavedData extends SavedData {
      * @param tag The {@link CompoundTag}.
      * @return The {@link PerkSavedData} created from the world data.
      */
-    public static PerkSavedData load(CompoundTag tag) {
+    public static PerkSavedData load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
         PerkSavedData data = PerkSavedData.create();
         for (String key : tag.getAllKeys()) {
             if (key.equals("StoredSkinData")) {

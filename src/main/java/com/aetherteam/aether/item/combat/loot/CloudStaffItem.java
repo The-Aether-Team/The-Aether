@@ -41,7 +41,7 @@ public class CloudStaffItem extends Item {
             player.swing(hand);
             if (!level.isClientSide()) {
                 if (!player.getAbilities().instabuild) {
-                    heldItem.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+                    heldItem.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
                 }
                 CloudMinion cloudMinionRight = new CloudMinion(level, player, HumanoidArm.RIGHT);
                 CloudMinion cloudMinionLeft = new CloudMinion(level, player, HumanoidArm.LEFT);

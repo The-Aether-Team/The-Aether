@@ -3,6 +3,7 @@ package com.aetherteam.aether.item.tools.abilities;
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
@@ -17,8 +18,8 @@ public interface SkyrootTool {
      * @return The new modified {@link ItemStack} of the item drop.
      * @see com.aetherteam.aether.loot.functions.DoubleDrops
      */
-    default ItemStack doubleDrops(ItemStack drop, @Nullable ItemStack tool, @Nullable BlockState state) {
-        if (tool != null && tool.getEnchantmentLevel(Enchantments.SILK_TOUCH) == 0) {
+    default ItemStack doubleDrops(Level level, ItemStack drop, @Nullable ItemStack tool, @Nullable BlockState state) {
+        if (tool != null && tool.getEnchantmentLevel(level.holderOrThrow(Enchantments.SILK_TOUCH)) == 0) {
             if (state != null && state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)) {
                 if (tool.isCorrectToolForDrops(state)) {
                     drop.setCount(2 * drop.getCount());

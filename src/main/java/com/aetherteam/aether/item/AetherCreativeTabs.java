@@ -172,7 +172,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherBlocks.TREASURE_CHEST.get());
                 output.accept(AetherBlocks.CHEST_MIMIC.get());
                 output.accept(AetherBlocks.PRESENT.get());
-                output.accept(AetherItems.createSwetBannerItemStack());
+                output.accept(AetherItems.createSwetBannerItemStack(features.holders().lookupOrThrow(Registries.BANNER_PATTERN)));
             }).build());
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> AETHER_REDSTONE_BLOCKS = CREATIVE_MODE_TABS.register("redstone_blocks", () -> CreativeModeTab.builder()
             .withTabsBefore(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "functional_blocks"))

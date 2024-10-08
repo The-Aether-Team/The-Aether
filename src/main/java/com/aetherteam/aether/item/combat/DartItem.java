@@ -58,18 +58,6 @@ public class DartItem extends Item {
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraft.world.item.ArrowItem#isInfinite(ItemStack, ItemStack, Player)}.<br><br>
-     * Checks if the Dart item is allowed to be infinite, if the dart shooter item has the Infinity enchantment and the dart item is specifically DartItem and not a subclass.
-     *
-     * @param dartShooter The dart shooter {@link ItemStack}.
-     * @return Whether the dart item ammo is allowed to be infinite, as a {@link Boolean}.
-     */
-    public boolean isInfinite(ItemStack dartShooter) {
-        int enchant = dartShooter.getEnchantmentLevel(Enchantments.INFINITY_ARROWS);
-        return enchant > 0 && this.getClass() == DartItem.class;
-    }
-
-    /**
      * @return A {@link Supplier Supplier&lt;? extends EntityType&lt;?&gt;&gt;} that gives the entity type correlating with the projectile that can be created by this dart.
      */
     public Supplier<? extends EntityType<?>> getDartEntityType() {

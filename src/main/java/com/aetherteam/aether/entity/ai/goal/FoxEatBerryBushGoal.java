@@ -59,7 +59,7 @@ public class FoxEatBerryBushGoal extends MoveToBlockGoal {
     }
 
     protected void onReachedTarget() {
-        if (EventHooks.getMobGriefingEvent(this.fox.level(), this.fox)) {
+        if (EventHooks.canEntityGrief(this.fox.level(), this.fox)) {
             BlockState blockState = this.mob.level().getBlockState(this.blockPos);
             if (blockState.is(AetherBlocks.BERRY_BUSH.get())) {
                 this.pickBlueBerries();

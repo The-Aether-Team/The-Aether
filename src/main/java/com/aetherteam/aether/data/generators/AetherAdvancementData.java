@@ -17,6 +17,8 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentPredicate;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -173,12 +175,12 @@ public class AetherAdvancementData extends AdvancementProvider {
 
             AdvancementHolder preventSwetSpawning = Advancement.Builder.advancement()
                 .parent(preventAechorPlantSpawning)
-                .display(AetherItems.createSwetBannerItemStack(),
+                .display(AetherItems.createSwetBannerItemStack(provider.lookupOrThrow(Registries.BANNER_PATTERN)),
                     Component.translatable("advancement.aether.prevent_swet_spawning"),
                     Component.translatable("advancement.aether.prevent_swet_spawning.desc"),
                     null,
                     AdvancementType.TASK, true, true, false)
-                .addCriterion("place_banner", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location(), ItemPredicate.Builder.item().of(Items.BLACK_BANNER).hasNbt(AetherItems.createSwetBannerItemStack().getTag())))
+                .addCriterion("place_banner", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location(), ItemPredicate.Builder.item().of(Items.BLACK_BANNER).hasComponents(DataComponentPredicate.allOf(AetherItems.createSwetBannerItemStack(provider.lookupOrThrow(Registries.BANNER_PATTERN)).getComponents()))))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "prevent_swet_spawning"), existingFileHelper);
 
             AdvancementHolder incubateMoa = Advancement.Builder.advancement()

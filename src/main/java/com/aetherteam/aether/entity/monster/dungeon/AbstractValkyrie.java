@@ -72,7 +72,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     }
 
     @Override
-    public void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
     }
@@ -103,7 +103,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     }
 
     @Override
-    protected void jumpFromGround() {
+    public void jumpFromGround() {
         super.jumpFromGround();
         this.setEntityOnGround(false);
     }

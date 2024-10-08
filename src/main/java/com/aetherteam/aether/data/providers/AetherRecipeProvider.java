@@ -36,7 +36,7 @@ import java.util.function.Supplier;
 
 public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
     public AetherRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String id) {
-        super(output, id);
+        super(output, lookupProvider, id);
     }
 
     protected ShapedRecipeBuilder fence(Supplier<? extends Block> fence, Supplier<? extends Block> material) {
@@ -108,11 +108,11 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
     }
 
     protected ShapedRecipeBuilder makePendant(Supplier<? extends Item> pendant, Item material) {
-        return this.makePendant(pendant, material, Ingredient.of(Tags.Items.STRING));
+        return this.makePendant(pendant, material, Ingredient.of(Tags.Items.STRINGS));
     }
 
     protected ShapedRecipeBuilder makePendantWithTag(Supplier<? extends Item> pendant, TagKey<Item> material, String unlockName) {
-        return this.makePendantWithTag(pendant, material, Ingredient.of(Tags.Items.STRING), unlockName);
+        return this.makePendantWithTag(pendant, material, Ingredient.of(Tags.Items.STRINGS), unlockName);
     }
 
     protected ShapedRecipeBuilder makeCape(Supplier<? extends Item> cape, Item material) {

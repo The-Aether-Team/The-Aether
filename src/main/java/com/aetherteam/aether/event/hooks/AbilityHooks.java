@@ -372,7 +372,7 @@ public class AbilityHooks {
             if (hand == InteractionHand.OFF_HAND && hasValkyrieItemInMainHandOnly(player)) {
                 AttributeInstance attackRange = player.getAttribute(NeoForgeMod.ENTITY_REACH.value());
                 if (attackRange != null) {
-                    AttributeModifier valkyrieModifier = attackRange.getModifier(ValkyrieTool.ATTACK_RANGE_MODIFIER_UUID);
+                    AttributeModifier valkyrieModifier = attackRange.getModifier(ValkyrieTool.ENTITY_INTERACTION_RANGE_MODIFIER_UUID);
                     if (valkyrieModifier != null) {
                         double range = player.getAttributeValue(NeoForgeMod.ENTITY_REACH.value()) - valkyrieModifier.getAmount();
                         double trueReach = range == 0 ? 0 : range + (player.isCreative() ? 3 : 0); // [CODE COPY] - IForgePlayer#getAttackRange().
@@ -394,7 +394,7 @@ public class AbilityHooks {
             if (hand == InteractionHand.OFF_HAND && hasValkyrieItemInMainHandOnly(player)) {
                 AttributeInstance reachDistance = player.getAttribute(NeoForgeMod.BLOCK_REACH.value());
                 if (reachDistance != null) {
-                    AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.REACH_DISTANCE_MODIFIER_UUID);
+                    AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.BLOCK_INTERACTION_RANGE_MODIFIER_UUID);
                     if (valkyrieModifier != null) {
                         double reach = player.getAttributeValue(NeoForgeMod.BLOCK_REACH.value()) - valkyrieModifier.getAmount();
                         double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // [CODE COPY] - IForgePlayer#getReachDistance().

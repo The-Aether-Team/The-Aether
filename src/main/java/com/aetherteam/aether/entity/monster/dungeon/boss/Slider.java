@@ -144,7 +144,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     @Override
-    public void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(DATA_AWAKE_ID, false);
         builder.define(DATA_BOSS_NAME_ID, Component.literal("Slider"));

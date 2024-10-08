@@ -36,10 +36,10 @@ public class AetherLootModifierData extends GlobalLootModifierProvider {
         this.add("pig_drops", new PigDropsModifier(new LootItemCondition[]{}));
         this.add("gloves_loot_leather", new GlovesLootModifier(new LootItemCondition[]{}, new ItemStack(AetherItems.LEATHER_GLOVES.get()), ArmorMaterials.LEATHER));
         this.add("gloves_loot_chain", new GlovesLootModifier(new LootItemCondition[]{
-                InvertedLootItemCondition.invert(LootTableIdCondition.builder(AetherLoot.GOLD_DUNGEON_REWARD)).build()
+                InvertedLootItemCondition.invert(LootTableIdCondition.builder(AetherLoot.GOLD_DUNGEON_REWARD.location())).build()
         }, new ItemStack(AetherItems.CHAINMAIL_GLOVES.get()), ArmorMaterials.CHAIN));
         this.add("gloves_loot_iron", new GlovesLootModifier(new LootItemCondition[]{
-                InvertedLootItemCondition.invert(LootTableIdCondition.builder(AetherLoot.RUINED_PORTAL)).build()
+                InvertedLootItemCondition.invert(LootTableIdCondition.builder(AetherLoot.RUINED_PORTAL.location())).build()
         }, new ItemStack(AetherItems.IRON_GLOVES.get()), ArmorMaterials.IRON));
         this.add("gloves_loot_gold", new GlovesLootModifier(new LootItemCondition[]{}, new ItemStack(AetherItems.GOLDEN_GLOVES.get()), ArmorMaterials.GOLD));
         this.add("gloves_loot_diamond", new GlovesLootModifier(new LootItemCondition[]{}, new ItemStack(AetherItems.DIAMOND_GLOVES.get()), ArmorMaterials.DIAMOND));

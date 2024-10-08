@@ -27,7 +27,7 @@ public class CrystalIslandFeature extends Feature<NoneFeatureConfiguration> {
      */
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        PlacedFeature feature = PlacementUtils.inlinePlaced(context.level().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolderOrThrow(AetherConfiguredFeatures.CRYSTAL_TREE_CONFIGURATION)).value();
+        PlacedFeature feature = PlacementUtils.inlinePlaced(context.level().holderOrThrow(AetherConfiguredFeatures.CRYSTAL_TREE_CONFIGURATION)).value();
         if (feature.place(context.level(), context.chunkGenerator(), context.random(), context.origin().above())) {
             for (int i = 0; i < 3; i++) {
                 BlockState state;

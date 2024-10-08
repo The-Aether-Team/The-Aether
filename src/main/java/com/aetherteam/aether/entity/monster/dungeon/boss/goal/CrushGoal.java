@@ -35,7 +35,7 @@ public class CrushGoal extends Goal {
     @Override
     public void start() {
         boolean crushed = false;
-        if (EventHooks.getMobGriefingEvent(this.slider.level(), this.slider)) {
+        if (EventHooks.canEntityGrief(this.slider.level(), this.slider)) {
             AABB crushBox = this.slider.getBoundingBox().inflate(0.2);
             for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(crushBox.minX), Mth.floor(crushBox.minY), Mth.floor(crushBox.minZ), Mth.floor(crushBox.maxX), Mth.floor(crushBox.maxY), Mth.floor(crushBox.maxZ))) {
                 if (this.slider.getDungeon() == null || this.slider.getDungeon().roomBounds().contains(pos.getCenter())) {
@@ -48,7 +48,7 @@ public class CrushGoal extends Goal {
             }
         }
         if (crushed) {
-            this.slider.level().playSound(null, this.slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (this.slider.getRandom().nextFloat() - this.slider.getRandom().nextFloat()) * 0.2F) * 0.7F);
+            this.slider.level().playSound(null, this.slider.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 3.0F, (0.625F + (this.slider.getRandom().nextFloat() - this.slider.getRandom().nextFloat()) * 0.2F) * 0.7F);
             this.slider.playSound(this.slider.getCollideSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
             this.slider.setMoveDelay(this.slider.calculateMoveDelay());
             this.slider.setDeltaMovement(Vec3.ZERO);

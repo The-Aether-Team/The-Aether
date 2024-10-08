@@ -6,6 +6,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -50,7 +51,7 @@ public class ParachuteItem extends Item {
                 if (!level.isClientSide()) { // Spawn Parachute and damage item (or automatically break for Cold Parachutes since they have 1 durability).
                     level.addFreshEntity(parachute);
                     player.startRiding(parachute);
-                    heldStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+                    heldStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
                 }
                 parachute.spawnExplosionParticle();
                 player.awardStat(Stats.ITEM_USED.get(this));

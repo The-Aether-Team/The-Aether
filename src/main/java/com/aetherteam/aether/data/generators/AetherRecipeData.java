@@ -275,7 +275,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
         this.makeCape(AetherItems.YELLOW_CAPE, Blocks.YELLOW_WOOL.asItem()).save(consumer);
         this.makeCape(AetherItems.WHITE_CAPE, Blocks.WHITE_WOOL.asItem()).save(consumer);
 
-        this.makeGlovesWithTag(AetherItems.LEATHER_GLOVES, Tags.Items.LEATHER, "leather").save(consumer);
+        this.makeGlovesWithTag(AetherItems.LEATHER_GLOVES, Tags.Items.LEATHERS, "leather").save(consumer);
         this.makeGlovesWithTag(AetherItems.IRON_GLOVES, Tags.Items.INGOTS_IRON, "iron").save(consumer);
         this.makeGlovesWithTag(AetherItems.GOLDEN_GLOVES, Tags.Items.INGOTS_GOLD, "gold").save(consumer);
         this.makeGlovesWithTag(AetherItems.DIAMOND_GLOVES, Tags.Items.GEMS_DIAMOND, "diamond").save(consumer);
@@ -326,7 +326,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Items.SADDLE, 1)
                 .define('L', Items.LEATHER)
-                .define('S', Items.STRING)
+                .define('S', Items.STRINGS)
                 .pattern("LLL")
                 .pattern("LSL")
                 .unlockedBy(getHasName(Items.LEATHER), has(Items.LEATHER))
@@ -343,7 +343,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Items.LEAD, 2)
                 .group("minecraft:lead")
                 .define('B', AetherTags.Items.SWET_BALLS)
-                .define('S', Tags.Items.STRING)
+                .define('S', Tags.Items.STRINGS)
                 .pattern("SS ")
                 .pattern("SB ")
                 .pattern("  S")
@@ -478,11 +478,11 @@ public class AetherRecipeData extends AetherRecipeProvider {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.LOOM, 1)
                 .group("minecraft:loom")
-                .define('T', Tags.Items.STRING)
+                .define('T', Tags.Items.STRINGS)
                 .define('P', AetherTags.Items.PLANKS_CRAFTING)
                 .pattern("TT")
                 .pattern("PP")
-                .unlockedBy("has_string", has(Tags.Items.STRING))
+                .unlockedBy("has_string", has(Tags.Items.STRINGS))
                 .save(consumer, this.name("skyroot_loom"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.NOTE_BLOCK, 1)
@@ -555,7 +555,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("I")
                 .pattern("/")
                 .pattern("P")
-                .unlockedBy("has_string", has(Tags.Items.STRING))
+                .unlockedBy("has_string", has(Tags.Items.STRINGS))
                 .save(consumer, this.name("skyroot_tripwire_hook"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.STONECUTTER)

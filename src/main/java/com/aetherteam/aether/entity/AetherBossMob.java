@@ -60,7 +60,7 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
      * @param check  An additional check using a {@link BlockState} {@link Predicate}.
      */
     default void evaporate(T entity, BlockPos min, BlockPos max, Predicate<BlockState> check) {
-        if (EventHooks.getMobGriefingEvent(entity.level(), entity)) {
+        if (EventHooks.canEntityGrief(entity.level(), entity)) {
             for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
                 if (entity.level().getBlockState(pos).getBlock() instanceof LiquidBlock && check.test(entity.level().getBlockState(pos))) {
                     entity.level().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());

@@ -32,7 +32,7 @@ public class EvilWhirlwind extends AbstractWhirlwind {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
         this.setLifeLeft((this.getRandom().nextInt(512) + 512) / 2);
         return spawnData;
     }
@@ -50,7 +50,7 @@ public class EvilWhirlwind extends AbstractWhirlwind {
 
     @Override
     public ResourceLocation getLootLocation() {
-        return AetherLoot.EVIL_WHIRLWIND_JUNK;
+        return AetherLoot.EVIL_WHIRLWIND_JUNK.location();
     }
 
     @Override

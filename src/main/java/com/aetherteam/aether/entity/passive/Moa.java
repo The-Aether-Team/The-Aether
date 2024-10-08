@@ -23,6 +23,7 @@ import com.aetherteam.aether.network.packet.clientbound.MoaInteractPacket;
 import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -89,13 +90,13 @@ public class Moa extends MountableAnimal implements WingedBird {
 
     public Moa(EntityType<? extends Moa> type, Level level) {
         super(type, level);
-        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.DANGER_OTHER, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.DAMAGE_OTHER, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.LAVA, -1.0F);
+        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.DAMAGE_FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.DANGER_POWDER_SNOW, -1.0F);
+        this.setPathfindingMalus(PathType.POWDER_SNOW, -1.0F);
+        this.setPathfindingMalus(PathType.DANGER_OTHER, -1.0F);
+        this.setPathfindingMalus(PathType.DAMAGE_OTHER, -1.0F);
+        this.setPathfindingMalus(PathType.LAVA, -1.0F);
     }
 
     @Override

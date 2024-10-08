@@ -97,7 +97,7 @@ public class ServerPerkData<T> {
      */
     public void syncFromServer(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
-            PacketDistributor.sendToPlayer(this.getSyncPacket(this.getServerPerkData(serverPlayer.getServer())), serverPlayer); // Send to client.
+            PacketDistributor.sendToPlayer(serverPlayer, this.getSyncPacket(this.getServerPerkData(serverPlayer.getServer()))); // Send to client.
         }
     }
 

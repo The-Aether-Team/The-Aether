@@ -15,7 +15,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * A {@link PlacementFilter} to prevent the feature from generating when the specified config condition is set to false.
  */
 public class ConfigFilter extends PlacementFilter {
-    public static final MapCodec<ConfigFilter> CODEC = Codec.STRING.comapFlatMap(ConfigFilter::buildDeserialization, configFilter -> ConfigSerializationUtil.serialize(configFilter.config));
+    public static final MapCodec<ConfigFilter> CODEC = MapCodec.assumeMapUnsafe(Codec.STRING.comapFlatMap(ConfigFilter::buildDeserialization, configFilter -> ConfigSerializationUtil.serialize(configFilter.config))); //todo check unsafe
 
     private final ModConfigSpec.ConfigValue<Boolean> config;
 

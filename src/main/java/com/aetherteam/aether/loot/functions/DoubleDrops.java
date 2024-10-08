@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
@@ -30,10 +31,11 @@ public class DoubleDrops extends LootItemConditionalFunction {
      */
     @Override
     protected ItemStack run(ItemStack stack, LootContext context) {
+        Level level = context.getLevel();
         ItemStack toolStack = context.getParamOrNull(LootContextParams.TOOL);
         BlockState blockState = context.getParamOrNull(LootContextParams.BLOCK_STATE);
         if (toolStack.getItem() instanceof SkyrootTool skyrootTool) {
-            return skyrootTool.doubleDrops(stack, toolStack, blockState);
+            return skyrootTool.doubleDrops(level, stack, toolStack, blockState);
         } else {
             return stack;
         }

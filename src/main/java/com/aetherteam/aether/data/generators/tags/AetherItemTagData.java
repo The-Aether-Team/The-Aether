@@ -247,19 +247,12 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.IRON_BUBBLE.get());
         this.tag(AetherTags.Items.ACCESSORIES_SHIELDS).add(AetherItems.SHIELD_OF_REPULSION.get());
 
-        this.tag(AetherTags.Items.AETHER_RING).addTag(AetherTags.Items.ACCESSORIES_RINGS);
-        this.tag(AetherTags.Items.AETHER_PENDANT).addTag(AetherTags.Items.ACCESSORIES_PENDANTS);
-        this.tag(AetherTags.Items.AETHER_GLOVES).addTag(AetherTags.Items.ACCESSORIES_GLOVES);
-        this.tag(AetherTags.Items.AETHER_CAPE).addTag(AetherTags.Items.ACCESSORIES_CAPES);
-        this.tag(AetherTags.Items.AETHER_ACCESSORY).addTag(AetherTags.Items.ACCESSORIES_MISCELLANEOUS);
-        this.tag(AetherTags.Items.AETHER_SHIELD).addTag(AetherTags.Items.ACCESSORIES_SHIELDS);
-
         this.tag(AetherTags.Items.ACCESSORIES).addTags(
                 AetherTags.Items.ACCESSORIES_RINGS,
                 AetherTags.Items.ACCESSORIES_PENDANTS,
                 AetherTags.Items.ACCESSORIES_GLOVES,
                 AetherTags.Items.ACCESSORIES_CAPES,
-                AetherTags.Items.AETHER_ACCESSORY,
+                AetherTags.Items.ACCESSORIES_MISCELLANEOUS,
                 AetherTags.Items.ACCESSORIES_SHIELDS);
 
         // Forge
