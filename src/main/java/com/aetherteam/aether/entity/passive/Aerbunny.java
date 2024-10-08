@@ -77,7 +77,7 @@ public class Aerbunny extends AetherAnimal {
     }
 
     @Override
-    public void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(DATA_PUFFINESS_ID, 0);
         builder.define(DATA_AFRAID_TIME_ID, 0);
@@ -146,7 +146,7 @@ public class Aerbunny extends AetherAnimal {
      * Makes this entity fall slowly.
      */
     private void handleFallSpeed() {
-        AttributeInstance gravity = this.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
+        AttributeInstance gravity = this.getAttribute(Attributes.GRAVITY);
         if (gravity != null) {
             double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1); // Entity isn't allowed to fall too slowly from gravity.
             if (this.getDeltaMovement().y() < fallSpeed) {
@@ -168,7 +168,7 @@ public class Aerbunny extends AetherAnimal {
 
             player.resetFallDistance();
             if (!player.onGround() && !player.isFallFlying()) {
-                AttributeInstance playerGravity = player.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
+                AttributeInstance playerGravity = player.getAttribute(Attributes.GRAVITY);
                 if (playerGravity != null) {
                     if (!player.getAbilities().flying && !player.isInFluidType() && playerGravity.getValue() > 0.02) {  // Entity isn't allowed to fall too slowly from gravity.
                         player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));

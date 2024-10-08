@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?>> extends BasicDisplay {
+public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?, ?>> extends BasicDisplay {
     private final CategoryIdentifier<?> categoryIdentifier;
 
     private final Either<ResourceKey<Biome>, TagKey<Biome>> biome;

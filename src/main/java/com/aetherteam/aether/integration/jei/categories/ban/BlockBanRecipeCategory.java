@@ -6,6 +6,7 @@ import com.aetherteam.nitrogen.integration.jei.BlockStateRenderer;
 import com.aetherteam.nitrogen.integration.jei.FluidStateRenderer;
 import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.input.BlockStateRecipeInput;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class BlockBanRecipeCategory extends AbstractPlacementBanRecipeCategory<BlockState, BlockStateIngredient, BlockBanRecipe> {
+public class BlockBanRecipeCategory extends AbstractPlacementBanRecipeCategory<BlockState, BlockStateIngredient, BlockStateRecipeInput, BlockBanRecipe> {
     public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "block_placement_ban");
     public static final RecipeType<BlockBanRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "block_placement_ban", BlockBanRecipe.class);
 

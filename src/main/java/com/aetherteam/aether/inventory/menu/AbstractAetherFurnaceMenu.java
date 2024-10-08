@@ -8,17 +8,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 /**
  * [CODE COPY] - {@link AbstractFurnaceMenu}.<br><br>
  * Cleaned up. This has to be its own class and not a subclass because of different slots.
  */
-public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container> {
+public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<SingleRecipeInput, AbstractCookingRecipe> {
     private final Container container;
     private final ContainerData data;
     protected final Level level;
@@ -66,8 +63,8 @@ public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<? extends Recipe<Container>> recipe) {
-        return recipe.value().matches(this.container, this.level);
+    public boolean recipeMatches(RecipeHolder<AbstractCookingRecipe> recipe) {
+        return recipe.value().matches(new SingleRecipeInput(this.container.getItem(0)), this.level);
     }
 
     @Override
@@ -148,7 +145,7 @@ public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container
      */
     @SuppressWarnings("unchecked")
     protected boolean canSmelt(ItemStack stack) {
-        return this.level.getRecipeManager().getRecipeFor((RecipeType<AbstractCookingRecipe>) this.recipeType, new SimpleContainer(stack), this.level).isPresent();
+        return this.level.getRecipeManager().getRecipeFor((RecipeType<AbstractCookingRecipe>) this.recipeType, new SingleRecipeInput(stack), this.level).isPresent();
     }
 
     /**

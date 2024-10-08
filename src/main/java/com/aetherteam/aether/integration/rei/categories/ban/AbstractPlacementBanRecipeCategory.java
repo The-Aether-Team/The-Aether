@@ -16,12 +16,13 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.item.crafting.RecipeInput;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<T>, R extends AbstractPlacementBanRecipe<T, S>> extends AbstractRecipeCategory<PlacementBanRecipeDisplay<R>> implements BiomeTooltip {
+public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<T>, F extends RecipeInput, R extends AbstractPlacementBanRecipe<T, S, F>> extends AbstractRecipeCategory<PlacementBanRecipeDisplay<R>> implements BiomeTooltip {
     public AbstractPlacementBanRecipeCategory(String id, CategoryIdentifier<PlacementBanRecipeDisplay<R>> uid, Renderer icon) {
         super(id, uid, 116, 18, icon);
     }

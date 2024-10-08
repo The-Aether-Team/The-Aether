@@ -26,6 +26,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -38,7 +39,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<T>, F extends SingleRecipeInput, R extends AbstractPlacementBanRecipe<T, S, F>> extends AbstractRecipeCategory<R> implements BiomeTooltip {
+public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<T>, F extends RecipeInput, R extends AbstractPlacementBanRecipe<T, S, F>> extends AbstractRecipeCategory<R> implements BiomeTooltip {
     protected final IPlatformFluidHelper<?> fluidHelper;
     private final IDrawable slot;
 
