@@ -1,1 +1,22 @@
-{}
+{
+  "advancement.aether.aether_sleep": "충분히 누릴 자격이 있는 휴식",
+  "advancement.aether.aether_sleep.desc": "마침내 에더에서 잠을",
+  "advancement.aether.black_moa": "날자!",
+  "advancement.aether.blue_aercloud": "무한한 공간 저 너머로!",
+  "advancement.aether.enter_aether.desc": "에더로 들어가세요",
+  "advancement.aether.hammer_loot": "신들의 힘",
+  "advancement.aether.ice_accessory.desc": "냉동고와 빙석을 사용하여 장신구를 얼리세요",
+  "advancement.aether.icestone": "얼음처럼 차갑게",
+  "advancement.aether.icestone.desc": "빙석을 얻으세요",
+  "aether.dungeon.bronze_dungeon": "청동빛 던전",
+  "aether.dungeon.gold_dungeon": "금빛 던전",
+  "aether.dungeon.silver_dungeon": "은빛 던전",
+  "aether.loot": "에더 전리품",
+  "aether.menu_title.the_aether": "에더",
+  "aether.pro_tips.line.aether.aether_day_length": "에더 세계의 하루는 지상보다 3배 더 깁니다.",
+  "aether.pro_tips.line.aether.holystone_tool_ability": "신성석 연장은 드물게 암브로시움 조각을 만들어냅니다.",
+  "lore.item.aether.skyroot_pickaxe": "신성석 또는 암브로시움 원석을 채굴 할 때 애더 나무 연장은 두 배 많이 제공합니다. 행운 인첸트가 있다면 다량 획득할 수 있습니다",
+  "rarity.aether.loot.name": "에더 전리품",
+  "structure.aether.bronze_dungeon": "청동 던전",
+  "structure.aether.gold_dungeon": "황금 던전"
+}
