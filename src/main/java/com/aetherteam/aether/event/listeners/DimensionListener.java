@@ -18,16 +18,15 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.LogicalSide;
-import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.entity.player.SleepingTimeCheckEvent;
 import net.neoforged.neoforge.event.level.AlterGroundEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.level.SleepFinishedTimeEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -88,9 +87,9 @@ public class DimensionListener {
      * @see DimensionHooks#tickTime(Level)
      * @see DimensionHooks#checkEternalDayConfig(Level)
      */
-    public static void onWorldTick(TickEvent.LevelTickEvent event) {
-        Level level = event.level;
-        if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
+    public static void onWorldTick(LevelTickEvent event) {
+        Level level = event.getLevel();
+        if (!level.isClientSide()) {
             DimensionHooks.tickTime(level);
             DimensionHooks.checkEternalDayConfig(level);
         }
@@ -108,8 +107,8 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#travelling(Player)
      */
-    public static void onPlayerTraveling(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
+    public static void onPlayerTraveling(PlayerTickEvent event) {
+        Player player = event.getEntity();
         DimensionHooks.travelling(player);
     }
 

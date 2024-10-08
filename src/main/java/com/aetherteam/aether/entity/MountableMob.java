@@ -1,8 +1,10 @@
 package com.aetherteam.aether.entity;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.aetherteam.aether.network.packet.serverbound.StepHeightPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -11,22 +13,20 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.CommonHooks;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.network.PacketDistributor;
-
-import java.util.UUID;
 
 /**
  * This interface has several methods for handling the movement for mounted mobs.
  */
 public interface MountableMob {
-    UUID MOUNT_HEIGHT_UUID = UUID.fromString("B2D5A57A-8DA5-4127-8091-14A4CCD000F1");
-    UUID DEFAULT_HEIGHT_UUID = UUID.fromString("31535561-F99D-4E14-ACE7-F636EAAD6180");
-    AttributeModifier STEP_HEIGHT_MODIFIER = new AttributeModifier(MOUNT_HEIGHT_UUID, "Mounted step height increase", 0.4, AttributeModifier.Operation.ADDITION);
-    AttributeModifier DEFAULT_STEP_HEIGHT_MODIFIER = new AttributeModifier(DEFAULT_HEIGHT_UUID, "Default step height increase", -0.1, AttributeModifier.Operation.ADDITION);
+    ResourceLocation MOUNT_HEIGHT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "mounted_step_height_increase");
+    ResourceLocation DEFAULT_HEIGHT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "default_step_height_increase");
+    AttributeModifier STEP_HEIGHT_MODIFIER = new AttributeModifier(MOUNT_HEIGHT_LOCATION, 0.4, AttributeModifier.Operation.ADD_VALUE);
+    AttributeModifier DEFAULT_STEP_HEIGHT_MODIFIER = new AttributeModifier(DEFAULT_HEIGHT_LOCATION, -0.1, AttributeModifier.Operation.ADD_VALUE);
 
     /**
      * Call this at the beginning of your entity's tick method to update the state of the entity.
@@ -102,12 +102,12 @@ public interface MountableMob {
                 vehicle.hasImpulse = true;
             }
             // Handles step height.
-            AttributeInstance stepHeight = vehicle.getAttribute(NeoForgeMod.STEP_HEIGHT.value());
+            AttributeInstance stepHeight = vehicle.getAttribute(Attributes.STEP_HEIGHT);
             if (stepHeight != null) {
-                if (stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier())) {
-                    stepHeight.removeModifier(vehicle.getDefaultStepHeightModifier().getId());
+                if (stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier().id())) {
+                    stepHeight.removeModifier(vehicle.getDefaultStepHeightModifier().id());
                 }
-                if (!stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
+                if (!stepHeight.hasModifier(vehicle.getMountStepHeightModifier().id())) {
                     stepHeight.addTransientModifier(vehicle.getMountStepHeightModifier());
                 }
                 if (vehicle.level().isClientSide()) {
@@ -124,12 +124,12 @@ public interface MountableMob {
             vehicle.calculateEntityAnimation(false);
         } else {
             // Handles step height.
-            AttributeInstance stepHeight = vehicle.getAttribute(NeoForgeMod.STEP_HEIGHT.value());
+            AttributeInstance stepHeight = vehicle.getAttribute(Attributes.STEP_HEIGHT);
             if (stepHeight != null) {
-                if (stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
-                    stepHeight.removeModifier(vehicle.getMountStepHeightModifier().getId());
+                if (stepHeight.hasModifier(vehicle.getMountStepHeightModifier().id())) {
+                    stepHeight.removeModifier(vehicle.getMountStepHeightModifier().id());
                 }
-                if (!stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier())) {
+                if (!stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier().id())) {
                     stepHeight.addTransientModifier(vehicle.getDefaultStepHeightModifier());
                 }
             }

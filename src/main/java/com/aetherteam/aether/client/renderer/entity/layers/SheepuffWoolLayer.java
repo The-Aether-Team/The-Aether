@@ -13,6 +13,8 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
+import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.DyeColor;
 
 /**
@@ -44,28 +46,21 @@ public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel> {
                     woolModel.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(sheepuff, 0.0F), -16777216);
                 }
             } else {
-                float f;
-                float f1;
-                float f2;
+                int i;
                 if (sheepuff.hasCustomName() && sheepuff.getName().getString().equals("jeb_")) {
-                    int i1 = 25;
-                    int i = sheepuff.tickCount / i1 + sheepuff.getId();
-                    int j = DyeColor.values().length;
-                    int k = i % j;
-                    int l = (i + 1) % j;
-                    float f3 = ((float) (sheepuff.tickCount % i1) + partialTicks) / (float) i1;
-                    float[] afloat1 = Sheepuff.getColorArray(DyeColor.byId(k));
-                    float[] afloat2 = Sheepuff.getColorArray(DyeColor.byId(l));
-                    f = afloat1[0] * (1.0F - f3) + afloat2[0] * f3;
-                    f1 = afloat1[1] * (1.0F - f3) + afloat2[1] * f3;
-                    f2 = afloat1[2] * (1.0F - f3) + afloat2[2] * f3;
+                    int j = 25;
+                    int k = sheepuff.tickCount / 25 + sheepuff.getId();
+                    int l = DyeColor.values().length;
+                    int i1 = k % l;
+                    int j1 = (k + 1) % l;
+                    float f = ((float) (sheepuff.tickCount % 25) + partialTicks) / 25.0F;
+                    int k1 = Sheep.getColor(DyeColor.byId(i1));
+                    int l1 = Sheep.getColor(DyeColor.byId(j1));
+                    i = FastColor.ARGB32.lerp(f, k1, l1);
                 } else {
-                    float[] afloat = Sheepuff.getColorArray(sheepuff.getColor());
-                    f = afloat[0];
-                    f1 = afloat[1];
-                    f2 = afloat[2];
+                    i = Sheep.getColor(sheepuff.getColor());
                 }
-                coloredCutoutModelCopyLayerRender(this.getParentModel(), woolModel, SHEEPUFF_WOOL_TEXTURE, poseStack, buffer, packedLight, sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, f, f1, f2);
+                coloredCutoutModelCopyLayerRender(this.getParentModel(), woolModel, SHEEPUFF_WOOL_TEXTURE, poseStack, buffer, packedLight, sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, i);
             }
         }
     }

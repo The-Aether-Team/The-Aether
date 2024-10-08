@@ -17,18 +17,18 @@ import net.neoforged.neoforge.client.event.RegisterRecipeBookCategoriesEvent;
 import java.util.function.Supplier;
 
 public class AetherRecipeCategories {
-    public static final Supplier<RecipeBookCategories> ENCHANTING_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.create("ENCHANTING_SEARCH", new ItemStack(Items.COMPASS)));
-    public static final Supplier<RecipeBookCategories> ENCHANTING_FOOD = Suppliers.memoize(() -> RecipeBookCategories.create("ENCHANTING_FOOD", new ItemStack(AetherItems.ENCHANTED_BERRY.get())));
-    public static final Supplier<RecipeBookCategories> ENCHANTING_BLOCKS = Suppliers.memoize(() -> RecipeBookCategories.create("ENCHANTING_BLOCKS", new ItemStack(AetherBlocks.ENCHANTED_GRAVITITE.get())));
-    public static final Supplier<RecipeBookCategories> ENCHANTING_MISC = Suppliers.memoize(() -> RecipeBookCategories.create("ENCHANTING_MISC", new ItemStack(AetherItems.SKYROOT_REMEDY_BUCKET.get())));
-    public static final Supplier<RecipeBookCategories> ENCHANTING_REPAIR = Suppliers.memoize(() -> RecipeBookCategories.create("ENCHANTING_REPAIR", new ItemStack(AetherItems.ZANITE_PICKAXE.get())));
+    public static final Supplier<RecipeBookCategories> ENCHANTING_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.valueOf("AETHER_ENCHANTING_SEARCH"));
+    public static final Supplier<RecipeBookCategories> ENCHANTING_FOOD = Suppliers.memoize(() -> RecipeBookCategories.valueOf("AETHER_ENCHANTING_FOOD"));
+    public static final Supplier<RecipeBookCategories> ENCHANTING_BLOCKS = Suppliers.memoize(() -> RecipeBookCategories.valueOf("AETHER_ENCHANTING_BLOCKS"));
+    public static final Supplier<RecipeBookCategories> ENCHANTING_MISC = Suppliers.memoize(() -> RecipeBookCategories.valueOf("AETHER_ENCHANTING_MISC"));
+    public static final Supplier<RecipeBookCategories> ENCHANTING_REPAIR = Suppliers.memoize(() -> RecipeBookCategories.valueOf("AETHER_ENCHANTING_REPAIR"));
 
-    public static final Supplier<RecipeBookCategories> FREEZABLE_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_SEARCH", new ItemStack(Items.COMPASS)));
-    public static final Supplier<RecipeBookCategories> FREEZABLE_BLOCKS = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_BLOCKS", new ItemStack(AetherBlocks.BLUE_AERCLOUD.get())));
-    public static final Supplier<RecipeBookCategories> FREEZABLE_MISC = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_MISC", new ItemStack(AetherItems.ICE_RING.get())));
+    public static final Supplier<RecipeBookCategories> FREEZABLE_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.valueOf("AETHER_FREEZABLE_SEARCH"));
+    public static final Supplier<RecipeBookCategories> FREEZABLE_BLOCKS = Suppliers.memoize(() -> RecipeBookCategories.valueOf("AETHER_FREEZABLE_BLOCKS"));
+    public static final Supplier<RecipeBookCategories> FREEZABLE_MISC = Suppliers.memoize(() -> RecipeBookCategories.valueOf("AETHER_FREEZABLE_MISC"));
 
-    public static final Supplier<RecipeBookCategories> INCUBATION_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.create("INCUBATION_SEARCH", new ItemStack(Items.COMPASS)));
-    public static final Supplier<RecipeBookCategories> INCUBATION_MISC = Suppliers.memoize(() -> RecipeBookCategories.create("INCUBATION_MISC", new ItemStack(AetherItems.BLUE_MOA_EGG.get())));
+    public static final Supplier<RecipeBookCategories> INCUBATION_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.valueOf("AETHER_INCUBATION_SEARCH"));
+    public static final Supplier<RecipeBookCategories> INCUBATION_MISC = Suppliers.memoize(() -> RecipeBookCategories.valueOf("AETHER_INCUBATION_MISC"));
 
     /**
      * Registers the mod's categories to be used in-game, along with functions to sort items.

@@ -320,17 +320,11 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addItem(AetherItems.GOLD_DUNGEON_KEY, "Gold Key");
 
         this.addItem(AetherItems.MUSIC_DISC_AETHER_TUNE, "Blue Music Disc");
-        this.addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
         this.addItem(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Valkyrie Music Disc");
-        this.addDiscDesc(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Emile van Krieken - Ascending Dawn");
         this.addItem(AetherItems.MUSIC_DISC_CHINCHILLA, "Sepia Music Disc");
-        this.addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
         this.addItem(AetherItems.MUSIC_DISC_HIGH, "Super Music Disc");
-        this.addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
         this.addItem(AetherItems.MUSIC_DISC_KLEPTO, "Blackened Music Disc");
-        this.addDiscDesc(AetherItems.MUSIC_DISC_KLEPTO, "sunsette - klepto");
         this.addItem(AetherItems.MUSIC_DISC_SLIDERS_WRATH, "Carved Music Disc");
-        this.addDiscDesc(AetherItems.MUSIC_DISC_SLIDERS_WRATH, "sunsette - Slider's Wrath");
 
         this.addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         this.addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");
@@ -384,6 +378,14 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addItem(AetherItems.SLIDER_SPAWN_EGG, "Slider Spawn Egg");
         this.addItem(AetherItems.SUN_SPIRIT_SPAWN_EGG, "Sun Spirit Spawn Egg");
         this.addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
+
+
+        this.addJukeboxSong("aether_tune", "Noisestorm - Aether Tune");
+        this.addJukeboxSong("ascending_dawn", "Emile van Krieken - Ascending Dawn");
+        this.addJukeboxSong("chinchilla", "RENREN - chinchilla");
+        this.addJukeboxSong("high", "RENREN - high");
+        this.addJukeboxSong("klepto", "sunsette - klepto");
+        this.addJukeboxSong("sliders_wrath", "sunsette - Slider's Wrath");
 
 
         this.addTrim("zanite", "Zanite");

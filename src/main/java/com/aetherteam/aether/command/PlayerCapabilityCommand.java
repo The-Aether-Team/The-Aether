@@ -56,10 +56,10 @@ public class PlayerCapabilityCommand {
                 data.setSynched(player.getId(), INBTSynchable.Direction.CLIENT, "setLifeShardCount", value);
                 AttributeInstance attribute = player.getAttribute(Attributes.MAX_HEALTH);
                 if (attribute != null) {
-                    attribute.removeModifier(data.getLifeShardHealthAttributeModifier().getId());
+                    attribute.removeModifier(data.getLifeShardHealthAttributeModifier().id());
                 }
                 player.setHealth(player.getMaxHealth());
-                PacketDistributor.sendToNear(new HealthResetPacket(player.getId(), value), player.getX(), player.getY(), player.getZ(), 5.0, level.dimension()); // Sync to client.
+                PacketDistributor.sendToPlayersNear(level, player, player.getX(), player.getY(), player.getZ(), 5.0, new HealthResetPacket(player.getId(), value)); // Sync to client.
                 source.sendSuccess(() -> Component.translatable("commands.aether.capability.player.life_shards.set", player.getDisplayName(), value), true);
             }
         }

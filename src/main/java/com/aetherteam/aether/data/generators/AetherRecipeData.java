@@ -11,6 +11,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
@@ -30,7 +31,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(RecipeOutput consumer) {
+    protected void buildRecipes(RecipeOutput consumer, HolderLookup.Provider holderLookup) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE.get())
                 .group("mossy_holystone")
                 .requires(AetherBlocks.HOLYSTONE.get())
@@ -623,7 +624,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy("has_pumpkin", has(Blocks.PUMPKIN))
                 .save(consumer, this.name("moa_egg_pumpkin_pie"));
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, AetherItems.createSwetBannerItemStack())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, AetherItems.createSwetBannerItemStack(holderLookup.lookupOrThrow(Registries.BANNER_PATTERN)))
             .requires(ItemTags.BANNERS)
             .requires(AetherItems.SWET_CAPE.get())
             .unlockedBy("has_swet_cape", has(AetherItems.SWET_CAPE.get()))

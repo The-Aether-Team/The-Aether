@@ -46,7 +46,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
@@ -173,27 +172,27 @@ public class EntityHooks {
      * Gets an accessory item from a slot identifier and armor material.
      *
      * @param identifier     The {@link String} identifier for the slot.
-     * @param armorMaterials The {@link ArmorMaterials} to get an item from.
+     * @param armorMaterials The {@link ArmorMaterial} to get an item from.
      * @return The accessory {@link Item}.
      * @see EntityHooks#equipAccessory(Mob, String, ArmorMaterials)
      */
     @Nullable
-    private static Item getEquipmentForSlot(String identifier, ArmorMaterials armorMaterials) {
+    private static Item getEquipmentForSlot(String identifier, ArmorMaterial armorMaterials) {
         if (identifier.equals(GlovesItem.getIdentifierStatic())) {
             switch (armorMaterials) {
-                case LEATHER -> {
+                case ArmorMaterials.LEATHER -> {
                     return AetherItems.LEATHER_GLOVES.get();
                 }
-                case GOLD -> {
+                case ArmorMaterials.GOLD -> {
                     return AetherItems.GOLDEN_GLOVES.get();
                 }
-                case CHAIN -> {
+                case ArmorMaterials.CHAIN -> {
                     return AetherItems.CHAINMAIL_GLOVES.get();
                 }
-                case IRON -> {
+                case ArmorMaterials.IRON -> {
                     return AetherItems.IRON_GLOVES.get();
                 }
-                case DIAMOND -> {
+                case ArmorMaterials.DIAMOND -> {
                     return AetherItems.DIAMOND_GLOVES.get();
                 }
             }

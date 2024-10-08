@@ -25,6 +25,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class FlyingCow extends WingedAnimal {
+    private static final EntityDimensions BABY_DIMENSIONS = EntityType.COW.getDimensions().scale(0.5F).withEyeHeight(0.665F);
+
     public FlyingCow(EntityType<? extends FlyingCow> type, Level level) {
         super(type, level);
     }
@@ -113,11 +115,8 @@ public class FlyingCow extends WingedAnimal {
         return AetherEntityTypes.FLYING_COW.get().create(level);
     }
 
-    /**
-     * [CODE COPY] - {@link net.minecraft.world.entity.animal.Cow#getStandingEyeHeight(Pose, EntityDimensions)}.
-     */
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return this.isBaby() ? size.height * 0.95F : 1.3F;
+    public EntityDimensions getDefaultDimensions(Pose pose) {
+        return this.isBaby() ? BABY_DIMENSIONS : super.getDefaultDimensions(pose);
     }
 }

@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.neoforged.fml.ModList;
-import noobanidus.mods.lootr.config.ConfigManager;
+import noobanidus.mods.lootr.neoforge.config.ConfigManager;
 
 import java.util.Calendar;
 
@@ -30,7 +30,7 @@ import java.util.Calendar;
  * Stripped down to only use what is necessary.
  */
 public class ChestMimicRenderer implements BlockEntityRenderer<ChestMimicBlockEntity> {
-    private static final Material LOOTR_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, ResourceLocation.withDefaultNamespace("lootr", "chest"));
+    private static final Material LOOTR_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, ResourceLocation.fromNamespaceAndPath("lootr", "chest"));
     private final ModelPart lid;
     private final ModelPart bottom;
     private final ModelPart lock;

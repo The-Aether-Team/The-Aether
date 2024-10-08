@@ -30,19 +30,15 @@ public class CrystalFruitLeavesBlock extends LeavesWithParticlesBlock {
     }
 
     /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     *
      * @param state  The {@link BlockState} of the block.
      * @param level  The {@link Level} the block is in.
      * @param pos    The {@link BlockPos} of the block.
      * @param player The {@link Player} interacting with the block.
-     * @param hand   The {@link InteractionHand} the player interacts with.
      * @param hit    The {@link BlockHitResult} of the interaction.
      * @return The {@link InteractionResult} of the interaction.
      */
-    @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (AetherConfig.SERVER.crystal_leaves_consistency.get()) {
             CrystalFruitLeavesBlock.dropResources(state, level, pos, null, player, ItemStack.EMPTY, true);
             level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + level.getRandom().nextFloat() * 0.4F);
@@ -50,7 +46,7 @@ public class CrystalFruitLeavesBlock extends LeavesWithParticlesBlock {
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
             return InteractionResult.sidedSuccess(level.isClientSide());
         } else {
-            return super.use(state, level, pos, player, hand, hit);
+            return super.useWithoutItem(state, level, pos, player, hit);
         }
     }
 

@@ -97,13 +97,12 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
      * @param difficulty The {@link DifficultyInstance} of the game.
      * @param reason     The {@link MobSpawnType} reason.
      * @param spawnData  The {@link SpawnGroupData}.
-     * @param tag        The {@link CompoundTag} to apply to this entity.
      * @return The {@link SpawnGroupData} to return.
      */
     @Nullable
     @Override
     @SuppressWarnings("deprecation")
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
         this.setSize(this.getRandom().nextInt(4) + 1);
         this.setPos(Vec3.atBottomCenterOf(this.blockPosition()));
         return spawnData;
@@ -133,7 +132,6 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
      * @param level The {@link LevelAccessor} to check in.
      * @param pos The starting {@link BlockPos}.
      * @param radius The {@link Integer} radius around the position.
-     * @param blocks The {@link TagKey} of {@link Block}s to check.
      * @return Whether the blocks were found in the radius, as a {@link Boolean}.
      */
     public static boolean inRadiusOfFlowers(LevelAccessor level, BlockPos pos, int radius) {
@@ -157,7 +155,6 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
      * @param level The {@link LevelAccessor} to check in.
      * @param pos The starting {@link BlockPos}.
      * @param radius The {@link Integer} radius around the position.
-     * @param blocks The {@link TagKey} of {@link Block}s to check.
      * @return Whether the blocks were found in the radius, as a {@link Boolean}.
      */
     public static boolean inRadiusOfEnchantedFlowers(LevelAccessor level, BlockPos pos, int radius) {
@@ -249,14 +246,14 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
      * Disallows Aechor Plants from jumping.
      */
     @Override
-    protected void jumpFromGround() {
+    public void jumpFromGround() {
     }
 
     /**
      * Disallows Aechor Plants from being leashed.
      */
     @Override
-    public boolean canBeLeashed(Player player) {
+    public boolean canBeLeashed() {
         return false;
     }
 

@@ -94,11 +94,6 @@ public class TntPresent extends Entity implements TraceableEntity {
     }
 
     @Override
-    protected float getEyeHeight(Pose pose, EntityDimensions dimensions) {
-        return 0.15F;
-    }
-
-    @Override
     protected void addAdditionalSaveData(CompoundTag tag) {
         tag.putShort("Fuse", (short) this.getFuse());
     }

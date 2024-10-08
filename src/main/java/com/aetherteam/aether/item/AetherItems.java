@@ -2,6 +2,7 @@ package com.aetherteam.aether.item;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.data.resources.registries.AetherJukeboxSongs;
 import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.accessories.cape.AgilityCapeItem;
@@ -80,7 +81,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class AetherItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Aether.MODID);
 
-    public static final Rarity AETHER_LOOT = Rarity.create("aether.loot", ChatFormatting.GREEN);
+    public static final Rarity AETHER_LOOT = Rarity.valueOf("AETHER_LOOT");
 
     public static final Component BRONZE_DUNGEON_TOOLTIP = Component.translatable("aether.dungeon.bronze_dungeon").withStyle(Style.EMPTY.withItalic(true).withColor(TextColor.parseColor("#D9AB7E").result().get()));
     public static final Component SILVER_DUNGEON_TOOLTIP = Component.translatable("aether.dungeon.silver_dungeon").withStyle(Style.EMPTY.withItalic(true).withColor(TextColor.parseColor("#E0E0E0").result().get()));
@@ -237,15 +238,15 @@ public class AetherItems {
     public static final DeferredItem<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key", () -> new DungeonKeyItem(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
     public static final DeferredItem<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key", () -> new DungeonKeyItem(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "gold"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
 
-    public static final DeferredItem<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune", () -> new RecordItem(1, AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 2980));
-    public static final DeferredItem<Item> MUSIC_DISC_ASCENDING_DAWN = ITEMS.register("music_disc_ascending_dawn", () -> new RecordItem(2, AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 7000));
-    public static final DeferredItem<Item> MUSIC_DISC_CHINCHILLA = ITEMS.register("music_disc_chinchilla", () -> new RecordItem(3, AetherSoundEvents.ITEM_MUSIC_DISC_CHINCHILLA, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3260));
-    public static final DeferredItem<Item> MUSIC_DISC_HIGH = ITEMS.register("music_disc_high", () -> new RecordItem(4, AetherSoundEvents.ITEM_MUSIC_DISC_HIGH, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3720));
-    public static final DeferredItem<Item> MUSIC_DISC_KLEPTO = ITEMS.register("music_disc_klepto", () -> new RecordItem(5, AetherSoundEvents.ITEM_MUSIC_DISC_KLEPTO, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3840));
-    public static final DeferredItem<Item> MUSIC_DISC_SLIDERS_WRATH = ITEMS.register("music_disc_sliders_wrath", () -> new RecordItem(6, AetherSoundEvents.ITEM_MUSIC_DISC_SLIDERS_WRATH, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3440));
+    public static final DeferredItem<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(AetherJukeboxSongs.AETHER_TUNE)));
+    public static final DeferredItem<Item> MUSIC_DISC_ASCENDING_DAWN = ITEMS.register("music_disc_ascending_dawn", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(AetherJukeboxSongs.ASCENDING_DAWN)));
+    public static final DeferredItem<Item> MUSIC_DISC_CHINCHILLA = ITEMS.register("music_disc_chinchilla", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(AetherJukeboxSongs.CHINCHILLA)));
+    public static final DeferredItem<Item> MUSIC_DISC_HIGH = ITEMS.register("music_disc_high", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(AetherJukeboxSongs.HIGH)));
+    public static final DeferredItem<Item> MUSIC_DISC_KLEPTO = ITEMS.register("music_disc_klepto", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(AetherJukeboxSongs.KLEPTO)));
+    public static final DeferredItem<Item> MUSIC_DISC_SLIDERS_WRATH = ITEMS.register("music_disc_sliders_wrath", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(AetherJukeboxSongs.SLIDERS_WRATH)));
 
-    public static final DeferredItem<Item> SKYROOT_BUCKET = ITEMS.register("skyroot_bucket", () -> new SkyrootBucketItem(() -> Fluids.EMPTY, new Item.Properties().stacksTo(16)));
-    public static final DeferredItem<Item> SKYROOT_WATER_BUCKET = ITEMS.register("skyroot_water_bucket", () -> new SkyrootBucketItem(() -> Fluids.WATER, new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1)));
+    public static final DeferredItem<Item> SKYROOT_BUCKET = ITEMS.register("skyroot_bucket", () -> new SkyrootBucketItem(Fluids.EMPTY, new Item.Properties().stacksTo(16)));
+    public static final DeferredItem<Item> SKYROOT_WATER_BUCKET = ITEMS.register("skyroot_water_bucket", () -> new SkyrootBucketItem(Fluids.WATER, new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1)));
     public static final DeferredItem<Item> SKYROOT_POISON_BUCKET = ITEMS.register("skyroot_poison_bucket", () -> new SkyrootPoisonBucketItem(new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1)));
     public static final DeferredItem<Item> SKYROOT_REMEDY_BUCKET = ITEMS.register("skyroot_remedy_bucket", () -> new SkyrootRemedyBucketItem(new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1).rarity(Rarity.RARE)));
     public static final DeferredItem<Item> SKYROOT_MILK_BUCKET = ITEMS.register("skyroot_milk_bucket", () -> new SkyrootMilkBucketItem(new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1)));

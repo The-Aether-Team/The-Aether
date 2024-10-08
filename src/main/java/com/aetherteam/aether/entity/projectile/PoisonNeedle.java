@@ -7,17 +7,20 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 public class PoisonNeedle extends AbstractDart {
     public PoisonNeedle(EntityType<? extends PoisonNeedle> type, Level level) {
         super(type, level);
         this.setBaseDamage(0.25);
+        this.pickup = Pickup.DISALLOWED;
     }
 
     public PoisonNeedle(Level level, LivingEntity shooter) {
-        super(AetherEntityTypes.POISON_NEEDLE.get(), level, shooter);
+        super(AetherEntityTypes.POISON_NEEDLE.get(), level, shooter, new ItemStack(Items.ARROW), null);
         this.setBaseDamage(0.25);
+        this.pickup = Pickup.DISALLOWED;
     }
 
     /**
@@ -29,5 +32,10 @@ public class PoisonNeedle extends AbstractDart {
     protected void doPostHurtEffects(LivingEntity living) {
         super.doPostHurtEffects(living);
         living.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION, 500, 0, false, false, true));
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return new ItemStack(Items.ARROW);
     }
 }

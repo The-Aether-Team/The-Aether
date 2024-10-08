@@ -9,14 +9,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nullable;
+
 public class PoisonDart extends AbstractDart {
     public PoisonDart(EntityType<? extends PoisonDart> type, Level level) {
         super(type, level);
         this.setBaseDamage(0.25);
     }
 
-    public PoisonDart(Level level) {
-        super(AetherEntityTypes.POISON_DART.get(), level);
+    public PoisonDart(Level level, LivingEntity shooter, @Nullable ItemStack firedFromWeapon) {
+        super(AetherEntityTypes.POISON_DART.get(), level, shooter, AetherItems.POISON_DART, firedFromWeapon);
         this.setBaseDamage(0.25);
     }
 

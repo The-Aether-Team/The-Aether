@@ -23,6 +23,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -122,12 +123,11 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * @param difficulty The {@link DifficultyInstance} of the game.
      * @param reason     The {@link MobSpawnType} reason.
      * @param spawnData  The {@link SpawnGroupData}.
-     * @param tag        The {@link CompoundTag} to apply to this entity.
      * @return The {@link SpawnGroupData} to return.
      */
     @Override
     @SuppressWarnings("deprecation")
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
         this.setBossName(BossNameGenerator.generateSunSpiritName(this.getRandom()));
         this.origin = this.position();
         return spawnData;
@@ -197,7 +197,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         for (Entity target : entities) {
             if (target instanceof LivingEntity) {
                 target.hurt(AetherDamageTypes.entityDamageSource(this.level(), AetherDamageTypes.INCINERATION, this), INCINERATION_DAMAGE);
-                target.setSecondsOnFire(INCINERATION_FIRE_DURATION);
+                target.setRemainingFireTicks(INCINERATION_FIRE_DURATION);
             }
         }
     }
@@ -399,8 +399,8 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     public boolean canBeAffected(MobEffectInstance pEffectInstance) {
         MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, pEffectInstance);
         NeoForge.EVENT_BUS.post(event);
-        if (event.getResult() != Event.Result.DEFAULT) {
-            return event.getResult() == Event.Result.ALLOW;
+        if (event.getResult() != MobEffectEvent.Applicable.Result.DEFAULT) {
+            return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
         }
         return false;
     }
@@ -432,7 +432,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        PacketDistributor.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
+        PacketDistributor.sendToPlayer(player, new BossInfoPacket.Display(this.bossFight.getId(), this.getId()));
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
             this.bossFight.addPlayer(player);
             AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), player);
@@ -447,7 +447,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Override
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
-        PacketDistributor.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
+        PacketDistributor.sendToPlayer(player, new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()));
         this.bossFight.removePlayer(player);
         AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), player);
     }
@@ -702,7 +702,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        this.addBossSaveData(tag);
+        this.addBossSaveData(tag, this.registryAccess());
         tag.putInt("ChatLine", this.chatLine);
         tag.putDouble("OffsetX", this.origin.x() - this.getX());
         tag.putDouble("OffsetY", this.origin.y() - this.getY());
@@ -715,7 +715,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.readBossSaveData(tag);
+        this.readBossSaveData(tag, this.registryAccess());
         if (tag.contains("ChatLine")) {
             this.chatLine = tag.getInt("ChatLine");
         }
@@ -733,9 +733,9 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag)
      */
     @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
         CompoundTag tag = new CompoundTag();
-        this.addBossSaveData(tag);
+        this.addBossSaveData(tag, this.registryAccess());
         buffer.writeNbt(tag);
     }
 
@@ -743,10 +743,10 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag)
      */
     @Override
-    public void readSpawnData(FriendlyByteBuf additionalData) {
+    public void readSpawnData(RegistryFriendlyByteBuf additionalData) {
         CompoundTag tag = additionalData.readNbt();
         if (tag != null) {
-            this.readBossSaveData(tag);
+            this.readBossSaveData(tag, this.registryAccess());
         }
     }
 

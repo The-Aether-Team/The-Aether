@@ -17,16 +17,13 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
-import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-import net.neoforged.neoforge.event.entity.living.MobSplitEvent;
+import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import top.theillusivec4.curios.api.event.CurioDropsEvent;
 
 import java.util.ArrayList;
@@ -74,7 +71,7 @@ public class EntityListener {
     /**
      * @see EntityHooks#launchMount(Player)
      */
-    public static void onRiderTick(TickEvent.PlayerTickEvent event) {
+    public static void onRiderTick(PlayerTickEvent event) {
         Player player = event.player;
         EntityHooks.launchMount(player);
     }
@@ -111,7 +108,7 @@ public class EntityListener {
     /**
      * @see EntityHooks#preventSliderShieldBlock(DamageSource)
      */
-    public static void onShieldBlock(ShieldBlockEvent event) {
+    public static void onShieldBlock(LivingShieldBlockEvent event) {
         if (!event.isCanceled()) {
             event.setCanceled(EntityHooks.preventSliderShieldBlock(event.getDamageSource()));
         }
@@ -167,7 +164,7 @@ public class EntityListener {
         LivingEntity livingEntity = event.getEntity();
         MobEffectInstance effectInstance = event.getEffectInstance();
         if (EntityHooks.preventInebriation(livingEntity, effectInstance)) {
-            event.setResult(Event.Result.DENY);
+            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
         }
     }
 

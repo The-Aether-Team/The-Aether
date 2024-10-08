@@ -18,7 +18,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 public abstract class AetherLanguageProvider extends NitrogenLanguageProvider {
-
     private final Map<String, String> PRO_TIPS = new HashMap<>();
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private final PackOutput output;
@@ -26,6 +25,10 @@ public abstract class AetherLanguageProvider extends NitrogenLanguageProvider {
     public AetherLanguageProvider(PackOutput output, String id) {
         super(output, id);
         this.output = output;
+    }
+
+    public void addJukeboxSong(String songName, String name) {
+        this.add("jukebox_song." + this.id + "." + songName, name);
     }
 
     public void addMoaSkinsText(String key, String name) {

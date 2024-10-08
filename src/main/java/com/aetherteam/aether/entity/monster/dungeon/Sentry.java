@@ -74,7 +74,7 @@ public class Sentry extends Slime {
      * Only allows jumping when the Sentry is awake.
      */
     @Override
-    protected void jumpFromGround() {
+    public void jumpFromGround() {
         if (this.isAwake()) {
             super.jumpFromGround();
         }
@@ -114,7 +114,7 @@ public class Sentry extends Slime {
         if (this.distanceToSqr(entity) < 1.5 && this.isAwake() && this.hasLineOfSight(entity) && entity.hurt(this.damageSources().mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
             entity.push(0.3, 0.4, 0.3);
             this.level().explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Level.ExplosionInteraction.MOB);
-            this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F * (this.getRandom().nextFloat() - this.getRandom().nextFloat()) + 1);
+            this.playSound(SoundEvents.GENERIC_EXPLODE.value(), 1.0F, 0.2F * (this.getRandom().nextFloat() - this.getRandom().nextFloat()) + 1);
             if (this.level() instanceof ServerLevel level) {
                 level.broadcastEntityEvent(this, (byte) 70);
                 level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.getX(), this.getY(), this.getZ(), 1, 0.0, 0.0, 0.0, 0.5);

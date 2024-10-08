@@ -14,7 +14,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -41,14 +41,14 @@ public class ToolAbilityListener {
     }
 
     /**
-     * @see AbilityHooks.ToolHooks#setupItemAbilities(LevelAccessor, BlockPos, BlockState, ToolAction)
+     * @see AbilityHooks.ToolHooks#setupItemAbilities(LevelAccessor, BlockPos, BlockState, ItemAbility)
      */
     public static void setupToolModifications(BlockEvent.BlockToolModificationEvent event) {
         LevelAccessor levelAccessor = event.getLevel();
         BlockPos pos = event.getPos();
         BlockState oldState = event.getState();
-        ToolAction toolAction = event.getToolAction();
-        BlockState newState = AbilityHooks.ToolHooks.setupItemAbilities(levelAccessor, pos, oldState, toolAction);
+        ItemAbility ItemAbility = event.getItemAbility();
+        BlockState newState = AbilityHooks.ToolHooks.setupItemAbilities(levelAccessor, pos, oldState, ItemAbility);
         if (newState != oldState && !event.isSimulated() && !event.isCanceled()) {
             event.setFinalState(newState);
         }
@@ -83,16 +83,16 @@ public class ToolAbilityListener {
     }
 
     /**
-     * @see AbilityHooks.ToolHooks#stripGoldenOak(LevelAccessor, BlockState, ItemStack, ToolAction, UseOnContext)
+     * @see AbilityHooks.ToolHooks#stripGoldenOak(LevelAccessor, BlockState, ItemStack, ItemAbility, UseOnContext)
      */
     public static void doGoldenOakStripping(BlockEvent.BlockToolModificationEvent event) {
         LevelAccessor levelAccessor = event.getLevel();
         BlockState oldState = event.getState();
         ItemStack itemStack = event.getHeldItemStack();
-        ToolAction toolAction = event.getToolAction();
+        ItemAbility ItemAbility = event.getItemAbility();
         UseOnContext context = event.getContext();
         if (!event.isSimulated() && !event.isCanceled()) {
-            AbilityHooks.ToolHooks.stripGoldenOak(levelAccessor, oldState, itemStack, toolAction, context);
+            AbilityHooks.ToolHooks.stripGoldenOak(levelAccessor, oldState, itemStack, ItemAbility, context);
         }
     }
 

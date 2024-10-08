@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.fml.ModList;
-import noobanidus.mods.lootr.init.ModBlocks;
+import noobanidus.mods.lootr.neoforge.init.ModBlocks;
 import org.jetbrains.annotations.Nullable;
 import snownee.jade.addon.vanilla.VanillaPlugin;
 import snownee.jade.api.*;

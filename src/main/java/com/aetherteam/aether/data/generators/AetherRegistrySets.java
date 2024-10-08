@@ -26,6 +26,7 @@ public class AetherRegistrySets extends DatapackBuiltinEntriesProvider {
             .add(Registries.STRUCTURE_SET, AetherStructureSets::bootstrap)
             .add(Registries.DAMAGE_TYPE, AetherDamageTypes::bootstrap)
             .add(Registries.TRIM_MATERIAL, AetherTrimMaterials::bootstrap)
+            .add(Registries.JUKEBOX_SONG, AetherJukeboxSongs::bootstrap)
             .add(AetherMoaTypes.MOA_TYPE_REGISTRY_KEY, AetherMoaTypes::bootstrap);
 
     public AetherRegistrySets(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

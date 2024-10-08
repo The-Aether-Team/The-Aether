@@ -10,20 +10,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.function.Supplier;
 
 public class AerogelStairsBlock extends StairBlock implements AerogelCulling {
-    public AerogelStairsBlock(Supplier<BlockState> state, Properties properties) {
+    public AerogelStairsBlock(BlockState state, Properties properties) {
         super(state, properties);
     }
 
     /**
      * Determines the amount of light this will block.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
      *
      * @param state The {@link BlockState} of the block.
      * @param level The {@link Level} the block is in.
      * @param pos   The {@link BlockPos} of the block.
      * @return The {@link Integer} of how many light levels are blocked, plus 2 extra by default.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
         return 3;

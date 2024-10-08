@@ -45,7 +45,7 @@ public class PhygHaloLayer extends RenderLayer<Phyg, PigModel<Phyg>> {
             this.phygHalo.halo.xRot = quadrupedModelAccessor.aether$getHead().xRot;
             this.phygHalo.setupAnim(phyg, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
             VertexConsumer consumer = buffer.getBuffer(RenderType.eyes(HALO_LOCATION));
-            this.phygHalo.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 0.25F);
+            this.phygHalo.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1073741823);
         }
     }
 }

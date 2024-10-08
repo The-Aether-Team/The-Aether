@@ -56,18 +56,16 @@ public class BerryBushBlock extends AetherBushBlock {
 
     /**
      * Allows Berry Bushes to be harvested by right-clicking if the {@link AetherConfig.Server#berry_bush_consistency} config is enabled.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
      *
      * @param state  The {@link BlockState} of the block.
      * @param level  The {@link Level} the block is in.
      * @param pos    The {@link BlockPos} of the block.
      * @param player The {@link Player} interacting with the block.
-     * @param hand   The {@link InteractionHand}.
      * @param hit    The {@link BlockHitResult} when using.
      * @return The {@link InteractionResult} for using this block.
      */
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (AetherConfig.SERVER.berry_bush_consistency.get()) {
             Block.dropResources(state, level, pos, null, player, ItemStack.EMPTY);
             level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + level.getRandom().nextFloat() * 0.4F);
@@ -75,7 +73,7 @@ public class BerryBushBlock extends AetherBushBlock {
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
             return InteractionResult.sidedSuccess(level.isClientSide());
         } else {
-            return super.use(state, level, pos, player, hand, hit);
+            return super.useWithoutItem(state, level, pos, player, hit);
         }
     }
 
@@ -92,7 +90,7 @@ public class BerryBushBlock extends AetherBushBlock {
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
         super.playerDestroy(level, player, pos, state, blockEntity, tool);
-        if (tool.getEnchantmentLevel(Enchantments.SILK_TOUCH) <= 0) {
+        if (tool.getEnchantmentLevel(level.holderOrThrow(Enchantments.SILK_TOUCH)) <= 0) {
             level.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 1 | 2);
             if (AetherConfig.SERVER.berry_bush_consistency.get()) { // Destroy stem too if config is enabled.
                 level.destroyBlock(pos, true, player);

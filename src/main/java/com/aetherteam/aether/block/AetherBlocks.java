@@ -202,7 +202,7 @@ public class AetherBlocks {
     public static final DeferredBlock<StairBlock> HOLYSTONE_BRICK_STAIRS = register("holystone_brick_stairs",
             () -> new StairBlock(HOLYSTONE_BRICKS.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.HOLYSTONE_BRICKS.get())));
     public static final DeferredBlock<StairBlock> AEROGEL_STAIRS = register("aerogel_stairs",
-            () -> new AerogelStairsBlock(() -> AEROGEL.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.AEROGEL.get()).isViewBlocking(AetherBlocks::never)));
+            () -> new AerogelStairsBlock(AEROGEL.get().defaultBlockState(), Block.Properties.ofFullCopy(AetherBlocks.AEROGEL.get()).isViewBlocking(AetherBlocks::never)));
 
     public static final DeferredBlock<SlabBlock> SKYROOT_SLAB = register("skyroot_slab",
             () -> new SlabBlock(Block.Properties.ofFullCopy(AetherBlocks.SKYROOT_PLANKS.get()).strength(2.0F, 3.0F)));

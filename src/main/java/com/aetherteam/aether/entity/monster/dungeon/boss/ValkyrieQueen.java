@@ -25,7 +25,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -512,7 +512,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        PacketDistributor.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
+        PacketDistributor.sendToPlayer(player, new BossInfoPacket.Display(this.bossFight.getId(), this.getId()));
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
             this.bossFight.addPlayer(player);
             AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), player);
@@ -527,7 +527,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
-        PacketDistributor.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
+        PacketDistributor.sendToPlayer(player, new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()));
         this.bossFight.removePlayer(player);
         AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), player);
     }
@@ -732,7 +732,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        this.addBossSaveData(tag);
+        this.addBossSaveData(tag, this.registryAccess());
         if (this.dungeonBounds != null) {
             tag.putDouble("DungeonBoundsMinX", this.dungeonBounds.minX);
             tag.putDouble("DungeonBoundsMinY", this.dungeonBounds.minY);
@@ -750,7 +750,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.readBossSaveData(tag);
+        this.readBossSaveData(tag, this.registryAccess());
         if (tag.contains("DungeonBoundsMinX")) {
             double minX = tag.getDouble("DungeonBoundsMinX");
             double minY = tag.getDouble("DungeonBoundsMinY");
@@ -769,9 +769,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag)
      */
     @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
         CompoundTag tag = new CompoundTag();
-        this.addBossSaveData(tag);
+        this.addBossSaveData(tag, this.registryAccess());
         buffer.writeNbt(tag);
     }
 
@@ -779,10 +779,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag)
      */
     @Override
-    public void readSpawnData(FriendlyByteBuf additionalData) {
+    public void readSpawnData(RegistryFriendlyByteBuf additionalData) {
         CompoundTag tag = additionalData.readNbt();
         if (tag != null) {
-            this.readBossSaveData(tag);
+            this.readBossSaveData(tag, this.registryAccess());
         }
     }
 

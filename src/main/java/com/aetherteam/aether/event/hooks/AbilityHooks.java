@@ -48,7 +48,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -246,16 +246,16 @@ public class AbilityHooks {
         public static boolean debuffTools;
 
         /**
-         * Handles modifying blocks when a {@link ToolAction} is performed on them.
+         * Handles modifying blocks when a {@link ItemAbility} is performed on them.
          *
          * @param accessor The {@link LevelAccessor} of the level.
          * @param pos      The {@link Block} within the level.
          * @param old      The old {@link BlockState} of the block an action is being performed on.
-         * @param action   The {@link ToolAction} being performed on the block.
+         * @param action   The {@link ItemAbility} being performed on the block.
          * @return The new {@link BlockState} of the block.
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#setupToolModifications(BlockEvent.BlockToolModificationEvent)
          */
-        public static BlockState setupItemAbilities(LevelAccessor accessor, BlockPos pos, BlockState old, ToolAction action) {
+        public static BlockState setupItemAbilities(LevelAccessor accessor, BlockPos pos, BlockState old, ItemAbility action) {
             Block oldBlock = old.getBlock();
             if (action == ItemAbilities.AXE_STRIP) {
                 if (STRIPPABLES.containsKey(oldBlock)) {
@@ -336,11 +336,11 @@ public class AbilityHooks {
          * @param accessor The {@link LevelAccessor} of the level.
          * @param state    The {@link BlockState} an action is being performed on.
          * @param stack    The {@link ItemStack} performing an action.
-         * @param action   The {@link ToolAction} being performed.
+         * @param action   The {@link ItemAbility} being performed.
          * @param context  The {@link UseOnContext} of this interaction.
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#doGoldenOakStripping(BlockEvent.BlockToolModificationEvent)
          */
-        public static void stripGoldenOak(LevelAccessor accessor, BlockState state, ItemStack stack, ToolAction action, UseOnContext context) {
+        public static void stripGoldenOak(LevelAccessor accessor, BlockState state, ItemStack stack, ItemAbility action, UseOnContext context) {
             if (action == ItemAbilities.AXE_STRIP) {
                 if (accessor instanceof Level level) {
                     if (state.is(AetherTags.Blocks.GOLDEN_OAK_LOGS) && stack.is(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)) {

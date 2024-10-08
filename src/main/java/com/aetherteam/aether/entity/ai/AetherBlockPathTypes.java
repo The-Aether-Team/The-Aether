@@ -1,7 +1,7 @@
 package com.aetherteam.aether.entity.ai;
 
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 public class AetherBlockPathTypes {
-    public static final BlockPathTypes BOSS_DOORWAY = BlockPathTypes.create("BOSS_DOORWAY", -1.0F);
+    public static final PathType BOSS_DOORWAY = PathType.valueOf("AETHER_BOSS_DOORWAY");
 }

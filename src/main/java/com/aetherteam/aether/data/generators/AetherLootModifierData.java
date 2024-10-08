@@ -6,6 +6,7 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.loot.modifiers.*;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
@@ -15,9 +16,11 @@ import net.minecraft.world.level.storage.loot.predicates.*;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
 import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 
+import java.util.concurrent.CompletableFuture;
+
 public class AetherLootModifierData extends GlobalLootModifierProvider {
-    public AetherLootModifierData(PackOutput output) {
-        super(output, Aether.MODID);
+    public AetherLootModifierData(PackOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
+        super(output, completableFuture, Aether.MODID);
     }
 
     @Override

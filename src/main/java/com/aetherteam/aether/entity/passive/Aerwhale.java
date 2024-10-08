@@ -246,7 +246,7 @@ public class Aerwhale extends FlyingMob {
      * [CODE COPY] - {@link Animal#getExperienceReward()}.
      */
     @Override
-    public int getExperienceReward() {
+    public int getBaseExperienceReward() {
         return 1 + this.level().getRandom().nextInt(3);
     }
 
