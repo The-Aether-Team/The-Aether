@@ -26,6 +26,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,7 +38,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<T>, R extends AbstractPlacementBanRecipe<T, S>> extends AbstractRecipeCategory<R> implements BiomeTooltip {
+public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<T>, F extends SingleRecipeInput, R extends AbstractPlacementBanRecipe<T, S, F>> extends AbstractRecipeCategory<R> implements BiomeTooltip {
     protected final IPlatformFluidHelper<?> fluidHelper;
     private final IDrawable slot;
 
@@ -75,7 +76,7 @@ public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<
         if (Minecraft.getInstance().level != null) {
             for (BlockPropertyPair pair : pairs) {
                 if (pair.block() instanceof LiquidBlock liquidBlock) {
-                    ingredients.add(this.fluidHelper.create(liquidBlock.getFluid(), 1000));
+                    ingredients.add(this.fluidHelper.create(liquidBlock.fluid.builtInRegistryHolder(), 1000));
                 } else {
                     BlockState state = pair.block().defaultBlockState();
                     if (pair.properties().isPresent()) {

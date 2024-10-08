@@ -5,26 +5,23 @@ import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class IncubationRecipe implements Recipe<Container> {
+public class IncubationRecipe implements Recipe<SingleRecipeInput> {
     protected final RecipeType<?> type;
     protected final String group;
     protected final Ingredient ingredient;
@@ -42,7 +39,7 @@ public class IncubationRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(Container menu, Level level) {
+    public boolean matches(SingleRecipeInput menu, Level level) {
         return this.ingredient.test(menu.getItem(0));
     }
 
@@ -50,7 +47,7 @@ public class IncubationRecipe implements Recipe<Container> {
      * @return An empty {@link ItemStack}, as there is no item output.
      */
     @Override
-    public ItemStack assemble(Container menu, RegistryAccess registryAccess) {
+    public ItemStack assemble(SingleRecipeInput menu, HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 
@@ -58,7 +55,7 @@ public class IncubationRecipe implements Recipe<Container> {
      * @return The original {@link ItemStack} ingredient for Recipe Book display.
      */
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return this.ingredient.getItems()[0];
     }
 
@@ -107,36 +104,37 @@ public class IncubationRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<IncubationRecipe> {
-        private static final Codec<IncubationRecipe> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-                ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(IncubationRecipe::getGroup),
+        @Override
+        public MapCodec<IncubationRecipe> codec() {
+            return RecordCodecBuilder.mapCodec((instance) -> instance.group(
+                Codec.STRING.optionalFieldOf("group", "").forGetter(p_300832_ -> p_300832_.group),
                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((recipe) -> recipe.ingredient),
                 BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("entity").forGetter((recipe) -> recipe.entity),
                 CompoundTag.CODEC.optionalFieldOf("tag").forGetter((recipe) -> recipe.tag),
                 Codec.INT.fieldOf("incubationtime").orElse(500).forGetter((recipe) -> recipe.incubationTime)
-        ).apply(instance, IncubationRecipe::new));
+            ).apply(instance, IncubationRecipe::new));
+        }
 
         @Override
-        public Codec<IncubationRecipe> codec() {
-            return CODEC;
+        public StreamCodec<RegistryFriendlyByteBuf, IncubationRecipe> streamCodec() {
+            return StreamCodec.of(this::toNetwork, this::fromNetwork);
         }
 
         @Nullable
-        @Override
-        public IncubationRecipe fromNetwork(FriendlyByteBuf buffer) {
+        public IncubationRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
             String group = buffer.readUtf();
-            Ingredient ingredient = Ingredient.fromNetwork(buffer);
+            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
             EntityType<?> entityType = EntityType.byString(buffer.readUtf()).orElseThrow(() -> new JsonSyntaxException("Entity type cannot be found"));
-            Optional<CompoundTag> tag = buffer.readOptional(FriendlyByteBuf::readNbt);
+            Optional<CompoundTag> tag = buffer.readOptional(RegistryFriendlyByteBuf::readNbt);
             int incubationTime = buffer.readVarInt();
             return new IncubationRecipe(group, ingredient, entityType, tag, incubationTime);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, IncubationRecipe recipe) {
+        public void toNetwork(RegistryFriendlyByteBuf buffer, IncubationRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            recipe.ingredient.toNetwork(buffer);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingredient);
             buffer.writeUtf(EntityType.getKey(recipe.getEntity()).toString());
-            buffer.writeOptional(recipe.tag, (FriendlyByteBuf::writeNbt));
+            buffer.writeOptional(recipe.tag, RegistryFriendlyByteBuf::writeNbt);
             buffer.writeVarInt(recipe.getIncubationTime());
         }
     }

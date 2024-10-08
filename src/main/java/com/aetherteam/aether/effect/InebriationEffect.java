@@ -24,11 +24,12 @@ public class InebriationEffect extends MobEffect {
      * @param amplifier    The {@link Integer} amplifier for the effect.
      */
     @Override
-    public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
+    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
         if (this.effectDuration % 50 == 0) {
             livingEntity.hurt(AetherDamageTypes.damageSource(livingEntity.level(), AetherDamageTypes.INEBRIATION), 1.0F);
         }
         this.distractEntity(livingEntity);
+        return true;
     }
 
     /**

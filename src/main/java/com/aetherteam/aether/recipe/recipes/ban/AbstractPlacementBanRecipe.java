@@ -3,12 +3,12 @@ package com.aetherteam.aether.recipe.recipes.ban;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> implements Recipe<Container> {
+public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>, R extends RecipeInput> implements Recipe<R> {
     protected final RecipeType<?> type;
     private final Either<ResourceKey<Biome>, TagKey<Biome>> biome;
     protected final Optional<BlockStateIngredient> bypassBlock;
@@ -72,7 +72,7 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
     }
 
     @Override
-    public boolean matches(Container container, Level level) {
+    public boolean matches(R container, Level level) {
         return false;
     }
 
@@ -82,12 +82,12 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
     }
 
     @Override
-    public ItemStack assemble(Container container, RegistryAccess registryAccess) {
+    public ItemStack assemble(R container, HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 }

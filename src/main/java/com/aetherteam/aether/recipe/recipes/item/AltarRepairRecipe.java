@@ -5,17 +5,16 @@ import com.aetherteam.aether.recipe.AetherBookCategory;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-
-import javax.annotation.Nullable;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 
 public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
     public final Ingredient ingredient;
@@ -26,11 +25,11 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
     }
 
     /**
-     * @param inventory The crafting {@link Container}.
+     * @param inventory The crafting {@link SingleRecipeInput}.
      * @return The original {@link ItemStack} ingredient, because repairing always outputs the same item as the input.
      */
     @Override
-    public ItemStack assemble(Container inventory, RegistryAccess registryAccess) {
+    public ItemStack assemble(SingleRecipeInput inventory, HolderLookup.Provider provider) {
         return this.ingredient.getItems()[0];
     }
 
@@ -38,7 +37,7 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
      * @return The original {@link ItemStack} ingredient for Recipe Book display, because repairing always outputs the same item as the input.
      */
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return this.ingredient.getItems()[0];
     }
 
@@ -53,31 +52,32 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<AltarRepairRecipe> {
-        private static final Codec<AltarRepairRecipe> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-                ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(AbstractCookingRecipe::getGroup),
+        private static final MapCodec<AltarRepairRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+                Codec.STRING.optionalFieldOf("group", "").forGetter(AbstractCookingRecipe::getGroup),
                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((recipe) -> recipe.ingredient),
                 Codec.INT.fieldOf("repairTime").orElse(500).forGetter((recipe) -> recipe.cookingTime)
         ).apply(instance, AltarRepairRecipe::new));
 
         @Override
-        public Codec<AltarRepairRecipe> codec() {
+        public MapCodec<AltarRepairRecipe> codec() {
             return CODEC;
         }
 
-        @Nullable
         @Override
-        public AltarRepairRecipe fromNetwork(FriendlyByteBuf buffer) {
-            String group = buffer.readUtf();
+        public StreamCodec<RegistryFriendlyByteBuf, AltarRepairRecipe> streamCodec() {
+            return null;
+        }
 
-            Ingredient ingredient = Ingredient.fromNetwork(buffer);
+        public AltarRepairRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
+            String group = buffer.readUtf();
+            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
             int cookingTime = buffer.readVarInt();
             return new AltarRepairRecipe(group, ingredient, cookingTime);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, AltarRepairRecipe recipe) {
+        public void toNetwork(RegistryFriendlyByteBuf buffer, AltarRepairRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            recipe.ingredient.toNetwork(buffer);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingredient);
             buffer.writeVarInt(recipe.cookingTime);
         }
     }

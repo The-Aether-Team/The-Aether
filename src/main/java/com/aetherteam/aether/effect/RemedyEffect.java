@@ -22,7 +22,7 @@ public class RemedyEffect extends MobEffect {
      * @param amplifier    The {@link Integer} amplifier for the effect.
      */
     @Override
-    public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
+    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
         if (livingEntity instanceof Player player) {
             if (player.level().isClientSide()) {
                 var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
@@ -31,9 +31,10 @@ public class RemedyEffect extends MobEffect {
                 }
             }
         }
-        if (livingEntity.hasEffect(AetherEffects.INEBRIATION.get())) {
-            livingEntity.removeEffect(AetherEffects.INEBRIATION.get());
+        if (livingEntity.hasEffect(AetherEffects.INEBRIATION)) {
+            livingEntity.removeEffect(AetherEffects.INEBRIATION);
         }
+        return true;
     }
 
     @Override

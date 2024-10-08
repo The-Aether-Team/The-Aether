@@ -7,26 +7,26 @@ import com.aetherteam.aether.recipe.serializer.PlacementBanRecipeSerializer;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredient> {
+public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredient, SingleRecipeInput> {
     public ItemBanRecipe(Either<ResourceKey<Biome>, TagKey<Biome>> biome, Optional<BlockStateIngredient> bypassBlock, Ingredient ingredient) {
         super(AetherRecipeTypes.ITEM_PLACEMENT_BAN.get(), biome, bypassBlock, ingredient);
     }
@@ -64,33 +64,35 @@ public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredi
         return AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get();
     }
 
-    public static class Serializer extends PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> {
+    public static class Serializer extends PlacementBanRecipeSerializer<ItemStack, Ingredient, SingleRecipeInput, ItemBanRecipe> {
         public Serializer() {
             super(ItemBanRecipe::new);
         }
 
         @Override
-        public Codec<ItemBanRecipe> codec() {
-            return RecordCodecBuilder.create(inst -> inst.group(
+        public MapCodec<ItemBanRecipe> codec() {
+            return RecordCodecBuilder.mapCodec(inst -> inst.group(
                     BlockStateRecipeUtil.KEY_CODEC.fieldOf("biome").forGetter(ItemBanRecipe::getBiome),
                     BlockStateIngredient.CODEC.optionalFieldOf("bypass").forGetter(ItemBanRecipe::getBypassBlock),
                     Ingredient.CODEC.fieldOf("ingredient").forGetter(ItemBanRecipe::getIngredient)
             ).apply(inst, this.getFactory()));
         }
 
-        @Nullable
         @Override
-        public ItemBanRecipe fromNetwork(FriendlyByteBuf buffer) {
-            Either<ResourceKey<Biome>, TagKey<Biome>> biome = buffer.readEither((buf) -> ResourceKey.create(Registries.BIOME, buf.readResourceLocation()), (buf) -> TagKey.create(Registries.BIOME, buf.readResourceLocation()));
-            Optional<BlockStateIngredient> bypassBlock = buffer.readOptional((buf) -> BlockStateIngredient.fromNetwork(buffer));
-            Ingredient ingredient = Ingredient.fromNetwork(buffer);
+        public StreamCodec<RegistryFriendlyByteBuf, ItemBanRecipe> streamCodec() {
+            return StreamCodec.of(this::toNetwork, this::fromNetwork);
+        }
+
+        public ItemBanRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
+            Either<ResourceKey<Biome>, TagKey<Biome>> biome = BlockStateRecipeUtil.STREAM_CODEC.decode(buffer);
+            Optional<BlockStateIngredient> bypassBlock = buffer.readOptional((buf) -> BlockStateIngredient.CONTENTS_STREAM_CODEC.decode(buffer));
+            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
             return new ItemBanRecipe(biome, bypassBlock, ingredient);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, ItemBanRecipe recipe) {
+        public void toNetwork(RegistryFriendlyByteBuf buffer, ItemBanRecipe recipe) {
             super.toNetwork(buffer, recipe);
-            recipe.getIngredient().toNetwork(buffer);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.getIngredient());
         }
     }
 }
