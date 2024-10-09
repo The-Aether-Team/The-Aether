@@ -74,7 +74,7 @@ public class GuiHooks {
     private static boolean areAccessoryTagsFilled() {
         boolean flag = true;
         for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
-            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, ResourceLocation.withDefaultNamespace("curios", string))).spliterator().estimateSize() == 0) {
+            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", string))).spliterator().estimateSize() == 0) {
                 flag = false;
             }
         }

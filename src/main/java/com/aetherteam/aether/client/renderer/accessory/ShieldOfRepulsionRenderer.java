@@ -7,6 +7,7 @@ import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.aetherteam.nitrogen.ConstantsUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import io.wispforest.accessories.api.client.AccessoryRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -26,9 +27,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import top.theillusivec4.curios.api.client.ICurioRenderer;
 
-public class ShieldOfRepulsionRenderer implements ICurioRenderer {
+public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
     private final HumanoidModel<LivingEntity> shieldModel;
     private final PlayerModel<LivingEntity> shieldModelSlim;
     public final HumanoidModel<LivingEntity> shieldModelArm;
@@ -86,7 +86,7 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
 
         ICurioRenderer.followHeadRotations(slotContext.entity(), model.head);
         ICurioRenderer.followBodyRotations(slotContext.entity(), model);
-        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, false);
+        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false);
         model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
     }
 
