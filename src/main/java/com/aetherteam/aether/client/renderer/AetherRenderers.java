@@ -28,6 +28,7 @@ import com.aetherteam.aether.entity.projectile.dart.EnchantedDart;
 import com.aetherteam.aether.entity.projectile.dart.GoldenDart;
 import com.aetherteam.aether.entity.projectile.dart.PoisonDart;
 import com.aetherteam.aether.item.AetherItems;
+import io.wispforest.accessories.api.client.AccessoriesRendererRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -42,6 +43,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -49,7 +51,6 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
-import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -184,25 +185,25 @@ public class AetherRenderers {
      * @see com.aetherteam.aether.client.AetherClient#clientSetup(FMLClientSetupEvent)
      */
     public static void registerCuriosRenderers() {
-        CuriosRendererRegistry.register(AetherItems.IRON_PENDANT.get(), PendantRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.GOLDEN_PENDANT.get(), PendantRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.ZANITE_PENDANT.get(), PendantRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.ICE_PENDANT.get(), PendantRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.IRON_PENDANT.get(), PendantRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.GOLDEN_PENDANT.get(), PendantRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.ZANITE_PENDANT.get(), PendantRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.ICE_PENDANT.get(), PendantRenderer::new);
 
-        CuriosRendererRegistry.register(AetherItems.LEATHER_GLOVES.get(), GlovesRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.CHAINMAIL_GLOVES.get(), GlovesRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.IRON_GLOVES.get(), GlovesRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.GOLDEN_GLOVES.get(), GlovesRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.DIAMOND_GLOVES.get(), GlovesRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.NETHERITE_GLOVES.get(), GlovesRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.ZANITE_GLOVES.get(), GlovesRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.GRAVITITE_GLOVES.get(), GlovesRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.NEPTUNE_GLOVES.get(), GlovesRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.PHOENIX_GLOVES.get(), GlovesRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.OBSIDIAN_GLOVES.get(), GlovesRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.VALKYRIE_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.LEATHER_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.CHAINMAIL_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.IRON_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.GOLDEN_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.DIAMOND_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.NETHERITE_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.ZANITE_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.GRAVITITE_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.NEPTUNE_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.PHOENIX_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.OBSIDIAN_GLOVES.get(), GlovesRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.VALKYRIE_GLOVES.get(), GlovesRenderer::new);
 
-        CuriosRendererRegistry.register(AetherItems.SHIELD_OF_REPULSION.get(), ShieldOfRepulsionRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.SHIELD_OF_REPULSION.get(), ShieldOfRepulsionRenderer::new);
     }
 
     /**
@@ -238,10 +239,10 @@ public class AetherRenderers {
      * @see AetherClient#eventSetup()
      */
     public static void bakeModels(ModelEvent.ModifyBakingResult event) {
-        List<Map.Entry<ResourceLocation, BakedModel>> models = new ArrayList<>();
-        for (Map.Entry<ResourceLocation, BakedModel> model : event.getModels().entrySet()) {
-            if (model.getKey().getNamespace().equals(Aether.MODID)) {
-                String path = model.getKey().getPath();
+        List<Map.Entry<ModelResourceLocation, BakedModel>> models = new ArrayList<>();
+        for (Map.Entry<ModelResourceLocation, BakedModel> model : event.getModels().entrySet()) {
+            if (model.getKey().id().getNamespace().equals(Aether.MODID)) {
+                String path = model.getKey().id().getPath();
                 if (path.equals(AetherBlocks.BERRY_BUSH.getId().getPath())) {
                     models.add(model);
                 } else if (path.equals(AetherBlocks.POTTED_BERRY_BUSH.getId().getPath())) {

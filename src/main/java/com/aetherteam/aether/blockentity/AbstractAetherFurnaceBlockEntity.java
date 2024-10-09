@@ -44,12 +44,13 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
         }
 
         ItemStack itemstack = abstractFurnaceBlockEntityAccessor.aether$getItems().get(1);
-        boolean flag2 = !abstractFurnaceBlockEntityAccessor.aether$getItems().get(0).isEmpty();
+        ItemStack itemstack1 = abstractFurnaceBlockEntityAccessor.aether$getItems().get(0);
+        boolean flag2 = !itemstack1.isEmpty();
         boolean flag3 = !itemstack.isEmpty();
         if (abstractFurnaceBlockEntityAccessor.callIsLit() || flag3 && flag2) {
             RecipeHolder<? extends AbstractCookingRecipe> recipe;
             if (flag2) {
-                recipe = abstractFurnaceBlockEntityAccessor.aether$getQuickCheck().getRecipeFor(blockEntity, level).orElse(null);
+                recipe = abstractFurnaceBlockEntityAccessor.aether$getQuickCheck().getRecipeFor(new SingleRecipeInput(itemstack1), level).orElse(null);
             } else {
                 recipe = null;
             }

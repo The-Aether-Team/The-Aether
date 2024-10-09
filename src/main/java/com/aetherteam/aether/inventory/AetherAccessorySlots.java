@@ -20,12 +20,12 @@ public class AetherAccessorySlots implements UniqueSlotHandling.RegistrationCall
     private static final ResourceLocation SHIELD_PREDICATE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "shield_items");
     private static final ResourceLocation ACCESSORY_PREDICATE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "accessory_items");
 
-    private static final ResourceLocation GLOVES_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "gloves_slot");
-    private static final ResourceLocation RING_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "ring_slot");
-    private static final ResourceLocation PENDANT_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "pendant_slot");
-    private static final ResourceLocation CAPE_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "cape_slot");
-    private static final ResourceLocation SHIELD_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "shield_slot");
-    private static final ResourceLocation ACCESSORY_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "accessory_slot");
+    public static final ResourceLocation GLOVES_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "gloves_slot");
+    public static final ResourceLocation RING_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "ring_slot");
+    public static final ResourceLocation PENDANT_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "pendant_slot");
+    public static final ResourceLocation CAPE_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "cape_slot");
+    public static final ResourceLocation SHIELD_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "shield_slot");
+    public static final ResourceLocation ACCESSORY_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "accessory_slot");
 
     public static final AetherAccessorySlots INSTANCE = new AetherAccessorySlots();
 

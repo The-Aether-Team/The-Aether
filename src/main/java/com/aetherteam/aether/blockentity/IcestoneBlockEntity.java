@@ -3,6 +3,7 @@ package com.aetherteam.aether.blockentity;
 import com.aetherteam.aether.AetherGameEvents;
 import com.aetherteam.aether.block.FreezingBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -74,9 +75,10 @@ public class IcestoneBlockEntity extends BlockEntity implements FreezingBlock {
             return this.listenerRadius;
         }
 
+
         @Override
-        public boolean handleGameEvent(ServerLevel level, GameEvent event, GameEvent.Context context, Vec3 pos) {
-            if (event == AetherGameEvents.ICESTONE_FREEZABLE_UPDATE.value() || event == GameEvent.BLOCK_PLACE || event == GameEvent.FLUID_PLACE || event == GameEvent.ENTITY_PLACE) {
+        public boolean handleGameEvent(ServerLevel level, Holder<GameEvent> event, GameEvent.Context context, Vec3 pos) {
+            if (event.is(AetherGameEvents.ICESTONE_FREEZABLE_UPDATE) || event.is(GameEvent.BLOCK_PLACE) || event.is(GameEvent.FLUID_PLACE) || event.is(GameEvent.ENTITY_PLACE)) {
                 IcestoneBlockEntity.this.freezeBlocks(level, IcestoneBlockEntity.this.getBlockPos(), IcestoneBlockEntity.this.getBlockState(), FreezingBlock.SQRT_8);
                 return true;
             } else if (event == GameEvent.BLOCK_DESTROY) {

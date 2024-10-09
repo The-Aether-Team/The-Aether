@@ -380,7 +380,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 
     @Override
     public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag);
+        super.saveAdditional(tag, registries);
         tag.putInt("LitTime", this.litTime);
         tag.putInt("IncubationProgress", this.incubationProgress);
         tag.putInt("IncubationTotalTime", this.incubationTotalTime);

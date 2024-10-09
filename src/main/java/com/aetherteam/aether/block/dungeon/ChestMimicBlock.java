@@ -71,19 +71,16 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
 
     /**
      * Spawns a Mimic when the chest is interacted with as long as it's not blocked.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
      *
      * @param state  The {@link BlockState} of the block.
      * @param level  The {@link Level} the block is in.
      * @param pos    The {@link BlockPos} of the block.
      * @param player The {@link Player} interacting with the block.
-     * @param hand   The {@link InteractionHand} the player interacts with.
      * @param hit    The {@link BlockHitResult} of the interaction.
      * @return The {@link InteractionResult} of the interaction.
      */
-    @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!ChestBlock.isChestBlockedAt(level, pos) && !level.isClientSide()) {
             this.spawnMimic(state, level, pos);
             return InteractionResult.SUCCESS;

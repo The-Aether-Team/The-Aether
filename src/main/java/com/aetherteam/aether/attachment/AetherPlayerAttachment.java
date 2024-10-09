@@ -23,6 +23,7 @@ import com.aetherteam.aether.perk.data.ClientHaloPerkData;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
 import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
+import com.aetherteam.nitrogen.network.packet.SyncPacket;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.Minecraft;
@@ -516,7 +517,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
                 aerbunny.startRiding(player);
                 this.setMountedAerbunny(aerbunny);
                 if (player instanceof ServerPlayer serverPlayer) {
-                    PacketDistributor.sendToPlayer(new RemountAerbunnyPacket(player.getId(), aerbunny.getId()), serverPlayer);
+                    PacketDistributor.sendToPlayer(serverPlayer, new RemountAerbunnyPacket(player.getId(), aerbunny.getId()));
                 }
             }
             this.setMountedAerbunnyTag(null);
@@ -536,7 +537,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
     private void handleSavedHealth(Player player) {
         if (this.getSavedHealth() > 0.0F) {
             AttributeInstance health = player.getAttribute(Attributes.MAX_HEALTH);
-            if (health != null && health.hasModifier(this.getLifeShardHealthAttributeModifier())) {
+            if (health != null && health.hasModifier(this.getLifeShardHealthAttributeModifier().id())) {
                 player.setHealth(Math.min(this.getSavedHealth(), player.getMaxHealth()));
                 this.setSavedHealth(0.0F);
             }
@@ -564,7 +565,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
      */
     private void handleLogoutSavedHealth(Player player) {
         AttributeInstance health = player.getAttribute(Attributes.MAX_HEALTH);
-        if (health != null && health.hasModifier(this.getLifeShardHealthAttributeModifier())) {
+        if (health != null && health.hasModifier(this.getLifeShardHealthAttributeModifier().id())) {
             this.setSavedHealth(player.getHealth());
         }
     }
@@ -1016,7 +1017,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
      * @return The Life Shard health {@link AttributeModifier}.
      */
     public AttributeModifier getLifeShardHealthAttributeModifier() {
-        return new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.getLifeShardCount() * 2.0F, AttributeModifier.Operation.ADDITION);
+        return new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.getLifeShardCount() * 2.0F, AttributeModifier.Operation.ADD_VALUE);
     }
 
     /**
@@ -1027,7 +1028,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
      */
     private void sendCloudMinionPacket(Player player, CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft) {
         if (player instanceof ServerPlayer serverPlayer && !player.level().isClientSide) {
-            PacketDistributor.sendToPlayer(new CloudMinionPacket(player.getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
+            PacketDistributor.sendToPlayer(serverPlayer, new CloudMinionPacket(player.getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()));
         }
     }
 
@@ -1043,7 +1044,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
     }
 
     @Override
-    public CustomPacketPayload getSyncPacket(int entityID, String key, Type type, Object value) {
+    public SyncPacket getSyncPacket(int entityID, String key, Type type, Object value) {
         return new AetherPlayerSyncPacket(entityID, key, type, value);
     }
 }

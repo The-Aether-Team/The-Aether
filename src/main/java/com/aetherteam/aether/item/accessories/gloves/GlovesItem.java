@@ -2,18 +2,24 @@ package com.aetherteam.aether.item.accessories.gloves;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.inventory.AetherAccessorySlots;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import io.wispforest.accessories.api.attributes.AccessoryAttributeBuilder;
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
@@ -21,6 +27,7 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import java.util.UUID;
 
 public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
+    public static final ResourceLocation BASE_PUNCH_DAMAGE_ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "base_punch_damage");
     protected final Holder<ArmorMaterial> material;
     protected final double damage;
     protected ResourceLocation GLOVES_TEXTURE;
@@ -37,10 +44,10 @@ public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
-        Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
-        attributes.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", this.damage, AttributeModifier.Operation.ADDITION));
-        return attributes;
+    public void getDynamicModifiers(ItemStack stack, SlotReference reference, AccessoryAttributeBuilder builder) {
+        if (reference.slotName().equals(AetherAccessorySlots.GLOVES_SLOT_LOCATION.toString())) {
+            builder.addStackable(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_PUNCH_DAMAGE_ID, this.damage, AttributeModifier.Operation.ADD_VALUE));
+        }
     }
 
     /**
@@ -54,7 +61,7 @@ public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
 
     @Override
     public boolean isValidRepairItem(ItemStack item, ItemStack material) {
-        return this.material.getRepairIngredient().test(material) || super.isValidRepairItem(item, material);
+        return this.material.value().repairIngredient().get().test(material) || super.isValidRepairItem(item, material);
     }
 
     public Holder<ArmorMaterial> getMaterial() {
@@ -71,20 +78,6 @@ public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
 
     public ResourceLocation getGlovesTexture() {
         return this.GLOVES_TEXTURE;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public ImmutableTriple<Float, Float, Float> getColors(ItemStack stack) {
-        float red = 1.0F;
-        float green = 1.0F;
-        float blue = 1.0F;
-        if (stack.getItem() instanceof LeatherGlovesItem leatherGlovesItem) {
-            int i = leatherGlovesItem.getColor(stack);
-            red = (float) (i >> 16 & 255) / 255.0F;
-            green = (float) (i >> 8 & 255) / 255.0F;
-            blue = (float) (i & 255) / 255.0F;
-        }
-        return new ImmutableTriple<>(red, green, blue);
     }
 
     /**
