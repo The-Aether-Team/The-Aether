@@ -46,7 +46,7 @@ public class SliderSpawnEggItem extends DeferredSpawnEggItem {
             if (blockState.is(Blocks.SPAWNER)) {
                 BlockEntity blockEntity = level.getBlockEntity(blockPos);
                 if (blockEntity instanceof SpawnerBlockEntity spawnerBlockEntity) {
-                    EntityType<?> entityType = this.getType(itemStack.getTag());
+                    EntityType<?> entityType = this.getType(itemStack);
                     spawnerBlockEntity.setEntityId(entityType, level.getRandom());
                     blockEntity.setChanged();
                     level.sendBlockUpdated(blockPos, blockState, blockState, 3);
@@ -65,7 +65,7 @@ public class SliderSpawnEggItem extends DeferredSpawnEggItem {
             Vec3 clickLoc = context.getClickLocation();
             BlockPos roundedPos = new BlockPos((int) Math.round(clickLoc.x()), relativePos.getY(), (int) Math.round(clickLoc.z()));
 
-            EntityType<?> entityType = this.getType(itemStack.getTag());
+            EntityType<?> entityType = this.getType(itemStack);
             if (entityType.spawn((ServerLevel) level, itemStack, context.getPlayer(), roundedPos, MobSpawnType.SPAWN_EGG, false, !Objects.equals(blockPos, relativePos) && direction == Direction.UP) != null) {
                 itemStack.shrink(1);
                 level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, blockPos);

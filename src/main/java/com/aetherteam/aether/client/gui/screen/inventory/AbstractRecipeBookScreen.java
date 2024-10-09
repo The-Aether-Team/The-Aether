@@ -12,12 +12,14 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.RecipeBookMenu;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 
 /**
  * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.AbstractFurnaceScreen}.<br><br>
  * Cleaned up and made more abstract to mostly only have {@link RecipeBookComponent}-specific code.
  */
-public abstract class AbstractRecipeBookScreen<T extends RecipeBookMenu<Container>, S extends RecipeBookComponent> extends AbstractContainerScreen<T> implements RecipeUpdateListener, RecipeBookBehavior<T, AbstractRecipeBookScreen<T, S>> {
+public abstract class AbstractRecipeBookScreen<A extends RecipeInput, B extends Recipe<A>, T extends RecipeBookMenu<A, B>, S extends RecipeBookComponent> extends AbstractContainerScreen<T> implements RecipeUpdateListener, RecipeBookBehavior<T, AbstractRecipeBookScreen<A, B, T, S>> {
     private static final ResourceLocation RECIPE_BUTTON_LOCATION = ResourceLocation.withDefaultNamespace("textures/gui/recipe_button.png");
     protected final S recipeBookComponent;
     protected boolean widthTooNarrow;

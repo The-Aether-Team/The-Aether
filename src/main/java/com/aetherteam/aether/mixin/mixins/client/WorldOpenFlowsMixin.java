@@ -2,7 +2,7 @@ package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.mojang.serialization.Dynamic;
-import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
+import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.worldselection.WorldOpenFlows;
 import net.minecraft.network.chat.Component;
@@ -44,7 +44,7 @@ public class WorldOpenFlowsMixin {
     @Inject(method = "loadLevel(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lcom/mojang/serialization/Dynamic;ZZLjava/lang/Runnable;Z)V", at = @At("HEAD"))
     private void closeActiveWorld(LevelStorageSource.LevelStorageAccess access, Dynamic<?> dynamic, boolean safeMode, boolean checkForBackup, Runnable runnable, boolean confirmExperimentalWarning, CallbackInfo ci) {
         if (WorldDisplayHelper.isActive() && !WorldDisplayHelper.sameSummaries(access.getSummary(dynamic))) {
-            WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.literal("")));
+            WorldDisplayHelper.stopLevel(new GenericMessageScreen(Component.literal("")));
         }
     }
 }

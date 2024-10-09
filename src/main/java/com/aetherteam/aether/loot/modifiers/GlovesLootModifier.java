@@ -7,6 +7,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ArmorItem;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -25,6 +27,7 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 
 import java.util.List;
+import java.util.Optional;
 
 public class GlovesLootModifier extends LootModifier {
     public static final MapCodec<GlovesLootModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> codecStart(instance)
@@ -52,6 +55,7 @@ public class GlovesLootModifier extends LootModifier {
      */
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> lootStacks, LootContext context) {
+        Level level = context.getLevel();
         RandomSource randomSource = context.getRandom();
         Vec3 vec3 = context.getParamOrNull(LootContextParams.ORIGIN);
         if (vec3 != null) {
@@ -64,21 +68,21 @@ public class GlovesLootModifier extends LootModifier {
                         ItemStack gloves = this.glovesStack.copy();
                         int cost = 0;
                         boolean isTreasure = false;
-                        for (Object2IntMap.Entry<Holder<Enchantment>> enchantmentInfo : armorStack.getAllEnchantments().entrySet()) {
+                        for (Object2IntMap.Entry<Holder<Enchantment>> enchantmentInfo : armorStack.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).entrySet()) {
                             Holder<Enchantment> enchantment = enchantmentInfo.getKey();
-                            int level = enchantmentInfo.getValue();
-                            cost = Math.max(cost, enchantment.value().getMinCost(level));
+                            int enchantmentValue = enchantmentInfo.getValue();
+                            cost = Math.max(cost, enchantment.value().getMinCost(enchantmentValue));
                             if (!isTreasure) {
                                 isTreasure = enchantment.is(EnchantmentTags.TREASURE);
                             }
-                            if (gloves.canApplyAtEnchantingTable(enchantment)) {
+                            if (gloves.isPrimaryItemFor(enchantment)) {
                                 gloves.enchant(enchantment, enchantmentInfo.getValue());
                             }
                         }
-                        if (!armorStack.getAllEnchantments().isEmpty() && gloves.getAllEnchantments().isEmpty()) {
-                            EnchantmentHelper.enchantItem(randomSource, gloves, cost, isTreasure);
+                        if (!armorStack.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty() && gloves.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty()) {
+                            EnchantmentHelper.enchantItem(randomSource, gloves, cost, level.registryAccess(), Optional.of(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentTags.ON_RANDOM_LOOT)));
                         }
-                        if (armorStack.getAllEnchantments().isEmpty() || !gloves.getAllEnchantments().isEmpty()) {
+                        if (armorStack.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty() || !gloves.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty()) {
                             lootStacks.replaceAll((stack) -> stack.equals(armorStack) ? gloves : stack);
                         }
                     }

@@ -188,7 +188,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         LivingEntity target = this.getTarget();
         if (!this.level().isClientSide()) {
             if (target != null) {
-                if (EventHooks.getMobGriefingEvent(this.level(), this)) {
+                if (EventHooks.canEntityGrief(this.level(), this)) {
                     for (int i = 0; i < 2; i++) {
                         Vec3i vector = i == 0 ? this.getMotionDirection().getNormal() : Vec3i.ZERO;
                         BlockPos upperPosition = BlockPos.containing(this.getEyePosition()).offset(vector);
@@ -282,7 +282,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
                             this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
-                            PacketDistributor.sendToPlayer(new QueenDialoguePacket(this.getId()), serverPlayer);
+                            PacketDistributor.sendToPlayer(serverPlayer, new QueenDialoguePacket(this.getId()));
                             this.setConversingPlayer(serverPlayer);
                         }
                     }

@@ -62,7 +62,7 @@ import java.util.function.Supplier;
  * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherPlayerHooks
  */
 public class AetherPlayerAttachment implements INBTSynchable {
-    private static final UUID LIFE_SHARD_HEALTH_ID = UUID.fromString("E11710C8-4247-4CB6-B3B5-729CB34CFC1A");
+    private static final ResourceLocation LIFE_SHARD_HEALTH_ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "life_shard_max_health");
 
     private boolean canGetPortal = true;
     private boolean canSpawnInAether = true;
@@ -552,8 +552,8 @@ public class AetherPlayerAttachment implements INBTSynchable {
             AttributeInstance health = player.getAttribute(Attributes.MAX_HEALTH);
             AttributeModifier lifeShardHealth = this.getLifeShardHealthAttributeModifier();
             if (health != null) {
-                if (health.hasModifier(lifeShardHealth)) {
-                    health.removeModifier(lifeShardHealth.getId());
+                if (health.hasModifier(lifeShardHealth.id())) {
+                    health.removeModifier(lifeShardHealth.id());
                 }
                 health.addTransientModifier(lifeShardHealth);
             }
@@ -1017,7 +1017,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
      * @return The Life Shard health {@link AttributeModifier}.
      */
     public AttributeModifier getLifeShardHealthAttributeModifier() {
-        return new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.getLifeShardCount() * 2.0F, AttributeModifier.Operation.ADD_VALUE);
+        return new AttributeModifier(LIFE_SHARD_HEALTH_ID, this.getLifeShardCount() * 2.0F, AttributeModifier.Operation.ADD_VALUE);
     }
 
     /**

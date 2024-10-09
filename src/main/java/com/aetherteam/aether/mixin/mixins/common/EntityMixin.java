@@ -85,7 +85,7 @@ public class EntityMixin {
                         if (nextPassenger != null) {
                             nextPassenger.startRiding(target);
                             if (target instanceof ServerPlayer serverPlayer) { // Fixes a desync between the server and client.
-                                PacketDistributor.sendToPlayer(new SetVehiclePacket(nextPassenger.getId(), target.getId()), serverPlayer);
+                                PacketDistributor.sendToPlayer(serverPlayer, new SetVehiclePacket(nextPassenger.getId(), target.getId()));
                             }
                         }
                     }

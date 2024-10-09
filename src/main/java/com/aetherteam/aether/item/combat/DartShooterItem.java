@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.projectile.dart.AbstractDart;
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -71,7 +72,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
         if (user instanceof Player player) {
             ItemStack ammoItem = player.getProjectile(stack); // Gets matching ammo stack from inventory according to DartShooterItem#getAllSupportedProjectiles().
 
-            boolean creativeOrShooterIsInfinite = player.getAbilities().instabuild || stack.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) > 0; // Note: Dart shooters can't be enchanted with Infinity in survival, but we still implement the behavior.
+            boolean creativeOrShooterIsInfinite = player.getAbilities().instabuild || stack.getEnchantmentLevel(level.holderOrThrow(Enchantments.INFINITY)) > 0; // Note: Dart shooters can't be enchanted with Infinity in survival, but we still implement the behavior.
             boolean stillHasAmmo = !ammoItem.isEmpty() || creativeOrShooterIsInfinite;
 
             EventHooks.onArrowLoose(stack, level, player, 0, stillHasAmmo);
@@ -90,12 +91,12 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
                         dart.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.1F, 1.2F);
                         dart.setNoGravity(true); // Darts have no gravity.
 
-                        int powerModifier = stack.getEnchantmentLevel(Enchantments.POWER_ARROWS);
+                        int powerModifier = stack.getEnchantmentLevel(level.holderOrThrow(Enchantments.POWER));
                         if (powerModifier > 0) {
                             dart.setBaseDamage(dart.getBaseDamage() + powerModifier * 0.1 + 0.1);
                         }
 
-                        int punchModifier = stack.getEnchantmentLevel(Enchantments.PUNCH_ARROWS);
+                        int punchModifier = stack.getEnchantmentLevel(level.holderOrThrow(Enchantments.PUNCH));
                         if (punchModifier > 0) {
                             dart.setKnockback(punchModifier);
                         }
@@ -162,8 +163,8 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
     }
 
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return ImmutableSet.of(Enchantments.POWER_ARROWS, Enchantments.PUNCH_ARROWS).contains(enchantment);
+    public boolean isPrimaryItemFor(ItemStack stack, Holder<Enchantment> enchantment) {
+        return ImmutableSet.of(Enchantments.POWER, Enchantments.PUNCH).contains(enchantment.getKey());
     }
 
     /**

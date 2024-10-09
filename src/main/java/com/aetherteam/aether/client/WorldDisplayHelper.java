@@ -5,7 +5,7 @@ import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
+import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.ProgressScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.server.IntegratedServer;
@@ -63,7 +63,7 @@ public class WorldDisplayHelper {
         LevelSummary summary = getLevelSummary();
         if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId())) {
             setActive();
-            minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("selectWorld.data_read")));
+            minecraft.forceSetScreen(new GenericMessageScreen(Component.translatable("selectWorld.data_read")));
             minecraft.createWorldOpenFlows().checkForBackupAndLoad(summary.getLevelId(), () -> {
             });
         } else {
@@ -95,7 +95,7 @@ public class WorldDisplayHelper {
     public static void disableWorldPreview() {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level != null) {
-            stopLevel(new GenericDirtMessageScreen(Component.literal("")));
+            stopLevel(new GenericMessageScreen(Component.literal("")));
             setMenu();
         }
     }

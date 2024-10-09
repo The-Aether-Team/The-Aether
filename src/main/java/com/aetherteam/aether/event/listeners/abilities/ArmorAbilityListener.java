@@ -7,11 +7,13 @@ import com.aetherteam.aether.item.combat.abilities.armor.NeptuneArmor;
 import com.aetherteam.aether.item.combat.abilities.armor.PhoenixArmor;
 import com.aetherteam.aether.item.combat.abilities.armor.ValkyrieArmor;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class ArmorAbilityListener {
     /**
@@ -30,9 +32,9 @@ public class ArmorAbilityListener {
      * @see PhoenixArmor#boostLavaSwimming(LivingEntity)
      * @see PhoenixArmor#damageArmor(LivingEntity)
      */
-    public static void onEntityUpdate(LivingEvent.LivingTickEvent event) {
-        LivingEntity livingEntity = event.getEntity();
-        if (!event.isCanceled()) {
+    public static void onEntityUpdate(EntityTickEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof LivingEntity livingEntity) {
             ValkyrieArmor.handleFlight(livingEntity);
             NeptuneArmor.boostWaterSwimming(livingEntity);
             PhoenixArmor.boostLavaSwimming(livingEntity);

@@ -3,6 +3,7 @@ package com.aetherteam.aether.entity.monster;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.loot.AetherLoot;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 import javax.annotation.Nullable;
 
@@ -70,8 +72,8 @@ public class PassiveWhirlwind extends AbstractWhirlwind {
     }
 
     @Override
-    public ResourceLocation getLootLocation() {
-        return AetherLoot.WHIRLWIND_JUNK.location();
+    public ResourceKey<LootTable> getLootLocation() {
+        return AetherLoot.WHIRLWIND_JUNK;
     }
 
     @Override

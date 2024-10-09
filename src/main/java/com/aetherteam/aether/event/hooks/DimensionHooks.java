@@ -22,6 +22,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
@@ -102,7 +103,7 @@ public class DimensionHooks {
                                 stack.shrink(1);
                                 player.addItem(stack.hasCraftingRemainingItem() ? stack.getCraftingRemainingItem() : ItemStack.EMPTY);
                             } else if (stack.isDamageableItem()) {
-                                stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+                                stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
                             } else {
                                 player.setItemInHand(hand, stack.hasCraftingRemainingItem() ? stack.getCraftingRemainingItem() : ItemStack.EMPTY);
                             }

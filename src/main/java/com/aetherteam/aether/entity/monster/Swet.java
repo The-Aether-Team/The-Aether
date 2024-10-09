@@ -578,7 +578,7 @@ public class Swet extends Slime implements MountableMob {
      * @return The {@link EntityDimensions}.
      */
     @Override
-    public EntityDimensions getDimensions(Pose pose) {
+    public EntityDimensions getDefaultDimensions(Pose pose) {
         return this.getType().getDimensions().scale(this.getScale());
     }
 

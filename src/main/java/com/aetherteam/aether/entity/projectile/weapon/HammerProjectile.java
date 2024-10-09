@@ -154,8 +154,8 @@ public class HammerProjectile extends ThrowableProjectile {
     }
 
     @Override
-    protected float getGravity() {
-        return 0.0F;
+    protected double getDefaultGravity() {
+        return 0.0;
     }
 
     public void setIsJeb(boolean isJeb) {

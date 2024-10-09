@@ -181,7 +181,7 @@ public class Sentry extends Slime {
     }
 
     @Override
-    public EntityDimensions getDimensions(Pose pose) {
+    public EntityDimensions getDefaultDimensions(Pose pose) {
         return super.getDimensions(pose).scale(1.76F);
     }
 

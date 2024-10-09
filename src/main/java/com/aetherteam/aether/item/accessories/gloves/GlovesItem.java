@@ -56,7 +56,7 @@ public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
     @SuppressWarnings("deprecation")
     @Override
     public int getEnchantmentValue() {
-        return this.material.getEnchantmentValue();
+        return this.material.value().enchantmentValue();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.aetherteam.aether.entity.monster;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.loot.AetherLoot;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -10,6 +11,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 import javax.annotation.Nullable;
 
@@ -49,8 +51,8 @@ public class EvilWhirlwind extends AbstractWhirlwind {
     }
 
     @Override
-    public ResourceLocation getLootLocation() {
-        return AetherLoot.EVIL_WHIRLWIND_JUNK.location();
+    public ResourceKey<LootTable> getLootLocation() {
+        return AetherLoot.EVIL_WHIRLWIND_JUNK;
     }
 
     @Override

@@ -177,33 +177,24 @@ public class EntityHooks {
      * @see EntityHooks#equipAccessory(Mob, String, ArmorMaterials)
      */
     @Nullable
-    private static Item getEquipmentForSlot(String identifier, ArmorMaterial armorMaterials) {
+    private static Item getEquipmentForSlot(String identifier, ArmorMaterial armorMaterial) {
         if (identifier.equals(GlovesItem.getIdentifierStatic())) {
-            switch (armorMaterials) {
-                case ArmorMaterials.LEATHER -> {
-                    return AetherItems.LEATHER_GLOVES.get();
-                }
-                case ArmorMaterials.GOLD -> {
-                    return AetherItems.GOLDEN_GLOVES.get();
-                }
-                case ArmorMaterials.CHAIN -> {
-                    return AetherItems.CHAINMAIL_GLOVES.get();
-                }
-                case ArmorMaterials.IRON -> {
-                    return AetherItems.IRON_GLOVES.get();
-                }
-                case ArmorMaterials.DIAMOND -> {
-                    return AetherItems.DIAMOND_GLOVES.get();
-                }
+            if (armorMaterial == ArmorMaterials.LEATHER.value()) {
+                return AetherItems.LEATHER_GLOVES.get();
+            } else if (armorMaterial == ArmorMaterials.GOLD.value()) {
+                return AetherItems.GOLDEN_GLOVES.get();
+            } else if (armorMaterial == ArmorMaterials.CHAIN.value()) {
+                return AetherItems.CHAINMAIL_GLOVES.get();
+            } else if (armorMaterial == ArmorMaterials.IRON.value()) {
+                return AetherItems.IRON_GLOVES.get();
+            } else if (armorMaterial == ArmorMaterials.DIAMOND.value()) {
+                return AetherItems.DIAMOND_GLOVES.get();
             }
         } else if (identifier.equals(PendantItem.getIdentifierStatic())) {
-            switch (armorMaterials) {
-                case GOLD -> {
-                    return AetherItems.GOLDEN_PENDANT.get();
-                }
-                case IRON -> {
-                    return AetherItems.IRON_PENDANT.get();
-                }
+            if (armorMaterial == ArmorMaterials.IRON.value()) {
+                return AetherItems.IRON_PENDANT.get();
+            } else if (armorMaterial == ArmorMaterials.GOLD.value()) {
+                return AetherItems.GOLDEN_PENDANT.get();
             }
         }
         return null;
@@ -558,7 +549,7 @@ public class EntityHooks {
                     float f = mob.getData(AetherDataAttachments.MOB_ACCESSORY).getEquipmentDropChance(identifier);
                     boolean flag = f > 1.0F;
                     if (!itemStack.isEmpty()) {
-                        itemDrops.removeIf((itemEntity) -> ItemStack.isSameItemSameTags(itemEntity.getItem(), itemStack));
+                        itemDrops.removeIf((itemEntity) -> ItemStack.isSameItemSameComponents(itemEntity.getItem(), itemStack));
                     }
                     if (!itemStack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemStack) && recentlyHit && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f) {
                         if (!flag && itemStack.isDamageableItem()) {
@@ -614,7 +605,7 @@ public class EntityHooks {
      * @see com.aetherteam.aether.event.listeners.EntityListener#onEffectApply(MobEffectEvent.Applicable)
      */
     public static boolean preventInebriation(LivingEntity livingEntity, MobEffectInstance appliedInstance) {
-        return livingEntity.hasEffect(AetherEffects.REMEDY.get()) && appliedInstance.getEffect() == AetherEffects.INEBRIATION.get();
+        return livingEntity.hasEffect(AetherEffects.REMEDY) && appliedInstance.getEffect() == AetherEffects.INEBRIATION.get();
     }
 
     /**

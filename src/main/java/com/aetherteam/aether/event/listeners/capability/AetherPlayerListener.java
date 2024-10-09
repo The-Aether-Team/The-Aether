@@ -11,6 +11,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 /**
  * Listener for Forge events to handle functions in {@link AetherPlayerAttachment}.
@@ -55,9 +56,11 @@ public class AetherPlayerListener {
     /**
      * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherPlayerHooks#update(LivingEntity)
      */
-    public static void onPlayerUpdate(LivingEvent.LivingTickEvent event) {
-        LivingEntity livingEntity = event.getEntity();
-        CapabilityHooks.AetherPlayerHooks.update(livingEntity);
+    public static void onPlayerUpdate(EntityTickEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof LivingEntity livingEntity) {
+            CapabilityHooks.AetherPlayerHooks.update(livingEntity);
+        }
     }
 
     /**

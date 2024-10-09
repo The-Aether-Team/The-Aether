@@ -23,6 +23,7 @@ import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -313,9 +314,9 @@ public class AbilityHooks {
          */
         public static float reduceToolEffectiveness(Player player, BlockState state, ItemStack stack, float speed) {
             if (AetherConfig.SERVER.tools_debuff.get()) {
-                if (!player.level().isClientSide()) {
+                if (!player.level().isClientSide() && player.level() instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
                     debuffTools = true;
-                    PacketDistributor.sendToNear(new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.level().dimension());
+                    PacketDistributor.sendToPlayersNear(serverLevel, serverPlayer, player.getX(), player.getY(), player.getZ(), 10, new ToolDebuffPacket(true));
                 }
             }
             if (debuffTools) {
@@ -347,7 +348,7 @@ public class AbilityHooks {
                         if (level.getServer() != null && level instanceof ServerLevel serverLevel) {
                             Vec3 vector = context.getClickLocation();
                             LootParams parameters = new LootParams.Builder(serverLevel).withParameter(LootContextParams.TOOL, stack).create(AetherLootContexts.STRIPPING);
-                            LootTable lootTable = level.getServer().getLootData().getLootTable(AetherLoot.STRIP_GOLDEN_OAK);
+                            LootTable lootTable = level.getServer().reloadableRegistries().getLootTable(AetherLoot.STRIP_GOLDEN_OAK);
                             List<ItemStack> list = lootTable.getRandomItems(parameters);
                             for (ItemStack itemStack : list) {
                                 ItemEntity itemEntity = new ItemEntity(level, vector.x(), vector.y(), vector.z(), itemStack);
@@ -457,7 +458,7 @@ public class AbilityHooks {
                 if (abstractArrow.hasData(AetherDataAttachments.PHOENIX_ARROW)) {
                     var data = abstractArrow.getData(AetherDataAttachments.PHOENIX_ARROW);
                     if (data.isPhoenixArrow() && data.getFireTime() > 0) {
-                        impactedEntity.setSecondsOnFire(data.getFireTime());
+                        impactedEntity.setRemainingFireTicks(data.getFireTime());
                     }
                 }
             }

@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -180,7 +181,7 @@ public abstract class AbstractWhirlwind extends Mob {
         if (this.level() instanceof ServerLevel serverLevel) {
             if (this.getRandom().nextInt(4) == 0) {
                 LootParams parameters = new LootParams.Builder(serverLevel).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.THIS_ENTITY, this).create(LootContextParamSets.SELECTOR);
-                LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(this.getLootLocation());
+                LootTable lootTable = serverLevel.getServer().reloadableRegistries().getLootTable(this.getLootLocation());
                 List<ItemStack> list = lootTable.getRandomItems(parameters);
                 for (ItemStack itemstack : list) {
                     serverLevel.playSound(null, this.blockPosition(), AetherSoundEvents.ENTITY_WHIRLWIND_DROP.get(), SoundSource.HOSTILE, 0.5F, 1.0F);
@@ -206,7 +207,7 @@ public abstract class AbstractWhirlwind extends Mob {
 
     public abstract void spawnParticles();
 
-    public abstract ResourceLocation getLootLocation();
+    public abstract ResourceKey<LootTable> getLootLocation();
 
     /**
      * @return The {@link Integer} for the decimal color of this Whirlwind.

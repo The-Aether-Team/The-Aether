@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class GoldGlovesItem extends GlovesItem {
     public GoldGlovesItem(double punchDamage, Properties properties) {
-        super(ArmorMaterials.GOLD, punchDamage, "gold_gloves", () -> SoundEvents.ARMOR_EQUIP_GOLD, properties);
+        super(ArmorMaterials.GOLD, punchDamage, "gold_gloves", SoundEvents.ARMOR_EQUIP_GOLD, properties);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.client.WorldDisplayHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
+import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.network.chat.Component;
@@ -26,7 +26,7 @@ public class CreateWorldScreenMixin {
     @Inject(at = @At(value = "HEAD"), method = "openFresh(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/Screen;)V")
     private static void openFresh(Minecraft minecraft, Screen screen, CallbackInfo ci) {
         if (WorldDisplayHelper.isActive()) {
-            WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.literal("")));
+            WorldDisplayHelper.stopLevel(new GenericMessageScreen(Component.literal("")));
         }
     }
 }
