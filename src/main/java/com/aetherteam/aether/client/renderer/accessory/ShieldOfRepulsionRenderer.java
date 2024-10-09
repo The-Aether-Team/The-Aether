@@ -8,6 +8,8 @@ import com.aetherteam.nitrogen.ConstantsUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.wispforest.accessories.api.client.AccessoryRenderer;
+import io.wispforest.accessories.api.client.SimpleAccessoryRenderer;
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -28,7 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
-public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
+public class ShieldOfRepulsionRenderer implements SimpleAccessoryRenderer {
     private final HumanoidModel<LivingEntity> shieldModel;
     private final PlayerModel<LivingEntity> shieldModelSlim;
     public final HumanoidModel<LivingEntity> shieldModelArm;
@@ -46,10 +48,10 @@ public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
     /**
      * Renders the Shield of Repulsion overlay over the player's model in third person.
      *
-     * @param stack             The {@link ItemStack} for the Curio.
-     * @param slotContext       The {@link SlotContext} for the Curio.
+     * @param stack             The {@link ItemStack} for the accessory.
+     * @param reference         The {@link SlotReference} for the accessory.
      * @param poseStack         The rendering {@link PoseStack}.
-     * @param renderLayerParent The {@link RenderLayerParent} for the renderer.
+     * @param entityModel       The {@link EntityModel} for the renderer.
      * @param buffer            The rendering {@link MultiBufferSource}.
      * @param packedLight       The {@link Integer} for the packed lighting for rendering.
      * @param limbSwing         The {@link Float} for the limb swing rotation.
@@ -60,13 +62,13 @@ public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
      * @param headPitch         The {@link Float} for the head pitch rotation.
      */
     @Override
-    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        LivingEntity livingEntity = slotContext.entity();
+    public <M extends LivingEntity> void render(ItemStack stack, SlotReference reference, PoseStack matrices, EntityModel<M> entityModel, MultiBufferSource multiBufferSource, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        LivingEntity livingEntity = reference.entity();
         ShieldOfRepulsionItem shield = (ShieldOfRepulsionItem) stack.getItem();
         ResourceLocation texture;
         HumanoidModel<LivingEntity> model;
 
-        if (livingEntity instanceof Player player && renderLayerParent.getModel() instanceof PlayerModel<?> playerModel) {
+        if (livingEntity instanceof Player player && entityModel instanceof PlayerModel<?> playerModel) {
             PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
             model = playerModelAccessor.aether$getSlim() ? this.shieldModelSlim : this.shieldModel;
             if (!player.getData(AetherDataAttachments.AETHER_PLAYER).isMoving()) {
@@ -84,10 +86,18 @@ public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
             }
         }
 
-        ICurioRenderer.followHeadRotations(slotContext.entity(), model.head);
-        ICurioRenderer.followBodyRotations(slotContext.entity(), model);
-        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false);
-        model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
+        this.align(stack, reference, model, matrices);
+        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(multiBufferSource, RenderType.entityTranslucent(texture), false);
+        model.renderToBuffer(matrices, consumer, light, OverlayTexture.NO_OVERLAY);
+    }
+
+
+    @Override
+    public <M extends LivingEntity> void align(ItemStack stack, SlotReference reference, EntityModel<M> model, PoseStack poseStack) {
+        if (model instanceof HumanoidModel<? extends LivingEntity> humanoidModel) {
+            AccessoryRenderer.translateToFace(poseStack, humanoidModel, reference.entity());
+            AccessoryRenderer.followBodyRotations(reference.entity(), (HumanoidModel<LivingEntity>) humanoidModel);
+        }
     }
 
     /**
@@ -134,7 +144,7 @@ public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
             texture = shield.getShieldOfRepulsionInactiveTexture();
         }
 
-        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, stack.isEnchanted());
+        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false);
         if (isSlim) {
             poseStack.translate((arm != HumanoidArm.LEFT ? 1.0F : -1.0F) * 0.05F, 0.0F, 0.0F);
         }

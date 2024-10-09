@@ -6,7 +6,7 @@ import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.client.event.listeners.*;
 import com.aetherteam.aether.client.event.listeners.abilities.AccessoryAbilityClientListener;
 import com.aetherteam.aether.client.event.listeners.capability.AetherPlayerClientListener;
-import com.aetherteam.aether.client.gui.screen.inventory.*;
+import com.aetherteam.aether.client.gui.screen.inventory.SunAltarScreen;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.client.renderer.AetherOverlays;
 import com.aetherteam.aether.client.renderer.AetherRenderers;
@@ -20,7 +20,6 @@ import com.aetherteam.cumulus.CumulusConfig;
 import com.aetherteam.nitrogen.event.listeners.TooltipListeners;
 import com.google.common.reflect.Reflection;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
@@ -53,7 +52,6 @@ public class AetherClient {
         event.enqueueWork(() -> {
             AetherAtlases.registerTreasureChestAtlases();
             AetherAtlases.registerWoodTypeAtlases();
-            registerGuiFactories();
             registerItemModelProperties();
             registerTooltipOverrides();
         });
@@ -73,19 +71,11 @@ public class AetherClient {
         }
     }
 
-    public static void registerGuiFactories() {
-        MenuScreens.register(AetherMenuTypes.ACCESSORIES.get(), AccessoriesScreen::new);
-        MenuScreens.register(AetherMenuTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
-        MenuScreens.register(AetherMenuTypes.ALTAR.get(), AltarScreen::new);
-        MenuScreens.register(AetherMenuTypes.FREEZER.get(), FreezerScreen::new);
-        MenuScreens.register(AetherMenuTypes.INCUBATOR.get(), IncubatorScreen::new);
-    }
-
     public static void registerItemModelProperties() {
         ItemProperties.register(AetherItems.PHOENIX_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"),
                 (stack, world, living, i) -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);
         ItemProperties.register(AetherItems.PHOENIX_BOW.get(), ResourceLocation.withDefaultNamespace("pull"),
-                (stack, world, living, i) -> living != null ? living.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration() - living.getUseItemRemainingTicks()) / 20.0F : 0.0F);
+                (stack, world, living, i) -> living != null ? living.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration(living) - living.getUseItemRemainingTicks()) / 20.0F : 0.0F);
 
         ItemProperties.register(AetherItems.CANDY_CANE_SWORD.get(), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "named"), // Easter Egg texture.
                 (stack, world, living, i) -> stack.getHoverName().getString().equalsIgnoreCase("green candy cane sword") ? 1.0F : 0.0F);
@@ -95,21 +85,21 @@ public class AetherClient {
     }
 
     public static void registerTooltipOverrides() {
-        TooltipListeners.PREDICATES.put(AetherItems.BLUE_GUMMY_SWET.getId(), (player, stack, components, component) -> {
+        TooltipListeners.PREDICATES.put(AetherItems.BLUE_GUMMY_SWET, (player, stack, components, context, component) -> {
             if (AetherConfig.SERVER.healing_gummy_swets.get() && component.getContents() instanceof TranslatableContents contents && contents.getKey().endsWith(".1")) {
                 return Component.translatable(contents.getKey() + ".health");
             } else {
                 return component;
             }
         });
-        TooltipListeners.PREDICATES.put(AetherItems.GOLDEN_GUMMY_SWET.getId(), (player, stack, components, component) -> {
+        TooltipListeners.PREDICATES.put(AetherItems.GOLDEN_GUMMY_SWET, (player, stack, components, context, component) -> {
             if (AetherConfig.SERVER.healing_gummy_swets.get() && component.getContents() instanceof TranslatableContents contents && contents.getKey().endsWith(".1")) {
                 return Component.translatable(contents.getKey() + ".health");
             } else {
                 return component;
             }
         });
-        TooltipListeners.PREDICATES.put(AetherItems.LIFE_SHARD.getId(), (player, stack, components, component) -> {
+        TooltipListeners.PREDICATES.put(AetherItems.LIFE_SHARD, (player, stack, components, context, component) -> {
             if (component.getContents() instanceof TranslatableContents contents && contents.getKey().endsWith(".1")) {
                 return Component.translatable(contents.getKey(), AetherConfig.SERVER.maximum_life_shards.get());
             } else {
@@ -123,7 +113,7 @@ public class AetherClient {
      */
     public static void registerLoreOverrides() {
         LoreBookMenu.addLoreEntryOverride(stack -> stack.is(AetherItems.HAMMER_OF_KINGBDOGZ.get()) && stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb"), "lore.item.aether.hammer_of_jeb");
-        LoreBookMenu.addLoreEntryOverride(stack -> ItemStack.isSameItemSameTags(stack, AetherItems.createSwetBannerItemStack()), "lore.item.aether.swet_banner");
+        LoreBookMenu.addLoreEntryOverride(stack -> ItemStack.isSameItemSameComponents(stack, AetherItems.createSwetBannerItemStack()), "lore.item.aether.swet_banner");
     }
 
     /**
@@ -153,6 +143,7 @@ public class AetherClient {
         MenuListener.listen(bus);
         WorldPreviewListener.listen(bus);
 
+        neoBus.addListener(AetherMenuTypes::registerMenuScreens);
         neoBus.addListener(AetherColorResolvers::registerBlockColor);
         neoBus.addListener(AetherColorResolvers::registerItemColor);
         neoBus.addListener(AetherKeys::registerKeyMappings);

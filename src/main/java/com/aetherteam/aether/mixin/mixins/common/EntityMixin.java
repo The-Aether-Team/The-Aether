@@ -66,36 +66,36 @@ public class EntityMixin {
      * @param entity The {@link Entity}
      */
     @Nullable
-    private static Entity entityFell(Entity entity) {
-        Level serverLevel = entity.level();
-        MinecraftServer minecraftserver = serverLevel.getServer();
-        if (minecraftserver != null) {
-            ServerLevel destination = minecraftserver.getLevel(LevelUtil.returnDimension());
-            if (destination != null && LevelUtil.returnDimension() != LevelUtil.destinationDimension()) {
-                List<Entity> passengers = entity.getPassengers();
-                serverLevel.getProfiler().push("aether_fall");
-                entity.setPortalCooldown();
-                Entity target = entity.changeDimension(destination, new AetherPortalForcer(destination, false));
-                serverLevel.getProfiler().pop();
-                // Check for passengers.
-                if (target != null) {
-                    for (Entity passenger : passengers) {
-                        passenger.stopRiding();
-                        Entity nextPassenger = entityFell(passenger);
-                        if (nextPassenger != null) {
-                            nextPassenger.startRiding(target);
-                            if (target instanceof ServerPlayer serverPlayer) { // Fixes a desync between the server and client.
-                                PacketDistributor.sendToPlayer(serverPlayer, new SetVehiclePacket(nextPassenger.getId(), target.getId()));
-                            }
-                        }
-                    }
-                    if (target instanceof ServerPlayer) {
-                        DimensionHooks.teleportationTimer = 500; // Sets a timer marking that the player teleported from falling out of the Aether.
-                    }
-                }
-                return target;
-            }
-        }
+    private static Entity entityFell(Entity entity) { //todo portal stuff
+//        Level serverLevel = entity.level();
+//        MinecraftServer minecraftserver = serverLevel.getServer();
+//        if (minecraftserver != null) {
+//            ServerLevel destination = minecraftserver.getLevel(LevelUtil.returnDimension());
+//            if (destination != null && LevelUtil.returnDimension() != LevelUtil.destinationDimension()) {
+//                List<Entity> passengers = entity.getPassengers();
+//                serverLevel.getProfiler().push("aether_fall");
+//                entity.setPortalCooldown();
+//                Entity target = entity.changeDimension(destination, new AetherPortalForcer(destination, false));
+//                serverLevel.getProfiler().pop();
+//                // Check for passengers.
+//                if (target != null) {
+//                    for (Entity passenger : passengers) {
+//                        passenger.stopRiding();
+//                        Entity nextPassenger = entityFell(passenger);
+//                        if (nextPassenger != null) {
+//                            nextPassenger.startRiding(target);
+//                            if (target instanceof ServerPlayer serverPlayer) { // Fixes a desync between the server and client.
+//                                PacketDistributor.sendToPlayer(serverPlayer, new SetVehiclePacket(nextPassenger.getId(), target.getId()));
+//                            }
+//                        }
+//                    }
+//                    if (target instanceof ServerPlayer) {
+//                        DimensionHooks.teleportationTimer = 500; // Sets a timer marking that the player teleported from falling out of the Aether.
+//                    }
+//                }
+//                return target;
+//            }
+//        }
         return null;
     }
 }

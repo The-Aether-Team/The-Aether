@@ -16,7 +16,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
+import top.theillusivec4.curios.api.SlotEntryReference;
 
 public interface ShieldOfRepulsionAccessory {
     /**
@@ -33,7 +33,7 @@ public interface ShieldOfRepulsionAccessory {
         if (hitResult.getType() == HitResult.Type.ENTITY && hitResult instanceof EntityHitResult entityHitResult) {
             if (entityHitResult.getEntity() instanceof LivingEntity impactedLiving) {
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
-                    SlotResult slotResult = EquipmentUtil.getCurio(impactedLiving, AetherItems.SHIELD_OF_REPULSION.get());
+                    SlotEntryReference slotResult = EquipmentUtil.getAccessory(impactedLiving, AetherItems.SHIELD_OF_REPULSION.get());
                     if (slotResult != null) {
                         Vec3 motion = impactedLiving.getDeltaMovement();
                         if (impactedLiving instanceof Player player) {
@@ -62,9 +62,9 @@ public interface ShieldOfRepulsionAccessory {
      *
      * @param projectile     The impacting {@link Projectile}.
      * @param impactedLiving The impacted {@link LivingEntity}.
-     * @param slotResult     The {@link SlotResult} of the Shield of Repulsion.
+     * @param slotResult     The {@link SlotEntryReference} of the Shield of Repulsion.
      */
-    private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, SlotResult slotResult) {
+    private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, SlotEntryReference slotResult) {
         event.setCanceled(true);
         if (!impactedLiving.equals(projectile.getOwner())) {
             projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25));

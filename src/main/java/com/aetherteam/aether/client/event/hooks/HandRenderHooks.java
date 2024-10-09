@@ -9,6 +9,7 @@ import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionIte
 import com.aetherteam.aether.mixin.mixins.client.accessor.ItemInHandRendererAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import io.wispforest.accessories.api.client.SimpleAccessoryRenderer;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -19,9 +20,6 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.client.event.RenderHandEvent;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
-import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 import javax.annotation.Nullable;
 
@@ -43,7 +41,7 @@ public class HandRenderHooks {
     public static void renderGloveHandOverlay(ItemInHandRenderer itemInHandRenderer, @Nullable AbstractClientPlayer player, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if (player != null) {
             if (!player.getData(AetherDataAttachments.AETHER_PLAYER).isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
-                EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof GlovesItem).ifPresent((slotResult) -> {
+                EquipmentUtil.findFirstAccessory(player, (item) -> item.getItem() instanceof GlovesItem).ifPresent((slotResult) -> {
                     String identifier = slotResult.slotContext().identifier();
                     int id = slotResult.slotContext().index();
                     ItemStack itemStack = slotResult.stack();
@@ -79,7 +77,7 @@ public class HandRenderHooks {
     public static void renderShieldOfRepulsionHandOverlay(ItemInHandRenderer itemInHandRenderer, @Nullable AbstractClientPlayer player, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if (player != null) {
             if (!player.getData(AetherDataAttachments.AETHER_PLAYER).isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
-                EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof ShieldOfRepulsionItem).ifPresent((slotResult) -> {
+                EquipmentUtil.findFirstAccessory(player, (item) -> item.getItem() instanceof ShieldOfRepulsionItem).ifPresent((slotResult) -> {
                     String identifier = slotResult.slotContext().identifier();
                     int id = slotResult.slotContext().index();
                     ItemStack itemStack = slotResult.stack();
@@ -102,7 +100,7 @@ public class HandRenderHooks {
      * [CODE COPY] - {@link ItemInHandRenderer#renderArmWithItem(AbstractClientPlayer, float, float, InteractionHand, float, ItemStack, float, PoseStack, MultiBufferSource, int)}.<br><br>
      * Remove any checks for items that don't display the player's hands.
      */
-    public static void renderArmWithItem(ItemInHandRenderer itemInHandRenderer, ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, HandRenderType handRenderType) {
+    public static void renderArmWithItem(ItemInHandRenderer itemInHandRenderer, SimpleAccessoryRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, HandRenderType handRenderType) {
         if (!player.isScoping()) {
             boolean isMainHand = hand == InteractionHand.MAIN_HAND;
             HumanoidArm humanoidarm = isMainHand ? player.getMainArm() : player.getMainArm().getOpposite();
@@ -126,7 +124,7 @@ public class HandRenderHooks {
      * [CODE COPY] - {@link ItemInHandRenderer#renderPlayerArm(PoseStack, MultiBufferSource, int, float, float, HumanoidArm)}.<br><br>
      * Checks if the model is slim and also checks for what {@link HandRenderType} to display.
      */
-    public static void renderPlayerArm(ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, HumanoidArm arm, HandRenderType handRenderType) {
+    public static void renderPlayerArm(SimpleAccessoryRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, HumanoidArm arm, HandRenderType handRenderType) {
         boolean isSlim = player.getSkin().model() == PlayerSkin.Model.SLIM;
         boolean flag = arm != HumanoidArm.LEFT;
         float f = flag ? 1.0F : -1.0F;
@@ -161,7 +159,7 @@ public class HandRenderHooks {
      * [CODE COPY] - {@link ItemInHandRenderer#renderTwoHandedMap(PoseStack, MultiBufferSource, int, float, float, float)}.<br><br>
      * Remove check for invisibility, as it is not necessary from {@link net.neoforged.neoforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
      */
-    public static void renderTwoHandedMap(ItemInHandRenderer itemInHandRenderer, ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, float pitch, HandRenderType handRenderType) {
+    public static void renderTwoHandedMap(ItemInHandRenderer itemInHandRenderer, SimpleAccessoryRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, float pitch, HandRenderType handRenderType) {
         float f = Mth.sqrt(swingProgress);
         float f1 = -0.2F * Mth.sin(swingProgress * Mth.PI);
         float f2 = -0.4F * Mth.sin(f * Mth.PI);
@@ -186,7 +184,7 @@ public class HandRenderHooks {
      * [CODE COPY] - {@link ItemInHandRenderer#renderOneHandedMap(PoseStack, MultiBufferSource, int, float, HumanoidArm, float, ItemStack)}.<br><br>
      * Remove check for invisibility, as it is not necessary from {@link net.neoforged.neoforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
      */
-    public static void renderOneHandedMap(ItemInHandRenderer itemInHandRenderer, ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, HumanoidArm arm, HandRenderType handRenderType) {
+    public static void renderOneHandedMap(ItemInHandRenderer itemInHandRenderer, SimpleAccessoryRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, HumanoidArm arm, HandRenderType handRenderType) {
         float f = arm == HumanoidArm.RIGHT ? 1.0F : -1.0F;
         poseStack.translate(f * 0.125F, -0.125F, 0.0F);
 
@@ -213,7 +211,7 @@ public class HandRenderHooks {
      * [CODE COPY] - {@link ItemInHandRenderer#renderMapHand(PoseStack, MultiBufferSource, int, HumanoidArm)}.<br><br>
      * Checks for what {@link HandRenderType} to display.
      */
-    public static void renderMapHand(ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, HumanoidArm arm, HandRenderType handRenderType) {
+    public static void renderMapHand(SimpleAccessoryRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, HumanoidArm arm, HandRenderType handRenderType) {
         poseStack.pushPose();
         float f = arm == HumanoidArm.RIGHT ? 1.0F : -1.0F;
         poseStack.mulPose(Axis.YP.rotationDegrees(92.0F));

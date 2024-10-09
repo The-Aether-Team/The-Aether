@@ -1,30 +1,19 @@
 package com.aetherteam.aether.item.accessories.gloves;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.inventory.AetherAccessorySlots;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import io.wispforest.accessories.api.attributes.AccessoryAttributeBuilder;
 import io.wispforest.accessories.api.slot.SlotReference;
+import io.wispforest.accessories.api.slot.SlotTypeReference;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
-
-import java.util.UUID;
 
 public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
     public static final ResourceLocation BASE_PUNCH_DAMAGE_ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "base_punch_damage");
@@ -85,14 +74,14 @@ public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
      * using a static method as it is used in other conditions without access to an instance.
      */
     @Override
-    public String getIdentifier() {
-        return getIdentifierStatic();
+    public SlotTypeReference getIdentifier() {
+        return AetherAccessorySlots.getGlovesSlotType();
     }
 
-    /**
-     * @return {@link GlovesItem}'s own identifier for its accessory slot.
-     */
-    public static String getIdentifierStatic() {
-        return AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
-    }
+//    /**
+//     * @return {@link GlovesItem}'s own identifier for its accessory slot.
+//     */
+//    public static String getIdentifierStatic() {
+//        return AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+//    }
 }

@@ -3,15 +3,14 @@ package com.aetherteam.aether.item;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
+import io.wispforest.accessories.api.AccessoriesCapability;
+import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModList;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
-import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -43,36 +42,36 @@ public final class EquipmentUtil {
     }
 
     /**
-     * Searches for gloves in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     * Searches for gloves in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotResult} for the curio item.
+     * @return The {@link SlotEntryReference} for the curio item.
      */
     @Nullable
-    public static SlotResult getGloves(LivingEntity entity) {
-        Optional<SlotResult> slotResultOptional = EquipmentUtil.findFirstCurio(entity, (stack) -> stack.getItem() instanceof GlovesItem);
+    public static SlotEntryReference getGloves(LivingEntity entity) {
+        Optional<SlotEntryReference> slotResultOptional = EquipmentUtil.findFirstAccessory(entity, (stack) -> stack.getItem() instanceof GlovesItem);
         return slotResultOptional.orElse(null);
     }
 
     /**
-     * Searches for Zanite Rings in an entity's accessory inventory and returns all the {@link SlotResult} instances.
+     * Searches for Zanite Rings in an entity's accessory inventory and returns all the {@link SlotEntryReference} instances.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link List} of {@link SlotResult}s for the curio items.
+     * @return The {@link List} of {@link SlotEntryReference}s for the curio items.
      */
-    public static List<SlotResult> getZaniteRings(LivingEntity entity) {
-        return getCurios(entity, AetherItems.ZANITE_RING.get());
+    public static List<SlotEntryReference> getZaniteRings(LivingEntity entity) {
+        return getAccessories(entity, AetherItems.ZANITE_RING.get());
     }
 
     /**
-     * Searches for a Zanite Pendant in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     * Searches for a Zanite Pendant in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotResult} for the curio item.
+     * @return The {@link SlotEntryReference} for the curio item.
      */
     @Nullable
-    public static SlotResult getZanitePendant(LivingEntity entity) {
-        return getCurio(entity, AetherItems.ZANITE_PENDANT.get());
+    public static SlotEntryReference getZanitePendant(LivingEntity entity) {
+        return getAccessory(entity, AetherItems.ZANITE_PENDANT.get());
     }
 
     /**
@@ -82,7 +81,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasFreezingAccessory(LivingEntity entity) {
-        return hasCurio(entity, AetherItems.ICE_PENDANT.get()) || hasCurio(entity, AetherItems.ICE_RING.get());
+        return hasAccessory(entity, AetherItems.ICE_PENDANT.get()) || hasAccessory(entity, AetherItems.ICE_RING.get());
     }
 
     /**
@@ -92,7 +91,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasSwetCape(LivingEntity entity) {
-        return hasCurio(entity, AetherItems.SWET_CAPE.get());
+        return hasAccessory(entity, AetherItems.SWET_CAPE.get());
     }
 
     /**
@@ -102,7 +101,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasInvisibilityCloak(LivingEntity entity) {
-        return hasCurio(entity, AetherItems.INVISIBILITY_CLOAK.get());
+        return hasAccessory(entity, AetherItems.INVISIBILITY_CLOAK.get());
     }
 
     /**
@@ -112,18 +111,18 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasCape(LivingEntity entity) {
-        return findFirstCurio(entity, stack -> stack.getItem() instanceof CapeItem).isPresent();
+        return findFirstAccessory(entity, stack -> stack.getItem() instanceof CapeItem).isPresent();
     }
 
     /**
-     * Searches for a {@link CapeItem} in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     * Searches for a {@link CapeItem} in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotResult} for the curio item.
+     * @return The {@link SlotEntryReference} for the curio item.
      */
     @Nullable
-    public static SlotResult getCape(LivingEntity entity) {
-        return findFirstCurio(entity, stack -> stack.getItem() instanceof CapeItem).orElse(null);
+    public static SlotEntryReference getCape(LivingEntity entity) {
+        return findFirstAccessory(entity, stack -> stack.getItem() instanceof CapeItem).orElse(null);
     }
 
     /**
@@ -133,33 +132,33 @@ public final class EquipmentUtil {
      * @param item   The curio {@link Item} to look for.
      * @return The result of the check, as a {@link Boolean}.
      */
-    public static boolean hasCurio(LivingEntity entity, Item item) {
-        return findFirstCurio(entity, item).isPresent();
+    public static boolean hasAccessory(LivingEntity entity, Item item) {
+        return findFirstAccessory(entity, item).isPresent();
     }
 
     /**
-     * Searches for a curio {@link Item} in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     * Searches for a curio {@link Item} in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
      *
      * @param entity The {@link LivingEntity} wearer.
      * @param item   The curio {@link Item} to look for.
-     * @return The {@link SlotResult} for the curio item.
+     * @return The {@link SlotEntryReference} for the curio item.
      */
     @Nullable
-    public static SlotResult getCurio(LivingEntity entity, Item item) {
-        return findFirstCurio(entity, item).orElse(null);
+    public static SlotEntryReference getAccessory(LivingEntity entity, Item item) {
+        return findFirstAccessory(entity, item).orElse(null);
     }
 
     /**
-     * Searches for a curio {@link Item} in an entity's accessory inventory and returns all the {@link SlotResult} instances.
+     * Searches for a curio {@link Item} in an entity's accessory inventory and returns all the {@link SlotEntryReference} instances.
      *
      * @param entity The {@link LivingEntity} wearer.
      * @param item   The curio {@link Item} to look for.
-     * @return The {@link List} of {@link SlotResult}s for the curio items.
+     * @return The {@link List} of {@link SlotEntryReference}s for the curio items.
      */
-    public static List<SlotResult> getCurios(LivingEntity entity, Item item) {
-        Optional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
-        if (inventoryOptional.isPresent()) {
-            return inventoryOptional.get().findCurios(item);
+    public static List<SlotEntryReference> getAccessories(LivingEntity entity, Item item) {
+        AccessoriesCapability accessories = AccessoriesCapability.get(entity);
+        if (accessories != null) {
+            return accessories.getEquipped(item);
         }
         return List.of();
     }
@@ -240,7 +239,7 @@ public final class EquipmentUtil {
                 && entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 && entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
                 && entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
-                && (!AetherConfig.SERVER.require_gloves.get() || findFirstCurio(entity, gloves).isPresent());
+                && (!AetherConfig.SERVER.require_gloves.get() || findFirstAccessory(entity, gloves).isPresent());
     }
 
     /**
@@ -259,23 +258,26 @@ public final class EquipmentUtil {
                 || entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 || entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
                 || entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
-                || findFirstCurio(entity, gloves).isPresent();
+                || findFirstAccessory(entity, gloves).isPresent();
     }
 
     /**
      * @see ICuriosItemHandler#findFirstCurio(Item)
      */
-    public static Optional<SlotResult> findFirstCurio(LivingEntity entity, Item item) {
-        return findFirstCurio(entity, (itemStack) -> itemStack.is(item));
+    public static Optional<SlotEntryReference> findFirstAccessory(LivingEntity entity, Item item) {
+        return findFirstAccessory(entity, (itemStack) -> itemStack.is(item));
     }
 
     /**
      * @see ICuriosItemHandler#findFirstCurio(Predicate)
      */
-    public static Optional<SlotResult> findFirstCurio(LivingEntity entity, Predicate<ItemStack> predicate) {
-        Optional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
-        if (inventoryOptional.isPresent()) {
-            return inventoryOptional.get().findFirstCurio(predicate);
+    public static Optional<SlotEntryReference> findFirstAccessory(LivingEntity entity, Predicate<ItemStack> predicate) {
+        AccessoriesCapability accessories = AccessoriesCapability.get(entity);
+        if (accessories != null) {
+            SlotEntryReference slotEntryReference = accessories.getFirstEquipped(predicate);
+            if (slotEntryReference != null) {
+                return Optional.of(slotEntryReference);
+            }
         }
         return Optional.empty();
     }

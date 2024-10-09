@@ -1,9 +1,10 @@
 package com.aetherteam.aether.item.accessories.miscellaneous;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.inventory.AetherAccessorySlots;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
+import io.wispforest.accessories.api.slot.SlotTypeReference;
 import net.minecraft.resources.ResourceLocation;
 
 public class ShieldOfRepulsionItem extends AccessoryItem implements SlotIdentifierHolder {
@@ -37,14 +38,14 @@ public class ShieldOfRepulsionItem extends AccessoryItem implements SlotIdentifi
      * using a static method as it is used in other conditions without access to an instance.
      */
     @Override
-    public String getIdentifier() {
-        return getIdentifierStatic();
+    public SlotTypeReference getIdentifier() {
+        return AetherAccessorySlots.getShieldSlotType();
     }
 
-    /**
-     * @return {@link ShieldOfRepulsionItem}'s own identifier for its accessory slot.
-     */
-    public static String getIdentifierStatic() {
-        return AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
-    }
+//    /**
+//     * @return {@link ShieldOfRepulsionItem}'s own identifier for its accessory slot.
+//     */
+//    public static String getIdentifierStatic() {
+//        return AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
+//    }
 }

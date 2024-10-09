@@ -1,7 +1,6 @@
 package com.aetherteam.aether.client.gui.screen.inventory;
 
 import com.aetherteam.aether.inventory.menu.AbstractAetherFurnaceMenu;
-import com.aetherteam.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.recipebook.AbstractFurnaceRecipeBookComponent;
 import net.minecraft.network.chat.Component;

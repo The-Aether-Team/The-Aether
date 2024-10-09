@@ -7,8 +7,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.function.Supplier;
-
 public class AerogelStairsBlock extends StairBlock implements AerogelCulling {
     public AerogelStairsBlock(BlockState state, Properties properties) {
         super(state, properties);

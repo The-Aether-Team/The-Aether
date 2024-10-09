@@ -21,6 +21,7 @@ import com.aetherteam.aether.loot.AetherLootContexts;
 import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import com.google.common.collect.ImmutableMap;
+import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -48,8 +49,8 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -61,7 +62,6 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -76,7 +76,7 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.mixin.mixins.common.PlayerMixin#attack(Entity, CallbackInfo)
          */
         public static void damageGloves(Player player) {
-            SlotResult slotResult = EquipmentUtil.getGloves(player);
+            SlotEntryReference slotResult = EquipmentUtil.getGloves(player);
             if (slotResult != null) {
                 slotResult.stack().hurtAndBreak(1, player, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
             }
@@ -88,8 +88,8 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
          */
         public static void damageZaniteRing(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
-            List<SlotResult> slotResults = EquipmentUtil.getZaniteRings(entity);
-            for (SlotResult slotResult : slotResults) {
+            List<SlotEntryReference> slotResults = EquipmentUtil.getZaniteRings(entity);
+            for (SlotEntryReference slotResult : slotResults) {
                 if (slotResult != null) {
                     if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
                         slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
@@ -104,7 +104,7 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
          */
         public static void damageZanitePendant(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
-            SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
+            SlotEntryReference slotResult = EquipmentUtil.getZanitePendant(entity);
             if (slotResult != null) {
                 if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
                     slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
@@ -120,8 +120,8 @@ public class AbilityHooks {
          */
         public static float handleZaniteRingAbility(LivingEntity entity, float speed) {
             float newSpeed = speed;
-            List<SlotResult> slotResults = EquipmentUtil.getZaniteRings(entity);
-            for (SlotResult slotResult : slotResults) {
+            List<SlotEntryReference> slotResults = EquipmentUtil.getZaniteRings(entity);
+            for (SlotEntryReference slotResult : slotResults) {
                 if (slotResult != null) {
                     newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, slotResult.stack());
                 }
@@ -136,7 +136,7 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
          */
         public static float handleZanitePendantAbility(LivingEntity entity, float speed) {
-            SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
+            SlotEntryReference slotResult = EquipmentUtil.getZanitePendant(entity);
             if (slotResult != null) {
                 speed = ZaniteAccessory.handleMiningSpeed(speed, slotResult.stack());
             }
@@ -371,11 +371,11 @@ public class AbilityHooks {
          */
         public static boolean entityTooFar(Entity target, Player player, InteractionHand hand) {
             if (hand == InteractionHand.OFF_HAND && hasValkyrieItemInMainHandOnly(player)) {
-                AttributeInstance attackRange = player.getAttribute(NeoForgeMod.ENTITY_REACH.value());
+                AttributeInstance attackRange = player.getAttribute(Attributes.ENTITY_INTERACTION_RANGE);
                 if (attackRange != null) {
                     AttributeModifier valkyrieModifier = attackRange.getModifier(ValkyrieTool.ENTITY_INTERACTION_RANGE_MODIFIER_UUID);
                     if (valkyrieModifier != null) {
-                        double range = player.getAttributeValue(NeoForgeMod.ENTITY_REACH.value()) - valkyrieModifier.getAmount();
+                        double range = player.getAttributeValue(Attributes.ENTITY_INTERACTION_RANGE) - valkyrieModifier.amount();
                         double trueReach = range == 0 ? 0 : range + (player.isCreative() ? 3 : 0); // [CODE COPY] - IForgePlayer#getAttackRange().
                         return !player.isCloseEnough(target, trueReach);
                     }
@@ -393,11 +393,11 @@ public class AbilityHooks {
          */
         public static boolean blockTooFar(Player player, InteractionHand hand) {
             if (hand == InteractionHand.OFF_HAND && hasValkyrieItemInMainHandOnly(player)) {
-                AttributeInstance reachDistance = player.getAttribute(NeoForgeMod.BLOCK_REACH.value());
+                AttributeInstance reachDistance = player.getAttribute(Attributes.BLOCK_INTERACTION_RANGE);
                 if (reachDistance != null) {
                     AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.BLOCK_INTERACTION_RANGE_MODIFIER_UUID);
                     if (valkyrieModifier != null) {
-                        double reach = player.getAttributeValue(NeoForgeMod.BLOCK_REACH.value()) - valkyrieModifier.getAmount();
+                        double reach = player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE) - valkyrieModifier.amount();
                         double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // [CODE COPY] - IForgePlayer#getReachDistance().
                         return player.pick(trueReach, 0.0F, false).getType() != HitResult.Type.BLOCK;
                     }

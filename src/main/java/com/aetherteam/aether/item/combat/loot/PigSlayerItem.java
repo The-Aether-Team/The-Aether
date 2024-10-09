@@ -62,12 +62,12 @@ public class PigSlayerItem extends SwordItem {
      * @see Aether#eventSetup()
      * Deals 20-22 hearts of damage to the target if they're a Pig-type entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.<br><br>
      */
-    public static void onLivingDamage(LivingDamageEvent event) {
+    public static void onLivingDamage(LivingDamageEvent.Pre event) {
         LivingEntity target = event.getEntity();
         DamageSource damageSource = event.getSource();
-        float damage = event.getAmount();
+        float damage = event.getNewDamage();
         if (canPerformAbility(target, damageSource)) {
-            event.setAmount(damage + 16.0F);
+            event.setNewDamage(damage + 16.0F);
         }
     }
 

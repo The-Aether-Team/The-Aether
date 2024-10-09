@@ -9,6 +9,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ClipContext;
@@ -51,11 +52,11 @@ public class ItemMixin {
      */
     private static BlockHitResult interactionTooFar(Level level, Player player, InteractionHand hand, ClipContext.Fluid fluidMode) {
         if (hand == InteractionHand.OFF_HAND && AbilityHooks.ToolHooks.hasValkyrieItemInMainHandOnly(player)) {
-            AttributeInstance reachDistance = player.getAttribute(NeoForgeMod.BLOCK_REACH.value());
+            AttributeInstance reachDistance = player.getAttribute(Attributes.BLOCK_INTERACTION_RANGE);
             if (reachDistance != null) {
                 AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.BLOCK_INTERACTION_RANGE_MODIFIER_UUID);
                 if (valkyrieModifier != null) {
-                    double reach = player.getAttributeValue(NeoForgeMod.BLOCK_REACH.value()) - valkyrieModifier.getAmount();
+                    double reach = player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE) - valkyrieModifier.amount();
                     double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // [CODE COPY] - IForgePlayer#getReachDistance().
                     return getPlayerPOVHitResultForReach(level, player, trueReach, fluidMode);
                 }

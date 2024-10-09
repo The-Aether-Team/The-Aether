@@ -22,8 +22,10 @@ import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionIte
 import com.aetherteam.aether.item.accessories.pendant.PendantItem;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
+import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -55,12 +57,6 @@ import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.living.MobSplitEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
-import top.theillusivec4.curios.api.event.CurioDropsEvent;
-import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
-import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
-import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -120,7 +116,7 @@ public class EntityHooks {
             } else {
                 boolean fullyArmored = true;
                 for (EquipmentSlot equipmentslot : EquipmentSlot.values()) {
-                    if (equipmentslot.getType() == EquipmentSlot.Type.ARMOR) {
+                    if (equipmentslot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
                         ItemStack itemStack = mob.getItemBySlot(equipmentslot);
                         if (itemStack.isEmpty()) {
                             fullyArmored = false;
@@ -130,10 +126,8 @@ public class EntityHooks {
                 }
                 if (fullyArmored && random.nextInt(4) == 1) {
                     if (mob.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof ArmorItem armorItem) {
-                        if (armorItem.getMaterial() instanceof ArmorMaterials armorMaterials) {
-                            for (String identifier : gloveSlots) {
-                                equipAccessory(mob, identifier, armorMaterials);
-                            }
+                        for (String identifier : gloveSlots) {
+                            equipAccessory(mob, identifier, armorItem.getMaterial());
                         }
                     }
                 }
@@ -150,10 +144,10 @@ public class EntityHooks {
      * @param armorMaterials The {@link ArmorMaterials} to get an item from.
      * @see EntityHooks#spawnWithAccessories(Entity, DifficultyInstance)
      */
-    private static void equipAccessory(Mob mob, String identifier, ArmorMaterials armorMaterials) {
+    private static void equipAccessory(Mob mob, String identifier, Holder<ArmorMaterial> armorMaterials) {
         CuriosApi.getCuriosInventory(mob).ifPresent((handler) -> {
             boolean empty = true;
-            for (SlotResult slotResult : handler.findCurios(identifier)) {
+            for (SlotEntryReference slotResult : handler.findCurios(identifier)) {
                 if (!slotResult.stack().isEmpty()) {
                     empty = false;
                     break;
@@ -582,7 +576,7 @@ public class EntityHooks {
                 if (experience > 0) {
                     String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
                     for (String identifier : allSlots) {
-                        Optional<SlotResult> optionalSlotResult = handler.findCurio(identifier, 0);
+                        Optional<SlotEntryReference> optionalSlotResult = handler.findCurio(identifier, 0);
                         if (optionalSlotResult.isPresent()) {
                             ItemStack stack = optionalSlotResult.get().stack();
                             if (!stack.isEmpty() && mob.getData(AetherDataAttachments.MOB_ACCESSORY).getEquipmentDropChance(identifier) <= 1.0F) {

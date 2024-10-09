@@ -5,6 +5,7 @@ import com.aetherteam.aether.event.hooks.EntityHooks;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
+import io.wispforest.accessories.api.slot.SlotTypeReference;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,8 +24,8 @@ public class MobMixin {
     private boolean canTakeItem(boolean original, @Local(ordinal = 0, argsOnly = true) ItemStack stack) {
         Mob mob = (Mob) (Object) this;
         if (EntityHooks.canMobSpawnWithAccessories(mob)) {
-            String identifier = AetherMixinHooks.getIdentifierForItem(mob, stack);
-            if (!identifier.isEmpty()) {
+            SlotTypeReference identifier = AetherMixinHooks.getIdentifierForItem(mob, stack);
+            if (identifier != null) {
                 ItemStack accessory = AetherMixinHooks.getItemByIdentifier(mob, identifier);
                 if (accessory.isEmpty()) return true;
             }
@@ -42,8 +43,8 @@ public class MobMixin {
     private ItemStack equipItemIfPossible(ItemStack original, @Local(ordinal = 0, argsOnly = true) ItemStack stack) {
         Mob mob = (Mob) (Object) this;
         var data = mob.getData(AetherDataAttachments.MOB_ACCESSORY);
-        String identifier = AetherMixinHooks.getIdentifierForItem(mob, stack);
-        if (!identifier.isEmpty()) {
+        SlotTypeReference identifier = AetherMixinHooks.getIdentifierForItem(mob, stack);
+        if (identifier != null) {
             ItemStack accessory = AetherMixinHooks.getItemByIdentifier(mob, identifier);
             boolean flag = AetherMixinHooks.canReplaceCurrentAccessory(mob, stack, accessory);
             if (flag && mob.canHoldItem(stack)) {

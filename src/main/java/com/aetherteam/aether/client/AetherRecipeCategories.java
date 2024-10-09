@@ -1,8 +1,6 @@
 package com.aetherteam.aether.client;
 
-import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
-import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.recipe.AetherBookCategory;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
@@ -10,8 +8,6 @@ import com.aetherteam.aether.recipe.recipes.item.AltarRepairRecipe;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.RecipeBookCategories;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.client.event.RegisterRecipeBookCategoriesEvent;
 
 import java.util.function.Supplier;

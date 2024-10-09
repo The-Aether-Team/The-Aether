@@ -27,7 +27,7 @@ public interface TitleScreenBehavior {
             titleScreenAccessor.aether$setFadeInStart(Util.getMillis());
         }
         float fadeAmount = titleScreenAccessor.aether$isFading() ? (float) (Util.getMillis() - titleScreenAccessor.aether$getFadeInStart()) / 1000.0F : 1.0F;
-        panorama.render(partialTicks, Mth.clamp(fadeAmount, 0.0F, 1.0F));
+        panorama.render(guiGraphics, titleScreen.width, titleScreen.height, Mth.clamp(fadeAmount, 0.0F, 1.0F), partialTicks);
         RenderSystem.enableBlend();
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, titleScreenAccessor.aether$isFading() ? (float) Mth.ceil(Mth.clamp(fadeAmount, 0.0F, 1.0F)) : 1.0F);
         guiGraphics.blit(panoramaOverlay, 0, 0, titleScreen.width, titleScreen.height, 0.0F, 0.0F, 16, 128, 16, 128);

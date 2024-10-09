@@ -18,7 +18,6 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -56,7 +55,7 @@ public class GlovesRenderer implements SimpleAccessoryRenderer {
      * @param stack             The {@link ItemStack} for the accessory.
      * @param reference         The {@link SlotReference} for the accessory.
      * @param poseStack         The rendering {@link PoseStack}.
-     * @param entityModel             The {@link EntityModel} for the renderer.
+     * @param entityModel       The {@link EntityModel} for the renderer.
      * @param buffer            The rendering {@link MultiBufferSource}.
      * @param packedLight       The {@link Integer} for the packed lighting for rendering.
      * @param limbSwing         The {@link Float} for the limb swing rotation.

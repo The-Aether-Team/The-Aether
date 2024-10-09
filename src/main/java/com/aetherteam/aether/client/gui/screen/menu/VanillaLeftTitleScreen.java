@@ -74,9 +74,6 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
         this.renderLogo(guiGraphics, fadeAmount);
         int roundedFadeAmount = Mth.ceil(fadeAmount * 255.0F) << 24;
         if ((roundedFadeAmount & -67108864) != 0) {
-            if (titleScreenAccessor.getWarningLabel() != null) {
-                titleScreenAccessor.getWarningLabel().render(guiGraphics, roundedFadeAmount);
-            }
             ClientHooks.renderMainMenu(this, guiGraphics, this.font, this.width, this.height, roundedFadeAmount);
             if (titleScreenAccessor.aether$getSplash() != null) {
                 SplashRendererAccessor splashRendererAccessor = (SplashRendererAccessor) titleScreenAccessor.aether$getSplash();

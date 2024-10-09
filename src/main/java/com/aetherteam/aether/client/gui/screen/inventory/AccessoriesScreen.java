@@ -34,13 +34,6 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
-import top.theillusivec4.curios.CuriosConstants;
-import top.theillusivec4.curios.client.gui.CuriosScreen;
-import top.theillusivec4.curios.client.gui.RenderButton;
-import top.theillusivec4.curios.common.inventory.CosmeticCurioSlot;
-import top.theillusivec4.curios.common.inventory.CurioSlot;
-import top.theillusivec4.curios.common.network.client.CPacketDestroy;
-import top.theillusivec4.curios.common.network.client.CPacketToggleRender;
 
 import javax.annotation.Nullable;
 

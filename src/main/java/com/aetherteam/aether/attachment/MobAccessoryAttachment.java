@@ -2,6 +2,7 @@ package com.aetherteam.aether.attachment;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.wispforest.accessories.api.slot.SlotTypeReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,22 +27,22 @@ public class MobAccessoryAttachment {
         this.accessoryDropChances = dropChances;
     }
 
-    public void setGuaranteedDrop(String identifier) {
-        if (identifier.equals("hands") || identifier.equals("necklace") || identifier.equals("aether_gloves") || identifier.equals("aether_pendant")) {
-            this.getAccessoryDropChances().put(identifier, 2.0F);
+    public void setGuaranteedDrop(SlotTypeReference identifier) {
+        if (identifier.slotName().equals("hands") || identifier.slotName().equals("necklace") || identifier.slotName().equals("aether_gloves") || identifier.slotName().equals("aether_pendant")) {
+            this.getAccessoryDropChances().put(identifier.slotName(), 2.0F);
         }
     }
 
-    public float getEquipmentDropChance(String identifier) {
-        if (identifier.equals("hands") || identifier.equals("necklace") || identifier.equals("aether_gloves") || identifier.equals("aether_pendant")) {
-            return this.getAccessoryDropChances().get(identifier);
+    public float getEquipmentDropChance(SlotTypeReference identifier) {
+        if (identifier.slotName().equals("hands") || identifier.slotName().equals("necklace") || identifier.slotName().equals("aether_gloves") || identifier.slotName().equals("aether_pendant")) {
+            return this.getAccessoryDropChances().get(identifier.slotName());
         }
         return 0.0F;
     }
 
-    public void setDropChance(String identifier, float chance) {
-        if (identifier.equals("hands") || identifier.equals("necklace") || identifier.equals("aether_gloves") || identifier.equals("aether_pendant")) {
-            this.getAccessoryDropChances().put(identifier, chance);
+    public void setDropChance(SlotTypeReference identifier, float chance) {
+        if (identifier.slotName().equals("hands") || identifier.slotName().equals("necklace") || identifier.slotName().equals("aether_gloves") || identifier.slotName().equals("aether_pendant")) {
+            this.getAccessoryDropChances().put(identifier.slotName(), chance);
         }
     }
 

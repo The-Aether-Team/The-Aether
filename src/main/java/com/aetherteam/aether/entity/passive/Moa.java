@@ -846,7 +846,7 @@ public class Moa extends MountableAnimal implements WingedBird {
      * @return The {@link EntityDimensions}.
      */
     @Override
-    public EntityDimensions getDimensions(Pose pose) {
+    public EntityDimensions getDefaultDimensions(Pose pose) {
         EntityDimensions dimensions = super.getDimensions(pose);
         if (this.isSitting()) {
             dimensions = dimensions.scale(1.0F, 0.5F);

@@ -250,7 +250,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.load(tag, registries);
+        super.loadAdditional(tag, registries);
         this.locked = !tag.contains("Locked") || tag.getBoolean("Locked");
         this.kind = tag.contains("Kind") ? ResourceLocation.withDefaultNamespace(tag.getString("Kind")) : ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze");
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
@@ -267,6 +267,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     @Override
     public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider lookupProvider) {
         CompoundTag compound = packet.getTag();
-        this.handleUpdateTag(compound);
+        this.handleUpdateTag(compound, lookupProvider);
     }
 }

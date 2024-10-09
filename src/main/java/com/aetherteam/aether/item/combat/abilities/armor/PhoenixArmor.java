@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
+import top.theillusivec4.curios.api.SlotEntryReference;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
@@ -113,7 +113,7 @@ public interface PhoenixArmor {
     /**
      * Slowly increments a timer to convert a player's Phoenix Armor if they're in water, rain, or a bubble column.<br><br>
      * This is done by looping through the armor {@link EquipmentSlot}s and also checking with {@link top.theillusivec4.curios.common.CuriosHelper#findFirstCurio(LivingEntity, Item)} for the gloves.<br><br>
-     * The methods used for this are {@link PhoenixArmor#breakPhoenixArmor(LivingEntity, ItemStack, ItemStack, EquipmentSlot)} and {@link PhoenixArmor#breakPhoenixGloves(LivingEntity, SlotResult, ItemStack)}.
+     * The methods used for this are {@link PhoenixArmor#breakPhoenixArmor(LivingEntity, ItemStack, ItemStack, EquipmentSlot)} and {@link PhoenixArmor#breakPhoenixGloves(LivingEntity, SlotEntryReference, ItemStack)}.
      *
      * @param entity The {@link LivingEntity} wearing the armor.
      * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
@@ -144,7 +144,7 @@ public interface PhoenixArmor {
                         }
                     }
                 }
-                SlotResult slotResult = EquipmentUtil.getCurio(entity, AetherItems.PHOENIX_GLOVES.get());
+                SlotEntryReference slotResult = EquipmentUtil.getAccessory(entity, AetherItems.PHOENIX_GLOVES.get());
                 if (slotResult != null) {
                     breakPhoenixGloves(entity, slotResult, new ItemStack(AetherItems.OBSIDIAN_GLOVES.get()));
                 }
@@ -175,10 +175,10 @@ public interface PhoenixArmor {
      * Replaces the gloves stack and copies over its tags and enchantments.
      *
      * @param entity       The {@link LivingEntity} wearing the armor.
-     * @param slotResult   The {@link SlotResult} of the Curio item.
+     * @param slotResult   The {@link SlotEntryReference} of the Curio item.
      * @param outcomeStack The replacement {@link ItemStack}.
      */
-    private static void breakPhoenixGloves(LivingEntity entity, SlotResult slotResult, ItemStack outcomeStack) {
+    private static void breakPhoenixGloves(LivingEntity entity, SlotEntryReference slotResult, ItemStack outcomeStack) {
         EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(slotResult.stack()), outcomeStack);
         if (slotResult.stack().hasTag()) {
             outcomeStack.setTag(slotResult.stack().getTag());
