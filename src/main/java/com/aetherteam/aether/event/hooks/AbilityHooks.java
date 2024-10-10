@@ -21,6 +21,7 @@ import com.aetherteam.aether.loot.AetherLootContexts;
 import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import com.google.common.collect.ImmutableMap;
+import io.wispforest.accessories.api.AccessoriesAPI;
 import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -56,12 +57,10 @@ import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
-import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.theillusivec4.curios.api.CuriosApi;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -78,7 +77,9 @@ public class AbilityHooks {
         public static void damageGloves(Player player) {
             SlotEntryReference slotResult = EquipmentUtil.getGloves(player);
             if (slotResult != null) {
-                slotResult.stack().hurtAndBreak(1, player, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
+                if (player.level() instanceof ServerLevel serverLevel) {
+                    slotResult.stack().hurtAndBreak(1, serverLevel, player, (item) -> AccessoriesAPI.breakStack(slotResult.reference()));
+                }
             }
         }
 
@@ -92,7 +93,9 @@ public class AbilityHooks {
             for (SlotEntryReference slotResult : slotResults) {
                 if (slotResult != null) {
                     if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
-                        slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
+                        if (entity.level() instanceof ServerLevel serverLevel) {
+                            slotResult.stack().hurtAndBreak(1, serverLevel, entity, (item) -> AccessoriesAPI.breakStack(slotResult.reference()));
+                        }
                     }
                 }
             }
@@ -107,7 +110,9 @@ public class AbilityHooks {
             SlotEntryReference slotResult = EquipmentUtil.getZanitePendant(entity);
             if (slotResult != null) {
                 if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
-                    slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
+                    if (entity.level() instanceof ServerLevel serverLevel) {
+                        slotResult.stack().hurtAndBreak(1, serverLevel, entity, (item) -> AccessoriesAPI.breakStack(slotResult.reference()));
+                    }
                 }
             }
         }

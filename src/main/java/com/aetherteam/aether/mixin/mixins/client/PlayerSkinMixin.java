@@ -3,13 +3,13 @@ package com.aetherteam.aether.mixin.mixins.client;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import top.theillusivec4.curios.api.SlotEntryReference;
 
 @Mixin(PlayerSkin.class)
 public class PlayerSkinMixin {

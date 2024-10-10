@@ -119,14 +119,11 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
         AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
         if (recipe != null && abstractFurnaceBlockEntityAccessor.callCanBurn(registryAccess, recipe, stacks, stackSize)) {
             ItemStack inputSlotStack = stacks.get(0);
-            ItemStack resultStack = ((Recipe<WorldlyContainer>) recipe.value()).assemble(this, registryAccess);
+            ItemStack resultStack = ((Recipe<SingleRecipeInput>) recipe.value()).assemble(new SingleRecipeInput(abstractFurnaceBlockEntityAccessor.aether$getItems().getFirst()), registryAccess);
             ItemStack resultSlotStack = stacks.get(2);
 
             if (inputSlotStack.is(resultStack.getItem()) || resultStack.is(AetherTags.Items.SAVE_NBT_IN_RECIPE)) {
-                EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(inputSlotStack), resultStack);
-                if (inputSlotStack.hasTag()) {
-                    resultStack.setTag(inputSlotStack.getTag());
-                }
+                resultStack = new ItemStack(inputSlotStack.getItemHolder(), 1, inputSlotStack.getComponentsPatch());
             }
             if (inputSlotStack.is(resultStack.getItem())) {
                 resultStack.setDamageValue(0);
@@ -180,7 +177,7 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
         AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
-        Optional<NonNullList<Ingredient>> ingredient = abstractFurnaceBlockEntityAccessor.aether$getQuickCheck().getRecipeFor(this, this.level).map((recipe) -> recipe.value().getIngredients());
+        Optional<NonNullList<Ingredient>> ingredient = abstractFurnaceBlockEntityAccessor.aether$getQuickCheck().getRecipeFor(new SingleRecipeInput(abstractFurnaceBlockEntityAccessor.aether$getItems().getFirst()), this.level).map((recipe) -> recipe.value().getIngredients());
         if (this.remainderItem.isEmpty()) {
             ingredient.ifPresent(ing -> this.remainderItem = stack.getCraftingRemainingItem()); // Stores the correlating crafting remainder item.
         }

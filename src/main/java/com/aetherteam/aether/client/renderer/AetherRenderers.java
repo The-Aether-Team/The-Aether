@@ -9,7 +9,6 @@ import com.aetherteam.aether.client.renderer.accessory.GlovesRenderer;
 import com.aetherteam.aether.client.renderer.accessory.PendantRenderer;
 import com.aetherteam.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
 import com.aetherteam.aether.client.renderer.accessory.layer.ArmorStandCapeLayer;
-import com.aetherteam.aether.client.renderer.accessory.layer.EntityAccessoryLayer;
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
 import com.aetherteam.aether.client.renderer.accessory.model.GlovesModel;
 import com.aetherteam.aether.client.renderer.accessory.model.PendantModel;

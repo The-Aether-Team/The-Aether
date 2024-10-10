@@ -3,6 +3,9 @@ package com.aetherteam.aether.item.combat.abilities.armor;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
+import io.wispforest.accessories.api.AccessoriesCapability;
+import io.wispforest.accessories.api.AccessoriesContainer;
+import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -15,13 +18,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotEntryReference;
-import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
-import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
 import java.util.Map;
 
@@ -103,7 +102,7 @@ public interface PhoenixArmor {
      */
     private static float boostWithDepthStrider(LivingEntity entity, float start, float increment) {
         float defaultBoost = start;
-        float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
+        float depthStriderModifier = Math.min(EnchantmentHelper.getEnchantmentLevel(entity.level().holderOrThrow(Enchantments.DEPTH_STRIDER), entity), 3.0F);
         if (depthStriderModifier > 0.0F) {
             defaultBoost += depthStriderModifier * increment;
         }
@@ -131,7 +130,7 @@ public interface PhoenixArmor {
             }
             if (data.getObsidianConversionTime() >= data.getObsidianConversionTimerMax()) {
                 for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-                    if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
+                    if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
                         ItemStack equippedStack = entity.getItemBySlot(equipmentSlot);
                         if (equippedStack.is(AetherItems.PHOENIX_HELMET.get())) {
                             breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_HELMET.get()), equipmentSlot);
@@ -161,10 +160,7 @@ public interface PhoenixArmor {
      * @param slot          The {@link EquipmentSlot} of the armor item.
      */
     private static void breakPhoenixArmor(LivingEntity entity, ItemStack equippedStack, ItemStack outcomeStack, EquipmentSlot slot) {
-        EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(equippedStack), outcomeStack);
-        if (equippedStack.hasTag()) {
-            outcomeStack.setTag(equippedStack.getTag());
-        }
+        outcomeStack = new ItemStack(outcomeStack.getItemHolder(), 1, equippedStack.getComponentsPatch());
         entity.setItemSlot(slot, outcomeStack);
         if (entity instanceof ServerPlayer serverPlayer) {
             CriteriaTriggers.INVENTORY_CHANGED.trigger(serverPlayer, serverPlayer.getInventory(), outcomeStack);
@@ -179,18 +175,14 @@ public interface PhoenixArmor {
      * @param outcomeStack The replacement {@link ItemStack}.
      */
     private static void breakPhoenixGloves(LivingEntity entity, SlotEntryReference slotResult, ItemStack outcomeStack) {
-        EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(slotResult.stack()), outcomeStack);
-        if (slotResult.stack().hasTag()) {
-            outcomeStack.setTag(slotResult.stack().getTag());
-        }
-        CuriosApi.getCuriosInventory(entity).ifPresent(iCuriosItemHandler -> {
-            Map<String, ICurioStacksHandler> curios = iCuriosItemHandler.getCurios(); // Map of Curio slot names -> slot stack handlers.
-            ICurioStacksHandler inv = curios.get(slotResult.slotContext().identifier()); // Stack handler for the Curio slot, gotten using the identifier through slotResult.
-            if (inv != null) {
-                IDynamicStackHandler stackHandler = inv.getStacks();
-                stackHandler.setStackInSlot(slotResult.slotContext().index(), outcomeStack); // Changes stack in slot using stack handler.
+        outcomeStack = new ItemStack(outcomeStack.getItemHolder(), 1, slotResult.stack().getComponentsPatch());
+        AccessoriesCapability accessories = AccessoriesCapability.get(entity);
+        if (accessories != null) {
+            AccessoriesContainer accessoriesContainer = accessories.getContainer(slotResult.reference().type());
+            if (accessoriesContainer != null) {
+                accessoriesContainer.getAccessories().setItem(slotResult.reference().slot(), outcomeStack);
             }
-        });
+        }
         if (entity instanceof ServerPlayer serverPlayer) {
             CriteriaTriggers.INVENTORY_CHANGED.trigger(serverPlayer, serverPlayer.getInventory(), outcomeStack);
         }

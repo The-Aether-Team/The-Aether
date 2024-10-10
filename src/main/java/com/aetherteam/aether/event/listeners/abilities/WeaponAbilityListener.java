@@ -12,7 +12,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 
 public class WeaponAbilityListener {
     /**
@@ -28,12 +27,10 @@ public class WeaponAbilityListener {
     /**
      * @see AbilityHooks.WeaponHooks#stickDart(LivingEntity, DamageSource)
      */
-    public static void onDartHurt(LivingHurtEvent event) {
+    public static void onDartHurt(LivingDamageEvent.Pre event) {
         LivingEntity livingEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
-        if (!event.isCanceled()) {
-            AbilityHooks.WeaponHooks.stickDart(livingEntity, damageSource);
-        }
+        AbilityHooks.WeaponHooks.stickDart(livingEntity, damageSource);
     }
 
     /**
@@ -62,11 +59,11 @@ public class WeaponAbilityListener {
      * @see com.aetherteam.aether.event.hooks.AbilityHooks.WeaponHooks#reduceWeaponEffectiveness(LivingEntity, Entity, float)
      * @see com.aetherteam.aether.event.hooks.AbilityHooks.WeaponHooks#reduceArmorEffectiveness(LivingEntity, Entity, float)
      */
-    public static void onEntityDamage(LivingDamageEvent event) {
+    public static void onEntityDamage(LivingDamageEvent.Pre event) {
         LivingEntity targetEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
         Entity sourceEntity = damageSource.getDirectEntity();
-        event.setAmount(AbilityHooks.WeaponHooks.reduceWeaponEffectiveness(targetEntity, sourceEntity, event.getAmount()));
-        event.setAmount(AbilityHooks.WeaponHooks.reduceArmorEffectiveness(targetEntity, sourceEntity, event.getAmount()));
+        event.setNewDamage(AbilityHooks.WeaponHooks.reduceWeaponEffectiveness(targetEntity, sourceEntity, event.getNewDamage()));
+        event.setNewDamage(AbilityHooks.WeaponHooks.reduceArmorEffectiveness(targetEntity, sourceEntity, event.getNewDamage()));
     }
 }

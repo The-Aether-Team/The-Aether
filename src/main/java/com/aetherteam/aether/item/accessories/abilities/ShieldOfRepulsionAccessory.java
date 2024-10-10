@@ -6,7 +6,10 @@ import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.nitrogen.ConstantsUtil;
+import io.wispforest.accessories.api.AccessoriesAPI;
+import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.client.player.Input;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -15,8 +18,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotEntryReference;
 
 public interface ShieldOfRepulsionAccessory {
     /**
@@ -69,11 +70,11 @@ public interface ShieldOfRepulsionAccessory {
         if (!impactedLiving.equals(projectile.getOwner())) {
             projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25));
             if (projectile instanceof AbstractHurtingProjectile damagingProjectileEntity) {
-                damagingProjectileEntity.xPower *= -0.25;
-                damagingProjectileEntity.yPower *= -0.25;
-                damagingProjectileEntity.zPower *= -0.25;
+                damagingProjectileEntity.accelerationPower *= -0.25;
             }
-            slotResult.stack().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
+            if (impactedLiving.level() instanceof ServerLevel serverLevel) {
+                slotResult.stack().hurtAndBreak(1, serverLevel, impactedLiving, (item) -> AccessoriesAPI.breakStack(slotResult.reference()));
+            }
         }
     }
 }

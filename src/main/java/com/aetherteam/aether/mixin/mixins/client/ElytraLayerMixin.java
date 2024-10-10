@@ -1,22 +1,19 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
-import com.aetherteam.aether.item.accessories.cape.CapeItem;
+import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
+import io.wispforest.accessories.api.slot.SlotEntryReference;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.layers.ElytraLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
-import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
-import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
-
-import java.util.Optional;
 
 @Mixin(ElytraLayer.class)
 public class ElytraLayerMixin<T extends LivingEntity> {
@@ -31,21 +28,31 @@ public class ElytraLayerMixin<T extends LivingEntity> {
     @ModifyReturnValue(at = @At("RETURN"), method = "getElytraTexture(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/resources/ResourceLocation;", remap = false)
     private ResourceLocation getElytraTexture(ResourceLocation original, @Local(ordinal = 0, argsOnly = true) ItemStack stack, @Local(ordinal = 0, argsOnly = true) T entity) {
         if (entity instanceof ArmorStand armorStand) {
-            String identifier = CapeItem.getIdentifierStatic();
-            Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
-            if (lazyHandler.isPresent()) {
-                ICuriosItemHandler handler = lazyHandler.get();
-                Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
-                if (stacksHandler.isPresent()) {
-                    IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
-                    if (0 < stackHandler.getSlots()) {
-                        ItemStack itemStack = stackHandler.getStackInSlot(0);
-                        ResourceLocation texture = AetherMixinHooks.getCapeTexture(itemStack);
-                        if (texture != null)
-                            return texture;
-                    }
-                }
+
+            Player player = Minecraft.getInstance().player;
+            SlotEntryReference result = EquipmentUtil.getCape(armorStand);
+            if (result != null && AetherMixinHooks.isCapeVisible(player)) {
+                ResourceLocation texture = AetherMixinHooks.getCapeTexture(result.stack());
+                if (texture != null)
+                    return texture;
             }
+
+
+//            String identifier = CapeItem.getIdentifierStatic();
+//            Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
+//            if (lazyHandler.isPresent()) {
+//                ICuriosItemHandler handler = lazyHandler.get();
+//                Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
+//                if (stacksHandler.isPresent()) {
+//                    IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
+//                    if (0 < stackHandler.getSlots()) {
+//                        ItemStack itemStack = stackHandler.getStackInSlot(0);
+//                        ResourceLocation texture = AetherMixinHooks.getCapeTexture(itemStack);
+//                        if (texture != null)
+//                            return texture;
+//                    }
+//                }
+//            }
         }
         return original;
     }

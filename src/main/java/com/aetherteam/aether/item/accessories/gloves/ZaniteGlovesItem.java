@@ -16,12 +16,12 @@ public class ZaniteGlovesItem extends GlovesItem {
         super(AetherArmorMaterials.ZANITE, punchDamage, "zanite_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_ZANITE, properties);
     }
 
-    @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
-        Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
-        attributes.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", calculateIncrease(stack), AttributeModifier.Operation.ADDITION));
-        return attributes;
-    }
+//    @Override
+//    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
+//        Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
+//        attributes.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", calculateIncrease(stack), AttributeModifier.Operation.ADDITION));
+//        return attributes;
+//    }
 
     /**
      * If the current durability is greater than 3/4 the max durability, the damage will be 0.25.<br><br>

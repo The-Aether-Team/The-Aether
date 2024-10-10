@@ -36,7 +36,7 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
     }
 
     public ZephyrSnowball(Level level, LivingEntity shooter, double accelX, double accelY, double accelZ) {
-        super(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), shooter, accelX, accelY, accelZ, level);
+        super(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), shooter, new Vec3(accelX, accelY, accelZ), level);
         this.setNoGravity(true);
     }
 
@@ -76,7 +76,7 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
                 f = 0.8F;
             }
 
-            this.setDeltaMovement(vec3.add(this.xPower, this.yPower, this.zPower).scale(f));
+            this.setDeltaMovement(vec3.add(this.accelerationPower, this.accelerationPower, this.accelerationPower).scale(f));
             this.level().addParticle(this.getTrailParticle(), d0, d1 + 0.5, d2, 0.0, 0.0, 0.0);
             this.setPos(d0, d1, d2);
         } else {
@@ -109,7 +109,7 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
                 entity.setDeltaMovement(entity.getDeltaMovement().x() + (this.getDeltaMovement().x() * 1.5), entity.getDeltaMovement().y(), entity.getDeltaMovement().z() + (this.getDeltaMovement().z() * 1.5));
                 if (livingEntity instanceof ServerPlayer player) {
                     if (!this.level().isClientSide()) { // Properly communicates the knockback to the client.
-                        PacketDistributor.sendToPlayer(new ZephyrSnowballHitPacket(livingEntity.getId(), this.getDeltaMovement().x(), this.getDeltaMovement().z()), player);
+                        PacketDistributor.sendToPlayer(player, new ZephyrSnowballHitPacket(livingEntity.getId(), this.getDeltaMovement().x(), this.getDeltaMovement().z()));
                     }
                 }
             }

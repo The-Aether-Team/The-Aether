@@ -14,8 +14,8 @@ public class ZaniteSwordItem extends SwordItem implements ZaniteWeapon {
         super(AetherItemTiers.ZANITE, new Item.Properties().attributes(SwordItem.createAttributes(AetherItemTiers.ZANITE, 3.0F, -2.4F)));
     }
 
-    @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-        return this.increaseDamage(super.getAttributeModifiers(slot, stack), stack, slot);
-    }
+//    @Override
+//    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+//        return this.increaseDamage(super.getAttributeModifiers(slot, stack), stack, slot);
+//    }
 }

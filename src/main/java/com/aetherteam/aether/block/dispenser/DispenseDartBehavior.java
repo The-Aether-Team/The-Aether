@@ -36,7 +36,7 @@ public class DispenseDartBehavior extends DefaultDispenseItemBehavior {
     public ItemStack execute(BlockSource blockSource, ItemStack stack) {
         Projectile projectile = this.getProjectile(blockSource.level(), DispenserBlock.getDispensePosition(blockSource), stack);
         if (projectile != null) {
-            AetherDispenseBehaviors.spawnProjectile(blockSource, projectile, this.getPower(), this.getUncertainty());
+            AetherDispenseBehaviors.spawnProjectile(blockSource, projectile, this.dispenseConfig.power(), this.getUncertainty());
             stack.shrink(1);
         }
         return stack;
