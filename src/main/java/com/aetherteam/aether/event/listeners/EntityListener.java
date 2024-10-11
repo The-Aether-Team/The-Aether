@@ -136,15 +136,15 @@ public class EntityListener {
     /**
      * @see EntityHooks#handleEntityCurioDrops(LivingEntity, Collection, boolean, int)
      */
-    public static void onCurioDrops(CurioDropsEvent event) {
-        LivingEntity entity = event.getEntity();
-        Collection<ItemEntity> itemDrops = event.getDrops();
-        Collection<ItemEntity> itemDropsCopy = new ArrayList<>(itemDrops);
-        boolean recentlyHit = event.isRecentlyHit();
-        int looting = event.getLootingLevel();
-        itemDrops.clear();
-        itemDrops.addAll(EntityHooks.handleEntityCurioDrops(entity, itemDropsCopy, recentlyHit, looting));
-    }
+//    public static void onCurioDrops(CurioDropsEvent event) { //todo
+//        LivingEntity entity = event.getEntity();
+//        Collection<ItemEntity> itemDrops = event.getDrops();
+//        Collection<ItemEntity> itemDropsCopy = new ArrayList<>(itemDrops);
+//        boolean recentlyHit = event.isRecentlyHit();
+//        int looting = event.getLootingLevel();
+//        itemDrops.clear();
+//        itemDrops.addAll(EntityHooks.handleEntityCurioDrops(entity, itemDropsCopy, recentlyHit, looting));
+//    }
 
     /**
      * @see EntityHooks#modifyExperience(LivingEntity, int)

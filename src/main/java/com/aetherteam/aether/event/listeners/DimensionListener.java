@@ -43,7 +43,7 @@ public class DimensionListener {
         bus.addListener(DimensionListener::onPlayerTraveling);
         bus.addListener(DimensionListener::onWorldLoad);
         bus.addListener(DimensionListener::onSleepFinish);
-        bus.addListener(DimensionListener::onTriedToSleep);
+//        bus.addListener(DimensionListener::onTriedToSleep);
         bus.addListener(DimensionListener::onAlterGround);
     }
 
@@ -131,15 +131,15 @@ public class DimensionListener {
         }
     }
 
-    /**
-     * @see DimensionHooks#isEternalDay(Player)
-     */
-    public static void onTriedToSleep(SleepingTimeCheckEvent event) {
-        Player player = event.getEntity();
-        if (DimensionHooks.isEternalDay(player)) {
-            event.setResult(Event.Result.DENY);
-        }
-    }
+//    /**
+//     * @see DimensionHooks#isEternalDay(Player)
+//     */
+//    public static void onTriedToSleep(SleepingTimeCheckEvent event) { //todo
+//        Player player = event.getEntity();
+//        if (DimensionHooks.isEternalDay(player)) {
+//            event.setResult(Event.Result.DENY);
+//        }
+//    }
 
     /**
      * Prevents Aether Dirt from being replaced by Podzol.

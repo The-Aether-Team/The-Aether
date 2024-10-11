@@ -339,7 +339,7 @@ public class EntityHooks {
             }
             if (!stack.isEmpty()) { // Equip behavior.
                 if (stack.is(AetherTags.Items.ACCESSORIES)) {
-                    String identifier = "";
+                    SlotTypeReference identifier = null;
                     if (stack.getItem() instanceof SlotIdentifierHolder slotIdentifierHolder)
                         identifier = slotIdentifierHolder.getIdentifier();
 
