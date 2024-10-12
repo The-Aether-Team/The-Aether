@@ -9,6 +9,10 @@ import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionIte
 import com.aetherteam.aether.mixin.mixins.client.accessor.ItemInHandRendererAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import io.wispforest.accessories.api.AccessoriesCapability;
+import io.wispforest.accessories.api.AccessoriesContainer;
+import io.wispforest.accessories.api.client.AccessoriesRendererRegistry;
+import io.wispforest.accessories.api.client.AccessoryRenderer;
 import io.wispforest.accessories.api.client.SimpleAccessoryRenderer;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
@@ -42,19 +46,15 @@ public class HandRenderHooks {
         if (player != null) {
             if (!player.getData(AetherDataAttachments.AETHER_PLAYER).isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
                 EquipmentUtil.findFirstAccessory(player, (item) -> item.getItem() instanceof GlovesItem).ifPresent((slotResult) -> {
-                    String identifier = slotResult.slotContext().identifier();
-                    int id = slotResult.slotContext().index();
                     ItemStack itemStack = slotResult.stack();
-                    CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.getStacksHandler(identifier)).ifPresent(stacksHandler -> {
-                        if (stacksHandler.getRenders().get(id)) { // Check if Gloves are visible.
-                            CuriosRendererRegistry.getRenderer(itemStack.getItem()).ifPresent((renderer) -> {
-                                if (renderer instanceof GlovesRenderer glovesRenderer) {
-                                    ItemStack heldItem = hand == InteractionHand.MAIN_HAND ? ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getMainHandItem() : ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getOffHandItem();
-                                    renderArmWithItem(itemInHandRenderer, glovesRenderer, itemStack, player, heldItem, hand, pitch, swingProgress, equippedProgress, poseStack, buffer, packedLight, HandRenderType.GLOVES);
-                                }
-                            });
+                    AccessoriesCapability accessories = AccessoriesCapability.get(player);
+                    if (accessories != null) {
+                        AccessoryRenderer renderer = AccessoriesRendererRegistry.getRender(itemStack);
+                        if (renderer instanceof GlovesRenderer glovesRenderer) {
+                            ItemStack heldItem = hand == InteractionHand.MAIN_HAND ? ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getMainHandItem() : ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getOffHandItem();
+                            renderArmWithItem(itemInHandRenderer, glovesRenderer, itemStack, player, heldItem, hand, pitch, swingProgress, equippedProgress, poseStack, buffer, packedLight, HandRenderType.GLOVES);
                         }
-                    });
+                    }
                 });
             }
         }
@@ -78,19 +78,15 @@ public class HandRenderHooks {
         if (player != null) {
             if (!player.getData(AetherDataAttachments.AETHER_PLAYER).isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
                 EquipmentUtil.findFirstAccessory(player, (item) -> item.getItem() instanceof ShieldOfRepulsionItem).ifPresent((slotResult) -> {
-                    String identifier = slotResult.slotContext().identifier();
-                    int id = slotResult.slotContext().index();
                     ItemStack itemStack = slotResult.stack();
-                    CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.getStacksHandler(identifier)).ifPresent(stacksHandler -> {
-                        if (stacksHandler.getRenders().get(id)) { // Check if Shield of Repulsion is visible.
-                            CuriosRendererRegistry.getRenderer(itemStack.getItem()).ifPresent((renderer) -> {
-                                if (renderer instanceof ShieldOfRepulsionRenderer shieldRenderer) {
-                                    ItemStack heldItem = hand == InteractionHand.MAIN_HAND ? ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getMainHandItem() : ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getOffHandItem();
-                                    renderArmWithItem(itemInHandRenderer, shieldRenderer, itemStack, player, heldItem, hand, pitch, swingProgress, equippedProgress, poseStack, buffer, packedLight, HandRenderType.SHIELD_OF_REPULSION);
-                                }
-                            });
+                    AccessoriesCapability accessories = AccessoriesCapability.get(player);
+                    if (accessories != null) {
+                        AccessoryRenderer renderer = AccessoriesRendererRegistry.getRender(itemStack);
+                        if (renderer instanceof ShieldOfRepulsionRenderer shieldRenderer) {
+                            ItemStack heldItem = hand == InteractionHand.MAIN_HAND ? ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getMainHandItem() : ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getOffHandItem();
+                            renderArmWithItem(itemInHandRenderer, shieldRenderer, itemStack, player, heldItem, hand, pitch, swingProgress, equippedProgress, poseStack, buffer, packedLight, HandRenderType.SHIELD_OF_REPULSION);
                         }
-                    });
+                    }
                 });
             }
         }

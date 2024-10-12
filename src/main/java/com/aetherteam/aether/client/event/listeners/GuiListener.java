@@ -3,7 +3,7 @@ package com.aetherteam.aether.client.event.listeners;
 import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.inventory.AccessoryButton;
-import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
+//import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.layouts.GridLayout;
@@ -37,18 +37,18 @@ public class GuiListener {
      */
     public static void onGuiInitialize(ScreenEvent.Init.Post event) {
         Screen screen = event.getScreen();
-        if (GuiHooks.isAccessoryButtonEnabled()) {
-            Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
-            AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButton(screen, offsets);
-            if (inventoryAccessoryButton != null) {
-                event.addListener(inventoryAccessoryButton);
-            }
-        } else {
-            GridLayout layout = GuiHooks.setupPerksButtons(screen);
-            if (layout != null) {
-                layout.visitWidgets(event::addListener);
-            }
-        }
+//        if (GuiHooks.isAccessoryButtonEnabled()) {
+//            Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
+//            AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButton(screen, offsets);
+//            if (inventoryAccessoryButton != null) {
+//                event.addListener(inventoryAccessoryButton);
+//            }
+//        } else {
+//            GridLayout layout = GuiHooks.setupPerksButtons(screen);
+//            if (layout != null) {
+//                layout.visitWidgets(event::addListener);
+//            }
+//        }
     }
 
     /**

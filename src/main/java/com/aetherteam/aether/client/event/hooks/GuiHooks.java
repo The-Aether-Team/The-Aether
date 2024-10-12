@@ -5,12 +5,12 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.client.gui.component.inventory.AccessoryButton;
 import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
-import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
+//import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
-import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
+//import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
@@ -72,11 +72,11 @@ public class GuiHooks {
      */
     private static boolean areAccessoryTagsFilled() {
         boolean flag = true;
-        for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
-            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", string))).spliterator().estimateSize() == 0) {
-                flag = false;
-            }
-        }
+//        for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
+//            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", string))).spliterator().estimateSize() == 0) {
+//                flag = false;
+//            }
+//        }
         return flag;
     }
 
@@ -90,10 +90,10 @@ public class GuiHooks {
      */
     @Nullable
     public static AccessoryButton setupAccessoryButton(Screen screen, Tuple<Integer, Integer> offsets) {
-        AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen);
-        if (containerScreen != null) {
-            return new AccessoryButton(containerScreen, containerScreen.getGuiLeft() + offsets.getA(), containerScreen.getGuiTop() + offsets.getB(), AccessoriesScreen.ACCESSORIES_BUTTON);
-        }
+//        AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen);
+//        if (containerScreen != null) {
+//            return new AccessoryButton(containerScreen, containerScreen.getGuiLeft() + offsets.getA(), containerScreen.getGuiTop() + offsets.getB(), AccessoriesScreen.ACCESSORIES_BUTTON);
+//        }
         return null;
     }
 
@@ -106,11 +106,11 @@ public class GuiHooks {
      */
     @Nullable
     private static AbstractContainerScreen<?> canCreateAccessoryButtonForScreen(Screen screen) {
-        if (screen instanceof InventoryScreen || screen instanceof io.wispforest.accessories.client.gui.AccessoriesScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) {
-            return (AbstractContainerScreen<?>) screen;
-        } else if (screen instanceof AccessoriesScreen) {
-            shouldAddButton = true;
-        }
+//        if (screen instanceof InventoryScreen || screen instanceof io.wispforest.accessories.client.gui.AccessoriesScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) {
+//            return (AbstractContainerScreen<?>) screen;
+//        } else if (screen instanceof AccessoriesScreen) {
+//            shouldAddButton = true;
+//        }
         return null;
     }
 
@@ -158,11 +158,11 @@ public class GuiHooks {
      * @param rowHelper  The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
      */
     private static void createSkinsButton(Screen screen, GridLayout gridLayout, GridLayout.RowHelper rowHelper) {
-        ImageButton skinsButton = new ImageButton(0, 0, 20, 20, AccessoriesScreen.SKINS_BUTTON,
-                (pressed) -> Minecraft.getInstance().setScreen(new MoaSkinsScreen(screen)),
-                Component.translatable("gui.aether.accessories.skins_button"));
-        skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
-        rowHelper.addChild(skinsButton, gridLayout.newCellSettings().paddingTop(58));
+//        ImageButton skinsButton = new ImageButton(0, 0, 20, 20, AccessoriesScreen.SKINS_BUTTON,
+//                (pressed) -> Minecraft.getInstance().setScreen(new MoaSkinsScreen(screen)),
+//                Component.translatable("gui.aether.accessories.skins_button"));
+//        skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
+//        rowHelper.addChild(skinsButton, gridLayout.newCellSettings().paddingTop(58));
     }
 
     /**
@@ -172,11 +172,11 @@ public class GuiHooks {
      * @param rowHelper The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
      */
     private static void createCustomizationsButton(Screen screen, GridLayout.RowHelper rowHelper) {
-        ImageButton customizationButton = new ImageButton(0, 0, 20, 20, AccessoriesScreen.CUSTOMIZATION_BUTTON,
-                (pressed) -> Minecraft.getInstance().setScreen(new AetherCustomizationsScreen(screen)),
-                Component.translatable("gui.aether.accessories.customization_button"));
-        customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
-        rowHelper.addChild(customizationButton);
+//        ImageButton customizationButton = new ImageButton(0, 0, 20, 20, AccessoriesScreen.CUSTOMIZATION_BUTTON,
+//                (pressed) -> Minecraft.getInstance().setScreen(new AetherCustomizationsScreen(screen)),
+//                Component.translatable("gui.aether.accessories.customization_button"));
+//        customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
+//        rowHelper.addChild(customizationButton);
     }
 
     /**
