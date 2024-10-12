@@ -1,1 +1,16 @@
-{}
+{
+  "advancement.aether.aether_sleep": "충분히 누릴 자격이 있는 휴식",
+  "advancement.aether.black_moa": "날자!",
+  "advancement.aether.blue_aercloud": "무한한 공간 저 너머로!",
+  "advancement.aether.hammer_loot": "신들의 힘",
+  "advancement.aether.ice_accessory.desc": "냉동고와 빙석을 사용하여 장신구를 얼리세요",
+  "advancement.aether.icestone": "얼음처럼 차갑게",
+  "advancement.aether.icestone.desc": "빙석을 얻으세요",
+  "aether.dungeon.bronze_dungeon": "청동 던전",
+  "aether.dungeon.gold_dungeon": "황금 던전",
+  "aether.loot": "에더 전리품",
+  "aether.pro_tips.line.aether.aether_day_length": "에더 세계의 하루는 지상보다 3배 더 깁니다.",
+  "rarity.aether.loot.name": "에더 전리품",
+  "structure.aether.bronze_dungeon": "청동 던전",
+  "structure.aether.gold_dungeon": "황금 던전"
+}
