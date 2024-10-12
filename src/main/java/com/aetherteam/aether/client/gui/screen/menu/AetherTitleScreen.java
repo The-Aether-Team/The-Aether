@@ -65,7 +65,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
             Tooltip tooltip = component != null ? Tooltip.create(component) : null;
             Button serverButton = this.addRenderableWidget(Button.builder(Component.translatable("gui.aether.menu.server"), (button) -> {
                 ServerData serverData = new ServerData("OATS", "oats.aether-mod.net", ServerData.Type.OTHER);
-                ConnectScreen.startConnecting(this, this.minecraft, ServerAddress.parseString(serverData.ip), serverData, false);
+                ConnectScreen.startConnecting(this, this.minecraft, ServerAddress.parseString(serverData.ip), serverData, false, null);
             }).bounds(this.width / 2 - 100, (this.height / 4 + 48) + 24 * 3, 200, 20).tooltip(tooltip).build());
             serverButton.active = flag;
             Predicate<AbstractWidget> predicate = (abstractWidget) -> (abstractWidget.getMessage().equals(Component.translatable("menu.multiplayer")) || abstractWidget.getMessage().equals(Component.translatable("menu.online")));

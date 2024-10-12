@@ -297,6 +297,16 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
     }
 
     @Override
+    protected NonNullList<ItemStack> getItems() {
+        return this.items;
+    }
+
+    @Override
+    protected void setItems(NonNullList<ItemStack> items) {
+        this.items = items;
+    }
+
+    @Override
     public void fillStackedContents(StackedContents helper) {
         for (ItemStack itemstack : this.items) {
             helper.accountStack(itemstack);

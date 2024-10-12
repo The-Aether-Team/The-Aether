@@ -34,7 +34,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.entity.player.SleepingTimeCheckEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.SleepFinishedTimeEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -53,26 +52,26 @@ public class DimensionHooks {
      * @param player The {@link Player}.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerLogin(PlayerEvent.PlayerLoggedInEvent)
      */
-    public static void startInAether(Player player) {
-        var aetherPlayer = player.getData(AetherDataAttachments.AETHER_PLAYER);
-        if (AetherConfig.SERVER.spawn_in_aether.get()) {
-            if (aetherPlayer.canSpawnInAether()) { // Checks if the player has been set to spawn in the Aether.
-                if (player instanceof ServerPlayer serverPlayer) {
-                    MinecraftServer server = serverPlayer.level().getServer();
-                    if (server != null) {
-                        ServerLevel aetherLevel = server.getLevel(AetherDimensions.AETHER_LEVEL);
-                        if (aetherLevel != null && serverPlayer.level().dimension() == Level.OVERWORLD) {
-                            if (player.changeDimension(aetherLevel, new AetherPortalForcer(aetherLevel, false, true)) != null) {
-                                serverPlayer.setRespawnPosition(AetherDimensions.AETHER_LEVEL, serverPlayer.blockPosition(), serverPlayer.getYRot(), true, false);
-                                aetherPlayer.setCanSpawnInAether(false); // Sets that the player has already spawned in the Aether.
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            aetherPlayer.setCanSpawnInAether(false);
-        }
+    public static void startInAether(Player player) { //todo
+//        var aetherPlayer = player.getData(AetherDataAttachments.AETHER_PLAYER);
+//        if (AetherConfig.SERVER.spawn_in_aether.get()) {
+//            if (aetherPlayer.canSpawnInAether()) { // Checks if the player has been set to spawn in the Aether.
+//                if (player instanceof ServerPlayer serverPlayer) {
+//                    MinecraftServer server = serverPlayer.level().getServer();
+//                    if (server != null) {
+//                        ServerLevel aetherLevel = server.getLevel(AetherDimensions.AETHER_LEVEL);
+//                        if (aetherLevel != null && serverPlayer.level().dimension() == Level.OVERWORLD) {
+//                            if (player.changeDimension(aetherLevel, new AetherPortalForcer(aetherLevel, false, true)) != null) {
+//                                serverPlayer.setRespawnPosition(AetherDimensions.AETHER_LEVEL, serverPlayer.blockPosition(), serverPlayer.getYRot(), true, false);
+//                                aetherPlayer.setCanSpawnInAether(false); // Sets that the player has already spawned in the Aether.
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        } else {
+//            aetherPlayer.setCanSpawnInAether(false);
+//        }
     }
 
     /**

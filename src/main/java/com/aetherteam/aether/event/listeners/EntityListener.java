@@ -23,7 +23,6 @@ import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import top.theillusivec4.curios.api.event.CurioDropsEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,7 +41,7 @@ public class EntityListener {
         bus.addListener(EntityListener::onShieldBlock);
         bus.addListener(EntityListener::onLightningStrike);
         bus.addListener(EntityListener::onPlayerDrops);
-        bus.addListener(EntityListener::onCurioDrops);
+//        bus.addListener(EntityListener::onCurioDrops);
         bus.addListener(EntityListener::onDropExperience);
         bus.addListener(EntityListener::onEffectApply);
         bus.addListener(EntityListener::onEntitySplit);

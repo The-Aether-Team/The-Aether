@@ -87,12 +87,12 @@ public class WorldPreviewHooks {
     public static void angleCamera() {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-        if (WorldDisplayHelper.isActive() && player != null) {
-            float f = (float) (minecraft.getDeltaFrameTime() * minecraft.options.panoramaSpeed().get()); // Ensures the rotation speed isn't tied to game tick speed
-            float spin = wrapDegrees(player.getViewYRot(minecraft.getDeltaFrameTime()) + f * 0.2F);
-            player.setYRot(spin);
-            player.setXRot(0);
-        }
+//        if (WorldDisplayHelper.isActive() && player != null) { //todo
+//            float f = (float) (minecraft.getDeltaFrameTime() * minecraft.options.panoramaSpeed().get()); // Ensures the rotation speed isn't tied to game tick speed
+//            float spin = wrapDegrees(player.getViewYRot(minecraft.getDeltaFrameTime()) + f * 0.2F);
+//            player.setYRot(spin);
+//            player.setXRot(0);
+//        }
     }
 
     /**

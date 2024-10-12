@@ -26,6 +26,7 @@ import com.aetherteam.aether.mixin.AetherMixinHooks;
 import io.wispforest.accessories.api.AccessoriesCapability;
 import io.wispforest.accessories.api.AccessoriesContainer;
 import io.wispforest.accessories.api.slot.SlotEntryReference;
+import io.wispforest.accessories.api.slot.SlotReferenceImpl;
 import io.wispforest.accessories.api.slot.SlotTypeReference;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Direction;
@@ -50,6 +51,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -343,38 +345,32 @@ public class EntityHooks {
                     if (stack.getItem() instanceof SlotIdentifierHolder slotIdentifierHolder)
                         identifier = slotIdentifierHolder.getIdentifier();
 
-                    Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
-                    if (lazyHandler.isPresent()) {
-                        ICuriosItemHandler handler = lazyHandler.get();
-                        Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
-                        if (stacksHandler.isPresent()) {
-                            IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
-                            if (0 < stackHandler.getSlots()) {
-                                ItemStack itemStack = stackHandler.getStackInSlot(0);
-                                if (stack.getItem() instanceof AccessoryItem accessoryItem) {
-                                    SlotContext slotContext = new SlotContext(identifier, armorStand, 0, true, true);
-                                    if (accessoryItem.canEquip(slotContext, stack)) {
-                                        stackHandler.setStackInSlot(0, stack.copy());
-                                        if (accessoryItem instanceof GlovesItem glovesItem) {
-                                            armorStand.level().playSound(null, armorStand.blockPosition(), glovesItem.getEquipSound(slotContext, stack).soundEvent(), armorStand.getSoundSource(), 1, 1);
-                                        } else if (accessoryItem instanceof PendantItem pendantItem) {
-                                            armorStand.level().playSound(null, armorStand.blockPosition(), pendantItem.getEquipSound(slotContext, stack).soundEvent(), armorStand.getSoundSource(), 1, 1);
-                                        } else {
-                                            armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, armorStand.getSoundSource(), 1, 1);
-                                        }
-                                        if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
-                                            armorStand.setShowArms(true);
-                                        }
-                                        if (!player.isCreative()) {
-                                            int count = stack.getCount();
-                                            stack.shrink(count);
-                                        }
-                                        if (!itemStack.isEmpty()) {
-                                            player.setItemInHand(hand, itemStack);
-                                        }
-                                        return Optional.of(InteractionResult.SUCCESS);
-                                    }
+                    AccessoriesCapability accessories = AccessoriesCapability.get(armorStand);
+                    if (accessories != null) {
+                        AccessoriesContainer accessoriesContainer = accessories.getContainer(identifier);
+                        if (accessoriesContainer != null) {
+                            ItemStack itemStack = accessoriesContainer.getAccessories().getItem(0);
+                            if (stack.getItem() instanceof AccessoryItem accessoryItem) {
+                                SlotReferenceImpl slotContext = new SlotReferenceImpl(armorStand, identifier.slotName(), 0);
+                                accessoriesContainer.getAccessories().setItem(0, stack.copy());
+                                if (accessoryItem instanceof GlovesItem glovesItem) {
+                                    armorStand.level().playSound(null, armorStand.blockPosition(), glovesItem.getEquipSound(stack, slotContext).event().value(), armorStand.getSoundSource(), 1, 1);
+                                } else if (accessoryItem instanceof PendantItem pendantItem) {
+                                    armorStand.level().playSound(null, armorStand.blockPosition(), pendantItem.getEquipSound(stack, slotContext).event().value(), armorStand.getSoundSource(), 1, 1);
+                                } else {
+                                    armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC.value(), armorStand.getSoundSource(), 1, 1);
                                 }
+                                if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
+                                    armorStand.setShowArms(true);
+                                }
+                                if (!player.isCreative()) {
+                                    int count = stack.getCount();
+                                    stack.shrink(count);
+                                }
+                                if (!itemStack.isEmpty()) {
+                                    player.setItemInHand(hand, itemStack);
+                                }
+                                return Optional.of(InteractionResult.SUCCESS);
                             }
                         }
                     }
@@ -382,19 +378,15 @@ public class EntityHooks {
             } else { // Unequip behavior.
                 SlotTypeReference identifier = slotToUnequip(armorStand, pos);
                 if (identifier != null) {
-                    Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
-                    if (lazyHandler.isPresent()) {
-                        ICuriosItemHandler handler = lazyHandler.get();
-                        Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
-                        if (stacksHandler.isPresent()) {
-                            IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
-                            if (0 < stackHandler.getSlots()) {
-                                ItemStack itemStack = stackHandler.getStackInSlot(0);
-                                if (!itemStack.isEmpty()) {
-                                    player.setItemInHand(hand, itemStack);
-                                    stackHandler.setStackInSlot(0, ItemStack.EMPTY);
-                                    return Optional.of(InteractionResult.SUCCESS);
-                                }
+                    AccessoriesCapability accessories = AccessoriesCapability.get(armorStand);
+                    if (accessories != null) {
+                        AccessoriesContainer accessoriesContainer = accessories.getContainer(identifier);
+                        if (accessoriesContainer != null) {
+                            ItemStack itemStack = accessoriesContainer.getAccessories().getItem(0);
+                            if (!itemStack.isEmpty()) {
+                                player.setItemInHand(hand, itemStack);
+                                accessoriesContainer.getAccessories().setItem(0, ItemStack.EMPTY);
+                                return Optional.of(InteractionResult.SUCCESS);
                             }
                         }
                     }
@@ -545,8 +537,8 @@ public class EntityHooks {
      */
     public static Collection<ItemEntity> handleEntityCurioDrops(LivingEntity entity, Collection<ItemEntity> itemDrops, boolean recentlyHit, int looting) {
         if (entity instanceof Mob mob && mob.hasData(AetherDataAttachments.MOB_ACCESSORY)) {
-            String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
-            for (String identifier : allSlots) {
+            SlotTypeReference[] allSlots = { AetherAccessorySlots.getGlovesSlotType(), AetherAccessorySlots.getPendantSlotType() };
+            for (SlotTypeReference identifier : allSlots) {
                 List<ItemStack> itemStacks = itemDrops.stream().map(ItemEntity::getItem).filter((stack) -> AetherMixinHooks.getIdentifierForItem(mob, stack).equals(identifier)).toList();
                 if (!itemStacks.isEmpty()) {
                     ItemStack itemStack = itemStacks.get(0);
@@ -555,7 +547,7 @@ public class EntityHooks {
                     if (!itemStack.isEmpty()) {
                         itemDrops.removeIf((itemEntity) -> ItemStack.isSameItemSameComponents(itemEntity.getItem(), itemStack));
                     }
-                    if (!itemStack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemStack) && recentlyHit && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f) {
+                    if (!itemStack.isEmpty() && itemStack.getEnchantmentLevel(entity.level().holderOrThrow(Enchantments.VANISHING_CURSE)) == 0 && recentlyHit && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f) {
                         if (!flag && itemStack.isDamageableItem()) {
                             itemStack.setDamageValue(itemStack.getMaxDamage() - mob.getRandom().nextInt(1 + mob.getRandom().nextInt(Math.max(itemStack.getMaxDamage() - 3, 1))));
                         }
@@ -580,15 +572,14 @@ public class EntityHooks {
      */
     public static int modifyExperience(LivingEntity entity, int experience) {
         if (entity instanceof Mob mob && mob.hasData(AetherDataAttachments.MOB_ACCESSORY)) {
-            Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(mob);
-            if (lazyHandler.isPresent()) {
-                ICuriosItemHandler handler = lazyHandler.get();
+            AccessoriesCapability accessories = AccessoriesCapability.get(entity);
+            if (accessories != null) {
                 if (experience > 0) {
-                    String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
-                    for (String identifier : allSlots) {
-                        Optional<SlotEntryReference> optionalSlotResult = handler.findCurio(identifier, 0);
-                        if (optionalSlotResult.isPresent()) {
-                            ItemStack stack = optionalSlotResult.get().stack();
+                    SlotTypeReference[] allSlots = { AetherAccessorySlots.getGlovesSlotType(), AetherAccessorySlots.getPendantSlotType() };
+                    for (SlotTypeReference identifier : allSlots) {
+                        AccessoriesContainer accessoriesContainer = accessories.getContainer(identifier);
+                        if (accessoriesContainer != null) {
+                            ItemStack stack = accessoriesContainer.getAccessories().getItem(0);
                             if (!stack.isEmpty() && mob.getData(AetherDataAttachments.MOB_ACCESSORY).getEquipmentDropChance(identifier) <= 1.0F) {
                                 experience += 1 + mob.getRandom().nextInt(3);
                             }

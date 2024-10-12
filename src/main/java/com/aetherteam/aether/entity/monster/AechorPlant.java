@@ -385,12 +385,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     public EntityDimensions getDefaultDimensions(Pose pose) {
         float width = 0.75F + this.getSize() * 0.125F;
         float height = 0.5F + this.getSize() * 0.075F;
-        return EntityDimensions.fixed(width, height);
-    }
-
-    @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height / 1.15F;
+        return EntityDimensions.fixed(width, height).withEyeHeight(height / 1.15F);
     }
 
     @Override

@@ -64,7 +64,7 @@ public class WorldDisplayHelper {
         if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId())) {
             setActive();
             minecraft.forceSetScreen(new GenericMessageScreen(Component.translatable("selectWorld.data_read")));
-            minecraft.createWorldOpenFlows().checkForBackupAndLoad(summary.getLevelId(), () -> {
+            minecraft.createWorldOpenFlows().openWorld(summary.getLevelId(), () -> {
             });
         } else {
             resetActive();
