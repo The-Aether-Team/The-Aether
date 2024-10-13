@@ -38,6 +38,7 @@ import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.item.combat.AetherArmorMaterials;
 import com.aetherteam.aether.item.combat.loot.FlamingSwordItem;
 import com.aetherteam.aether.item.combat.loot.HolySwordItem;
 import com.aetherteam.aether.item.combat.loot.PigSlayerItem;
@@ -132,6 +133,7 @@ public class Aether {
                 AetherBlockEntityTypes.BLOCK_ENTITY_TYPES,
                 AetherMenuTypes.MENU_TYPES,
                 AetherEffects.EFFECTS,
+                AetherArmorMaterials.ARMOR_MATERIALS,
                 AetherParticleTypes.PARTICLES,
                 AetherFeatures.FEATURES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,

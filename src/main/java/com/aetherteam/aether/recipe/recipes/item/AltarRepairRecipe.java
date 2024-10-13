@@ -65,7 +65,7 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
 
         @Override
         public StreamCodec<RegistryFriendlyByteBuf, AltarRepairRecipe> streamCodec() {
-            return null;
+            return StreamCodec.of(this::toNetwork, this::fromNetwork);
         }
 
         public AltarRepairRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {

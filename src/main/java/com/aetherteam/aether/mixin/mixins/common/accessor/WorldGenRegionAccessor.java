@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(WorldGenRegion.class)
 public interface WorldGenRegionAccessor {
-    @Accessor("structureManager")
-    StructureManager aether$getStructureManager();
+//    @Accessor("structureManager")
+//    StructureManager aether$getStructureManager();
 }
 

@@ -27,10 +27,10 @@ public class WorldOpenFlowsMixin {
      * @return The new {@link Boolean} value.
      * @see WorldDisplayHelper#isActive()
      */
-    @ModifyVariable(method = "loadLevel(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lcom/mojang/serialization/Dynamic;ZZLjava/lang/Runnable;Z)V", at = @At("HEAD"), ordinal = 2, argsOnly = true, remap = false)
-    private boolean confirmExperimentalWarning(boolean confirmExperimentalWarning) {
-        return WorldDisplayHelper.isActive() || confirmExperimentalWarning;
-    }
+//    @ModifyVariable(method = "loadLevel(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lcom/mojang/serialization/Dynamic;ZZLjava/lang/Runnable;Z)V", at = @At("HEAD"), ordinal = 2, argsOnly = true, remap = false)
+//    private boolean confirmExperimentalWarning(boolean confirmExperimentalWarning) {
+//        return WorldDisplayHelper.isActive() || confirmExperimentalWarning;
+//    } //todo
 
     /**
      * Used by the world preview system.<br>
@@ -41,10 +41,10 @@ public class WorldOpenFlowsMixin {
      * @see WorldDisplayHelper#sameSummaries(LevelSummary)
      * @see WorldDisplayHelper#stopLevel(Screen)
      */
-    @Inject(method = "loadLevel(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lcom/mojang/serialization/Dynamic;ZZLjava/lang/Runnable;Z)V", at = @At("HEAD"))
-    private void closeActiveWorld(LevelStorageSource.LevelStorageAccess access, Dynamic<?> dynamic, boolean safeMode, boolean checkForBackup, Runnable runnable, boolean confirmExperimentalWarning, CallbackInfo ci) {
-        if (WorldDisplayHelper.isActive() && !WorldDisplayHelper.sameSummaries(access.getSummary(dynamic))) {
-            WorldDisplayHelper.stopLevel(new GenericMessageScreen(Component.literal("")));
-        }
-    }
+//    @Inject(method = "loadLevel(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lcom/mojang/serialization/Dynamic;ZZLjava/lang/Runnable;Z)V", at = @At("HEAD"))
+//    private void closeActiveWorld(LevelStorageSource.LevelStorageAccess access, Dynamic<?> dynamic, boolean safeMode, boolean checkForBackup, Runnable runnable, boolean confirmExperimentalWarning, CallbackInfo ci) {
+//        if (WorldDisplayHelper.isActive() && !WorldDisplayHelper.sameSummaries(access.getSummary(dynamic))) {
+//            WorldDisplayHelper.stopLevel(new GenericMessageScreen(Component.literal("")));
+//        }
+//    } //todo
 }
