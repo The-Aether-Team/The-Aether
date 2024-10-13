@@ -15,8 +15,8 @@ prioritizeChunkUpdates:0
 fullscreen:false
 gamma:0.5
 graphicsMode:1
-guiScale:0
-maxFps:120
+guiScale:2
+maxFps:260
 mipmapLevels:4
 narrator:0
 particles:0
@@ -71,7 +71,7 @@ notificationDisplayTime:1.0
 useNativeTransport:true
 mainHand:"right"
 attackIndicator:1
-tutorialStep:movement
+tutorialStep:none
 mouseWheelSensitivity:1.0
 rawMouseInput:true
 glDebugVerbosity:1

@@ -379,7 +379,7 @@ public class BronzeDungeonBuilder {
     private Rotation getBossRoomRotation(BlockPos minPos, BlockPos maxPos) {
         StructureTemplate template = this.context.structureTemplateManager().getOrCreate(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze_dungeon/chest_room"));
         RandomSource random = this.context.random();
-        BoundingBox bossBox = new BoundingBox(minPos.getX(), minPos.getY() + 1, minPos.getZ(), maxPos.getX(), maxPos.getY(), maxPos.getZ());
+        BoundingBox bossBox = new BoundingBox(minPos.getX(), minPos.getY(), minPos.getZ(), maxPos.getX(), maxPos.getY(), maxPos.getZ());
 
         for (Rotation rotation : Rotation.getShuffled(random)) {
             Direction direction = rotation.rotate(Direction.SOUTH);
