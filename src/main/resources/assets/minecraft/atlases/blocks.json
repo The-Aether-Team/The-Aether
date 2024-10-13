@@ -2,6 +2,11 @@
   "sources": [
     {
       "type": "directory",
+      "source": "slot",
+      "prefix": "slot/"
+    },
+    {
+      "type": "directory",
       "source": "gui/slots",
       "prefix": "gui/slots/"
     },

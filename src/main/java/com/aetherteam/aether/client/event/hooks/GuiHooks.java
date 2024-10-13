@@ -5,12 +5,12 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.client.gui.component.inventory.AccessoryButton;
 import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
-//import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
+import com.aetherteam.aether.client.gui.screen.inventory.AetherAccessoriesScreen;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
-//import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
+import com.aetherteam.aether.inventory.menu.AetherAccessoriesMenu;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
@@ -28,11 +28,7 @@ import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.BossEvent;
@@ -90,27 +86,27 @@ public class GuiHooks {
      */
     @Nullable
     public static AccessoryButton setupAccessoryButton(Screen screen, Tuple<Integer, Integer> offsets) {
-//        AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen); //todo
-//        if (containerScreen != null) {
-//            return new AccessoryButton(containerScreen, containerScreen.getGuiLeft() + offsets.getA(), containerScreen.getGuiTop() + offsets.getB(), AccessoriesScreen.ACCESSORIES_BUTTON);
-//        }
+        AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen); //todo
+        if (containerScreen != null) {
+            return new AccessoryButton(containerScreen, containerScreen.getGuiLeft() + offsets.getA(), containerScreen.getGuiTop() + offsets.getB(), AetherAccessoriesScreen.ACCESSORIES_BUTTON);
+        }
         return null;
     }
 
     /**
-     * Checks whether the screen is an inventory screen or if it's the {@link AccessoriesScreen} and a button can be added to it.
-     * If the screen is the {@link AccessoriesScreen}, then it sets the {@link AccessoryButton} should be rendered in it.
+     * Checks whether the screen is an inventory screen or if it's the {@link AetherAccessoriesScreen} and a button can be added to it.
+     * If the screen is the {@link AetherAccessoriesScreen}, then it sets the {@link AccessoryButton} should be rendered in it.
      *
      * @param screen The parent {@link Screen}.
      * @return The parent screen, cast to a {@link AbstractContainerScreen}.
      */
     @Nullable
     private static AbstractContainerScreen<?> canCreateAccessoryButtonForScreen(Screen screen) {
-//        if (screen instanceof InventoryScreen || screen instanceof io.wispforest.accessories.client.gui.AccessoriesScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) { //todo
-//            return (AbstractContainerScreen<?>) screen;
-//        } else if (screen instanceof AccessoriesScreen) {
-//            shouldAddButton = true;
-//        }
+        if (screen instanceof InventoryScreen || screen instanceof io.wispforest.accessories.client.gui.AccessoriesScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AetherAccessoriesScreen && shouldAddButton)) { //todo
+            return (AbstractContainerScreen<?>) screen;
+        } else if (screen instanceof AetherAccessoriesScreen) {
+            shouldAddButton = true;
+        }
         return null;
     }
 
@@ -158,11 +154,11 @@ public class GuiHooks {
      * @param rowHelper  The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
      */
     private static void createSkinsButton(Screen screen, GridLayout gridLayout, GridLayout.RowHelper rowHelper) {
-//        ImageButton skinsButton = new ImageButton(0, 0, 20, 20, AccessoriesScreen.SKINS_BUTTON,
-//                (pressed) -> Minecraft.getInstance().setScreen(new MoaSkinsScreen(screen)),
-//                Component.translatable("gui.aether.accessories.skins_button"));
-//        skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
-//        rowHelper.addChild(skinsButton, gridLayout.newCellSettings().paddingTop(58));
+        ImageButton skinsButton = new ImageButton(0, 0, 20, 20, AetherAccessoriesScreen.SKINS_BUTTON,
+                (pressed) -> Minecraft.getInstance().setScreen(new MoaSkinsScreen(screen)),
+                Component.translatable("gui.aether.accessories.skins_button"));
+        skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
+        rowHelper.addChild(skinsButton, gridLayout.newCellSettings().paddingTop(58));
     }
 
     /**
@@ -172,11 +168,11 @@ public class GuiHooks {
      * @param rowHelper The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
      */
     private static void createCustomizationsButton(Screen screen, GridLayout.RowHelper rowHelper) {
-//        ImageButton customizationButton = new ImageButton(0, 0, 20, 20, AccessoriesScreen.CUSTOMIZATION_BUTTON,
-//                (pressed) -> Minecraft.getInstance().setScreen(new AetherCustomizationsScreen(screen)),
-//                Component.translatable("gui.aether.accessories.customization_button"));
-//        customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
-//        rowHelper.addChild(customizationButton);
+        ImageButton customizationButton = new ImageButton(0, 0, 20, 20, AetherAccessoriesScreen.CUSTOMIZATION_BUTTON,
+                (pressed) -> Minecraft.getInstance().setScreen(new AetherCustomizationsScreen(screen)),
+                Component.translatable("gui.aether.accessories.customization_button"));
+        customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
+        rowHelper.addChild(customizationButton);
     }
 
     /**
@@ -269,7 +265,7 @@ public class GuiHooks {
     }
 
     /**
-     * Handles opening the {@link AccessoriesMenu} when clicking the {@link AetherKeys#OPEN_ACCESSORY_INVENTORY} keybind.
+     * Handles opening the {@link AetherAccessoriesMenu} when clicking the {@link AetherKeys#OPEN_ACCESSORY_INVENTORY} keybind.
      *
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onKeyPress(InputEvent.Key)
      */

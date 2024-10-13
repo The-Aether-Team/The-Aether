@@ -5,7 +5,6 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.functions.DoubleDrops;
 import com.aetherteam.aether.loot.functions.SpawnTNT;
 import com.aetherteam.aether.loot.functions.SpawnXP;
-import com.aetherteam.aether.mixin.mixins.common.accessor.BlockLootAccessor;
 import com.aetherteam.nitrogen.data.providers.NitrogenBlockLootSubProvider;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderLookup;

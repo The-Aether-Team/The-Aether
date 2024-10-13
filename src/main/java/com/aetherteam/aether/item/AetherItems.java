@@ -299,8 +299,42 @@ public class AetherItems {
     public static final DeferredItem<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new DeferredSpawnEggItem(AetherEntityTypes.ZEPHYR, 0xDFDFDF, 0x99CFE8, new Item.Properties()));
 
     public static void registerAccessories() {
+        AccessoriesAPI.registerAccessory(AetherItems.IRON_RING.get(), (Accessory) AetherItems.IRON_RING.get());
+        AccessoriesAPI.registerAccessory(AetherItems.GOLDEN_RING.get(), (Accessory) AetherItems.GOLDEN_RING.get());
+        AccessoriesAPI.registerAccessory(AetherItems.ZANITE_RING.get(), (Accessory) AetherItems.ZANITE_RING.get());
+        AccessoriesAPI.registerAccessory(AetherItems.ICE_RING.get(), (Accessory) AetherItems.ICE_RING.get());
+
+        AccessoriesAPI.registerAccessory(AetherItems.IRON_PENDANT.get(), (Accessory) AetherItems.IRON_PENDANT.get());
+        AccessoriesAPI.registerAccessory(AetherItems.GOLDEN_PENDANT.get(), (Accessory) AetherItems.GOLDEN_PENDANT.get());
+        AccessoriesAPI.registerAccessory(AetherItems.ZANITE_PENDANT.get(), (Accessory) AetherItems.ZANITE_PENDANT.get());
+        AccessoriesAPI.registerAccessory(AetherItems.ICE_PENDANT.get(), (Accessory) AetherItems.ICE_PENDANT.get());
+
+        AccessoriesAPI.registerAccessory(AetherItems.LEATHER_GLOVES.get(), (Accessory) AetherItems.LEATHER_GLOVES.get());
+        AccessoriesAPI.registerAccessory(AetherItems.CHAINMAIL_GLOVES.get(), (Accessory) AetherItems.CHAINMAIL_GLOVES.get());
+        AccessoriesAPI.registerAccessory(AetherItems.IRON_GLOVES.get(), (Accessory) AetherItems.IRON_GLOVES.get());
+        AccessoriesAPI.registerAccessory(AetherItems.GOLDEN_GLOVES.get(), (Accessory) AetherItems.GOLDEN_GLOVES.get());
+        AccessoriesAPI.registerAccessory(AetherItems.DIAMOND_GLOVES.get(), (Accessory) AetherItems.DIAMOND_GLOVES.get());
+        AccessoriesAPI.registerAccessory(AetherItems.NETHERITE_GLOVES.get(), (Accessory) AetherItems.NETHERITE_GLOVES.get());
         AccessoriesAPI.registerAccessory(AetherItems.ZANITE_GLOVES.get(), (Accessory) AetherItems.ZANITE_GLOVES.get());
         AccessoriesAPI.registerAccessory(AetherItems.GRAVITITE_GLOVES.get(), (Accessory) AetherItems.GRAVITITE_GLOVES.get());
+        AccessoriesAPI.registerAccessory(AetherItems.VALKYRIE_GLOVES.get(), (Accessory) AetherItems.VALKYRIE_GLOVES.get());
+        AccessoriesAPI.registerAccessory(AetherItems.NEPTUNE_GLOVES.get(), (Accessory) AetherItems.NEPTUNE_GLOVES.get());
+        AccessoriesAPI.registerAccessory(AetherItems.PHOENIX_GLOVES.get(), (Accessory) AetherItems.PHOENIX_GLOVES.get());
+        AccessoriesAPI.registerAccessory(AetherItems.OBSIDIAN_GLOVES.get(), (Accessory) AetherItems.OBSIDIAN_GLOVES.get());
+
+        AccessoriesAPI.registerAccessory(AetherItems.RED_CAPE.get(), (Accessory) AetherItems.RED_CAPE.get());
+        AccessoriesAPI.registerAccessory(AetherItems.BLUE_CAPE.get(), (Accessory) AetherItems.BLUE_CAPE.get());
+        AccessoriesAPI.registerAccessory(AetherItems.YELLOW_CAPE.get(), (Accessory) AetherItems.YELLOW_CAPE.get());
+        AccessoriesAPI.registerAccessory(AetherItems.WHITE_CAPE.get(), (Accessory) AetherItems.WHITE_CAPE.get());
+        AccessoriesAPI.registerAccessory(AetherItems.AGILITY_CAPE.get(), (Accessory) AetherItems.AGILITY_CAPE.get());
+        AccessoriesAPI.registerAccessory(AetherItems.SWET_CAPE.get(), (Accessory) AetherItems.SWET_CAPE.get());
+        AccessoriesAPI.registerAccessory(AetherItems.INVISIBILITY_CLOAK.get(), (Accessory) AetherItems.INVISIBILITY_CLOAK.get());
+        AccessoriesAPI.registerAccessory(AetherItems.VALKYRIE_CAPE.get(), (Accessory) AetherItems.VALKYRIE_CAPE.get());
+
+        AccessoriesAPI.registerAccessory(AetherItems.GOLDEN_FEATHER.get(), (Accessory) AetherItems.GOLDEN_FEATHER.get());
+        AccessoriesAPI.registerAccessory(AetherItems.REGENERATION_STONE.get(), (Accessory) AetherItems.REGENERATION_STONE.get());
+        AccessoriesAPI.registerAccessory(AetherItems.IRON_BUBBLE.get(), (Accessory) AetherItems.IRON_BUBBLE.get());
+        AccessoriesAPI.registerAccessory(AetherItems.SHIELD_OF_REPULSION.get(), (Accessory) AetherItems.SHIELD_OF_REPULSION.get());
     }
 
     /**
