@@ -87,7 +87,7 @@ public class DimensionListener {
      * @see DimensionHooks#tickTime(Level)
      * @see DimensionHooks#checkEternalDayConfig(Level)
      */
-    public static void onWorldTick(LevelTickEvent event) {
+    public static void onWorldTick(LevelTickEvent.Post event) {
         Level level = event.getLevel();
         if (!level.isClientSide()) {
             DimensionHooks.tickTime(level);
@@ -107,7 +107,7 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#travelling(Player)
      */
-    public static void onPlayerTraveling(PlayerTickEvent event) {
+    public static void onPlayerTraveling(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
         DimensionHooks.travelling(player);
     }

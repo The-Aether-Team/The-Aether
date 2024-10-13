@@ -1,2 +1,2 @@
-// 1.20.4	2024-03-19T10:40:11.1046439	Tags for minecraft:fluid mod id aether
-c9ae54a7510073b17edf82f7591e14bdb2c51837 data/aether/tags/fluids/allowed_bucket_pickup.json
+// 1.21	2024-10-12T19:57:00.793751	Tags for minecraft:fluid mod id aether
+c9ae54a7510073b17edf82f7591e14bdb2c51837 data/aether/tags/fluid/allowed_bucket_pickup.json

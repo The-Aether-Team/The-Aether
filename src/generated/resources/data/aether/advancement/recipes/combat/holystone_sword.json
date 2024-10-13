@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_holystone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:holystone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:holystone_sword"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_holystone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:holystone_sword"
+    ]
+  }
+}

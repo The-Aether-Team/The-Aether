@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gravitite_ore": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:gravitite_ore"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:enchanted_gravitite_enchanting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gravitite_ore"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:enchanted_gravitite_enchanting"
+    ]
+  }
+}

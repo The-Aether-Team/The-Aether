@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "aether:chests/dungeon/silver/silver_dungeon_loot",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "aether:chests/dungeon/silver/silver_dungeon_disc",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "aether:chests/dungeon/silver/silver_dungeon_trash"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    }
+  ],
+  "random_sequence": "aether:chests/dungeon/silver/silver_dungeon"
+}

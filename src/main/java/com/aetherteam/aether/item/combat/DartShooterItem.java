@@ -12,6 +12,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
@@ -20,11 +21,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.event.EventHooks;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class DartShooterItem extends ProjectileWeaponItem implements Vanishable {
+public class DartShooterItem extends ProjectileWeaponItem { //implements Vanishable
     private final Supplier<? extends Item> dartType;
 
     public DartShooterItem(Supplier<? extends Item> dartType, Properties properties) {
@@ -81,7 +83,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
                 if (ammoItem.isEmpty()) {
                     ammoItem = new ItemStack(this.getDartType().get()); // Another failsafe to create a stack if somehow the ammoItem is empty at this stage of the code; under normal circumstances this seems to never get reached.
                 }
-                boolean creativeOrDartIsInfinite = player.getAbilities().instabuild || (ammoItem.getItem() instanceof DartItem dartItem && dartItem.isInfinite(stack));
+                boolean creativeOrDartIsInfinite = player.getAbilities().instabuild || (ammoItem.getItem() instanceof DartItem dartItem && dartItem.isInfinite(stack, level));
 
                 if (!level.isClientSide()) {
                     DartItem dartItem = (DartItem) (ammoItem.getItem() instanceof DartItem dart ? dart : this.getDartType().get());
@@ -98,7 +100,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
 
                         int punchModifier = stack.getEnchantmentLevel(level.holderOrThrow(Enchantments.PUNCH));
                         if (punchModifier > 0) {
-                            dart.setKnockback(punchModifier);
+//                            dart.setKnockback(punchModifier);
                         }
 
                         if (creativeOrDartIsInfinite || player.getAbilities().instabuild) {
@@ -155,6 +157,11 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
     @Override
     public int getDefaultProjectileRange() {
         return 15;
+    }
+
+    @Override
+    protected void shootProjectile(LivingEntity shooter, Projectile projectile, int index, float velocity, float inaccuracy, float angle, @Nullable LivingEntity target) {
+
     }
 
     @Override

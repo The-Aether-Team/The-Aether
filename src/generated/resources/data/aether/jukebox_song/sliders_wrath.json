@@ -1,0 +1,8 @@
+{
+  "comparator_output": 6,
+  "description": {
+    "translate": "jukebox_song.aether.sliders_wrath"
+  },
+  "length_in_seconds": 172.0,
+  "sound_event": "aether:item.music_disc.sliders_wrath"
+}

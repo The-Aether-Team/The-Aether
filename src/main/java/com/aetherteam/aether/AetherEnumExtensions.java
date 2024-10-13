@@ -23,7 +23,7 @@ public class AetherEnumExtensions {
         });
     }
 
-    public static Object enchantingoodIcon(int idx, Class<?> type) {
+    public static Object enchantingFoodIcon(int idx, Class<?> type) {
         return type.cast(switch (idx) {
             case 0 -> (Supplier<List<ItemStack>>) () -> List.of(new ItemStack(AetherItems.ENCHANTED_BERRY.get()));
             default -> throw new IllegalArgumentException("Unexpected parameter index: " + idx);

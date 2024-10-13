@@ -91,7 +91,7 @@
     }
   },
   "spawners": {
-    "aether_aerwhale": [
+    "aether:aether_aerwhale": [
       {
         "type": "aether:aerwhale",
         "maxCount": 1,
@@ -99,7 +99,7 @@
         "weight": 10
       }
     ],
-    "aether_darkness_monster": [
+    "aether:aether_darkness_monster": [
       {
         "type": "aether:cockatrice",
         "maxCount": 1,
@@ -107,7 +107,7 @@
         "weight": 8
       }
     ],
-    "aether_sky_monster": [
+    "aether:aether_sky_monster": [
       {
         "type": "aether:zephyr",
         "maxCount": 1,
@@ -115,7 +115,7 @@
         "weight": 20
       }
     ],
-    "aether_surface_monster": [
+    "aether:aether_surface_monster": [
       {
         "type": "aether:aechor_plant",
         "maxCount": 1,

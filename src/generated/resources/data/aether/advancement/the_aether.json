@@ -1,0 +1,31 @@
+{
+  "criteria": {
+    "the_aether": {
+      "conditions": {
+        "to": "aether:the_aether"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "aether:textures/block/dungeon/carved_stone.png",
+    "description": {
+      "translate": "advancement.aether.the_aether.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aether:aether_portal_frame"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancement.aether.the_aether"
+    }
+  },
+  "requirements": [
+    [
+      "the_aether"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

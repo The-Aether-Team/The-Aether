@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_hellfire_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:hellfire_stone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:hellfire_slab_from_hellfire_stone_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_hellfire_stone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:hellfire_slab_from_hellfire_stone_stonecutting"
+    ]
+  }
+}

@@ -3,9 +3,9 @@
     {
       "enum": "net/minecraft/world/item/Rarity",
       "name": "AETHER_LOOT",
-      "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
+      "constructor": "(ILjava/lang/String;Lnet/minecraft/ChatFormatting;)V",
       "parameters": {
-        "class": "com/aetherteam/aetherii/AetherEnumExtensions",
+        "class": "com/aetherteam/aether/AetherEnumExtensions",
         "field": "AETHER_LOOT_RARITY_PROXY"
       }
     },
@@ -50,12 +50,6 @@
       "name": "AETHER_AETHER_AERWHALE",
       "constructor": "(Ljava/lang/String;IZZI)V",
       "parameters": [ "aether:aether_aerwhale", 1, true, false, 128 ]
-    },
-    {
-      "enum": "net/minecraft/world/level/pathfinder/PathType",
-      "name": "AETHER_BOSS_DOORWAY",
-      "constructor": "(F)V",
-      "parameters": [ -1.0 ]
     },
     {
       "enum": "net/minecraft/client/RecipeBookCategories",

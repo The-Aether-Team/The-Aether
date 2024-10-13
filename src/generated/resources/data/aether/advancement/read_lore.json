@@ -1,0 +1,26 @@
+{
+  "parent": "aether:enter_aether",
+  "criteria": {
+    "lore_book_entry": {
+      "trigger": "aether:lore_entry"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.read_lore.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aether:book_of_lore"
+    },
+    "title": {
+      "translate": "advancement.aether.read_lore"
+    }
+  },
+  "requirements": [
+    [
+      "lore_book_entry"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

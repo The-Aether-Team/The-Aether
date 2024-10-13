@@ -1,0 +1,33 @@
+{
+  "parent": "aether:craft_altar",
+  "criteria": {
+    "icestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:icestone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.icestone.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aether:icestone"
+    },
+    "title": {
+      "translate": "advancement.aether.icestone"
+    }
+  },
+  "requirements": [
+    [
+      "icestone"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

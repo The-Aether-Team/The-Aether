@@ -2,6 +2,7 @@ package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.client.WorldDisplayHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.PanoramaRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,8 +20,8 @@ public class PanoramaRendererMixin {
      * @param ci        The {@link CallbackInfo} for the void method return.
      * @see WorldDisplayHelper#isActive()
      */
-    @Inject(at = @At(value = "HEAD"), method = "render(FF)V", cancellable = true)
-    public void render(float deltaTick, float alpha, CallbackInfo ci) {
+    @Inject(at = @At(value = "HEAD"), method = "render(Lnet/minecraft/client/gui/GuiGraphics;IIFF)V", cancellable = true)
+    public void render(GuiGraphics guiGraphics, int width, int height, float fade, float partialTick, CallbackInfo ci) {
         if (Minecraft.getInstance().level != null && WorldDisplayHelper.isActive()) {
             ci.cancel();
         }

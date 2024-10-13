@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:gold_ingot"
+    },
+    "S": {
+      "tag": "c:strings"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "S S",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "aether:golden_pendant"
+  }
+}

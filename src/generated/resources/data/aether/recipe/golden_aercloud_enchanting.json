@@ -1,0 +1,13 @@
+{
+  "type": "aether:enchanting",
+  "category": "enchanting_blocks",
+  "cookingtime": 1000,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "aether:cold_aercloud"
+  },
+  "result": {
+    "count": 1,
+    "id": "aether:golden_aercloud"
+  }
+}

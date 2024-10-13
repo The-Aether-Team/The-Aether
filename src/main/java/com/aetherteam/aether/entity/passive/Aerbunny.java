@@ -394,8 +394,8 @@ public class Aerbunny extends AetherAnimal {
      * @return The offset {@link Double} for an Aerbunny when riding another entity.
      */
     @Override
-    public float getMyRidingOffset(Entity entity) {
-        return 0.125F;
+    public Vec3 getPassengerRidingPosition(Entity entity) {
+        return super.getPassengerRidingPosition(entity).add(0.0F, 0.125F, 0.0F);
     }
 
     /**

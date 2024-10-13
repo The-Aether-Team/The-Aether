@@ -1,0 +1,78 @@
+{
+  "parent": "aether:gold_dungeon",
+  "criteria": {
+    "phoenix_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:phoenix_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "phoenix_chestplate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:phoenix_chestplate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "phoenix_gloves": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:phoenix_gloves"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "phoenix_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:phoenix_helmet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "phoenix_leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:phoenix_leggings"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.phoenix_armor.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "aether:phoenix_helmet"
+    },
+    "title": {
+      "translate": "advancement.aether.phoenix_armor"
+    }
+  },
+  "requirements": [
+    [
+      "phoenix_helmet",
+      "phoenix_chestplate",
+      "phoenix_leggings",
+      "phoenix_boots",
+      "phoenix_gloves"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

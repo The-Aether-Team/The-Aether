@@ -1,0 +1,38 @@
+{
+  "parent": "aether:enchanted_gravitite",
+  "criteria": {
+    "kill_slider": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether:slider"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.bronze_dungeon.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "aether:bronze_dungeon_key"
+    },
+    "title": {
+      "translate": "advancement.aether.bronze_dungeon"
+    }
+  },
+  "requirements": [
+    [
+      "kill_slider"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

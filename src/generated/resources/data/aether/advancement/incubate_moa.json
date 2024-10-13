@@ -1,0 +1,31 @@
+{
+  "parent": "aether:obtain_egg",
+  "criteria": {
+    "incubate_moa": {
+      "conditions": {
+        "item": {
+          "items": "#aether:moa_eggs"
+        }
+      },
+      "trigger": "aether:incubation_trigger"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.incubate_moa.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aether:incubator"
+    },
+    "title": {
+      "translate": "advancement.aether.incubate_moa"
+    }
+  },
+  "requirements": [
+    [
+      "incubate_moa"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -4,7 +4,10 @@ import com.aetherteam.aether.entity.projectile.dart.AbstractDart;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -52,6 +55,18 @@ public class DartItem extends Item {
         } else {
             return null;
         }
+    }
+
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.item.ArrowItem#isInfinite(ItemStack, ItemStack, Player)}.<br><br>
+     * Checks if the Dart item is allowed to be infinite, if the dart shooter item has the Infinity enchantment and the dart item is specifically DartItem and not a subclass.
+     *
+     * @param dartShooter The dart shooter {@link ItemStack}.
+     * @return Whether the dart item ammo is allowed to be infinite, as a {@link Boolean}.
+     */
+    public boolean isInfinite(ItemStack dartShooter, Level level) {
+        int enchant = dartShooter.getEnchantmentLevel(level.holderOrThrow(Enchantments.INFINITY));
+        return enchant > 0 && this.getClass() == DartItem.class;
     }
 
     /**

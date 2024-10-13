@@ -2,7 +2,10 @@ package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
+import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
+import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
+import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.inventory.menu.IncubatorMenu;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
@@ -14,6 +17,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -205,8 +209,27 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
                     tag = recipe.value().getTag().get();
                 }
                 Component customName = itemStack.has(DataComponents.CUSTOM_NAME) ? itemStack.getHoverName() : null;
-                Entity entity = entityType.spawn(serverLevel, tag, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
+                Entity entity = entityType.spawn(serverLevel, itemStack, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
                 if (entity != null) {
+                    if (entity instanceof Moa moa) {
+                        if (tag != null) { // Applies NBT when spawned from incubation. //todo
+                            if (tag.contains("IsBaby")) {
+                                moa.setBaby(tag.getBoolean("IsBaby"));
+                            }
+                            if (tag.contains("MoaType")) {
+                                ResourceKey<MoaType> moaTypeKey = AetherMoaTypes.getResourceKey(level.registryAccess(), tag.getString("MoaType"));
+                                if (moaTypeKey != null) {
+                                    moa.setMoaTypeByKey(moaTypeKey);
+                                }
+                            }
+                            if (tag.contains("Hungry")) {
+                                moa.setHungry(tag.getBoolean("Hungry"));
+                            }
+                            if (tag.contains("PlayerGrown")) {
+                                moa.setPlayerGrown(tag.getBoolean("PlayerGrown"));
+                            }
+                        }
+                    }
                     entity.setCustomName(customName);
                     if (this.player != null) {
                         AetherAdvancementTriggers.INCUBATION_TRIGGER.get().trigger(this.player, itemStack);

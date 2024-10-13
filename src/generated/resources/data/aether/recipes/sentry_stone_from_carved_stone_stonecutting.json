@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "aether:carved_stone"
-  },
-  "result": "aether:sentry_stone"
-}

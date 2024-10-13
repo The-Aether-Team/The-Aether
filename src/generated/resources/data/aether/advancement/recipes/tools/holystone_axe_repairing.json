@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_holystone_axe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:holystone_axe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:holystone_axe_repairing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_holystone_axe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:holystone_axe_repairing"
+    ]
+  }
+}

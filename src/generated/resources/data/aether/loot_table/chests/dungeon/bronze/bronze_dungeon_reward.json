@@ -1,0 +1,195 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "aether:chests/dungeon/bronze/bronze_dungeon_neptune"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "aether:chests/dungeon/bronze/bronze_dungeon_treasure"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "aether:chests/dungeon/bronze/bronze_dungeon_gummies"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_helmet",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_chestplate",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_leggings",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_boots",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_gloves",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_ring"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_pendant"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:saddle"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:shield_of_repulsion",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:cloud_staff",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:phoenix_bow",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:flaming_sword",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:agility_cape",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "aether:zanite_gemstone",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:golden_amber",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:valkyrie_lance"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:hammer_of_kingbdogz"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "aether:chests/dungeon/bronze/bronze_dungeon_neptune",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:sentry_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:sentry_stone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:carved_stone"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 5.0,
+        "min": 3.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:lightning_knife",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:golden_dart",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:arrow",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:sentry_stone"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 15.0,
+        "min": 4.0
+      }
+    }
+  ],
+  "random_sequence": "aether:chests/dungeon/bronze/bronze_dungeon_reward"
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "aether:gems/zanite"
+    },
+    "S": {
+      "tag": "c:strings"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "S S",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "aether:zanite_pendant"
+  }
+}

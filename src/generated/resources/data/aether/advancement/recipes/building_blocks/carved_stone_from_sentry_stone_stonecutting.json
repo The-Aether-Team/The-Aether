@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_sentry_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:sentry_stone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:carved_stone_from_sentry_stone_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_sentry_stone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:carved_stone_from_sentry_stone_stonecutting"
+    ]
+  }
+}

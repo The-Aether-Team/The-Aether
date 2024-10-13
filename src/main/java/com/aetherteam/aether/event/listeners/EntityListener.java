@@ -69,7 +69,7 @@ public class EntityListener {
     /**
      * @see EntityHooks#launchMount(Player)
      */
-    public static void onRiderTick(PlayerTickEvent event) {
+    public static void onRiderTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
         EntityHooks.launchMount(player);
     }

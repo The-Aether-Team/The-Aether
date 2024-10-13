@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aether:holystone"
+  },
+  "result": {
+    "count": 1,
+    "id": "aether:holystone_wall"
+  }
+}

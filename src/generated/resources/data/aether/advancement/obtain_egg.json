@@ -1,0 +1,33 @@
+{
+  "parent": "aether:blue_aercloud",
+  "criteria": {
+    "moa_egg": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#aether:moa_eggs"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.obtain_egg.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aether:blue_moa_egg"
+    },
+    "title": {
+      "translate": "advancement.aether.obtain_egg"
+    }
+  },
+  "requirements": [
+    [
+      "moa_egg"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

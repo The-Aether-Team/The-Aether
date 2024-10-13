@@ -2,7 +2,6 @@ package com.aetherteam.aether.block.dungeon;
 
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.entity.EntityUtil;
-import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -165,6 +164,6 @@ public class DoorwayBlock extends Block {
     @Nullable
     @Override
     public PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
-        return AetherBlockPathTypes.BOSS_DOORWAY;
+        return PathType.BLOCKED;
     }
 }

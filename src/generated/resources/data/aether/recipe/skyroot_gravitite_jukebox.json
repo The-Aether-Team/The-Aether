@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "minecraft:jukebox",
+  "key": {
+    "G": {
+      "tag": "aether:processed/gravitite"
+    },
+    "P": {
+      "tag": "aether:planks_crafting"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PGP",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:jukebox"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_skyroot_shovel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:skyroot_shovel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:skyroot_shovel_repairing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_skyroot_shovel"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:skyroot_shovel_repairing"
+    ]
+  }
+}

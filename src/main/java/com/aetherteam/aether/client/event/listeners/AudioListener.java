@@ -34,7 +34,7 @@ public class AudioListener {
     /**
      * @see AudioHooks#tick()
      */
-    public static void onClientTick(ClientTickEvent event) {
+    public static void onClientTick(ClientTickEvent.Post event) {
         AudioHooks.tick();
     }
 

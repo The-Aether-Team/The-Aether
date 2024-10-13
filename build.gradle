@@ -123,6 +123,7 @@ tasks.withType(ProcessResources).configureEach {
         mod_version            : mod_version,
         mod_license            : mod_license,
         mod_url                : mod_url,
+        mod_update             : mod_update,
         mod_tracker            : mod_tracker,
         mod_credits            : mod_credits,
         mod_authors            : mod_authors,

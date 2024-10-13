@@ -9,7 +9,6 @@ import com.aetherteam.aether.data.resources.registries.AetherStructures;
 import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.NpcDialogue;
-import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
 import com.aetherteam.aether.entity.ai.goal.NpcDialogueGoal;
 import com.aetherteam.aether.entity.monster.dungeon.AbstractValkyrie;
 import com.aetherteam.aether.entity.projectile.crystal.ThunderCrystal;
@@ -104,7 +103,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         this.bossFight = (ServerBossEvent) new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS).setPlayBossMusic(true);
         this.setBossFight(false);
         this.xpReward = XP_REWARD_BOSS;
-        this.setPathfindingMalus(AetherBlockPathTypes.BOSS_DOORWAY, -1.0F); // Prevents the Queen from leaving the boss room.
+//        this.setPathfindingMalus(AetherBlockPathTypes.BOSS_DOORWAY, -1.0F); // Prevents the Queen from leaving the boss room.
         this.setPersistenceRequired();
     }
 
@@ -122,22 +121,22 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      */
     @Override
     @SuppressWarnings("deprecation")
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
         this.setBossName(BossNameGenerator.generateValkyrieName(this.getRandom()));
         // Set the bounds for the whole dungeon.
-        if (tag != null && tag.contains("Dungeon")) {
+        if (reason == MobSpawnType.CHUNK_GENERATION) {
             StructureManager manager = level.getLevel().structureManager();
             manager.registryAccess().registry(Registries.STRUCTURE).ifPresent(registry -> {
-                        Structure temple = registry.get(AetherStructures.SILVER_DUNGEON);
-                        if (temple != null) {
-                            StructureStart start = manager.getStructureAt(this.blockPosition(), temple);
-                            if (start != StructureStart.INVALID_START) {
-                                BoundingBox box = start.getBoundingBox();
-                                AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
-                                this.setDungeonBounds(dungeonBounds);
-                            }
+                    Structure temple = registry.get(AetherStructures.SILVER_DUNGEON);
+                    if (temple != null) {
+                        StructureStart start = manager.getStructureAt(this.blockPosition(), temple);
+                        if (start != StructureStart.INVALID_START) {
+                            BoundingBox box = start.getBoundingBox();
+                            AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
+                            this.setDungeonBounds(dungeonBounds);
                         }
                     }
+                }
             );
         }
         return spawnData;

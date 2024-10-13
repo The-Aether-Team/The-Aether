@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_diamond_hoe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:diamond_hoe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:diamond_hoe_repairing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_diamond_hoe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:diamond_hoe_repairing"
+    ]
+  }
+}

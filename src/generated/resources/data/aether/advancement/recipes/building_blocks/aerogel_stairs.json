@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_aerogel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:aerogel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:aerogel_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_aerogel"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:aerogel_stairs"
+    ]
+  }
+}

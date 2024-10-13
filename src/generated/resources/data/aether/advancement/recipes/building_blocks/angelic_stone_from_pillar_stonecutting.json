@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pillar": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:pillar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:angelic_stone_from_pillar_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pillar"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:angelic_stone_from_pillar_stonecutting"
+    ]
+  }
+}

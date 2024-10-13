@@ -1,0 +1,33 @@
+{
+  "parent": "aether:zanite",
+  "criteria": {
+    "craft_altar": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:altar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.craft_altar.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aether:altar"
+    },
+    "title": {
+      "translate": "advancement.aether.craft_altar"
+    }
+  },
+  "requirements": [
+    [
+      "craft_altar"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

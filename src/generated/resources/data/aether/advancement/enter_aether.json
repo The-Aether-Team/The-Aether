@@ -1,0 +1,34 @@
+{
+  "parent": "aether:the_aether",
+  "criteria": {
+    "enter_aether": {
+      "conditions": {
+        "to": "aether:the_aether"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.enter_aether.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:glowstone"
+    },
+    "title": {
+      "translate": "advancement.aether.enter_aether"
+    }
+  },
+  "requirements": [
+    [
+      "enter_aether"
+    ]
+  ],
+  "rewards": {
+    "loot": [
+      "aether:advancements/enter_aether"
+    ]
+  },
+  "sends_telemetry_event": true
+}

@@ -10,9 +10,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class ArmorAbilityListener {
@@ -32,7 +32,7 @@ public class ArmorAbilityListener {
      * @see PhoenixArmor#boostLavaSwimming(LivingEntity)
      * @see PhoenixArmor#damageArmor(LivingEntity)
      */
-    public static void onEntityUpdate(EntityTickEvent event) {
+    public static void onEntityUpdate(EntityTickEvent.Post event) {
         Entity entity = event.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
             ValkyrieArmor.handleFlight(livingEntity);
@@ -63,7 +63,7 @@ public class ArmorAbilityListener {
     /**
      * @see PhoenixArmor#extinguishUser(LivingEntity, DamageSource)
      */
-    public static void onEntityAttack(LivingAttackEvent event) {
+    public static void onEntityAttack(LivingIncomingDamageEvent event) {
         LivingEntity livingEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
         if (!event.isCanceled()) {

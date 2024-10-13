@@ -62,7 +62,7 @@ public class DimensionClientListener {
     /**
      * @see DimensionClientHooks#tickTime()
      */
-    public static void onClientTick(ClientTickEvent event) {
+    public static void onClientTick(ClientTickEvent.Post event) {
         DimensionClientHooks.tickTime();
     }
 }

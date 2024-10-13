@@ -37,8 +37,9 @@ public class LargeAercloudChunk extends StructurePiece {
     public LargeAercloudChunk(StructurePieceSerializationContext context, CompoundTag tag) {
         super(AetherStructurePieceTypes.LARGE_AERCLOUD.get(), tag);
         ListTag positions = tag.getList("Positions", Tag.TAG_COMPOUND);
-        for (Tag position : positions) {
-            this.positions.add(NbtUtils.readBlockPos((CompoundTag) position));
+        for (int i = 0; i < positions.size(); i++) {
+            Tag position = positions.get(i);
+            this.positions.add(NbtUtils.readBlockPos((CompoundTag) position, String.valueOf(i)).get()); //todo
         }
         this.blocks = BlockStateProvider.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Blocks"))).getPartialOrThrow();
     }

@@ -1,0 +1,13 @@
+{
+  "type": "aether:enchanting",
+  "category": "enchanting_misc",
+  "cookingtime": 500,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "aether:skyroot_poison_bucket"
+  },
+  "result": {
+    "count": 1,
+    "id": "aether:skyroot_remedy_bucket"
+  }
+}

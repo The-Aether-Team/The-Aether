@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_holystone_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:holystone_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:holystone_brick_slab_from_holystone_bricks_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_holystone_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:holystone_brick_slab_from_holystone_bricks_stonecutting"
+    ]
+  }
+}

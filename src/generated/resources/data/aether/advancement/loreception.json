@@ -1,0 +1,33 @@
+{
+  "parent": "aether:read_lore",
+  "criteria": {
+    "lore_book_entry": {
+      "conditions": {
+        "item": {
+          "items": "aether:book_of_lore"
+        }
+      },
+      "trigger": "aether:lore_entry"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.loreception.desc"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "aether:book_of_lore"
+    },
+    "title": {
+      "translate": "advancement.aether.loreception"
+    }
+  },
+  "requirements": [
+    [
+      "lore_book_entry"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

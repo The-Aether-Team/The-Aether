@@ -119,7 +119,7 @@ public class Sentry extends Slime {
                 level.broadcastEntityEvent(this, (byte) 70);
                 level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.getX(), this.getY(), this.getZ(), 1, 0.0, 0.0, 0.0, 0.5);
             }
-            this.doEnchantDamageEffects(this, entity);
+//            this.doEnchantDamageEffects(this, entity);
             this.discard();
         }
     }

@@ -1,0 +1,13 @@
+{
+  "type": "aether:enchanting",
+  "category": "enchanting_blocks",
+  "cookingtime": 250,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "aether:quicksoil"
+  },
+  "result": {
+    "count": 1,
+    "id": "aether:quicksoil_glass"
+  }
+}

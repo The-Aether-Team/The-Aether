@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ring": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#aether:freezable_rings"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:ice_ring_from_freezing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ring"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:ice_ring_from_freezing"
+    ]
+  }
+}

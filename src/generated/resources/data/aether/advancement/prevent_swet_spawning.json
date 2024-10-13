@@ -1,0 +1,126 @@
+{
+  "parent": "aether:prevent_aechor_petal_spawning",
+  "criteria": {
+    "place_banner": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {}
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "components": {
+                "minecraft:attribute_modifiers": {
+                  "modifiers": []
+                },
+                "minecraft:banner_patterns": [
+                  {
+                    "color": "cyan",
+                    "pattern": "minecraft:stripe_downleft"
+                  },
+                  {
+                    "color": "cyan",
+                    "pattern": "minecraft:stripe_bottom"
+                  },
+                  {
+                    "color": "cyan",
+                    "pattern": "minecraft:stripe_left"
+                  },
+                  {
+                    "color": "black",
+                    "pattern": "minecraft:half_horizontal"
+                  },
+                  {
+                    "color": "cyan",
+                    "pattern": "minecraft:straight_cross"
+                  },
+                  {
+                    "color": "white",
+                    "pattern": "minecraft:border"
+                  },
+                  {
+                    "color": "light_blue",
+                    "pattern": "minecraft:gradient_up"
+                  },
+                  {
+                    "color": "light_blue",
+                    "pattern": "minecraft:gradient"
+                  }
+                ],
+                "minecraft:enchantments": {
+                  "levels": {}
+                },
+                "minecraft:hide_additional_tooltip": {},
+                "minecraft:item_name": "{\"color\":\"gold\",\"translate\":\"aether.block.aether.swet_banner\"}",
+                "minecraft:lore": [],
+                "minecraft:max_stack_size": 16,
+                "minecraft:rarity": "common",
+                "minecraft:repair_cost": 0
+              },
+              "items": "minecraft:black_banner"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.prevent_swet_spawning.desc"
+    },
+    "icon": {
+      "components": {
+        "minecraft:banner_patterns": [
+          {
+            "color": "cyan",
+            "pattern": "minecraft:stripe_downleft"
+          },
+          {
+            "color": "cyan",
+            "pattern": "minecraft:stripe_bottom"
+          },
+          {
+            "color": "cyan",
+            "pattern": "minecraft:stripe_left"
+          },
+          {
+            "color": "black",
+            "pattern": "minecraft:half_horizontal"
+          },
+          {
+            "color": "cyan",
+            "pattern": "minecraft:straight_cross"
+          },
+          {
+            "color": "white",
+            "pattern": "minecraft:border"
+          },
+          {
+            "color": "light_blue",
+            "pattern": "minecraft:gradient_up"
+          },
+          {
+            "color": "light_blue",
+            "pattern": "minecraft:gradient"
+          }
+        ],
+        "minecraft:hide_additional_tooltip": {},
+        "minecraft:item_name": "{\"color\":\"gold\",\"translate\":\"aether.block.aether.swet_banner\"}"
+      },
+      "count": 1,
+      "id": "minecraft:black_banner"
+    },
+    "title": {
+      "translate": "advancement.aether.prevent_swet_spawning"
+    }
+  },
+  "requirements": [
+    [
+      "place_banner"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

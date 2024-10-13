@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_blue_berry": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:blue_berry"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:enchanted_berry_enchanting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_blue_berry"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:enchanted_berry_enchanting"
+    ]
+  }
+}

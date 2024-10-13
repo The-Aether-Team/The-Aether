@@ -1,0 +1,8 @@
+{
+  "comparator_output": 1,
+  "description": {
+    "translate": "jukebox_song.aether.aether_tune"
+  },
+  "length_in_seconds": 149.0,
+  "sound_event": "aether:item.music_disc.aether_tune"
+}

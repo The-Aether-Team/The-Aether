@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:zanite_shovel"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_zanite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#aether:gems/zanite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_zanite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:zanite_shovel"
+    ]
+  }
+}

@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
@@ -87,7 +87,7 @@ public class AccessoryAbilityListener {
     /**
      * @see AbilityHooks.AccessoryHooks#preventMagmaDamage(LivingEntity, DamageSource)
      */
-    public static void onEntityHurt(LivingAttackEvent event) {
+    public static void onEntityHurt(LivingIncomingDamageEvent event) {
         LivingEntity livingEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
         AbilityHooks.AccessoryHooks.setAttack(event.getSource());

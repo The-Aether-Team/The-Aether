@@ -1,0 +1,8 @@
+{
+  "comparator_output": 3,
+  "description": {
+    "translate": "jukebox_song.aether.chinchilla"
+  },
+  "length_in_seconds": 178.0,
+  "sound_event": "aether:item.music_disc.chinchilla"
+}

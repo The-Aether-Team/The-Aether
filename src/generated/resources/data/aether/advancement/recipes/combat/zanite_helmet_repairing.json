@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:zanite_helmet_repairing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_zanite_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:zanite_helmet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_zanite_helmet"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:zanite_helmet_repairing"
+    ]
+  }
+}

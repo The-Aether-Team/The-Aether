@@ -1,0 +1,75 @@
+[Rendering]
+	#Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod
+	"Switches to legacy mob models" = false
+	#Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes
+	"Disables Aether custom skybox" = false
+	#Removes warm-tinting of the lightmap in the Aether, giving the lighting a colder feel
+	"Makes lightmap colder" = false
+	#Enables a green-tinted sunrise and sunset in the Aether, similar to the original mod
+	"Enables green sunrise/sunset" = false
+
+[Gui]
+	#Adds a button to the top right of the main menu screen to toggle between the Aether and vanilla menu
+	"Enables Aether menu button" = true
+	#Changes the background panorama into a preview of the latest played world
+	"Enables world preview" = false
+	#Adds a button to the top right of the main menu screen to toggle between the panorama and world preview
+	"Enables toggle world button" = true
+	#Adds a button to the top right of the main menu screen to allow quick loading into a world if the world preview is enabled
+	"Enables quick load button" = true
+	#Determines that menu elements will align left if the menu's world preview is active, if true, this overrides 'Align menu elements left'
+	"Align menu elements left with world preview" = false
+	#Determines the default Aether menu style to switch to with the menu theme button
+	"Default Aether menu style" = "aether:the_aether_left"
+	#Determines the default Minecraft menu style to switch to with the menu theme button
+	"Default Minecraft menu style" = "cumulus_menus:minecraft"
+	#Adds random trivia and tips to the bottom of loading screens
+	"Enables random trivia" = true
+	#Makes the extra hearts given by life shards display as silver colored
+	"Enables silver life shard hearts" = true
+	#Disables the Aether's accessories button from appearing in GUIs
+	"Disables the accessories button" = false
+	#The y-coordinate of the Ascending to the Aether and Descending from the Aether text in loading screens
+	"Portal text y-coordinate in loading screens" = 50
+	#The x-coordinate of the accessories button in the inventory and curios menus
+	"Button x-coordinate in inventory menus" = 27
+	#The y-coordinate of the accessories button in the inventory and curios menus
+	"Button y-coordinate in inventory menus" = 68
+	#The x-coordinate of the accessories button in the creative menu
+	"Button x-coordinate in creative menu" = 74
+	#The y-coordinate of the accessories button in the creative menu
+	"Button y-coordinate in creative menu" = 40
+	#The x-coordinate of the accessories button in the accessories menu
+	"Button x-coordinate in accessories menu" = 9
+	#The y-coordinate of the accessories button in the accessories menu
+	"Button y-coordinate in accessories menu" = 68
+	#The x-coordinate of the perks button layout when in the pause menu
+	"Layout x-coordinate in pause menu" = -116
+	#The y-coordinate of the perks button layout when in the pause menu
+	"Layout y-coordinate in pause menu" = 0
+	#Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown
+	"Enables Hammer of Kingbdogz' cooldown overlay" = true
+
+[Audio]
+	#Makes Blue Aerclouds have their wobbly sounds that play when bouncing on them
+	"Blue Aercloud bouncing sounds" = true
+	#Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether
+	"Set backup minimum music delay" = 12000
+	#Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether
+	"Set backup maximum music delay" = 24000
+	#Disables the Aether's internal music manager, if true, this overrides all other audio configs
+	"Disables Aether music manager" = false
+	#Disables the Aether's boss fight music, only works if 'Disables Aether music manager' is false
+	"Disables Aether boss music" = false
+	#Disables the Aether's menu music in case another mod implements its own, only works if 'Disables Aether music manager' is false
+	"Disables Aether menu music" = false
+	#Disables the menu music on the vanilla world preview menu, only works if 'Disables Aether music manager' is false
+	"Disables vanilla world preview menu music" = false
+	#Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false
+	"Disables Aether world preview menu music" = false
+
+[Miscellaneous]
+	#Disables the Cumulus menu selection screen button on launch
+	"Disable Cumulus button" = false
+	#Enables a direct join button for the official server
+	"Enables server button" = false

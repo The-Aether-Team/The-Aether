@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "aether:golden_dart_shooter"
+    },
+    {
+      "item": "aether:aechor_petal"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "aether:poison_dart_shooter"
+  }
+}

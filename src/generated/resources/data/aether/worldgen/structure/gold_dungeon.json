@@ -11,19 +11,19 @@
   },
   "rangeY": 60,
   "spawn_overrides": {
-    "aether_aerwhale": {
+    "aether:aether_aerwhale": {
       "bounding_box": "full",
       "spawns": []
     },
-    "aether_darkness_monster": {
+    "aether:aether_darkness_monster": {
       "bounding_box": "full",
       "spawns": []
     },
-    "aether_sky_monster": {
+    "aether:aether_sky_monster": {
       "bounding_box": "full",
       "spawns": []
     },
-    "aether_surface_monster": {
+    "aether:aether_surface_monster": {
       "bounding_box": "full",
       "spawns": []
     },

@@ -21,7 +21,7 @@ public interface AbstractFurnaceBlockEntityAccessor {
     RecipeManager.CachedCheck<SingleRecipeInput, ? extends AbstractCookingRecipe> aether$getQuickCheck();
 
     @Invoker
-    boolean callCanBurn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipe, NonNullList<ItemStack> stacks, int stackSize);
+    boolean callCanBurn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipe, NonNullList<ItemStack> stacks, int stackSize, AbstractFurnaceBlockEntity furnace);
 
     @Accessor("litTime")
     int aether$getLitTime();

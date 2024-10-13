@@ -4,10 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.FileUtil;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.AbstractPackResources;
-import net.minecraft.server.packs.CompositePackResources;
-import net.minecraft.server.packs.PackResources;
-import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.*;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
@@ -30,8 +27,8 @@ public class CombinedPackResources extends AbstractPackResources {
     private final Map<String, List<PackResources>> data;
     private final Path source;
 
-    public CombinedPackResources(String id, PackMetadataSection packInfo, List<? extends PackResources> packs, Path sourcePack) {
-        super(id, true);
+    public CombinedPackResources(PackLocationInfo id, PackMetadataSection packInfo, List<? extends PackResources> packs, Path sourcePack) {
+        super(id);
         this.packInfo = packInfo;
         this.packs = ImmutableList.copyOf(packs);
         this.assets = this.buildNamespaceMap(PackType.CLIENT_RESOURCES, packs);
@@ -123,14 +120,14 @@ public class CombinedPackResources extends AbstractPackResources {
     public record CombinedResourcesSupplier(PackMetadataSection packInfo, List<? extends PackResources> packs,
                                             Path sourcePack) implements Pack.ResourcesSupplier {
         @Override
-        public PackResources openPrimary(String pId) {
-            return new CombinedPackResources(pId, this.packInfo, this.packs, this.sourcePack);
+        public PackResources openPrimary(PackLocationInfo location) {
+            return new CombinedPackResources(location, this.packInfo, this.packs, this.sourcePack);
         }
 
         @Override
-        public PackResources openFull(String id, Pack.Info info) {
-            PackResources packresources = this.openPrimary(id);
-            List<String> list = info.overlays();
+        public PackResources openFull(PackLocationInfo location, Pack.Metadata metadata) {
+            PackResources packresources = this.openPrimary(location);
+            List<String> list = metadata.overlays();
             if (list.isEmpty()) {
                 return packresources;
             } else {
@@ -138,7 +135,7 @@ public class CombinedPackResources extends AbstractPackResources {
 
                 for (String s : list) {
                     Path path = this.sourcePack.resolve(s);
-                    list1.add(new CombinedPackResources(id, this.packInfo, this.packs, path));
+                    list1.add(new CombinedPackResources(location, this.packInfo, this.packs, path));
                 }
 
                 return new CompositePackResources(packresources, list1);

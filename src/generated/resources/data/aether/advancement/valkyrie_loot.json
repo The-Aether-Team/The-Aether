@@ -1,0 +1,122 @@
+{
+  "parent": "aether:silver_dungeon",
+  "criteria": {
+    "valkyrie_axe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:valkyrie_axe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "valkyrie_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:valkyrie_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "valkyrie_chestplate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:valkyrie_chestplate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "valkyrie_gloves": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:valkyrie_gloves"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "valkyrie_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:valkyrie_helmet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "valkyrie_hoe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:valkyrie_hoe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "valkyrie_leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:valkyrie_leggings"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "valkyrie_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:valkyrie_pickaxe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "valkyrie_shovel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:valkyrie_shovel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.valkyrie_loot.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "aether:valkyrie_helmet"
+    },
+    "title": {
+      "translate": "advancement.aether.valkyrie_loot"
+    }
+  },
+  "requirements": [
+    [
+      "valkyrie_pickaxe",
+      "valkyrie_hoe",
+      "valkyrie_axe",
+      "valkyrie_shovel",
+      "valkyrie_helmet",
+      "valkyrie_chestplate",
+      "valkyrie_leggings",
+      "valkyrie_boots",
+      "valkyrie_gloves"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

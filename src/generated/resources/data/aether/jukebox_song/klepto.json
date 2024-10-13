@@ -1,0 +1,8 @@
+{
+  "comparator_output": 5,
+  "description": {
+    "translate": "jukebox_song.aether.klepto"
+  },
+  "length_in_seconds": 192.0,
+  "sound_event": "aether:item.music_disc.klepto"
+}

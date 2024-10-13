@@ -38,6 +38,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.event.EventHooks;
 
 import java.util.function.Supplier;
 
@@ -119,7 +120,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
      */
     @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) { //todo
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
             ResourceLocation kind = treasureChestBlockEntity.getKind();
@@ -228,7 +229,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
             if (f < 0.0F) {
                 return 0.0F;
             } else {
-                int i = CommonHooks.isCorrectToolForDrops(state, player) ? 30 : 100;
+                int i = EventHooks.doPlayerHarvestCheck(player, state, level, pos) ? 30 : 100;
                 return player.getDigSpeed(state, pos) / f / (float) i;
             }
         }
@@ -276,7 +277,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
      */
     @SuppressWarnings("deprecation")
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
     }
 
@@ -303,7 +304,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
             CompoundTag compound = new CompoundTag();
             compound.putBoolean("Locked", treasureChestBlockEntity.getLocked());
             compound.putString("Kind", treasureChestBlockEntity.getKind().toString());
-            stack.addTagElement("BlockEntityTag", compound);
+//            stack.addTagElement("BlockEntityTag", compound);
         }
         return stack;
     }

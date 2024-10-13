@@ -26,7 +26,6 @@ import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
 import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
 import com.aetherteam.aether.event.listeners.*;
 import com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener;
 import com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener;
@@ -177,7 +176,6 @@ public class Aether {
     public void commonSetup(FMLCommonSetupEvent event) {
         Reflection.initialize(SunAltarWhitelist.class);
         Reflection.initialize(AetherRecipeBookTypes.class);
-        Reflection.initialize(AetherBlockPathTypes.class);
         Reflection.initialize(AetherMobCategory.class);
         Reflection.initialize(AetherAdvancementTriggers.class);
 

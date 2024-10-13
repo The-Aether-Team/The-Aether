@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "aether:holystone"
+    },
+    "I": {
+      "item": "aether:icestone"
+    },
+    "P": {
+      "item": "aether:skyroot_planks"
+    }
+  },
+  "pattern": [
+    "HHH",
+    "HIH",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aether:freezer"
+  }
+}

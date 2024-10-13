@@ -53,20 +53,6 @@ public abstract class AbstractCrystal extends Projectile {
         }
         HitResult result = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
         boolean flag = false;
-        if (result.getType() == HitResult.Type.BLOCK) {
-            BlockPos blockPos = ((BlockHitResult) result).getBlockPos();
-            BlockState blockState = this.level().getBlockState(blockPos);
-            if (blockState.is(Blocks.NETHER_PORTAL)) {
-                this.handleInsidePortal(blockPos);
-                flag = true;
-            } else if (blockState.is(Blocks.END_GATEWAY)) {
-                BlockEntity blockEntity = this.level().getBlockEntity(blockPos);
-                if (blockEntity instanceof TheEndGatewayBlockEntity endGatewayBlockEntity && TheEndGatewayBlockEntity.canEntityTeleport(this)) {
-                    TheEndGatewayBlockEntity.teleportEntity(this.level(), blockPos, blockState, this, endGatewayBlockEntity);
-                }
-                flag = true;
-            }
-        }
         if (result.getType() != HitResult.Type.MISS && !flag && !EventHooks.onProjectileImpact(this, result)) {
             this.onHit(result);
         }

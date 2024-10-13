@@ -55,7 +55,7 @@ public class AetherPlayerListener {
     /**
      * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherPlayerHooks#update(LivingEntity)
      */
-    public static void onPlayerUpdate(EntityTickEvent event) {
+    public static void onPlayerUpdate(EntityTickEvent.Post event) {
         Entity entity = event.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
             CapabilityHooks.AetherPlayerHooks.update(livingEntity);

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pendant": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#aether:freezable_pendants"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:ice_pendant_from_freezing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pendant"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:ice_pendant_from_freezing"
+    ]
+  }
+}

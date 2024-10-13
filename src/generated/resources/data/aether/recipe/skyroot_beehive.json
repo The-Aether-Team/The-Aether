@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "minecraft:beehive",
+  "key": {
+    "C": {
+      "item": "minecraft:honeycomb"
+    },
+    "P": {
+      "tag": "aether:planks_crafting"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "CCC",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:beehive"
+  }
+}

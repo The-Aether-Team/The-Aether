@@ -1,0 +1,33 @@
+{
+  "parent": "aether:craft_altar",
+  "criteria": {
+    "enchanted_gravitite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:enchanted_gravitite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.enchanted_gravitite.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aether:enchanted_gravitite"
+    },
+    "title": {
+      "translate": "advancement.aether.enchanted_gravitite"
+    }
+  },
+  "requirements": [
+    [
+      "enchanted_gravitite"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

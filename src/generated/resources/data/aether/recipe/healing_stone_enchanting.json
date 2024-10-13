@@ -1,0 +1,13 @@
+{
+  "type": "aether:enchanting",
+  "category": "enchanting_food",
+  "cookingtime": 500,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "aether:holystone"
+  },
+  "result": {
+    "count": 1,
+    "id": "aether:healing_stone"
+  }
+}

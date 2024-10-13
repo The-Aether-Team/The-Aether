@@ -1,0 +1,30 @@
+{
+	"clientData": {
+		"showGroupTabs": true,
+		"showUniqueRendering": false,
+		"inventoryButtonXOffset": 66,
+		"inventoryButtonYOffset": 9,
+		"creativeInventoryButtonXOffset": 96,
+		"creativeInventoryButtonYOffset": 7,
+		"forceNullRenderReplacement": false,
+		"disableEmptySlotScreenError": false,
+		"allowSlotScrolling": true,
+		"equipControl": "MUST_NOT_CROUCH",
+		"hoverOptions": {
+			"hoveredOptions": {
+				"brightenHovered": true,
+				"cycleBrightness": true,
+				"line": false,
+				"clickbait": false
+			},
+			"unHoveredOptions": {
+				"renderUnHovered": true,
+				"darkenUnHovered": true,
+				"darkenedBrightness": 0.5,
+				"darkenedOpacity": 1.0
+			}
+		},
+		"disabledDefaultRenders": []
+	},
+	"modifiers": []
+}

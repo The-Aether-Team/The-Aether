@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gravitite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#aether:processed/gravitite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:gravitite_chestplate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gravitite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:gravitite_chestplate"
+    ]
+  }
+}

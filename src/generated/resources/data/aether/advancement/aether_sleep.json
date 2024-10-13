@@ -1,0 +1,41 @@
+{
+  "parent": "aether:gold_dungeon",
+  "criteria": {
+    "aether_sleep": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "dimension": "aether:the_aether"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:slept_in_bed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.aether_sleep.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "aether:skyroot_bed"
+    },
+    "title": {
+      "translate": "advancement.aether.aether_sleep"
+    }
+  },
+  "requirements": [
+    [
+      "aether_sleep"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

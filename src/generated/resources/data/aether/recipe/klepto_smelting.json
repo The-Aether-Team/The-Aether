@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "ingredient": {
+    "item": "minecraft:music_disc_stal"
+  },
+  "result": {
+    "count": 1,
+    "id": "aether:music_disc_klepto"
+  }
+}

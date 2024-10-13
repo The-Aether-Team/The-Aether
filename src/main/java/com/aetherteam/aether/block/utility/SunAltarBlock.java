@@ -85,17 +85,6 @@ public class SunAltarBlock extends BaseEntityBlock {
         }
     }
 
-    @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
-        if (stack.hasCustomHoverName()) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof SunAltarBlockEntity sunAltar) {
-                sunAltar.setCustomName(stack.getHoverName());
-                sunAltar.setChanged();
-            }
-        }
-    }
-
     /**
      * Warning for "deprecation" is suppressed because the method is fine to override.
      */

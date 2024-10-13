@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "/": {
+      "tag": "aether:skyroot_stick"
+    },
+    "F": {
+      "tag": "c:feathers"
+    },
+    "G": {
+      "item": "aether:golden_amber"
+    }
+  },
+  "pattern": [
+    "F",
+    "/",
+    "G"
+  ],
+  "result": {
+    "count": 4,
+    "id": "aether:golden_dart"
+  }
+}

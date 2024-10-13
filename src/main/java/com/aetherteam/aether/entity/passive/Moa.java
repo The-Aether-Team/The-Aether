@@ -150,25 +150,25 @@ public class Moa extends MountableAnimal implements WingedBird {
      * @return The {@link SpawnGroupData} to return.
      */
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
         this.generateMoaUUID();
-        if (tag != null) { // Applies NBT when spawned from incubation.
-            if (tag.contains("IsBaby")) {
-                this.setBaby(tag.getBoolean("IsBaby"));
-            }
-            if (tag.contains("MoaType")) {
-                ResourceKey<MoaType> moaTypeKey = AetherMoaTypes.getResourceKey(level.registryAccess(), tag.getString("MoaType"));
-                if (moaTypeKey != null) {
-                    this.setMoaTypeByKey(moaTypeKey);
-                }
-            }
-            if (tag.contains("Hungry")) {
-                this.setHungry(tag.getBoolean("Hungry"));
-            }
-            if (tag.contains("PlayerGrown")) {
-                this.setPlayerGrown(tag.getBoolean("PlayerGrown"));
-            }
-        }
+//        if (tag != null) { // Applies NBT when spawned from incubation.
+//            if (tag.contains("IsBaby")) {
+//                this.setBaby(tag.getBoolean("IsBaby"));
+//            }
+//            if (tag.contains("MoaType")) {
+//                ResourceKey<MoaType> moaTypeKey = AetherMoaTypes.getResourceKey(level.registryAccess(), tag.getString("MoaType"));
+//                if (moaTypeKey != null) {
+//                    this.setMoaTypeByKey(moaTypeKey);
+//                }
+//            }
+//            if (tag.contains("Hungry")) {
+//                this.setHungry(tag.getBoolean("Hungry"));
+//            }
+//            if (tag.contains("PlayerGrown")) {
+//                this.setPlayerGrown(tag.getBoolean("PlayerGrown"));
+//            }
+//        }
         if (spawnData == null) { // Disallow baby Moas from spawning in spawn groups.
             spawnData = new AgeableMob.AgeableMobGroupData(false);
         }
@@ -182,7 +182,7 @@ public class Moa extends MountableAnimal implements WingedBird {
         if (this.getMoaType() == null) {
             this.setMoaTypeByKey(AetherMoaTypes.BLUE);
         }
-        return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
+        return super.finalizeSpawn(level, difficulty, reason, spawnData);
     }
 
     /**

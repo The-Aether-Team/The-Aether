@@ -1,0 +1,6 @@
+#A config option mainly for developers. Logs out modded item tags that do not have translations when running on integrated server. Format desired is tag.item.<namespace>.<path> for the translation key. Defaults to SILENCED.
+#Allowed Values: SILENCED, DEV_SHORT, DEV_VERBOSE, PROD_SHORT, PROD_VERBOSE
+logUntranslatedItemTagWarnings = "SILENCED"
+#A config option mainly for developers. Logs out modded tags that are using the 'forge' namespace when running on integrated server. Defaults to DEV_SHORT.
+#Allowed Values: SILENCED, DEV_SHORT, DEV_VERBOSE, PROD_SHORT, PROD_VERBOSE
+logLegacyTagWarnings = "DEV_SHORT"

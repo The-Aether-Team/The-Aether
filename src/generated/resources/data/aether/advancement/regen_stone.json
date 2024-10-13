@@ -1,0 +1,33 @@
+{
+  "parent": "aether:silver_dungeon",
+  "criteria": {
+    "regen_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:regeneration_stone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.regen_stone.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aether:regeneration_stone"
+    },
+    "title": {
+      "translate": "advancement.aether.regen_stone"
+    }
+  },
+  "requirements": [
+    [
+      "regen_stone"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -10,19 +10,19 @@
     "tunnel_processors": "aether:bronze_tunnel"
   },
   "spawn_overrides": {
-    "aether_aerwhale": {
+    "aether:aether_aerwhale": {
       "bounding_box": "piece",
       "spawns": []
     },
-    "aether_darkness_monster": {
+    "aether:aether_darkness_monster": {
       "bounding_box": "piece",
       "spawns": []
     },
-    "aether_sky_monster": {
+    "aether:aether_sky_monster": {
       "bounding_box": "piece",
       "spawns": []
     },
-    "aether_surface_monster": {
+    "aether:aether_surface_monster": {
       "bounding_box": "piece",
       "spawns": []
     },

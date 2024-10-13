@@ -67,7 +67,7 @@ public class GuiListener {
     /**
      * @see GuiHooks#handlePatreonRefreshRebound()
      */
-    public static void onClientTick(ClientTickEvent event) {
+    public static void onClientTick(ClientTickEvent.Post event) {
         GuiHooks.handlePatreonRefreshRebound();
     }
 

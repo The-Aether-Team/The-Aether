@@ -118,7 +118,7 @@ public class AetherOverlays {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                renderSilverLifeShardHearts(guiGraphics, gui, player, screenWidth, screenHeight);
+//                renderSilverLifeShardHearts(guiGraphics, gui, player, screenWidth, screenHeight);
             }
         });
     }
@@ -130,25 +130,25 @@ public class AetherOverlays {
      */
     @SuppressWarnings("deprecation")
     private static void renderAetherPortalOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, Player player, DeltaTracker partialTicks) {
-        var handler = player.getData(AetherDataAttachments.AETHER_PLAYER);
-        PoseStack poseStack = guiGraphics.pose();
-        float timeInPortal = Mth.lerp(partialTicks.getGameTimeDeltaPartialTick(false), handler.getOldPortalIntensity(), handler.getPortalIntensity());
-        if (timeInPortal > 0.0F) {
-            if (timeInPortal < 1.0F) {
-                timeInPortal = timeInPortal * timeInPortal;
-                timeInPortal = timeInPortal * timeInPortal;
-                timeInPortal = timeInPortal * 0.8F + 0.2F;
-            }
-
-            poseStack.pushPose();
-            RenderSystem.disableDepthTest();
-            RenderSystem.depthMask(false);
-            TextureAtlasSprite textureAtlasSprite = minecraft.getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState());
-            guiGraphics.blit(0, 0, -90, window.getGuiScaledWidth(), window.getGuiScaledHeight(), textureAtlasSprite, 1.0F, 1.0F, 1.0F, timeInPortal);
-            RenderSystem.depthMask(true);
-            RenderSystem.enableDepthTest();
-            poseStack.popPose();
-        }
+//        var handler = player.getData(AetherDataAttachments.AETHER_PLAYER);
+//        PoseStack poseStack = guiGraphics.pose();
+//        float timeInPortal = Mth.lerp(partialTicks.getGameTimeDeltaPartialTick(false), handler.getOldPortalIntensity(), handler.getPortalIntensity());
+//        if (timeInPortal > 0.0F) {
+//            if (timeInPortal < 1.0F) {
+//                timeInPortal = timeInPortal * timeInPortal;
+//                timeInPortal = timeInPortal * timeInPortal;
+//                timeInPortal = timeInPortal * 0.8F + 0.2F;
+//            }
+//
+//            poseStack.pushPose();
+//            RenderSystem.disableDepthTest();
+//            RenderSystem.depthMask(false);
+//            TextureAtlasSprite textureAtlasSprite = minecraft.getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState());
+//            guiGraphics.blit(0, 0, -90, window.getGuiScaledWidth(), window.getGuiScaledHeight(), textureAtlasSprite, 1.0F, 1.0F, 1.0F, timeInPortal);
+//            RenderSystem.depthMask(true);
+//            RenderSystem.enableDepthTest();
+//            poseStack.popPose();
+//        }
     }
 
     /**
@@ -292,63 +292,63 @@ public class AetherOverlays {
      * @param height      The {@link Integer} for the screen height.
      */
     private static void renderSilverLifeShardHearts(GuiGraphics guiGraphics, Gui gui, LocalPlayer player, int width, int height) {
-        GuiAccessor guiAccessor = (GuiAccessor) gui;
-        if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
-            var aetherPlayer = player.getData(AetherDataAttachments.AETHER_PLAYER);
-            if (aetherPlayer.getLifeShardCount() > 0) {
-                AttributeInstance attributeInstance = player.getAttribute(Attributes.MAX_HEALTH);
-                if (attributeInstance != null) {
-                    int lastLifeShardHealth = 0;
-                    int lastOverallHealth = 0;
-
-                    RenderSystem.enableBlend();
-
-                    double overallHealth = attributeInstance.getValue();
-                    double maxLifeShardHealth = aetherPlayer.getLifeShardHealthAttributeModifier().getAmount();
-
-                    int maxDefaultHealth = Mth.ceil(overallHealth - maxLifeShardHealth);
-
-                    int currentOverallHealth = Mth.ceil(player.getHealth());
-                    int currentLifeShardHealth = Mth.ceil(maxDefaultHealth > 20 ? Mth.clamp(currentOverallHealth - 20, 0, maxLifeShardHealth) : Math.min(player.getHealth(), currentOverallHealth - maxDefaultHealth));
-
-                    boolean highlight = guiAccessor.aether$getHealthBlinkTime() > (long) gui.getGuiTicks() && (guiAccessor.aether$getHealthBlinkTime() - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
-                    if (Util.getMillis() - guiAccessor.aether$getLastHealthTime() > 1000L) {
-                        lastOverallHealth = currentOverallHealth;
-                        lastLifeShardHealth = currentLifeShardHealth;
-                    }
-
-                    //do NOT cast this to long. This is the only way the hearts will properly shake when health is low
-                    //the only time the shaking will be off is if the player's max health attribute base is below 0. This probably can't be fixed.
-                    guiAccessor.aether$getRandom().setSeed(gui.getGuiTicks() * 312871L);
-
-                    float displayOverallHealth = Math.max((float) overallHealth, Math.max(lastOverallHealth, currentOverallHealth));
-                    float displayLifeShardHealth = Math.max((float) maxLifeShardHealth, Math.max(lastLifeShardHealth, currentLifeShardHealth));
-                    int absorption = Mth.ceil(player.getAbsorptionAmount());
-
-                    int healthRows = Mth.ceil((displayOverallHealth + absorption) / 2.0F / 10.0F);
-                    int rowHeight = Math.max(10 - (healthRows - 2), 3);
-
-                    int left = width / 2 - 91;
-                    int top = height - 39;
-
-                    int regen = Integer.MIN_VALUE;
-                    if (player.hasEffect(MobEffects.REGENERATION)) {
-                        regen = gui.getGuiTicks() % Mth.ceil(displayOverallHealth + 5.0F);
-                    }
-
-                    renderHearts(guiGraphics, player, gui, left, top, regen, displayOverallHealth, displayLifeShardHealth, maxDefaultHealth, currentLifeShardHealth, rowHeight, absorption, highlight);
-
-                    RenderSystem.disableBlend();
-                }
-            }
-        }
+//        GuiAccessor guiAccessor = (GuiAccessor) gui;
+//        if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
+//            var aetherPlayer = player.getData(AetherDataAttachments.AETHER_PLAYER);
+//            if (aetherPlayer.getLifeShardCount() > 0) {
+//                AttributeInstance attributeInstance = player.getAttribute(Attributes.MAX_HEALTH);
+//                if (attributeInstance != null) {
+//                    int lastLifeShardHealth = 0;
+//                    int lastOverallHealth = 0;
+//
+//                    RenderSystem.enableBlend();
+//
+//                    double overallHealth = attributeInstance.getValue();
+//                    double maxLifeShardHealth = aetherPlayer.getLifeShardHealthAttributeModifier().getAmount();
+//
+//                    int maxDefaultHealth = Mth.ceil(overallHealth - maxLifeShardHealth);
+//
+//                    int currentOverallHealth = Mth.ceil(player.getHealth());
+//                    int currentLifeShardHealth = Mth.ceil(maxDefaultHealth > 20 ? Mth.clamp(currentOverallHealth - 20, 0, maxLifeShardHealth) : Math.min(player.getHealth(), currentOverallHealth - maxDefaultHealth));
+//
+//                    boolean highlight = guiAccessor.aether$getHealthBlinkTime() > (long) gui.getGuiTicks() && (guiAccessor.aether$getHealthBlinkTime() - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
+//                    if (Util.getMillis() - guiAccessor.aether$getLastHealthTime() > 1000L) {
+//                        lastOverallHealth = currentOverallHealth;
+//                        lastLifeShardHealth = currentLifeShardHealth;
+//                    }
+//
+//                    //do NOT cast this to long. This is the only way the hearts will properly shake when health is low
+//                    //the only time the shaking will be off is if the player's max health attribute base is below 0. This probably can't be fixed.
+//                    guiAccessor.aether$getRandom().setSeed(gui.getGuiTicks() * 312871L);
+//
+//                    float displayOverallHealth = Math.max((float) overallHealth, Math.max(lastOverallHealth, currentOverallHealth));
+//                    float displayLifeShardHealth = Math.max((float) maxLifeShardHealth, Math.max(lastLifeShardHealth, currentLifeShardHealth));
+//                    int absorption = Mth.ceil(player.getAbsorptionAmount());
+//
+//                    int healthRows = Mth.ceil((displayOverallHealth + absorption) / 2.0F / 10.0F);
+//                    int rowHeight = Math.max(10 - (healthRows - 2), 3);
+//
+//                    int left = width / 2 - 91;
+//                    int top = height - 39;
+//
+//                    int regen = Integer.MIN_VALUE;
+//                    if (player.hasEffect(MobEffects.REGENERATION)) {
+//                        regen = gui.getGuiTicks() % Mth.ceil(displayOverallHealth + 5.0F);
+//                    }
+//
+//                    renderHearts(guiGraphics, player, gui, left, top, regen, displayOverallHealth, displayLifeShardHealth, maxDefaultHealth, currentLifeShardHealth, rowHeight, absorption, highlight);
+//
+//                    RenderSystem.disableBlend();
+//                }
+//            }
+//        }
     }
 
     /**
      * [CODE COPY] - {@link Gui#renderHearts(GuiGraphics, Player, int, int, int, int, float, int, int, int, boolean)}.<br><br>
      * Stripped down to only use what is necessary.
      */
-    private static void renderHearts(GuiGraphics guiGraphics, Player player, ExtendedGui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int rowHeight, int absorption, boolean highlight) {
+    private static void renderHearts(GuiGraphics guiGraphics, Player player, Gui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int rowHeight, int absorption, boolean highlight) {
         GuiAccessor guiAccessor = (GuiAccessor) gui;
         Gui.HeartType heartType = HeartTypeAccessor.callForPlayer(player);
         int overallHearts = Mth.ceil((double) displayOverallHealth / 2.0);

@@ -155,11 +155,11 @@ public class MoaEggItem extends Item {
      */
     public ItemStack getStackWithTags(ItemStack stack, boolean isBaby, ResourceKey<MoaType> moaType, boolean isHungry, boolean isPlayerGrown) {
         ItemStack itemStack = stack.copy();
-        CompoundTag tag = itemStack.getOrCreateTag();
-        tag.putBoolean("IsBaby", isBaby);
-        tag.putString("MoaType", moaType.location().toString());
-        tag.putBoolean("Hungry", isHungry);
-        tag.putBoolean("PlayerGrown", isPlayerGrown);
+//        CompoundTag tag = itemStack.getOrCreateTag();
+//        tag.putBoolean("IsBaby", isBaby);
+//        tag.putString("MoaType", moaType.location().toString());
+//        tag.putBoolean("Hungry", isHungry);
+//        tag.putBoolean("PlayerGrown", isPlayerGrown);
         return itemStack;
     }
 

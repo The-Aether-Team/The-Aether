@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:zanite_pendant_repairing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_zanite_pendant": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:zanite_pendant"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_zanite_pendant"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:zanite_pendant_repairing"
+    ]
+  }
+}

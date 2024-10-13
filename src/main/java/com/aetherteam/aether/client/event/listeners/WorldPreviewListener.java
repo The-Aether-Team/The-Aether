@@ -54,7 +54,7 @@ public class WorldPreviewListener {
     /**
      * @see WorldPreviewHooks#tickMenuWhenPaused()
      */
-    public static void onClientTick(ClientTickEvent event) {
+    public static void onClientTick(ClientTickEvent.Post event) {
         WorldPreviewHooks.tickMenuWhenPaused();
     }
 

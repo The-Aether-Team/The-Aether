@@ -1,0 +1,33 @@
+{
+  "parent": "aether:obtain_egg",
+  "criteria": {
+    "aechor_petal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:aechor_petal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.obtain_petal.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aether:aechor_petal"
+    },
+    "title": {
+      "translate": "advancement.aether.obtain_petal"
+    }
+  },
+  "requirements": [
+    [
+      "aechor_petal"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

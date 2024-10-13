@@ -1,0 +1,33 @@
+{
+  "parent": "aether:enter_aether",
+  "criteria": {
+    "zanite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aether:zanite_gemstone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.zanite.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aether:zanite_gemstone"
+    },
+    "title": {
+      "translate": "advancement.aether.zanite"
+    }
+  },
+  "requirements": [
+    [
+      "zanite"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,38 @@
+{
+  "parent": "aether:lance_loot",
+  "criteria": {
+    "kill_valkyrie_queen": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether:valkyrie_queen"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.aether.silver_dungeon.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "aether:silver_dungeon_key"
+    },
+    "title": {
+      "translate": "advancement.aether.silver_dungeon"
+    }
+  },
+  "requirements": [
+    [
+      "kill_valkyrie_queen"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

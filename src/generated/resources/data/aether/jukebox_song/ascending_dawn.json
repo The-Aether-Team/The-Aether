@@ -1,0 +1,8 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.aether.ascending_dawn"
+  },
+  "length_in_seconds": 163.0,
+  "sound_event": "aether:item.music_disc.ascending_dawn"
+}

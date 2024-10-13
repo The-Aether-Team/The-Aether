@@ -1,0 +1,7 @@
+[Menu]
+	#Determines whether the Menu API is enabled or not
+	"Enable Menu API" = true
+	#Sets the current active menu title screen
+	"Active Menu" = "cumulus_menus:minecraft"
+	#Adds a button to the top right of the main menu screen to open a menu selection screen
+	"Enables menu selection button" = false
