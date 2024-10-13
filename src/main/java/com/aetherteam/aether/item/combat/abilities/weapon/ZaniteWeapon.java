@@ -1,17 +1,5 @@
 package com.aetherteam.aether.item.combat.abilities.weapon;
 
-import com.aetherteam.aether.item.EquipmentUtil;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ItemStack;
-
-import java.util.Iterator;
-import java.util.UUID;
-
 public interface ZaniteWeapon { //todo
 //    /**
 //     * The unique identifier for the item's damage bonus attribute.

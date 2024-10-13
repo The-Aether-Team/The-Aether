@@ -21,6 +21,8 @@ build
 eclipse
 run
 runs
+runs/client
+runs/client/options.txt
 __pycache__
 logs
 src/generated/resources/.cache

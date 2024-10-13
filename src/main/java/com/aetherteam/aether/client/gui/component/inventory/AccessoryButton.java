@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.gui.component.inventory;
 
-//import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
+import com.aetherteam.aether.client.gui.screen.inventory.AetherAccessoriesScreen;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.network.packet.serverbound.OpenInventoryPacket;
 import net.minecraft.client.Minecraft;
@@ -17,7 +17,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
  * [CODE COPY] - {@link top.theillusivec4.curios.client.gui.CuriosButton}.<br><br>
- * Opens the {@link AccessoriesScreen} instead.
+ * Opens the {@link AetherAccessoriesScreen} instead.
  */
 public class AccessoryButton extends ImageButton {
     private final AbstractContainerScreen<?> parentScreen;
@@ -31,14 +31,14 @@ public class AccessoryButton extends ImageButton {
                         ItemStack stack = player.containerMenu.getCarried();
                         player.containerMenu.setCarried(ItemStack.EMPTY);
 
-//                        if (parentScreen instanceof AccessoriesScreen) {
-//                            InventoryScreen inventory = new InventoryScreen(player);
-//                            minecraft.setScreen(inventory);
-//                            player.inventoryMenu.setCarried(stack);
-//                            PacketDistributor.sendToServer(new OpenInventoryPacket(stack));
-//                        } else {
-//                            PacketDistributor.sendToServer(new OpenAccessoriesPacket(stack));
-//                        }
+                        if (parentScreen instanceof AetherAccessoriesScreen) {
+                            InventoryScreen inventory = new InventoryScreen(player);
+                            minecraft.setScreen(inventory);
+                            player.inventoryMenu.setCarried(stack);
+                            PacketDistributor.sendToServer(new OpenInventoryPacket(stack));
+                        } else {
+                            PacketDistributor.sendToServer(new OpenAccessoriesPacket(stack));
+                        }
                     }
                 });
         this.parentScreen = parentScreen;
@@ -46,21 +46,21 @@ public class AccessoryButton extends ImageButton {
 
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-//        Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(this.parentScreen);
-//        this.setX(this.parentScreen.getGuiLeft() + offsets.getA());
-//        this.setY(this.parentScreen.getGuiTop() + offsets.getB());
-//        if (this.parentScreen instanceof CreativeModeInventoryScreen screen) {
-//            boolean isInventoryTab = screen.isInventoryOpen();
-//            this.active = isInventoryTab;
-//            if (isInventoryTab) {
-//                super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
-//            }
-//        } else if (this.parentScreen instanceof AccessoriesScreen screen) {
-//            if (screen.getMenu().hasButton) {
-//                super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
-//            }
-//        } else {
-//            super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
-//        }
+        Tuple<Integer, Integer> offsets = AetherAccessoriesScreen.getButtonOffset(this.parentScreen);
+        this.setX(this.parentScreen.getGuiLeft() + offsets.getA());
+        this.setY(this.parentScreen.getGuiTop() + offsets.getB());
+        if (this.parentScreen instanceof CreativeModeInventoryScreen screen) {
+            boolean isInventoryTab = screen.isInventoryOpen();
+            this.active = isInventoryTab;
+            if (isInventoryTab) {
+                super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
+            }
+        } else if (this.parentScreen instanceof AetherAccessoriesScreen screen) {
+            if (screen.getMenu().hasButton) {
+                super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
+            }
+        } else {
+            super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
+        }
     }
 }

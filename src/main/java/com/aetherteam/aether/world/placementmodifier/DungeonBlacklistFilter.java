@@ -1,19 +1,12 @@
 package com.aetherteam.aether.world.placementmodifier;
 
-import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.mixin.mixins.common.accessor.WorldGenRegionAccessor;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementFilter;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
-import net.minecraft.world.level.levelgen.structure.Structure;
 
 /**
  * A {@link PlacementFilter} to prevent the feature from generating inside of a dungeon.

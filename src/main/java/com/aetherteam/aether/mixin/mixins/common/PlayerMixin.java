@@ -1,10 +1,8 @@
 package com.aetherteam.aether.mixin.mixins.common;
 
 import com.aetherteam.aether.entity.passive.MountableAnimal;
-import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import org.spongepowered.asm.mixin.Mixin;

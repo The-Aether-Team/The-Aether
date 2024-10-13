@@ -26,6 +26,7 @@
     "common.accessor.BushBlockAccessor",
     "common.accessor.ChunkAccessAccessor",
     "common.accessor.ConcretePowderBlockAccessor",
+    "common.accessor.CraftingMenuAccessor",
     "common.accessor.EntityAccessor",
     "common.accessor.FireBlockAccessor",
     "common.accessor.HoeItemAccessor",

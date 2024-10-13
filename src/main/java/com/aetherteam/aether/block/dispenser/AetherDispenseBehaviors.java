@@ -1,47 +1,17 @@
 package com.aetherteam.aether.block.dispenser;
 
-import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.attachment.AetherDataAttachments;
-import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
-import com.aetherteam.aether.entity.projectile.weapon.ThrownLightningKnife;
-import com.aetherteam.aether.event.hooks.EntityHooks;
-//import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.item.accessories.AccessoryItem;
-import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
-import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
-import com.aetherteam.aether.item.accessories.pendant.PendantItem;
-import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Position;
-//import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.DispensibleContainerItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class AetherDispenseBehaviors {
     /**

@@ -1,15 +1,10 @@
 package com.aetherteam.aether.data.providers;
 
 import com.aetherteam.nitrogen.data.providers.NitrogenLanguageProvider;
-import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import net.minecraft.ChatFormatting;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.HashMap;
