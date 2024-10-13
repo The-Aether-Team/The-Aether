@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -82,7 +83,7 @@ public class GlovesRenderer implements SimpleAccessoryRenderer {
         this.align(stack, reference, model, poseStack);
         this.align(stack, reference, trimModel, poseStack);
 
-        int color = FastColor.ARGB32.opaque(DyedItemColor.getOrDefault(stack, -6265536));
+        int color = stack.is(ItemTags.DYEABLE) ? FastColor.ARGB32.opaque(DyedItemColor.getOrDefault(stack, -6265536)) : -1;
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.armorCutoutNoCull(texture));
         model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, color);
 
@@ -124,7 +125,7 @@ public class GlovesRenderer implements SimpleAccessoryRenderer {
         GlovesItem glovesItem = (GlovesItem) stack.getItem();
         VertexConsumer consumer = buffer.getBuffer(RenderType.armorCutoutNoCull(glovesItem.getGlovesTexture()));
 
-        int color = FastColor.ARGB32.opaque(DyedItemColor.getOrDefault(stack, -6265536));
+        int color = stack.is(ItemTags.DYEABLE) ? FastColor.ARGB32.opaque(DyedItemColor.getOrDefault(stack, -6265536)) : -1;
 
         model.setAllVisible(false);
         model.attackTime = 0.0F;
