@@ -138,11 +138,6 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
         LevelRenderer levelRenderer = Minecraft.getInstance().levelRenderer;
         float cloudHeight = level.effects().getCloudHeight();
         if (!Float.isNaN(cloudHeight)) {
-            RenderSystem.disableCull();
-            RenderSystem.enableBlend();
-            RenderSystem.enableDepthTest();
-            RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            RenderSystem.depthMask(true);
             double d1 = ((float) ticks + partialTick) * 0.03F;
             double d2 = (camX + d1) / 12.0;
             double d3 = cloudHeight - (float) camY + 0.33F;
@@ -185,24 +180,18 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
                 ((LevelRendererAccessor) levelRenderer).aether$getCloudBuffer().bind();
                 int l = ((LevelRendererAccessor) levelRenderer).aether$getPrevCloudsType() == CloudStatus.FANCY ? 0 : 1;
 
-                for (int i1 = l; i1 < 2; ++i1) {
-                    if (i1 == 0) {
-                        RenderSystem.colorMask(false, false, false, false);
-                    } else {
-                        RenderSystem.colorMask(true, true, true, true);
-                    }
-
-                    ShaderInstance shaderInstance = RenderSystem.getShader();
-                    ((LevelRendererAccessor) levelRenderer).aether$getCloudBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, shaderInstance);
+                for (int i1 = l; i1 < 2; i1++) {
+                    RenderType rendertype = i1 == 0 ? RenderType.cloudsDepthOnly() : RenderType.clouds();
+                    rendertype.setupRenderState();
+                    ShaderInstance shaderinstance = RenderSystem.getShader();
+                    ((LevelRendererAccessor) levelRenderer).aether$getCloudBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, shaderinstance);
+                    rendertype.clearRenderState();
                 }
 
                 VertexBuffer.unbind();
             }
 
             poseStack.popPose();
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.enableCull();
-            RenderSystem.disableBlend();
         }
         return true;
     }

@@ -34,7 +34,7 @@ public class SilverBossRoom extends SilverDungeonPiece {
     }
 
     public SilverBossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), context.registryAccess(), tag, context.structureTemplateManager(), resourceLocation -> SilverBossRoom.makeSettings(context.structureTemplateManager(), ResourceLocation.withDefaultNamespace(tag.getString("Template"))));
+        super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), context.registryAccess(), tag, context.structureTemplateManager(), resourceLocation -> SilverBossRoom.makeSettings(context.structureTemplateManager(), ResourceLocation.parse(tag.getString("Template"))));
     }
 
     private static StructurePlaceSettings makeSettings(StructureTemplateManager templateManager, ResourceLocation name) {
