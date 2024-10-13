@@ -62,32 +62,6 @@ public class AetherMoaTypes {
         return registryAccess.registryOrThrow(AetherMoaTypes.MOA_TYPE_REGISTRY_KEY).get(location);
     }
 
-
-
-//    @Nullable
-//    public static MoaType get(RegistryAccess registryAccess, String location) {
-//        return get(registryAccess, ResourceLocation.withDefaultNamespace(location));
-//    }
-//
-//    @Nullable
-//    public static MoaType get(RegistryAccess registryAccess, ResourceLocation location) {
-//        return registryAccess.registryOrThrow(AetherMoaTypes.MOA_TYPE_REGISTRY_KEY).get(location);
-//    }
-//
-//    @Nullable
-//    public static ResourceKey<MoaType> getKey(RegistryAccess registryAccess, String location) {
-//        return getKey(registryAccess, ResourceLocation.withDefaultNamespace(location));
-//    }
-//
-//    @Nullable
-//    public static ResourceKey<MoaType> getKey(RegistryAccess registryAccess, ResourceLocation location) {
-//        MoaType moaType = get(registryAccess, location);
-//        if (moaType != null) {
-//            return registryAccess.registryOrThrow(AetherMoaTypes.MOA_TYPE_REGISTRY_KEY).getResourceKey(moaType).orElse(null);
-//        }
-//        return null;
-//    }
-
     /**
      * Gets a random {@link MoaType} with a weighted chance. This is used when spawning Moas in the world.<br>
      * A {@link SimpleWeightedRandomList} is built with all the {@link MoaType}s and their spawn chance weights, and one is randomly picked out of the list.
