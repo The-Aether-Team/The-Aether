@@ -3,6 +3,7 @@ package com.aetherteam.aether.attachment;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.block.portal.PortalClientUtil;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.sound.PortalTriggerSoundInstance;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
@@ -66,9 +67,8 @@ public class AetherPlayerAttachment implements INBTSynchable {
     private boolean canGetPortal = true;
     private boolean canSpawnInAether = true;
 
-    public boolean isInAetherPortal = false;
-    public int aetherPortalTimer = 0;
-    public float prevPortalAnimTime, portalAnimTime = 0.0F;
+    public float portalIntensity;
+    public float oPortalIntensity;
 
     private boolean isHitting;
     private boolean isMoving;
@@ -273,6 +273,16 @@ public class AetherPlayerAttachment implements INBTSynchable {
         }
     }
 
+    /**
+     * Increments or decrements the Aether portal timer depending on if the player is inside an Aether portal.
+     * On the client, this will also help to set the portal overlay.
+     */
+    private void handleAetherPortal(Player player) {
+        if (player.level().isClientSide()) {
+            PortalClientUtil.handleAetherPortal(player, this);
+        }
+    }
+
     public void setCanSpawnInAether(boolean canSpawnInAether) {
         this.canSpawnInAether = canSpawnInAether;
     }
@@ -284,6 +294,14 @@ public class AetherPlayerAttachment implements INBTSynchable {
         return this.canSpawnInAether;
     }
 
+    public float getPortalIntensity() {
+        return this.portalIntensity;
+    }
+
+    public float getOldPortalIntensity() {
+        return this.oPortalIntensity;
+    }
+
     /**
      * Gives the player an Aether Portal Frame item on login if the {@link AetherConfig.Common#start_with_portal} config is enabled.
      */
@@ -293,61 +311,6 @@ public class AetherPlayerAttachment implements INBTSynchable {
         } else {
             this.setCanGetPortal(false);
         }
-    }
-
-    /**
-     * Increments or decrements the Aether portal timer depending on if the player is inside an Aether portal.
-     * On the client, this will also help to set the portal overlay.
-     */
-    private void handleAetherPortal(Player player) {
-        if (player.level().isClientSide()) {
-            this.prevPortalAnimTime = this.portalAnimTime;
-            Minecraft minecraft = Minecraft.getInstance();
-            if (this.isInAetherPortal) {
-                if (minecraft.screen != null && !minecraft.screen.isPauseScreen()) {
-                    if (minecraft.screen instanceof AbstractContainerScreen) {
-                        player.closeContainer();
-                    }
-                    minecraft.setScreen(null);
-                }
-
-                if (this.getPortalAnimTime() == 0.0F) {
-                    this.playPortalSound(minecraft, player);
-                }
-            }
-        }
-
-        if (this.isInPortal()) {
-            ++this.aetherPortalTimer;
-            if (player.level().isClientSide()) {
-                this.portalAnimTime += 0.0125F;
-                if (this.getPortalAnimTime() > 1.0F) {
-                    this.portalAnimTime = 1.0F;
-                }
-            }
-            this.isInAetherPortal = false;
-        } else {
-            if (player.level().isClientSide()) {
-                if (this.getPortalAnimTime() > 0.0F) {
-                    this.portalAnimTime -= 0.05F;
-                }
-
-                if (this.getPortalAnimTime() < 0.0F) {
-                    this.portalAnimTime = 0.0F;
-                }
-            }
-            if (this.getPortalTimer() > 0) {
-                this.aetherPortalTimer -= 4;
-            }
-        }
-    }
-
-    /**
-     * Plays the portal entry sound on the client.
-     */
-    @OnlyIn(Dist.CLIENT)
-    private void playPortalSound(Minecraft minecraft, Player player) {
-        minecraft.getSoundManager().play(PortalTriggerSoundInstance.forLocalAmbience(player, AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.get(), player.getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
     }
 
     /**
@@ -641,42 +604,6 @@ public class AetherPlayerAttachment implements INBTSynchable {
      */
     public boolean canGetPortal() {
         return this.canGetPortal;
-    }
-
-    public void setInPortal(boolean inPortal) {
-        this.isInAetherPortal = inPortal;
-    }
-
-    /**
-     * @return Whether the player is in an Aether Portal, as a {@link Boolean}.
-     */
-    public boolean isInPortal() {
-        return this.isInAetherPortal;
-    }
-
-    public void setPortalTimer(int timer) {
-        this.aetherPortalTimer = timer;
-    }
-
-    /**
-     * @return The {@link Integer} timer for how long the player has stood in a portal.
-     */
-    public int getPortalTimer() {
-        return this.aetherPortalTimer;
-    }
-
-    /**
-     * @return The {@link Float} timer for the portal vignette animation time.
-     */
-    public float getPortalAnimTime() {
-        return this.portalAnimTime;
-    }
-
-    /**
-     * @return The previous {@link Float} for the portal animation timer.
-     */
-    public float getPrevPortalAnimTime() {
-        return this.prevPortalAnimTime;
     }
 
     public void setHitting(boolean isHitting) {

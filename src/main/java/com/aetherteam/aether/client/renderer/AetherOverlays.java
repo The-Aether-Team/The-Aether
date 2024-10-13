@@ -3,6 +3,8 @@ package com.aetherteam.aether.client.renderer;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.attachment.AetherPlayerAttachment;
+import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.passive.Moa;
@@ -17,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -62,10 +65,9 @@ public class AetherOverlays {
     public static void registerOverlays(RegisterGuiLayersEvent event) {
         event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "aether_portal_overlay"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
-            Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                renderAetherPortalOverlay(guiGraphics, minecraft, window, player, partialTicks);
+                renderAetherPortalOverlay(guiGraphics, minecraft, player.getData(AetherDataAttachments.AETHER_PLAYER.get()), partialTicks);
             }
         });
         event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "inebriation_vignette"), (guiGraphics, partialTicks) -> {
@@ -123,26 +125,26 @@ public class AetherOverlays {
      * Warning for "deprecation" is suppressed because vanilla calls {@link net.minecraft.client.renderer.block.BlockModelShaper#getParticleIcon(BlockState)} just fine.
      */
     @SuppressWarnings("deprecation")
-    private static void renderAetherPortalOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, Player player, DeltaTracker partialTicks) {
-//        var handler = player.getData(AetherDataAttachments.AETHER_PLAYER);
-//        PoseStack poseStack = guiGraphics.pose();
-//        float timeInPortal = Mth.lerp(partialTicks.getGameTimeDeltaPartialTick(false), handler.getOldPortalIntensity(), handler.getPortalIntensity());
-//        if (timeInPortal > 0.0F) {
-//            if (timeInPortal < 1.0F) {
-//                timeInPortal = timeInPortal * timeInPortal;
-//                timeInPortal = timeInPortal * timeInPortal;
-//                timeInPortal = timeInPortal * 0.8F + 0.2F;
-//            }
-//
-//            poseStack.pushPose();
-//            RenderSystem.disableDepthTest();
-//            RenderSystem.depthMask(false);
-//            TextureAtlasSprite textureAtlasSprite = minecraft.getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState());
-//            guiGraphics.blit(0, 0, -90, window.getGuiScaledWidth(), window.getGuiScaledHeight(), textureAtlasSprite, 1.0F, 1.0F, 1.0F, timeInPortal);
-//            RenderSystem.depthMask(true);
-//            RenderSystem.enableDepthTest();
-//            poseStack.popPose();
-//        }
+    private static void renderAetherPortalOverlay(GuiGraphics guiGraphics, Minecraft minecraft, AetherPlayerAttachment handler, DeltaTracker partialTicks) {
+        float timeInPortal = Mth.lerp(partialTicks.getGameTimeDeltaPartialTick(false), handler.getOldPortalIntensity(), handler.getPortalIntensity());
+        if (timeInPortal > 0.0F) {
+            if (timeInPortal < 1.0F) {
+                timeInPortal *= timeInPortal;
+                timeInPortal *= timeInPortal;
+                timeInPortal = timeInPortal * 0.8F + 0.2F;
+            }
+
+            RenderSystem.disableDepthTest();
+            RenderSystem.depthMask(false);
+            RenderSystem.enableBlend();
+            guiGraphics.setColor(1.0F, 1.0F, 1.0F, timeInPortal);
+            TextureAtlasSprite textureatlassprite = minecraft.getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState());
+            guiGraphics.blit(0, 0, -90, guiGraphics.guiWidth(), guiGraphics.guiHeight(), textureatlassprite);
+            RenderSystem.disableBlend();
+            RenderSystem.depthMask(true);
+            RenderSystem.enableDepthTest();
+            guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        }
     }
 
     /**

@@ -63,7 +63,7 @@ public class PortalTriggerSoundInstance extends AbstractTickableSoundInstance {
     @Override
     public void tick() {
         var data = this.player.getData(AetherDataAttachments.AETHER_PLAYER);
-        if (!data.isInPortal()) {
+        if (data.getPortalIntensity() > 0.0F) {
             this.fade++;
             this.volume = (float) Math.exp(-(this.fade / (75 / 1.5))) - (1 - this.startingVolume);
             if (this.fade >= 75) {
