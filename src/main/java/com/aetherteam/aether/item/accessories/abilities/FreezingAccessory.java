@@ -34,7 +34,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
         if (!(livingEntity instanceof Player player) || (!player.getAbilities().flying && !player.isSpectator())) {
             int damage = this.freezeBlocks(livingEntity.level(), livingEntity.blockPosition(), stack, 1.9F);
             if (livingEntity.level() instanceof ServerLevel serverLevel) {
-                context.getStack().hurtAndBreak(1, serverLevel, livingEntity, (item) -> AccessoriesAPI.breakStack(context));
+                context.getStack().hurtAndBreak(damage / 3, serverLevel, livingEntity, (item) -> AccessoriesAPI.breakStack(context));
             }
         }
     }

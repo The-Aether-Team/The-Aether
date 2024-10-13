@@ -5,6 +5,7 @@ import com.aetherteam.aether.recipe.serializer.BiomeParameterRecipeSerializer;
 import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.mojang.datafixers.util.Either;
+import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -18,7 +19,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
 import java.util.Optional;
 
 public class BiomeParameterRecipeBuilder implements RecipeBuilder {
@@ -43,7 +43,7 @@ public class BiomeParameterRecipeBuilder implements RecipeBuilder {
         return recipe(BlockPropertyPair.of(resultPair.block(), resultPair.properties()), ingredient, Optional.of(Either.left(biomeKey)), factory);
     }
 
-    public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties, ResourceKey<Biome> biomeKey, BiomeParameterRecipeSerializer.Factory<?> factory) {
+    public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, Reference2ObjectArrayMap<Property<?>, Comparable<?>> resultProperties, ResourceKey<Biome> biomeKey, BiomeParameterRecipeSerializer.Factory<?> factory) {
         return recipe(BlockPropertyPair.of(resultBlock, Optional.ofNullable(resultProperties)), ingredient, Optional.of(Either.left(biomeKey)), factory);
     }
 
@@ -55,7 +55,7 @@ public class BiomeParameterRecipeBuilder implements RecipeBuilder {
         return recipe(BlockPropertyPair.of(resultPair.block(), resultPair.properties()), ingredient, Optional.of(Either.right(biomeTag)), factory);
     }
 
-    public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties, TagKey<Biome> biomeTag, BiomeParameterRecipeSerializer.Factory<?> factory) {
+    public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, Reference2ObjectArrayMap<Property<?>, Comparable<?>> resultProperties, TagKey<Biome> biomeTag, BiomeParameterRecipeSerializer.Factory<?> factory) {
         return recipe(BlockPropertyPair.of(resultBlock, Optional.of(resultProperties)), ingredient, Optional.of(Either.right(biomeTag)), factory);
     }
 

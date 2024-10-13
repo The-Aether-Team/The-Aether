@@ -11,6 +11,7 @@ import com.aetherteam.nitrogen.data.providers.NitrogenRecipeProvider;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.builder.BlockStateRecipeBuilder;
 import com.mojang.datafixers.util.Either;
+import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -29,7 +30,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.common.Tags;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
@@ -191,14 +191,14 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
     }
 
     protected BlockStateRecipeBuilder accessoryFreezable(Block result, Block ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(this.pair(ingredient, Optional.of(Map.of(BlockStateProperties.LEVEL, 0)))), result, AccessoryFreezableRecipe::new);
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(this.pair(ingredient, Optional.of(this.map(BlockStateProperties.LEVEL, 0)))), result, AccessoryFreezableRecipe::new);
     }
 
     protected BiomeParameterRecipeBuilder convertPlacement(Block result, Block ingredient, TagKey<Biome> biome) {
         return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, biome, PlacementConversionRecipe::new);
     }
 
-    protected BiomeParameterRecipeBuilder convertPlacementWithProperties(Block result, Map<Property<?>, Comparable<?>> resultProperties, Block ingredient, Map<Property<?>, Comparable<?>> ingredientProperties, TagKey<Biome> biome) {
+    protected BiomeParameterRecipeBuilder convertPlacementWithProperties(Block result, Reference2ObjectArrayMap<Property<?>, Comparable<?>> resultProperties, Block ingredient, Reference2ObjectArrayMap<Property<?>, Comparable<?>> ingredientProperties, TagKey<Biome> biome) {
         return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(this.pair(ingredient, Optional.of(ingredientProperties))), result, resultProperties, biome, PlacementConversionRecipe::new);
     }
 
@@ -216,5 +216,9 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
 
     protected PlacementBanBuilder banBlockPlacementWithBypass(Block ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
         return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), Optional.of(BlockStateIngredient.of(bypass)), Either.right(biome));
+    }
+
+    public Reference2ObjectArrayMap<Property<?>, Comparable<?>> map(Property<?> key, Comparable<?> value) {
+        return new Reference2ObjectArrayMap<>(new Property<?>[]{key}, new Comparable<?>[]{value});
     }
 }

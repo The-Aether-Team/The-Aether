@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.*;
 import net.neoforged.neoforge.common.Tags;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -865,16 +864,16 @@ public class AetherRecipeData extends AetherRecipeProvider {
         this.accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, this.name("accessory_freeze_lava"));
 
         this.convertPlacement(AetherBlocks.AEROGEL.get(), Blocks.LAVA, AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("aerogel_conversion"));
-        this.convertPlacementWithProperties(Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, false), Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("campfire_conversion"));
+        this.convertPlacementWithProperties(Blocks.CAMPFIRE, this.map(CampfireBlock.LIT, false), Blocks.CAMPFIRE, this.map(CampfireBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("campfire_conversion"));
 
         List<Block> candles = List.of(Blocks.CANDLE, Blocks.WHITE_CANDLE, Blocks.ORANGE_CANDLE, Blocks.MAGENTA_CANDLE, Blocks.LIGHT_BLUE_CANDLE, Blocks.YELLOW_CANDLE, Blocks.LIME_CANDLE, Blocks.PINK_CANDLE, Blocks.GRAY_CANDLE, Blocks.LIGHT_GRAY_CANDLE, Blocks.CYAN_CANDLE, Blocks.PURPLE_CANDLE, Blocks.BLUE_CANDLE, Blocks.BROWN_CANDLE, Blocks.GREEN_CANDLE, Blocks.RED_CANDLE, Blocks.BLACK_CANDLE);
         for (Block candle : candles) {
-            this.convertPlacementWithProperties(candle, Map.of(CandleBlock.LIT, false), candle, Map.of(CandleBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, this.name(candle.getDescriptionId().replace(".", "_").replace("block_minecraft_", "") + "_conversion"));
+            this.convertPlacementWithProperties(candle, this.map(CandleBlock.LIT, false), candle, this.map(CandleBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, this.name(candle.getDescriptionId().replace(".", "_").replace("block_minecraft_", "") + "_conversion"));
         }
 
         List<Block> candleCakes = List.of(Blocks.CANDLE_CAKE, Blocks.WHITE_CANDLE_CAKE, Blocks.ORANGE_CANDLE_CAKE, Blocks.MAGENTA_CANDLE_CAKE, Blocks.LIGHT_BLUE_CANDLE_CAKE, Blocks.YELLOW_CANDLE_CAKE, Blocks.LIME_CANDLE_CAKE, Blocks.PINK_CANDLE_CAKE, Blocks.GRAY_CANDLE_CAKE, Blocks.LIGHT_GRAY_CANDLE_CAKE, Blocks.CYAN_CANDLE_CAKE, Blocks.PURPLE_CANDLE_CAKE, Blocks.BLUE_CANDLE_CAKE, Blocks.BROWN_CANDLE_CAKE, Blocks.GREEN_CANDLE_CAKE, Blocks.RED_CANDLE_CAKE, Blocks.BLACK_CANDLE_CAKE);
         for (Block candleCake : candleCakes) {
-            this.convertPlacementWithProperties(candleCake, Map.of(CandleCakeBlock.LIT, false), candleCake, Map.of(CandleCakeBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, this.name(candleCake.getDescriptionId().replace(".", "_").replace("block_minecraft_", "") + "_conversion"));
+            this.convertPlacementWithProperties(candleCake, this.map(CandleCakeBlock.LIT, false), candleCake, this.map(CandleCakeBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, this.name(candleCake.getDescriptionId().replace(".", "_").replace("block_minecraft_", "") + "_conversion"));
         }
 
         this.convertPlacement(Blocks.CARVED_PUMPKIN, Blocks.JACK_O_LANTERN, AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("jack_o_lantern_conversion"));
