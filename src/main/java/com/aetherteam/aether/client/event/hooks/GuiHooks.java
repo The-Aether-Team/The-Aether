@@ -72,7 +72,7 @@ public class GuiHooks {
      */
     private static boolean areAccessoryTagsFilled() {
         boolean flag = true;
-//        for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
+//        for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) { //todo
 //            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", string))).spliterator().estimateSize() == 0) {
 //                flag = false;
 //            }
@@ -90,7 +90,7 @@ public class GuiHooks {
      */
     @Nullable
     public static AccessoryButton setupAccessoryButton(Screen screen, Tuple<Integer, Integer> offsets) {
-//        AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen);
+//        AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen); //todo
 //        if (containerScreen != null) {
 //            return new AccessoryButton(containerScreen, containerScreen.getGuiLeft() + offsets.getA(), containerScreen.getGuiTop() + offsets.getB(), AccessoriesScreen.ACCESSORIES_BUTTON);
 //        }
@@ -106,7 +106,7 @@ public class GuiHooks {
      */
     @Nullable
     private static AbstractContainerScreen<?> canCreateAccessoryButtonForScreen(Screen screen) {
-//        if (screen instanceof InventoryScreen || screen instanceof io.wispforest.accessories.client.gui.AccessoriesScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) {
+//        if (screen instanceof InventoryScreen || screen instanceof io.wispforest.accessories.client.gui.AccessoriesScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) { //todo
 //            return (AbstractContainerScreen<?>) screen;
 //        } else if (screen instanceof AccessoriesScreen) {
 //            shouldAddButton = true;

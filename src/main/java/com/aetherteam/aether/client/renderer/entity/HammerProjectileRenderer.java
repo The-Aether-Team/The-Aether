@@ -28,9 +28,8 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
     public void render(HammerProjectile hammer, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-        VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(hammer)));
         PoseStack.Pose pose = poseStack.last();
+        VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(hammer)));
         vertex(consumer, pose, packedLight, 0.0F, 0.0F, 0.0F, 1.0F);
         vertex(consumer, pose, packedLight, 1.0F, 0.0F, 1.0F, 1.0F);
         vertex(consumer, pose, packedLight, 1.0F, 1.0F, 1.0F, 0.0F);
@@ -40,7 +39,12 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
     }
 
     private static void vertex(VertexConsumer consumer, PoseStack.Pose pose, int packedLight, float offsetX, float offsetY, float textureX, float textureY) {
-        consumer.addVertex(pose, offsetX - 0.5F, offsetY - 0.25F, 0.0F).setColor(255, 255, 255, 255).setUv(textureX, textureY).setOverlay(OverlayTexture.NO_OVERLAY).setLight(packedLight).setNormal(pose, 0.0F, 1.0F, 0.0F);
+        consumer.addVertex(pose, offsetX - 0.5F, offsetY - 0.25F, 0.0F)
+            .setColor(-1)
+            .setUv(textureX, textureY)
+            .setOverlay(OverlayTexture.NO_OVERLAY)
+            .setLight(packedLight)
+            .setNormal(pose, 0.0F, 1.0F, 0.0F);
     }
 
     /**
