@@ -173,6 +173,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherBlocks.CHEST_MIMIC.get());
                 output.accept(AetherBlocks.PRESENT.get());
                 output.accept(AetherItems.createSwetBannerItemStack(features.holders().lookupOrThrow(Registries.BANNER_PATTERN)));
+                output.accept(AetherItems.AETHER_PORTAL_FRAME.get());
             }).build());
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> AETHER_REDSTONE_BLOCKS = CREATIVE_MODE_TABS.register("redstone_blocks", () -> CreativeModeTab.builder()
             .withTabsBefore(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "functional_blocks"))
@@ -271,7 +272,6 @@ public class AetherCreativeTabs {
                 output.accept(AetherItems.MUSIC_DISC_AETHER_TUNE.get());
                 output.accept(AetherItems.MUSIC_DISC_ASCENDING_DAWN.get());
                 output.accept(AetherItems.MUSIC_DISC_SLIDERS_WRATH.get());
-                output.accept(AetherItems.AETHER_PORTAL_FRAME.get());
             }).build());
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> AETHER_ARMOR_AND_ACCESSORIES = CREATIVE_MODE_TABS.register("armor_and_accessories", () -> CreativeModeTab.builder()
             .withTabsBefore(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "equipment_and_utilities"))
