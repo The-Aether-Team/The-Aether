@@ -1,3 +1,3 @@
-execute in aether:the_aether run tp @p ~ ~ ~
-gamemode spectator @p
-effect give @p minecraft:night_vision infinite
+execute in aether:the_aether run tp @s ~ ~ ~
+gamemode spectator @s
+effect give @s minecraft:night_vision infinite
