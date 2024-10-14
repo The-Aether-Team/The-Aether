@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -29,6 +31,7 @@ public class ToolAbilityListener {
      */
     public static void listen(IEventBus bus) {
         bus.addListener(ToolAbilityListener::setupToolModifications);
+        bus.addListener(ToolAbilityListener::modifyItemAttributes);
         bus.addListener(ToolAbilityListener::doHolystoneAbility);
         bus.addListener(ToolAbilityListener::modifyBreakSpeed);
         bus.addListener(ToolAbilityListener::doGoldenOakStripping);
@@ -51,6 +54,15 @@ public class ToolAbilityListener {
         BlockState newState = AbilityHooks.ToolHooks.setupItemAbilities(levelAccessor, pos, oldState, ItemAbility);
         if (newState != oldState && !event.isSimulated() && !event.isCanceled()) {
             event.setFinalState(newState);
+        }
+    }
+
+    public static void modifyItemAttributes(ItemAttributeModifierEvent event) {
+        ItemStack itemStack = event.getItemStack();
+        ItemAttributeModifiers modifiers = event.getDefaultModifiers();
+        ItemAttributeModifiers.Entry modifierEntry = AbilityHooks.ToolHooks.handleZaniteToolAbilityModifiers(modifiers, itemStack);
+        if (modifierEntry != null) {
+            event.replaceModifier(modifierEntry.attribute(), modifierEntry.modifier(), modifierEntry.slot());
         }
     }
 
@@ -77,7 +89,6 @@ public class ToolAbilityListener {
         Player player = event.getEntity();
         ItemStack itemStack = player.getMainHandItem();
         if (!event.isCanceled()) {
-            event.setNewSpeed(AbilityHooks.ToolHooks.handleZaniteToolAbility(itemStack, event.getNewSpeed()));
             event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(player, blockState, itemStack, event.getNewSpeed()));
         }
     }

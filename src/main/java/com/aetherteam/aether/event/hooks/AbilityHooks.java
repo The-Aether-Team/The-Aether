@@ -40,6 +40,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -300,11 +302,11 @@ public class AbilityHooks {
          * @see ZaniteTool#increaseSpeed(ItemStack, float)
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
          */
-        public static float handleZaniteToolAbility(ItemStack stack, float speed) {
-            if (stack.getItem() instanceof ZaniteTool zaniteTool) {
-                return zaniteTool.increaseSpeed(stack, speed);
+        public static ItemAttributeModifiers.Entry handleZaniteToolAbilityModifiers(ItemAttributeModifiers modifiers, ItemStack stack) {
+            if (stack.getItem() instanceof ZaniteTool zaniteTool && stack.getItem() instanceof TieredItem tieredItem) {
+                return zaniteTool.increaseSpeed(modifiers, stack, tieredItem.getTier().getSpeed());
             }
-            return speed;
+            return null;
         }
 
         /**
