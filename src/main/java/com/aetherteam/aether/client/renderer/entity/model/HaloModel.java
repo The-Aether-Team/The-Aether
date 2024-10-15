@@ -30,11 +30,7 @@ public class HaloModel<T extends Entity> extends EntityModel<T> {
 
     @Override
     public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-        if (this.crouching) {
-            this.halo.y = 4.2F;
-        } else {
-            this.halo.y = 0.0F;
-        }
+
     }
 
     @Override

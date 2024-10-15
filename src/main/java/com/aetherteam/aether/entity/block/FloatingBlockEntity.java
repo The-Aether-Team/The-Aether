@@ -57,7 +57,7 @@ import java.util.function.Predicate;
  * [CODE COPY] - {@link net.minecraft.world.entity.item.FallingBlockEntity}.<br><br>
  * Modified for reversed gravity.
  */
-public class FloatingBlockEntity extends Entity {
+public class FloatingBlockEntity extends Entity { //todo keep up to date
     private static final EntityDataAccessor<BlockPos> DATA_START_POS = SynchedEntityData.defineId(FloatingBlockEntity.class, EntityDataSerializers.BLOCK_POS);
     private BlockState blockState = Blocks.SAND.defaultBlockState();
     private int time;

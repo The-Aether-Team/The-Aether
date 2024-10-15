@@ -22,7 +22,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 /**
  * This interface has several methods for handling the movement for mounted mobs.
  */
-public interface MountableMob {
+public interface MountableMob { //todo keep up to date
     ResourceLocation MOUNT_HEIGHT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "mounted_step_height_increase");
     ResourceLocation DEFAULT_HEIGHT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "default_step_height_increase");
     AttributeModifier STEP_HEIGHT_MODIFIER = new AttributeModifier(MOUNT_HEIGHT_LOCATION, 0.4, AttributeModifier.Operation.ADD_VALUE);

@@ -63,6 +63,11 @@ public class PlayerHaloLayer<T extends Player, M extends PlayerModel<T>> extends
                 this.playerHalo.crouching = this.getParentModel().crouching;
                 this.playerHalo.halo.yRot = this.getParentModel().head.yRot;
                 this.playerHalo.halo.xRot = this.getParentModel().head.xRot;
+                if (entity.isCrouching()) {
+                    this.playerHalo.halo.y = 4.2F;
+                } else {
+                    this.playerHalo.halo.y = 0.0F;
+                }
                 this.playerHalo.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                 Triple<Float, Float, Float> color;
                 if (Minecraft.getInstance().screen instanceof AetherCustomizationsScreen aetherCustomizationsScreen) {

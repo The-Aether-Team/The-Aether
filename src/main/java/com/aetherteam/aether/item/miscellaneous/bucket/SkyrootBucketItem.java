@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class SkyrootBucketItem extends BucketItem {
+public class SkyrootBucketItem extends BucketItem { //todo keep up to date
     /**
      * Map of replacements for vanilla buckets to Skyroot buckets.
      */

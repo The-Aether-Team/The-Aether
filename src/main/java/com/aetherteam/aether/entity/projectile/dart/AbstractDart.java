@@ -25,7 +25,7 @@ import net.minecraft.world.phys.HitResult;
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
-public abstract class AbstractDart extends AbstractArrow {
+public abstract class AbstractDart extends AbstractArrow { //todo keep up to date
     private int ticksInAir = 0;
 
     protected AbstractDart(EntityType<? extends AbstractDart> type, Level level) {
