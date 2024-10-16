@@ -15,8 +15,13 @@ public class GoldenDart extends AbstractDart {
         this.setBaseDamage(0.5);
     }
 
-    public GoldenDart(Level level, LivingEntity shooter, @Nullable ItemStack firedFromWeapon) {
-        super(AetherEntityTypes.GOLDEN_DART.get(), level, shooter, AetherItems.GOLDEN_DART, firedFromWeapon);
+    public GoldenDart(Level level, LivingEntity shooter, ItemStack itemStack, @Nullable ItemStack firedFromWeapon) {
+        super(AetherEntityTypes.GOLDEN_DART.get(), level, shooter,itemStack, firedFromWeapon);
+        this.setBaseDamage(0.5);
+    }
+
+    public GoldenDart(EntityType<? extends GoldenDart> entityType, Level level, double x, double y, double z, ItemStack itemStack, @Nullable ItemStack firedFromWeapon) {
+        super(entityType, x, y, z, level, itemStack, firedFromWeapon);
         this.setBaseDamage(0.5);
     }
 

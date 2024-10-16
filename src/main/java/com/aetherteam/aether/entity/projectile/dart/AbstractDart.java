@@ -41,6 +41,10 @@ public abstract class AbstractDart extends AbstractArrow {
         super(type, shooter, level, new ItemStack(pickupItem.get()), firedFromWeapon);
     }
 
+    public AbstractDart(EntityType<? extends AbstractDart> entityType, double x, double y, double z, Level level, ItemStack itemStack, ItemStack firedFromWeapon) {
+        super(entityType, x, y, z, level, itemStack, firedFromWeapon);
+    }
+
     @Override
     public void tick() {
         super.tick();

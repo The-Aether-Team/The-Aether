@@ -1,17 +1,16 @@
 package com.aetherteam.aether.item.combat;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.projectile.dart.AbstractDart;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -72,58 +72,40 @@ public class DartShooterItem extends ProjectileWeaponItem { //implements Vanisha
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (user instanceof Player player) {
-            ItemStack ammoItem = player.getProjectile(stack); // Gets matching ammo stack from inventory according to DartShooterItem#getAllSupportedProjectiles().
+            ItemStack itemStack = player.getProjectile(stack);
+            if (!itemStack.isEmpty()) {
+                net.neoforged.neoforge.event.EventHooks.onArrowLoose(stack, level, player, 0, !itemStack.isEmpty());
 
-            boolean creativeOrShooterIsInfinite = player.getAbilities().instabuild || stack.getEnchantmentLevel(level.holderOrThrow(Enchantments.INFINITY)) > 0; // Note: Dart shooters can't be enchanted with Infinity in survival, but we still implement the behavior.
-            boolean stillHasAmmo = !ammoItem.isEmpty() || creativeOrShooterIsInfinite;
-
-            EventHooks.onArrowLoose(stack, level, player, 0, stillHasAmmo);
-
-            if (stillHasAmmo) { // Seems to be a failsafe check; under normal circumstances this should already be true because of the checks in DartShooterItem#use().
-                if (ammoItem.isEmpty()) {
-                    ammoItem = new ItemStack(this.getDartType().get()); // Another failsafe to create a stack if somehow the ammoItem is empty at this stage of the code; under normal circumstances this seems to never get reached.
+                List<ItemStack> list = draw(stack, itemStack, player);
+                if (level instanceof ServerLevel serverlevel && !list.isEmpty()) {
+                    this.shoot(serverlevel, player, player.getUsedItemHand(), stack, list, 3.1F, 1.2F, false, null);
                 }
-                boolean creativeOrDartIsInfinite = player.getAbilities().instabuild || (ammoItem.getItem() instanceof DartItem dartItem && dartItem.isInfinite(stack, level));
 
-                if (!level.isClientSide()) {
-                    DartItem dartItem = (DartItem) (ammoItem.getItem() instanceof DartItem dart ? dart : this.getDartType().get());
-                    AbstractDart dart = dartItem.createDart(level, player);
-                    if (dart != null) {
-                        dart = this.customDart(dart);
-                        dart.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.1F, 1.2F);
-                        dart.setNoGravity(true); // Darts have no gravity.
-
-                        int powerModifier = stack.getEnchantmentLevel(level.holderOrThrow(Enchantments.POWER));
-                        if (powerModifier > 0) {
-                            dart.setBaseDamage(dart.getBaseDamage() + powerModifier * 0.1 + 0.1);
-                        }
-
-                        int punchModifier = stack.getEnchantmentLevel(level.holderOrThrow(Enchantments.PUNCH));
-                        if (punchModifier > 0) {
-//                            dart.setKnockback(punchModifier);
-                        }
-
-                        if (creativeOrDartIsInfinite || player.getAbilities().instabuild) {
-                            dart.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
-                        }
-
-                        level.addFreshEntity(dart);
-                    } else {
-                        Aether.LOGGER.warn("Failed to create dart from Dart Shooter");
-                    }
-                }
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), AetherSoundEvents.ITEM_DART_SHOOTER_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
-
-                if (!creativeOrDartIsInfinite && !player.getAbilities().instabuild) {
-                    ammoItem.shrink(1);
-                    if (ammoItem.isEmpty()) {
-                        player.getInventory().removeItem(ammoItem);
-                    }
-                }
                 player.awardStat(Stats.ITEM_USED.get(this));
             }
         }
         return stack;
+    }
+
+    @Override
+    protected void shootProjectile(LivingEntity shooter, Projectile projectile, int index, float velocity, float inaccuracy, float angle, @Nullable LivingEntity target) {
+        projectile.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, inaccuracy);
+    }
+
+    @Override
+    protected Projectile createProjectile(Level level, LivingEntity shooter, ItemStack weapon, ItemStack ammo, boolean isCrit) {
+        DartItem dartItem = ammo.getItem() instanceof DartItem dart ? dart : (DartItem) this.getDartType().get();
+        AbstractDart dart = dartItem.createDart(level, ammo, shooter, weapon);
+        if (dart != null) {
+            dart.setNoGravity(true); // Darts have no gravity.
+            return this.customDart(dart, ammo, weapon);
+        }
+        return super.createProjectile(level, shooter, weapon, ammo, isCrit);
+    }
+
+    public AbstractDart customDart(AbstractDart dart, ItemStack projectileStack, ItemStack weaponStack) {
+        return dart;
     }
 
     /**
@@ -147,21 +129,12 @@ public class DartShooterItem extends ProjectileWeaponItem { //implements Vanisha
         return (stack) -> stack.is(this.getDartType().get());
     }
 
-    public AbstractDart customDart(AbstractDart dart) {
-        return dart;
-    }
-
     /**
      * @return The block range as an {@link Integer} that an entity's AI is capable of targeting to shoot with this weapon.
      */
     @Override
     public int getDefaultProjectileRange() {
         return 15;
-    }
-
-    @Override
-    protected void shootProjectile(LivingEntity shooter, Projectile projectile, int index, float velocity, float inaccuracy, float angle, @Nullable LivingEntity target) {
-
     }
 
     @Override

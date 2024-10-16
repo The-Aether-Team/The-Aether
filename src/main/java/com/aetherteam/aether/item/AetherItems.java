@@ -132,9 +132,9 @@ public class AetherItems {
 
     public static final DeferredItem<Item> LIGHTNING_KNIFE = ITEMS.register("lightning_knife", LightningKnifeItem::new);
 
-    public static final DeferredItem<Item> GOLDEN_DART = ITEMS.register("golden_dart", () -> new DartItem(AetherEntityTypes.GOLDEN_DART, new Item.Properties()));
-    public static final DeferredItem<Item> POISON_DART = ITEMS.register("poison_dart", () -> new DartItem(AetherEntityTypes.POISON_DART, new Item.Properties()));
-    public static final DeferredItem<Item> ENCHANTED_DART = ITEMS.register("enchanted_dart", () -> new DartItem(AetherEntityTypes.ENCHANTED_DART, new Item.Properties().rarity(Rarity.RARE)));
+    public static final DeferredItem<Item> GOLDEN_DART = ITEMS.register("golden_dart", () -> new GoldenDartItem(new Item.Properties()));
+    public static final DeferredItem<Item> POISON_DART = ITEMS.register("poison_dart", () -> new PoisonDartItem(new Item.Properties()));
+    public static final DeferredItem<Item> ENCHANTED_DART = ITEMS.register("enchanted_dart", () -> new EnchantedDartItem(new Item.Properties().rarity(Rarity.RARE)));
 
     public static final DeferredItem<Item> GOLDEN_DART_SHOOTER = ITEMS.register("golden_dart_shooter", () -> new DartShooterItem(GOLDEN_DART, new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> POISON_DART_SHOOTER = ITEMS.register("poison_dart_shooter", () -> new DartShooterItem(POISON_DART, new Item.Properties().stacksTo(1)));
