@@ -384,6 +384,7 @@
   "entity.aether.fire_crystal": "Fire Crystal",
   "entity.aether.fire_minion": "Fire Minion",
   "entity.aether.floating_block": "Floating Block",
+  "entity.aether.floating_block_type": "Floating %s",
   "entity.aether.flying_cow": "Flying Cow",
   "entity.aether.golden_dart": "Golden Dart",
   "entity.aether.golden_parachute": "Golden Parachute",

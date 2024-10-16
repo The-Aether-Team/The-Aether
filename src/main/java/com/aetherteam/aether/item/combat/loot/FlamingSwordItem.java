@@ -44,7 +44,7 @@ public class FlamingSwordItem extends SwordItem {
                     if (fireAspectModifier > 0) {
                         defaultTime += (fireAspectModifier * 4);
                     }
-                    target.setRemainingFireTicks(defaultTime);
+                    target.igniteForSeconds(defaultTime);
                 }
             }
         }

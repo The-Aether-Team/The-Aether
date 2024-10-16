@@ -195,7 +195,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         for (Entity target : entities) {
             if (target instanceof LivingEntity) {
                 target.hurt(AetherDamageTypes.entityDamageSource(this.level(), AetherDamageTypes.INCINERATION, this), INCINERATION_DAMAGE);
-                target.setRemainingFireTicks(INCINERATION_FIRE_DURATION);
+                target.igniteForSeconds(INCINERATION_FIRE_DURATION);
             }
         }
     }

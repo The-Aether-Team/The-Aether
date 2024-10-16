@@ -466,7 +466,7 @@ public class AbilityHooks {
                 if (abstractArrow.hasData(AetherDataAttachments.PHOENIX_ARROW)) {
                     var data = abstractArrow.getData(AetherDataAttachments.PHOENIX_ARROW);
                     if (data.isPhoenixArrow() && data.getFireTime() > 0) {
-                        impactedEntity.setRemainingFireTicks(data.getFireTime());
+                        impactedEntity.igniteForSeconds(data.getFireTime());
                     }
                 }
             }
