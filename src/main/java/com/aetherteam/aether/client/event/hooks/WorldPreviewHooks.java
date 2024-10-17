@@ -84,15 +84,15 @@ public class WorldPreviewHooks {
      *
      * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onCameraView(ViewportEvent.ComputeCameraAngles)
      */
-    public static void angleCamera() {
+    public static void angleCamera(double partialTick) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-//        if (WorldDisplayHelper.isActive() && player != null) { //todo
-//            float f = (float) (minecraft.getDeltaFrameTime() * minecraft.options.panoramaSpeed().get()); // Ensures the rotation speed isn't tied to game tick speed
-//            float spin = wrapDegrees(player.getViewYRot(minecraft.getDeltaFrameTime()) + f * 0.2F);
-//            player.setYRot(spin);
-//            player.setXRot(0);
-//        }
+        if (WorldDisplayHelper.isActive() && player != null) {
+            float f = (float) (partialTick * minecraft.options.panoramaSpeed().get()); // Ensures the rotation speed isn't tied to game tick speed
+            float spin = wrapDegrees(player.getViewYRot((float) partialTick) + f * 0.2F);
+            player.setYRot(spin);
+            player.setXRot(0);
+        }
     }
 
     /**

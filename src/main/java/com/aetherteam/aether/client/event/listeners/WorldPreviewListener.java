@@ -62,7 +62,9 @@ public class WorldPreviewListener {
      * @see WorldPreviewHooks#angleCamera()
      */
     public static void onCameraView(ViewportEvent.ComputeCameraAngles event) {
-        WorldPreviewHooks.angleCamera();
+        double partialTick = event.getPartialTick();
+
+        WorldPreviewHooks.angleCamera(partialTick);
     }
 
     /**
