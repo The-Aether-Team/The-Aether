@@ -28,7 +28,6 @@ public class ElytraLayerMixin<T extends LivingEntity> {
     @ModifyReturnValue(at = @At("RETURN"), method = "getElytraTexture(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/resources/ResourceLocation;", remap = false)
     private ResourceLocation getElytraTexture(ResourceLocation original, @Local(ordinal = 0, argsOnly = true) ItemStack stack, @Local(ordinal = 0, argsOnly = true) T entity) {
         if (entity instanceof ArmorStand armorStand) {
-
             Player player = Minecraft.getInstance().player;
             SlotEntryReference result = EquipmentUtil.getCape(armorStand);
             if (result != null && AetherMixinHooks.isCapeVisible(player)) {
@@ -36,23 +35,6 @@ public class ElytraLayerMixin<T extends LivingEntity> {
                 if (texture != null)
                     return texture;
             }
-
-
-//            String identifier = CapeItem.getIdentifierStatic();
-//            Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
-//            if (lazyHandler.isPresent()) {
-//                ICuriosItemHandler handler = lazyHandler.get();
-//                Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
-//                if (stacksHandler.isPresent()) {
-//                    IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
-//                    if (0 < stackHandler.getSlots()) {
-//                        ItemStack itemStack = stackHandler.getStackInSlot(0);
-//                        ResourceLocation texture = AetherMixinHooks.getCapeTexture(itemStack);
-//                        if (texture != null)
-//                            return texture;
-//                    }
-//                }
-//            }
         }
         return original;
     }
