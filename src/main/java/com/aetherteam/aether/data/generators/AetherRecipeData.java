@@ -835,10 +835,10 @@ public class AetherRecipeData extends AetherRecipeProvider {
 
         this.hiddenFreezingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_HIGH.get(), AetherItems.MUSIC_DISC_CHINCHILLA.get(), 1.0F, 500).save(consumer, this.name("high_freezing"));
 
-        this.freezingRecipeWithUnlockTag(RecipeCategory.BUILDING_BLOCKS, Blocks.BLUE_ICE, Blocks.PACKED_ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 500, "water_bucket").save(consumer, this.name("blue_ice_freezing"));
-        this.freezingRecipeWithUnlockTag(RecipeCategory.BUILDING_BLOCKS, Blocks.PACKED_ICE, Blocks.ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 300, "water_bucket").save(consumer, this.name("packed_ice_freezing"));
-        this.freezingRecipeWithTag(RecipeCategory.BUILDING_BLOCKS, Blocks.ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 200, "water_bucket").save(consumer, this.name("ice_from_bucket_freezing"));
-        this.freezingRecipe(RecipeCategory.BUILDING_BLOCKS, Blocks.OBSIDIAN, Items.LAVA_BUCKET, 0.1F, 200).save(consumer, this.name("obsidian_from_bucket_freezing"));
+        this.freezingRecipeWithUnlockTag(RecipeCategory.BUILDING_BLOCKS, Blocks.BLUE_ICE, Blocks.PACKED_ICE, Tags.Items.BUCKETS_WATER, 0.1F, 500, "water_bucket").save(consumer, this.name("blue_ice_freezing"));
+        this.freezingRecipeWithUnlockTag(RecipeCategory.BUILDING_BLOCKS, Blocks.PACKED_ICE, Blocks.ICE, Tags.Items.BUCKETS_WATER, 0.1F, 300, "water_bucket").save(consumer, this.name("packed_ice_freezing"));
+        this.freezingRecipeWithTag(RecipeCategory.BUILDING_BLOCKS, Blocks.ICE, Tags.Items.BUCKETS_WATER, 0.1F, 200, "water_bucket").save(consumer, this.name("ice_from_bucket_freezing"));
+        this.freezingRecipeWithTag(RecipeCategory.BUILDING_BLOCKS, Blocks.OBSIDIAN, Tags.Items.BUCKETS_LAVA, 0.1F, 200, "lava_bucket").save(consumer, this.name("obsidian_from_bucket_freezing"));
 
         this.freezingRecipeWithTag(RecipeCategory.MISC, AetherItems.ICE_RING.get(), AetherTags.Items.FREEZABLE_RINGS, 1.0F, 800, "ring").save(consumer, this.name("ice_ring_from_freezing"));
 

@@ -4,7 +4,7 @@
   "cookingtime": 200,
   "experience": 0.1,
   "ingredient": {
-    "item": "minecraft:lava_bucket"
+    "tag": "c:buckets/lava"
   },
   "result": {
     "count": 1,

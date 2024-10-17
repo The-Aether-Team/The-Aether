@@ -92,6 +92,16 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.VALKYRIE_QUEEN.get(),
                 AetherEntityTypes.SUN_SPIRIT.get()
         );
+        this.tag(Tags.EntityTypes.CAPTURING_NOT_SUPPORTED).add(
+            AetherEntityTypes.SLIDER.get(),
+            AetherEntityTypes.VALKYRIE_QUEEN.get(),
+            AetherEntityTypes.SUN_SPIRIT.get()
+        );
+        this.tag(Tags.EntityTypes.TELEPORTING_NOT_SUPPORTED).add(
+            AetherEntityTypes.SLIDER.get(),
+            AetherEntityTypes.VALKYRIE_QUEEN.get(),
+            AetherEntityTypes.SUN_SPIRIT.get()
+        );
 
         // Vanilla
         this.tag(EntityTypeTags.IMPACT_PROJECTILES).add(
@@ -128,6 +138,9 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.AERBUNNY.get(),
                 AetherEntityTypes.BLUE_SWET.get(),
                 AetherEntityTypes.GOLDEN_SWET.get()
+        );
+        this.tag(EntityTypeTags.REDIRECTABLE_PROJECTILE).add(
+            AetherEntityTypes.ZEPHYR_SNOWBALL.get()
         );
     }
 }

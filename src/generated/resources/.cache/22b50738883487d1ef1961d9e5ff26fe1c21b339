@@ -1,4 +1,4 @@
-// 1.21	2024-10-12T19:57:00.7627514	Tags for minecraft:block mod id aether
+// 1.21	2024-10-16T20:19:13.5883943	Tags for minecraft:block mod id aether
 04c3617fbc472d94c5befb6664262911a296e0de data/aether/tags/block/aechor_plant_spawnable_deterrent.json
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/block/aechor_plant_spawnable_on.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/block/aerclouds.json
@@ -37,6 +37,7 @@ af61d0b4368cde926f896d6a9bda3fed75061d35 data/aether/tags/block/valkyrie_queen_u
 01f606af3f58ae6c9742c9c6e927e787256e6274 data/c/tags/block/bookshelves.json
 bc9de2bdb11aba0025a16f480e48e231376296ee data/c/tags/block/fences/wooden.json
 0bba5a874905f77d759a35126765746aff21acf2 data/c/tags/block/fence_gates/wooden.json
+3549a6c0791821524c9419a608b6af0de62b3530 data/c/tags/block/glass_blocks/cheap.json
 3549a6c0791821524c9419a608b6af0de62b3530 data/c/tags/block/glass_blocks/colorless.json
 3e52c5c101f4f3e27d0a4c0ceb478864450a6a40 data/c/tags/block/glass_panes/colorless.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/c/tags/block/ores.json
@@ -54,6 +55,7 @@ e7909d515ff024fd14d135aeb5e292dc775903d7 data/minecraft/tags/block/convertable_t
 a00b76037fde7105059470ed988f4651c8b25a2c data/minecraft/tags/block/dragon_immune.json
 01f606af3f58ae6c9742c9c6e927e787256e6274 data/minecraft/tags/block/enchantment_power_provider.json
 ee6af189f3abd5cc155e83023432af66f8abf538 data/minecraft/tags/block/enderman_holdable.json
+b322cfaf18dab472190eacef2ee8397cbf37c94c data/minecraft/tags/block/fall_damage_resetting.json
 0bba5a874905f77d759a35126765746aff21acf2 data/minecraft/tags/block/fence_gates.json
 0117fd9b7b40b0e02aa3498f00e7b329ecbe6d40 data/minecraft/tags/block/flower_pots.json
 3549a6c0791821524c9419a608b6af0de62b3530 data/minecraft/tags/block/impermeable.json

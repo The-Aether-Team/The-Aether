@@ -1,4 +1,4 @@
-// 1.21	2024-10-12T19:57:00.7947519	Tags for minecraft:item mod id aether
+// 1.21	2024-10-16T20:19:13.6073922	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/item/accepted_music_discs.json
 b4d12513c8c0ef5b1fa6237ca7a1f25799c219a2 data/aether/tags/item/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/item/accessories_capes.json
@@ -26,7 +26,6 @@ b7b37d30e23e65ee6925f4068e6d142f874fadd6 data/aether/tags/item/dungeon_blocks.js
 1afb0e16f412f35b65a41d9abe8ae898f087e419 data/aether/tags/item/dungeon_keys.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/item/flaming_repairing.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/item/flying_cow_temptation_items.json
-465cdb990ab342cb97554e980a0558c26a7fb539 data/aether/tags/item/freezable_buckets.json
 cf02540e648766882006eb0eb293476a9c3d33c5 data/aether/tags/item/freezable_pendants.json
 bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/item/freezable_rings.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/item/gems/zanite.json
@@ -77,21 +76,35 @@ c26f64255e81ace6a67fcf973a34043471ebff1d data/aether/tags/item/treasure_doorway_
 2f6eb76f8d5c842eba05c54205f51bf1c2b6bc71 data/aether/tags/item/water_bucket_crafting.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/item/zanite_repairing.json
 01f606af3f58ae6c9742c9c6e927e787256e6274 data/c/tags/item/bookshelves.json
+48429c058473ac929ef406e37aebe372845aaca5 data/c/tags/item/buckets/entity_water.json
+7305f7745e9b208e709d3dddc076c5303d49026b data/c/tags/item/buckets/milk.json
+2e2a8a99c236e6641ec35844af2eb02f870dd4ef data/c/tags/item/buckets/powder_snow.json
+3355dd8056772d0c70a0f8ee86ff2e118c06b385 data/c/tags/item/buckets/water.json
 874cf6f228328fdf36815cb0358b19effa8ad2f2 data/c/tags/item/eggs.json
 bc9de2bdb11aba0025a16f480e48e231376296ee data/c/tags/item/fences.json
 bc9de2bdb11aba0025a16f480e48e231376296ee data/c/tags/item/fences/wooden.json
 0bba5a874905f77d759a35126765746aff21acf2 data/c/tags/item/fence_gates.json
 0bba5a874905f77d759a35126765746aff21acf2 data/c/tags/item/fence_gates/wooden.json
+252219f81f3abde4bdebe512332bb483fefab9da data/c/tags/item/foods/berry.json
+82cba6caba4d9bce0d8fd31c257b93276279f0e6 data/c/tags/item/foods/candy.json
+0427db3fd74b496da5fe89654b3b996c78774f39 data/c/tags/item/foods/cookie.json
+e016c33e93baa610f56a93bc2b4dc88b813dcc59 data/c/tags/item/foods/fruit.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/c/tags/item/gems.json
+3549a6c0791821524c9419a608b6af0de62b3530 data/c/tags/item/glass_blocks/cheap.json
 3549a6c0791821524c9419a608b6af0de62b3530 data/c/tags/item/glass_blocks/colorless.json
 3e52c5c101f4f3e27d0a4c0ceb478864450a6a40 data/c/tags/item/glass_panes/colorless.json
+2ebb4ad4b0e5922d40d7d7f14b844b648dd12efa data/c/tags/item/music_discs.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/c/tags/item/ores.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/c/tags/item/ore_rates/singular.json
 4d0fcd44af39fa4f1950e841827bfde973be863f data/c/tags/item/rods/wooden.json
 59990c003209bd1350c89f0fe3c6037c16e95ae4 data/c/tags/item/slime_balls.json
+fd01915c57cee8effe17fe38cbedcefa19a98fb3 data/c/tags/item/stones.json
 01be455b4f57023ac9af8857eb885afcfb917025 data/c/tags/item/storage_blocks.json
 addb62cbd712e3f83c6bbadcbfdf309dc0ee3cc3 data/c/tags/item/tools.json
 194d42fbb36c91ae3f46b107ece7166c78d58625 data/c/tags/item/tools/bow.json
+89d5303adbc3b1e37dafb86fe4841df32156159d data/c/tags/item/tools/melee_weapon.json
+33397c0e49ca28fad45a2f4fc1a5ceb3a01edfbd data/c/tags/item/tools/mining_tool.json
+e1a26432b98702b54dd192c29d09edd5778b19d1 data/c/tags/item/tools/ranged_weapon.json
 851b7c166c40d8a697aed8960ec6a8c4439db824 data/minecraft/tags/item/axes.json
 62f7c5ff85d3739e0a50b0a194fb5f1dc443c6a9 data/minecraft/tags/item/beacon_payment_items.json
 a838c2bd53ede04f2a9ee61012c93d721871dce4 data/minecraft/tags/item/beds.json
@@ -100,6 +113,10 @@ a838c2bd53ede04f2a9ee61012c93d721871dce4 data/minecraft/tags/item/beds.json
 ae55992a015bc68477c240af9e2959c48fba8803 data/minecraft/tags/item/chest_armor.json
 041c4417a18df60eb724a8acde8db524fa8bfba5 data/minecraft/tags/item/chest_boats.json
 33397c0e49ca28fad45a2f4fc1a5ceb3a01edfbd data/minecraft/tags/item/cluster_max_harvestables.json
+245b2653dfdca186ced11e198ca6194cb3eb67e9 data/minecraft/tags/item/dyeable.json
+afe7910871dbdae2920afc5c8a43fc14da5275b2 data/minecraft/tags/item/enchantable/bow.json
+5e7ec8ef1a8e4ca93200622a60efdcd370222706 data/minecraft/tags/item/enchantable/durability.json
+9a36ac3385061ad6b0797bbde04d98c24c788ce2 data/minecraft/tags/item/enchantable/vanishing.json
 7cc99b499993ff43d1bec64e0297def0c92f4c2d data/minecraft/tags/item/foot_armor.json
 252219f81f3abde4bdebe512332bb483fefab9da data/minecraft/tags/item/fox_food.json
 7b309889aa4e92af4df62936f4a36677e23c52d3 data/minecraft/tags/item/hanging_signs.json

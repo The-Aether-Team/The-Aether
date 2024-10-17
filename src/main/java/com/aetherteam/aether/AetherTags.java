@@ -95,7 +95,6 @@ public class AetherTags {
         public static final TagKey<Item> ACCEPTED_MUSIC_DISCS = tag("accepted_music_discs");
         public static final TagKey<Item> SAVE_NBT_IN_RECIPE = tag("save_nbt_in_recipe");
         public static final TagKey<Item> MOA_EGGS = tag("moa_eggs");
-        public static final TagKey<Item> FREEZABLE_BUCKETS = tag("freezable_buckets");
         public static final TagKey<Item> FREEZABLE_RINGS = tag("freezable_rings");
         public static final TagKey<Item> FREEZABLE_PENDANTS = tag("freezable_pendants");
         public static final TagKey<Item> SLIDER_DAMAGING_ITEMS = tag("slider_damaging_items");
