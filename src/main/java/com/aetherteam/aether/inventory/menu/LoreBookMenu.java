@@ -2,6 +2,7 @@ package com.aetherteam.aether.inventory.menu;
 
 import com.aetherteam.aether.inventory.container.LoreInventory;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -13,10 +14,12 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class LoreBookMenu extends AbstractContainerMenu {
-    private static final Map<Predicate<ItemStack>, String> LORE_ENTRY_OVERRIDES = new HashMap<>();
+    private static final Map<Function<RegistryAccess, Predicate<ItemStack>>, String> LORE_ENTRY_OVERRIDES = new HashMap<>();
     private final LoreInventory loreInventory;
     private boolean loreEntryExists;
 
@@ -103,18 +106,14 @@ public class LoreBookMenu extends AbstractContainerMenu {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void addLoreEntryOverride(Predicate<ItemStack> predicate, String entry) {
+    public static void addLoreEntryOverride(Function<RegistryAccess, Predicate<ItemStack>> predicate, String entry) {
         LORE_ENTRY_OVERRIDES.putIfAbsent(predicate, entry);
     }
 
     @OnlyIn(Dist.CLIENT)
     public String getLoreEntryKey(ItemStack stack) {
-        for (Predicate<ItemStack> predicate : LORE_ENTRY_OVERRIDES.keySet()) {
-            if (predicate.test(stack)) {
-                return LORE_ENTRY_OVERRIDES.get(predicate);
-            }
-        }
-        return "lore." + stack.getDescriptionId();
+        Optional<String> key = LORE_ENTRY_OVERRIDES.entrySet().stream().filter(e -> e.getKey().apply(this.loreInventory.player.registryAccess()).test(stack)).findAny().map(Map.Entry::getValue);
+        return key.orElseGet(() -> "lore." + stack.getDescriptionId());
     }
 
     @OnlyIn(Dist.CLIENT)

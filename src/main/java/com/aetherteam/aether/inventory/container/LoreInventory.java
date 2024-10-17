@@ -12,8 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class LoreInventory extends SimpleContainer {
-    private final Player player;
-    private LoreBookMenu menu;
+    public final Player player;
+    public LoreBookMenu menu;
 
     public LoreInventory(Player player) {
         super(1);
