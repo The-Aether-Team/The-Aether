@@ -20,7 +20,7 @@ public class WorldPreviewListener {
         bus.addListener(WorldPreviewListener::onRenderLevelLast);
         bus.addListener(WorldPreviewListener::onClientTick);
         bus.addListener(WorldPreviewListener::onCameraView);
-//        bus.addListener(WorldPreviewListener::onRenderOverlay);
+        bus.addListener(WorldPreviewListener::onRenderOverlay);
         bus.addListener(WorldPreviewListener::onRenderPlayer);
         bus.addListener(WorldPreviewListener::onRenderEntity);
     }
@@ -70,11 +70,11 @@ public class WorldPreviewListener {
     /**
      * @see WorldPreviewHooks#hideOverlays()
      */
-//    public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) { //todo
-//        if (WorldPreviewHooks.hideOverlays()) {
-//            event.setCanceled(true);
-//        }
-//    }
+    public static void onRenderOverlay(RenderGuiLayerEvent.Pre event) { //todo
+        if (WorldPreviewHooks.hideOverlays()) {
+            event.setCanceled(true);
+        }
+    }
 
     /**
      * @see WorldPreviewHooks#shouldHidePlayer()
