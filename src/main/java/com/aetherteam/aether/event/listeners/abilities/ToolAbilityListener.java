@@ -60,7 +60,7 @@ public class ToolAbilityListener {
     public static void modifyItemAttributes(ItemAttributeModifierEvent event) {
         ItemStack itemStack = event.getItemStack();
         ItemAttributeModifiers modifiers = event.getDefaultModifiers();
-        ItemAttributeModifiers.Entry modifierEntry = AbilityHooks.ToolHooks.handleZaniteToolAbilityModifiers(modifiers, itemStack);
+        ItemAttributeModifiers.Entry modifierEntry = AbilityHooks.ToolHooks.handleZaniteAbilityModifiers(modifiers, itemStack);
         if (modifierEntry != null) {
             event.replaceModifier(modifierEntry.attribute(), modifierEntry.modifier(), modifierEntry.slot());
         }

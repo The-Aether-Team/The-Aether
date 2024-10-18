@@ -286,6 +286,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.WHITE_FLOWER.get());
         this.tag(BlockTags.BEDS).add(AetherBlocks.SKYROOT_BED.get());
         this.tag(BlockTags.DIRT).addTag(AetherTags.Blocks.AETHER_DIRT);
+        this.tag(BlockTags.FALL_DAMAGE_RESETTING).addTag(AetherTags.Blocks.AERCLOUDS);
         this.tag(BlockTags.FLOWER_POTS).add(
                 AetherBlocks.POTTED_BERRY_BUSH.get(),
                 AetherBlocks.POTTED_BERRY_BUSH_STEM.get(),
@@ -478,6 +479,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
         this.tag(Tags.Blocks.FENCE_GATES_WOODEN).add(AetherBlocks.SKYROOT_FENCE_GATE.get());
         this.tag(Tags.Blocks.FENCES_WOODEN).add(AetherBlocks.SKYROOT_FENCE.get());
         this.tag(Tags.Blocks.GLASS_BLOCKS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get());
+        this.tag(Tags.Blocks.GLASS_BLOCKS_CHEAP).add(AetherBlocks.QUICKSOIL_GLASS.get());
         this.tag(Tags.Blocks.GLASS_PANES_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS_PANE.get());
         this.tag(Tags.Blocks.ORE_RATES_SINGULAR).add(
                 AetherBlocks.AMBROSIUM_ORE.get(),

@@ -18,6 +18,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
+import net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.AlterGroundEvent;
@@ -42,7 +43,7 @@ public class DimensionListener {
         bus.addListener(DimensionListener::onPlayerTraveling);
         bus.addListener(DimensionListener::onWorldLoad);
         bus.addListener(DimensionListener::onSleepFinish);
-//        bus.addListener(DimensionListener::onTriedToSleep);
+        bus.addListener(DimensionListener::onTriedToSleep);
         bus.addListener(DimensionListener::onAlterGround);
     }
 
@@ -130,15 +131,15 @@ public class DimensionListener {
         }
     }
 
-//    /**
-//     * @see DimensionHooks#isEternalDay(Player)
-//     */
-//    public static void onTriedToSleep(SleepingTimeCheckEvent event) { //todo
-//        Player player = event.getEntity();
-//        if (DimensionHooks.isEternalDay(player)) {
-//            event.setResult(Event.Result.DENY);
-//        }
-//    }
+    /**
+     * @see DimensionHooks#isEternalDay(Player)
+     */
+    public static void onTriedToSleep(CanPlayerSleepEvent event) {
+        Player player = event.getEntity();
+        if (DimensionHooks.isEternalDay(player)) {
+            event.setProblem(Player.BedSleepingProblem.NOT_POSSIBLE_NOW);
+        }
+    }
 
     /**
      * Prevents Aether Dirt from being replaced by Podzol.

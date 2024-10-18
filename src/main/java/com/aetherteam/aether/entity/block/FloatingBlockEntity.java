@@ -14,6 +14,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -25,7 +26,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -109,13 +109,10 @@ public class FloatingBlockEntity extends Entity {
                 }
             }
 
-            if (!this.isNoGravity()) {
-                this.floatDistance = this.blockPosition().getY() - this.getStartPos().getY();
-                this.setDeltaMovement(this.getDeltaMovement().add(0.0, 0.04, 0.0)); // Move upwards.
-                this.causeFallDamage();
-                if (this.level().isClientSide()) {
-                    this.spawnFloatingBlockParticles();
-                }
+            this.applyGravity();
+            this.floatDistance = this.blockPosition().getY() - this.getStartPos().getY();
+            if (this.level().isClientSide()) {
+                this.spawnFloatingBlockParticles();
             }
 
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -123,11 +120,11 @@ public class FloatingBlockEntity extends Entity {
             if (!this.level().isClientSide() && this.level() instanceof ServerLevel serverLevel && (this.isAlive() || this.forceTickAfterTeleportToDuplicate)) {
                 BlockPos blockPos1 = this.blockPosition();
                 boolean isConcrete = this.getBlockState().getBlock() instanceof ConcretePowderBlock;
-                boolean canConvert = isConcrete && this.level().getFluidState(blockPos1).is(FluidTags.WATER);
+                boolean canConvert = isConcrete && this.blockState.canBeHydrated(this.level(), blockPos1, this.level().getFluidState(blockPos1), blockPos1);
                 double d0 = this.getDeltaMovement().lengthSqr();
                 if (isConcrete && d0 > 1.0) {
                     BlockHitResult blockHitResult = this.level().clip(new ClipContext(new Vec3(this.xo, this.yo, this.zo), this.position(), ClipContext.Block.COLLIDER, ClipContext.Fluid.SOURCE_ONLY, this));
-                    if (blockHitResult.getType() != HitResult.Type.MISS && this.level().getFluidState(blockHitResult.getBlockPos()).is(FluidTags.WATER)) {
+                    if (blockHitResult.getType() != HitResult.Type.MISS && this.blockState.canBeHydrated(this.level(), blockPos1, this.level().getFluidState(blockHitResult.getBlockPos()), blockHitResult.getBlockPos())) {
                         blockPos1 = blockHitResult.getBlockPos();
                         canConvert = true;
                     }
@@ -233,30 +230,37 @@ public class FloatingBlockEntity extends Entity {
         }
     }
 
-    private void causeFallDamage() {
-        if (this.hurtEntities) {
-            Predicate<Entity> predicate;
-            DamageSource damageSource;
-            if (this.getBlockState().getBlock() instanceof Floatable floatable) {
-                predicate = floatable.getHurtsEntitySelector();
-                damageSource = floatable.getFallDamageSource(this);
-            } else {
-                predicate = EntitySelector.NO_SPECTATORS;
-                damageSource = AetherDamageTypes.entityDamageSource(this.level(), AetherDamageTypes.FLOATING_BLOCK, this);
-            }
+    @Override
+    protected void applyGravity() {
+        double d0 = this.getGravity();
+        if (d0 != 0.0) {
+            this.setDeltaMovement(this.getDeltaMovement().add(0.0, d0, 0.0));
+        }
+    }
 
-            float f = (float) Math.min(Mth.floor((float) this.floatDistance * this.fallDamagePerDistance), this.fallDamageMax);
-            this.level().getEntities(this, this.getBoundingBox(), predicate).forEach((p_149649_) -> p_149649_.hurt(damageSource, f));
-            boolean flag = this.getBlockState().is(BlockTags.ANVIL);
-            if (flag && f > 0.0F && this.random.nextFloat() < 0.05F + (float) this.floatDistance * 0.05F) {
-                BlockState blockstate = AnvilBlock.damage(this.getBlockState());
-                if (blockstate == null) {
-                    this.cancelDrop = true;
-                } else {
-                    this.blockState = blockstate;
+    @Override
+    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
+        if (this.hurtEntities) {
+            int i = this.floatDistance;
+            if (i >= 0) {
+                Predicate<Entity> predicate = EntitySelector.NO_CREATIVE_OR_SPECTATOR.and(EntitySelector.LIVING_ENTITY_STILL_ALIVE);
+                DamageSource damageSource = this.blockState.getBlock() instanceof Floatable floatable
+                    ? floatable.getFallDamageSource(this)
+                    : AetherDamageTypes.entityDamageSource(this.level(), AetherDamageTypes.FLOATING_BLOCK, this);
+                float f = (float) Math.min(Mth.floor((float) i * this.fallDamagePerDistance), this.fallDamageMax);
+                this.level().getEntities(this, this.getBoundingBox(), predicate).forEach((entity) -> entity.hurt(damageSource, f));
+                boolean flag = this.getBlockState().is(BlockTags.ANVIL);
+                if (flag && f > 0.0F && this.random.nextFloat() < 0.05F + (float) i * 0.05F) {
+                    BlockState blockstate = AnvilBlock.damage(this.getBlockState());
+                    if (blockstate == null) {
+                        this.disableDrop();
+                    } else {
+                        this.blockState = blockstate;
+                    }
                 }
             }
         }
+        return false;
     }
 
     private void spawnFloatingBlockParticles() {
@@ -284,15 +288,8 @@ public class FloatingBlockEntity extends Entity {
         this.natural = natural;
     }
 
-    @Nullable
-    @Override
-    public Entity changeDimension(DimensionTransition transition) {
-        ResourceKey<Level> resourcekey = transition.newLevel().dimension();
-        ResourceKey<Level> resourcekey1 = this.level().dimension();
-        boolean flag = (resourcekey1 == Level.END || resourcekey == Level.END) && resourcekey1 != resourcekey;
-        Entity entity = super.changeDimension(transition);
-        this.forceTickAfterTeleportToDuplicate = entity != null && flag;
-        return entity;
+    public void disableDrop() {
+        this.cancelDrop = true;
     }
 
     @Override
@@ -303,6 +300,11 @@ public class FloatingBlockEntity extends Entity {
     @Override
     public boolean isPickable() {
         return !this.isRemoved();
+    }
+
+    @Override
+    protected double getDefaultGravity() {
+        return 0.04;
     }
 
     @Override
@@ -321,6 +323,22 @@ public class FloatingBlockEntity extends Entity {
     }
 
     @Override
+    protected Component getTypeName() {
+        return Component.translatable("entity.aether.floating_block_type", this.blockState.getBlock().getName());
+    }
+
+    @Nullable
+    @Override
+    public Entity changeDimension(DimensionTransition transition) {
+        ResourceKey<Level> newDimension = transition.newLevel().dimension();
+        ResourceKey<Level> currentDimension = this.level().dimension();
+        boolean flag = (currentDimension == Level.END || newDimension == Level.END) && currentDimension != newDimension;
+        Entity entity = super.changeDimension(transition);
+        this.forceTickAfterTeleportToDuplicate = entity != null && flag;
+        return entity;
+    }
+
+    @Override
     protected void addAdditionalSaveData(CompoundTag tag) {
         tag.put("BlockState", NbtUtils.writeBlockState(this.blockState));
         tag.putInt("Time", this.time);
@@ -332,6 +350,7 @@ public class FloatingBlockEntity extends Entity {
             tag.put("TileEntityData", this.blockData);
         }
         tag.putBoolean("Natural", this.natural);
+        tag.putBoolean("CancelDrop", this.cancelDrop);
     }
 
     @Override
@@ -358,6 +377,9 @@ public class FloatingBlockEntity extends Entity {
         if (this.blockState.isAir()) {
             this.blockState = Blocks.SAND.defaultBlockState();
         }
+        if (tag.contains("CancelDrop")) {
+            this.cancelDrop = tag.getBoolean("CancelDrop");
+        }
         if (tag.contains("Natural", 99)) {
             this.natural = tag.getBoolean("Natural");
         }
@@ -376,13 +398,13 @@ public class FloatingBlockEntity extends Entity {
         double d0 = packet.getX();
         double d1 = packet.getY();
         double d2 = packet.getZ();
-        this.setPos(d0, d1 + (double) ((1.0F - this.getBbHeight()) / 2.0F), d2);
+        this.setPos(d0, d1, d2);
         this.setStartPos(this.blockPosition());
     }
 
     @Override
     public void fillCrashReportCategory(CrashReportCategory category) {
         super.fillCrashReportCategory(category);
-        category.setDetail("Immitating BlockState", this.getBlockState().toString());
+        category.setDetail("Imitating BlockState", this.getBlockState().toString());
     }
 }

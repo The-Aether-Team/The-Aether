@@ -6,6 +6,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.client.sound.FadeOutSoundInstance;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import com.aetherteam.aether.world.LevelUtil;
 import net.minecraft.BlockUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -79,16 +80,16 @@ public class AetherPortalBlock extends Block implements Portal {
 
     @Nullable
     @Override
-    public DimensionTransition getPortalDestination(ServerLevel pLevel, Entity pEntity, BlockPos pPos) {
-        ResourceKey<Level> resourcekey = pLevel.dimension() == AetherDimensions.AETHER_LEVEL ? Level.OVERWORLD : AetherDimensions.AETHER_LEVEL;
-        ServerLevel serverlevel = pLevel.getServer().getLevel(resourcekey);
+    public DimensionTransition getPortalDestination(ServerLevel level, Entity entity, BlockPos pos) {
+        ResourceKey<Level> resourcekey = entity.level().dimension() == LevelUtil.destinationDimension() ? LevelUtil.returnDimension() : LevelUtil.destinationDimension();
+        ServerLevel serverlevel = level.getServer().getLevel(resourcekey);
         if (serverlevel == null) {
             return null;
         } else {
             WorldBorder worldborder = serverlevel.getWorldBorder();
-            double d0 = DimensionType.getTeleportationScale(pLevel.dimensionType(), serverlevel.dimensionType());
-            BlockPos blockpos = worldborder.clampToBounds(pEntity.getX() * d0, pEntity.getY(), pEntity.getZ() * d0);
-            return this.getExitPortal(serverlevel, pEntity, pPos, blockpos, worldborder);
+            double d0 = DimensionType.getTeleportationScale(level.dimensionType(), serverlevel.dimensionType());
+            BlockPos blockpos = worldborder.clampToBounds(entity.getX() * d0, entity.getY(), entity.getZ() * d0);
+            return this.getExitPortal(serverlevel, entity, pos, blockpos, worldborder);
         }
     }
 

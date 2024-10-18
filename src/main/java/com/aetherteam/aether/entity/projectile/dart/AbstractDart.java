@@ -14,6 +14,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -38,6 +39,10 @@ public abstract class AbstractDart extends AbstractArrow {
 
     public AbstractDart(EntityType<? extends AbstractDart> type, Level level, LivingEntity shooter, Supplier<Item> pickupItem, @Nullable ItemStack firedFromWeapon) {
         super(type, shooter, level, new ItemStack(pickupItem.get()), firedFromWeapon);
+    }
+
+    public AbstractDart(EntityType<? extends AbstractDart> entityType, double x, double y, double z, Level level, ItemStack itemStack, ItemStack firedFromWeapon) {
+        super(entityType, x, y, z, level, itemStack, firedFromWeapon);
     }
 
     @Override
@@ -81,28 +86,27 @@ public abstract class AbstractDart extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         float f = (float) this.getDeltaMovement().length();
-        int i = Mth.ceil(Mth.clamp((double) f * this.getBaseDamage(), 0.0, Integer.MAX_VALUE));
+        double d0 = this.getBaseDamage();
+        Entity owner = this.getOwner();
+        DamageSource damageSource = this.damageSources().arrow(this, owner != null ? owner : this);
+        if (this.getWeaponItem() != null && this.level() instanceof ServerLevel serverlevel) {
+            d0 = EnchantmentHelper.modifyDamage(serverlevel, this.getWeaponItem(), entity, damageSource, (float)d0);
+        }
+        int i = Mth.ceil(Mth.clamp((double) f * d0, 0.0, Integer.MAX_VALUE));
 
         if (this.isCritArrow()) {
             long j = this.random.nextInt(i / 2 + 2);
             i = (int) Math.min(j + (long) i, 2147483647L);
         }
 
-        Entity owner = this.getOwner();
-        DamageSource damageSource;
-        if (owner == null) {
-            damageSource = this.damageSources().arrow(this, this);
-        } else {
-            damageSource = this.damageSources().arrow(this, owner);
-            if (owner instanceof LivingEntity livingEntity) {
-                livingEntity.setLastHurtMob(entity);
-            }
+        if (owner instanceof LivingEntity livingEntity) {
+            livingEntity.setLastHurtMob(entity);
         }
 
         boolean flag = entity.getType() == EntityType.ENDERMAN;
         int k = entity.getRemainingFireTicks();
         if (this.isOnFire() && !flag) {
-            entity.setRemainingFireTicks(5);
+            entity.igniteForSeconds(5);
         }
 
         if (entity.hurt(damageSource, (float) i)) {
@@ -127,9 +131,8 @@ public abstract class AbstractDart extends AbstractArrow {
             this.discard();
         } else {
             entity.setRemainingFireTicks(k);
-            this.setDeltaMovement(this.getDeltaMovement().scale(-0.1));
-            this.setYRot(this.getYRot() + 180.0F);
-            this.yRotO += 180.0F;
+            this.deflect(ProjectileDeflection.REVERSE, entity, this.getOwner(), false);
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.2));
             if (!this.level().isClientSide() && this.getDeltaMovement().lengthSqr() < 1.0E-7) {
                 if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);

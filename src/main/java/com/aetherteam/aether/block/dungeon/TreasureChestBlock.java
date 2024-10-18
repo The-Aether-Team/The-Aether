@@ -182,17 +182,6 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
-//    @Override //todo
-//    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity livingEntity, ItemStack stack) {
-//        if (stack.hasCustomHoverName()) {
-//            BlockEntity blockEntity = level.getBlockEntity(pos);
-//            if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
-//                treasureChestBlockEntity.setCustomName(stack.getHoverName());
-//                treasureChestBlockEntity.setChanged();
-//            }
-//        }
-//    }
-
     /**
      * Warning for "deprecation" is suppressed because the method is fine to override.
      */

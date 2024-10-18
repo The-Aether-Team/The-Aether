@@ -12,6 +12,7 @@ import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.mojang.blaze3d.platform.InputConstants;
 import io.wispforest.accessories.AccessoriesInternals;
+import io.wispforest.accessories.client.gui.AccessoriesScreen;
 import io.wispforest.accessories.networking.server.NukeAccessories;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -390,7 +391,7 @@ public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<Aeth
     public static Tuple<Integer, Integer> getButtonOffset(Screen screen) {
         int x = 0;
         int y = 0;
-        if (screen instanceof InventoryScreen || screen instanceof io.wispforest.accessories.client.gui.AccessoriesScreen) {
+        if (screen instanceof InventoryScreen || screen instanceof AccessoriesScreen) {
             x = AetherConfig.CLIENT.button_inventory_x.get();
             y = AetherConfig.CLIENT.button_inventory_y.get();
         }

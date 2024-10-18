@@ -17,7 +17,6 @@ import javax.annotation.Nullable;
  * Custom damage types are used for death messages and different damage calculations through tags.
  */
 public class AetherDamageTypes {
-    public static final ResourceKey<DamageType> ARMOR_PIERCING_ATTACK = createKey("armor_piercing_attack");
     public static final ResourceKey<DamageType> CLOUD_CRYSTAL = createKey("cloud_crystal");
     public static final ResourceKey<DamageType> CRUSH = createKey("crush");
     public static final ResourceKey<DamageType> FIRE_CRYSTAL = createKey("fire_crystal");
@@ -28,7 +27,6 @@ public class AetherDamageTypes {
     public static final ResourceKey<DamageType> THUNDER_CRYSTAL = createKey("thunder_crystal");
 
     public static void bootstrap(BootstrapContext<DamageType> context) {
-        context.register(ARMOR_PIERCING_ATTACK, new DamageType("mob", 0.1F));
         context.register(CLOUD_CRYSTAL, new DamageType("aether.cloud_crystal", 0.1F));
         context.register(CRUSH, new DamageType("aether.crush", 0.1F));
         context.register(FIRE_CRYSTAL, new DamageType("aether.fire_crystal", 0.1F, DamageEffects.BURNING));

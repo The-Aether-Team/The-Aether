@@ -423,6 +423,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addEntityType(AetherEntityTypes.COLD_PARACHUTE, "Cold Parachute");
         this.addEntityType(AetherEntityTypes.GOLDEN_PARACHUTE, "Golden Parachute");
         this.addEntityType(AetherEntityTypes.FLOATING_BLOCK, "Floating Block");
+        this.add("entity.aether.floating_block_type", "Floating %s");
         this.addEntityType(AetherEntityTypes.TNT_PRESENT, "TNT Present");
 
         this.addEntityType(AetherEntityTypes.ZEPHYR_SNOWBALL, "Zephyr Snowball");

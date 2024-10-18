@@ -24,7 +24,6 @@ public class AetherDamageTypeTagData extends TagsProvider<DamageType> {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(DamageTypeTags.BYPASSES_ARMOR).add(
-                AetherDamageTypes.ARMOR_PIERCING_ATTACK,
                 AetherDamageTypes.INEBRIATION
         );
         this.tag(DamageTypeTags.DAMAGES_HELMET).add(AetherDamageTypes.FLOATING_BLOCK);
@@ -39,6 +38,14 @@ public class AetherDamageTypeTagData extends TagsProvider<DamageType> {
         );
         this.tag(AetherTags.DamageTypes.IS_COLD).add(
                 AetherDamageTypes.ICE_CRYSTAL
+        );
+        this.tag(DamageTypeTags.PANIC_CAUSES).add(
+            AetherDamageTypes.CLOUD_CRYSTAL,
+            AetherDamageTypes.CRUSH,
+            AetherDamageTypes.FIRE_CRYSTAL,
+            AetherDamageTypes.ICE_CRYSTAL,
+            AetherDamageTypes.INCINERATION,
+            AetherDamageTypes.THUNDER_CRYSTAL
         );
     }
 }

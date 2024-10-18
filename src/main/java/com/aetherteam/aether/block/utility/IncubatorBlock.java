@@ -70,17 +70,6 @@ public class IncubatorBlock extends BaseEntityBlock {
         }
     }
 
-//    @Override //todo
-//    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
-//        if (stack.hasCustomHoverName()) {
-//            BlockEntity blockentity = level.getBlockEntity(pos);
-//            if (blockentity instanceof IncubatorBlockEntity incubatorBlockEntity) {
-//                incubatorBlockEntity.setCustomName(stack.getHoverName());
-//                incubatorBlockEntity.setChanged();
-//            }
-//        }
-//    }
-
     /**
      * Warning for "deprecation" is suppressed because the method is fine to override.
      */

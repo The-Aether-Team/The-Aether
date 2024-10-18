@@ -8,6 +8,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -44,10 +45,7 @@ public class TntPresent extends Entity implements TraceableEntity {
 
     @Override
     public void tick() {
-        if (!this.isNoGravity()) {
-            this.setDeltaMovement(this.getDeltaMovement().add(0.0, -0.04, 0.0));
-        }
-
+        this.applyGravity();
         this.move(MoverType.SELF, this.getDeltaMovement());
         this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
         if (this.onGround()) {
@@ -59,7 +57,7 @@ public class TntPresent extends Entity implements TraceableEntity {
         if (i <= 0) {
             this.discard();
             if (!this.level().isClientSide()) {
-                this.level().explode(this, null, null, this.getX(), this.getY(0.0625), this.getZ(), 1.0F, false, Level.ExplosionInteraction.TNT);
+                this.level().explode(this, Explosion.getDefaultDamageSource(this.level(), this), null, this.getX(), this.getY(0.0625), this.getZ(), 1.0F, false, Level.ExplosionInteraction.TNT);
             }
         } else {
             this.updateInWaterStateAndDoFluidPushing();

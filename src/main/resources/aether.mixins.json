@@ -39,7 +39,6 @@
     "common.accessor.ServerLevelAccessor",
     "common.accessor.SpreadingSnowyDirtBlockAccessor",
     "common.accessor.StoredUserListAccessor",
-    "common.accessor.WorldGenRegionAccessor",
     "common.accessor.ZombifiedPiglinAccessor"
   ],
   "client": [

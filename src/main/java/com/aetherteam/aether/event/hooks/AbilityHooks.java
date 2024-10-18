@@ -13,6 +13,7 @@ import com.aetherteam.aether.entity.projectile.dart.GoldenDart;
 import com.aetherteam.aether.entity.projectile.dart.PoisonDart;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.accessories.abilities.ZaniteAccessory;
+import com.aetherteam.aether.item.combat.abilities.weapon.ZaniteWeapon;
 import com.aetherteam.aether.item.tools.abilities.HolystoneTool;
 import com.aetherteam.aether.item.tools.abilities.ValkyrieTool;
 import com.aetherteam.aether.item.tools.abilities.ZaniteTool;
@@ -302,11 +303,14 @@ public class AbilityHooks {
          * @see ZaniteTool#increaseSpeed(ItemStack, float)
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
          */
-        public static ItemAttributeModifiers.Entry handleZaniteToolAbilityModifiers(ItemAttributeModifiers modifiers, ItemStack stack) {
-            if (stack.getItem() instanceof ZaniteTool zaniteTool && stack.getItem() instanceof TieredItem tieredItem) {
-                return zaniteTool.increaseSpeed(modifiers, stack, tieredItem.getTier().getSpeed());
-            }
-            return null;
+        public static ItemAttributeModifiers.Entry handleZaniteAbilityModifiers(ItemAttributeModifiers modifiers, ItemStack stack) {
+            return switch (stack.getItem()) {
+                case ZaniteWeapon zaniteWeapon ->
+                    zaniteWeapon.increaseDamage(modifiers, stack);
+                case ZaniteTool zaniteTool when stack.getItem() instanceof TieredItem tieredItem ->
+                    zaniteTool.increaseSpeed(modifiers, stack, tieredItem.getTier().getSpeed());
+                default -> null;
+            };
         }
 
         /**
@@ -466,7 +470,7 @@ public class AbilityHooks {
                 if (abstractArrow.hasData(AetherDataAttachments.PHOENIX_ARROW)) {
                     var data = abstractArrow.getData(AetherDataAttachments.PHOENIX_ARROW);
                     if (data.isPhoenixArrow() && data.getFireTime() > 0) {
-                        impactedEntity.setRemainingFireTicks(data.getFireTime());
+                        impactedEntity.igniteForSeconds(data.getFireTime());
                     }
                 }
             }

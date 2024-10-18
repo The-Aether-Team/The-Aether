@@ -219,13 +219,6 @@ public class AetherRenderers {
                 playerRenderer.addLayer(new PlayerWingsLayer<>(playerRenderer, Minecraft.getInstance().getEntityModels()));
             }
         }
-//        List<EntityType<? extends LivingEntity>> entities = List.of(EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.HUSK, EntityType.SKELETON, EntityType.STRAY, EntityType.PIGLIN, EntityType.ZOMBIFIED_PIGLIN, EntityType.ARMOR_STAND);
-//        for (EntityType<? extends LivingEntity> entityType : entities) {
-//            LivingEntityRenderer<LivingEntity, EntityModel<LivingEntity>> renderer = event.getRenderer(entityType);
-//            if (renderer != null) {
-//                renderer.addLayer(new AccessoriesRenderLayer<>(renderer));
-//            }
-//        }
         LivingEntityRenderer<ArmorStand, ArmorStandModel> renderer = event.getRenderer(EntityType.ARMOR_STAND);
         if (renderer != null) {
             renderer.addLayer(new ArmorStandCapeLayer(renderer));

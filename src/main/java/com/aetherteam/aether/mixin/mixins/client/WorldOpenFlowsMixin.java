@@ -1,11 +1,20 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.client.WorldDisplayHelper;
+import com.mojang.serialization.Dynamic;
+import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.worldselection.WorldOpenFlows;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.io.IOException;
 
 @Mixin(WorldOpenFlows.class)
 public class WorldOpenFlowsMixin {
@@ -20,10 +29,10 @@ public class WorldOpenFlowsMixin {
      * @return The new {@link Boolean} value.
      * @see WorldDisplayHelper#isActive()
      */
-//    @ModifyVariable(method = "loadLevel(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lcom/mojang/serialization/Dynamic;ZZLjava/lang/Runnable;Z)V", at = @At("HEAD"), ordinal = 2, argsOnly = true, remap = false)
-//    private boolean confirmExperimentalWarning(boolean confirmExperimentalWarning) {
-//        return WorldDisplayHelper.isActive() || confirmExperimentalWarning;
-//    } //todo
+    @ModifyVariable(method = "openWorldCheckWorldStemCompatibility(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lnet/minecraft/server/WorldStem;Lnet/minecraft/server/packs/repository/PackRepository;Ljava/lang/Runnable;)V", at = @At("STORE"), ordinal = 2)
+    private boolean confirmExperimentalWarning(boolean confirmExperimentalWarning) {
+        return WorldDisplayHelper.isActive() || confirmExperimentalWarning;
+    }
 
     /**
      * Used by the world preview system.<br>
@@ -34,10 +43,10 @@ public class WorldOpenFlowsMixin {
      * @see WorldDisplayHelper#sameSummaries(LevelSummary)
      * @see WorldDisplayHelper#stopLevel(Screen)
      */
-//    @Inject(method = "loadLevel(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lcom/mojang/serialization/Dynamic;ZZLjava/lang/Runnable;Z)V", at = @At("HEAD"))
-//    private void closeActiveWorld(LevelStorageSource.LevelStorageAccess access, Dynamic<?> dynamic, boolean safeMode, boolean checkForBackup, Runnable runnable, boolean confirmExperimentalWarning, CallbackInfo ci) {
-//        if (WorldDisplayHelper.isActive() && !WorldDisplayHelper.sameSummaries(access.getSummary(dynamic))) {
-//            WorldDisplayHelper.stopLevel(new GenericMessageScreen(Component.literal("")));
-//        }
-//    } //todo
+    @Inject(method = "openWorldLoadLevelStem(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lcom/mojang/serialization/Dynamic;ZLjava/lang/Runnable;)V", at = @At("HEAD"))
+    private void closeActiveWorld(LevelStorageSource.LevelStorageAccess levelStorage, Dynamic<?> levelData, boolean safeMode, Runnable onFail, CallbackInfo ci) throws IOException {
+        if (WorldDisplayHelper.isActive() && !WorldDisplayHelper.sameSummaries(levelStorage.getSummary(levelStorage.getDataTag()))) {
+            WorldDisplayHelper.stopLevel(new GenericMessageScreen(Component.literal("")));
+        }
+    }
 }
