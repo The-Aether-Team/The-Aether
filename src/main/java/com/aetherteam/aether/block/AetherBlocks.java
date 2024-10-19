@@ -20,6 +20,7 @@ import com.aetherteam.aether.item.block.BurnableBlockItem;
 import com.aetherteam.aether.mixin.mixins.common.accessor.FireBlockAccessor;
 import com.aetherteam.aether.world.treegrower.GoldenOakTree;
 import com.aetherteam.aether.world.treegrower.SkyrootTree;
+import com.aetherteam.nitrogen.item.block.EntityBlockItem;
 import io.github.fabricators_of_create.porting_lib.fluids.FluidInteractionRegistry;
 import io.github.fabricators_of_create.porting_lib.fluids.PortingLibFluids;
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
@@ -323,9 +324,9 @@ public class AetherBlocks {
             } else if (block == SKYROOT_HANGING_SIGN.get()) {
                 return new HangingSignItem(SKYROOT_HANGING_SIGN.get(), SKYROOT_WALL_HANGING_SIGN.get(), new Item.Properties().stacksTo(16));
             } else if (block == CHEST_MIMIC.get()) {
-                return new BlockItem(block/*, ChestMimicBlockEntity::new*/, new Item.Properties()); // TODO: PORT
+                return new EntityBlockItem(block, new ChestMimicBlockEntity(), new Item.Properties());
             } else if (block == TREASURE_CHEST.get()) {
-                return new BlockItem(block/*, TreasureChestBlockEntity::new*/, new Item.Properties());
+                return new EntityBlockItem(block, new TreasureChestBlockEntity(), new Item.Properties());
             } else if (block == SKYROOT_PLANKS.get()
                     || block == SKYROOT_FENCE_GATE.get()
                     || block == SKYROOT_FENCE.get()
@@ -334,7 +335,7 @@ public class AetherBlocks {
             } else if (block == SUN_ALTAR.get()) {
                 return new BlockItem(block, new Item.Properties().fireResistant());
             } else if (block == SKYROOT_BED.get()) {
-                return new BlockItem(block, /*SkyrootBedBlockEntity::new, */new Item.Properties().stacksTo(1)); // TODO: PORT
+                return new EntityBlockItem(block, new SkyrootBedBlockEntity(), new Item.Properties().stacksTo(1));
             } else {
                 return new BlockItem(block, new Item.Properties());
             }

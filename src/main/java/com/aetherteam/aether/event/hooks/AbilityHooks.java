@@ -244,7 +244,7 @@ public class AbilityHooks {
          * @param old The old {@link BlockState} of the block an action is being performed on.
          * @param action The {@link ToolAction} being performed on the block.
          * @return The new {@link BlockState} of the block.
-         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#setupToolModifications(BlockEvent.BlockToolModificationEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#setupToolModifications(BlockEvents.BlockToolModificationEvent)
          */
         public static BlockState setupToolActions(LevelAccessor accessor, BlockPos pos, BlockState old, ToolAction action) {
             Block oldBlock = old.getBlock();
@@ -325,7 +325,7 @@ public class AbilityHooks {
          * @param stack The {@link ItemStack} performing an action.
          * @param action The {@link ToolAction} being performed.
          * @param context The {@link UseOnContext} of this interaction.
-         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#doGoldenOakStripping(BlockEvent.BlockToolModificationEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#doGoldenOakStripping(BlockEvents.BlockToolModificationEvent)
          */
         public static void stripGoldenOak(LevelAccessor accessor, BlockState state, ItemStack stack, ToolAction action, UseOnContext context) {
             if (action == ToolActions.AXE_STRIP) {

@@ -16,8 +16,10 @@ import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.platform.InputConstants;
 import io.github.fabricators_of_create.porting_lib.mixin.accessors.client.accessor.AbstractContainerScreenAccessor;
 import io.github.fabricators_of_create.porting_lib.util.KeyBindingHelper;
+import io.wispforest.accessories.AccessoriesInternals;
 import io.wispforest.accessories.api.menu.AccessoriesBasedSlot;
 import io.wispforest.accessories.client.gui.ToggleButton;
+import io.wispforest.accessories.networking.server.NukeAccessories;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -347,7 +349,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                     if (slot == this.destroyItemSlot && this.destroyItemSlot != null && flag) {
                         for (int j = 0; j < this.getMinecraft().player.inventoryMenu.getItems().size(); ++j) {
                             this.getMinecraft().gameMode.handleCreativeModeItemAdd(ItemStack.EMPTY, j);
-//                            NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketDestroy()); TODO: PORT
+                            AccessoriesInternals.getNetworkHandler().sendToServer(new NukeAccessories());
                         }
                     } else {
                         if (slot == this.destroyItemSlot && this.destroyItemSlot != null) {
@@ -386,7 +388,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     public static Tuple<Integer, Integer> getButtonOffset(Screen screen) {
         int x = 0;
         int y = 0;
-        if (screen instanceof InventoryScreen/* || screen instanceof CuriosScreen*/) {
+        if (screen instanceof InventoryScreen || screen instanceof io.wispforest.accessories.client.gui.AccessoriesScreen) {
             x = AetherConfig.CLIENT.button_inventory_x.get();
             y = AetherConfig.CLIENT.button_inventory_y.get();
         }

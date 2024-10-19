@@ -8,6 +8,9 @@ import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import io.wispforest.accessories.api.AccessoriesCapability;
+import io.wispforest.accessories.api.AccessoriesContainer;
+import io.wispforest.accessories.impl.ExpandedSimpleContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ArmorStandModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -40,37 +43,36 @@ public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, ArmorStand livingEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
         String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
-//        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity); TODO: PORT
-//        if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
-//            ICuriosItemHandler handler = lazyHandler.resolve().get();
-//            Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
-//            if (stacksHandler.isPresent()) {
-//                IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
-//                if (0 < stackHandler.getSlots()) {
-//                    ItemStack itemStack = stackHandler.getStackInSlot(0);
-//                    if (!itemStack.isEmpty()) {
-//                        if (itemStack.getItem() instanceof CapeItem capeItem) {
-//                            ResourceLocation texture = capeItem.getCapeTexture();
-//                            if (itemStack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) { // Easter Egg cape texture.
-//                                texture = SWUFF_CAPE_LOCATION;
-//                            }
-//                            if (!livingEntity.isInvisible() && texture != null) {
-//                                ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
-//                                if (!itemstack.is(Items.ELYTRA)) {
-//                                    poseStack.pushPose();
-//                                    poseStack.translate(0.0F, 0.0F, 0.0925F);
-//                                    poseStack.mulPose(Axis.XP.rotationDegrees(3.0F));
-//                                    poseStack.mulPose(Axis.ZP.rotationDegrees(0.0F));
-//                                    poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-//                                    VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entitySolid(texture));
-//                                    this.cape.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-//                                    poseStack.popPose();
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        AccessoriesCapability handler = livingEntity.accessoriesCapability();
+        if (handler != null) {
+            AccessoriesContainer stacksHandler = handler.getContainers().get(identifier);
+            if (stacksHandler != null) {
+                ExpandedSimpleContainer stackHandler = stacksHandler.getCosmeticAccessories();
+                if (0 < stackHandler.getContainerSize()) {
+                    ItemStack itemStack = stackHandler.getItem(0);
+                    if (!itemStack.isEmpty()) {
+                        if (itemStack.getItem() instanceof CapeItem capeItem) {
+                            ResourceLocation texture = capeItem.getCapeTexture();
+                            if (itemStack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) { // Easter Egg cape texture.
+                                texture = SWUFF_CAPE_LOCATION;
+                            }
+                            if (!livingEntity.isInvisible() && texture != null) {
+                                ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
+                                if (!itemstack.is(Items.ELYTRA)) {
+                                    poseStack.pushPose();
+                                    poseStack.translate(0.0F, 0.0F, 0.0925F);
+                                    poseStack.mulPose(Axis.XP.rotationDegrees(3.0F));
+                                    poseStack.mulPose(Axis.ZP.rotationDegrees(0.0F));
+                                    poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+                                    VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entitySolid(texture));
+                                    this.cape.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                                    poseStack.popPose();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

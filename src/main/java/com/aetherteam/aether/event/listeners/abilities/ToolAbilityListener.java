@@ -1,6 +1,5 @@
 package com.aetherteam.aether.event.listeners.abilities;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.player.AttackEntityEvent;
@@ -19,20 +18,19 @@ import net.minecraft.world.level.block.state.BlockState;
 public class ToolAbilityListener {
     public static InteractionHand INTERACTION_HAND;
 
-//    /** TODO: PORT
-//     * @see AbilityHooks.ToolHooks#setupToolActions(LevelAccessor, BlockPos, BlockState, ToolAction)
-//     */
-//    @SubscribeEvent
-//    public static void setupToolModifications(BlockEvent.BlockToolModificationEvent event) {
-//        LevelAccessor levelAccessor = event.getLevel();
-//        BlockPos pos = event.getPos();
-//        BlockState oldState = event.getState();
-//        ToolAction toolAction = event.getToolAction();
-//        BlockState newState = AbilityHooks.ToolHooks.setupToolActions(levelAccessor, pos, oldState, toolAction);
-//        if (newState != oldState && !event.isSimulated() && !event.isCanceled()) {
-//            event.setFinalState(newState);
-//        }
-//    }
+    /**
+     * @see AbilityHooks.ToolHooks#setupToolActions(LevelAccessor, BlockPos, BlockState, ToolAction)
+     */
+    public static void setupToolModifications(BlockEvents.BlockToolModificationEvent event) {
+        LevelAccessor levelAccessor = event.getLevel();
+        BlockPos pos = event.getPos();
+        BlockState oldState = event.getState();
+        ToolAction toolAction = event.getToolAction();
+        BlockState newState = AbilityHooks.ToolHooks.setupToolActions(levelAccessor, pos, oldState, toolAction);
+        if (newState != oldState && !event.isSimulated() && !event.isCanceled()) {
+            event.setFinalState(newState);
+        }
+    }
 
     /**
      * @see AbilityHooks.ToolHooks#handleHolystoneToolAbility(Player, Level, BlockPos, ItemStack, BlockState)
@@ -62,20 +60,19 @@ public class ToolAbilityListener {
         }
     }
 
-//    /** TODO: PORT
-//     * @see AbilityHooks.ToolHooks#stripGoldenOak(LevelAccessor, BlockState, ItemStack, ToolAction, UseOnContext)
-//     */
-//    @SubscribeEvent
-//    public static void doGoldenOakStripping(BlockEvent.BlockToolModificationEvent event) {
-//        LevelAccessor levelAccessor = event.getLevel();
-//        BlockState oldState = event.getState();
-//        ItemStack itemStack = event.getHeldItemStack();
-//        ToolAction toolAction = event.getToolAction();
-//        UseOnContext context = event.getContext();
-//        if (!event.isSimulated() && !event.isCanceled()) {
-//            AbilityHooks.ToolHooks.stripGoldenOak(levelAccessor, oldState, itemStack, toolAction, context);
-//        }
-//    }
+    /**
+     * @see AbilityHooks.ToolHooks#stripGoldenOak(LevelAccessor, BlockState, ItemStack, ToolAction, UseOnContext)
+     */
+    public static void doGoldenOakStripping(BlockEvents.BlockToolModificationEvent event) {
+        LevelAccessor levelAccessor = event.getLevel();
+        BlockState oldState = event.getState();
+        ItemStack itemStack = event.getHeldItemStack();
+        ToolAction toolAction = event.getToolAction();
+        UseOnContext context = event.getContext();
+        if (!event.isSimulated() && !event.isCanceled()) {
+            AbilityHooks.ToolHooks.stripGoldenOak(levelAccessor, oldState, itemStack, toolAction, context);
+        }
+    }
 
     /**
      * @see ToolAbilityListener#checkEntityTooFar(PlayerEvents, Entity, Player, InteractionHand)
@@ -84,12 +81,12 @@ public class ToolAbilityListener {
         checkEntityTooFar(event, event.getTarget(), event.getEntity(), InteractionHand.MAIN_HAND);
     }
 
-//    /** TODO: PORT
+    // TODO: PORT (Reintroduce these as events in 1.21 instead of mixins)
+//    /**
 //     * @see ToolAbilityListener#checkEntityTooFar(PlayerEvents, Entity, Player, InteractionHand)
 //     * @see ToolAbilityListener#checkBlockTooFar(PlayerEvents, Player, InteractionHand)
 //     * @see com.aetherteam.aether.mixin.mixins.common.ItemMixin#getPlayerPOVHitResult(Level, Player, ClipContext.Fluid, CallbackInfoReturnable)
 //     */
-//    @SubscribeEvent
 //    public static void onEntityInteract(PlayerInteractEvent event) {
 //        if (event instanceof PlayerInteractEvent.EntityInteractSpecific entityInteractSpecific) {
 //            checkEntityTooFar(entityInteractSpecific, entityInteractSpecific.getTarget(), entityInteractSpecific.getEntity(), entityInteractSpecific.getHand());
@@ -125,8 +122,10 @@ public class ToolAbilityListener {
     }
 
     public static void init() {
+        BlockEvents.BLOCK_MODIFICATION.register(ToolAbilityListener::setupToolModifications);
         PlayerEvents.BREAK_SPEED.register(ToolAbilityListener::modifyBreakSpeed);
         BlockEvents.BLOCK_BREAK.register(ToolAbilityListener::doHolystoneAbility);
+        BlockEvents.BLOCK_MODIFICATION.register(ToolAbilityListener::doGoldenOakStripping);
         AttackEntityEvent.ATTACK_ENTITY.register(ToolAbilityListener::onEntityAttack);
     }
 }

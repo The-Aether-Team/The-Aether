@@ -6,6 +6,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "aether.refmap.json",
   "mixins": [
+    "common.fabric.ServerGamePacketListenerImplMixin",
+    "common.fabric.ServerPlayerGameModeMixin"
   ],
   "client": [
     "client.fabric.BossHealthOverlayMixin",
@@ -13,6 +15,7 @@
     "client.fabric.ExistingFileHelperMixin",
     "client.fabric.GameRendererMixin",
     "client.fabric.LevelRendererMixin",
-    "client.fabric.MinecraftMixin"
+    "client.fabric.MinecraftMixin",
+    "client.fabric.MultiPlayerGameModeMixin"
   ]
 }

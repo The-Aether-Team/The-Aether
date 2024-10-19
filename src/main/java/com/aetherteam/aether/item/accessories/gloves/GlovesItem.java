@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import io.wispforest.accessories.api.attributes.AccessoryAttributeBuilder;
 import io.wispforest.accessories.api.slot.SlotReference;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,7 +17,6 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
-import java.util.UUID;
 import java.util.function.Supplier;
 
 public class GlovesItem extends AccessoryItem {
@@ -36,10 +36,8 @@ public class GlovesItem extends AccessoryItem {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getModifiers(ItemStack stack, SlotReference slotContext, UUID uuid) {
-        Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
-        attributes.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", this.damage, AttributeModifier.Operation.ADDITION));
-        return attributes;
+    public void getDynamicModifiers(ItemStack stack, SlotReference slotContext, AccessoryAttributeBuilder builder) {
+        builder.addExclusive(Attributes.ATTACK_DAMAGE, new ResourceLocation(Aether.MODID, "gloves_damage_bonus"), this.damage, AttributeModifier.Operation.ADDITION);
     }
 
     /**

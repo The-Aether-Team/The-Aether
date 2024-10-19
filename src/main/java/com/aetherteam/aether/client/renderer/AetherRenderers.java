@@ -1,6 +1,5 @@
 package com.aetherteam.aether.client.renderer;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.capability.player.AetherPlayer;
@@ -8,8 +7,6 @@ import com.aetherteam.aether.client.renderer.accessory.GlovesRenderer;
 import com.aetherteam.aether.client.renderer.accessory.PendantRenderer;
 import com.aetherteam.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
 import com.aetherteam.aether.client.renderer.accessory.layer.ArmorStandCapeLayer;
-//import com.aetherteam.aether.client.renderer.accessory.layer.EntityAccessoryLayer;
-import com.aetherteam.aether.client.renderer.accessory.layer.EntityAccessoryLayer;
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
 import com.aetherteam.aether.client.renderer.accessory.model.GlovesModel;
 import com.aetherteam.aether.client.renderer.accessory.model.PendantModel;
@@ -41,8 +38,6 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
-
-import java.util.List;
 
 public class AetherRenderers {
     public static void registerEntityRenderers() {
@@ -196,11 +191,6 @@ public class AetherRenderers {
             registrationHelper.register(new DartLayer<>(renderDispatcher, playerRenderer, (entity) -> new EnchantedDart(AetherEntityTypes.ENCHANTED_DART.get(), entity.level()), AetherPlayer::getEnchantedDartCount, 3.0F));
             registrationHelper.register(new PlayerHaloLayer<>(playerRenderer, Minecraft.getInstance().getEntityModels()));
             registrationHelper.register(new PlayerWingsLayer<>(playerRenderer, Minecraft.getInstance().getEntityModels()));
-        }
-        List<EntityType<? extends LivingEntity>> entities = List.of(EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.HUSK, EntityType.SKELETON, EntityType.STRAY, EntityType.PIGLIN, EntityType.ZOMBIFIED_PIGLIN, EntityType.ARMOR_STAND);
-//        LivingEntityRenderer<LivingEntity, EntityModel<LivingEntity>> renderer = event.getRenderer(entityType);
-        if (entities.contains(entityType)) {
-            registrationHelper.register(new EntityAccessoryLayer((RenderLayerParent<LivingEntity, EntityModel<LivingEntity>>) renderer));
         }
 
         if (entityType == EntityType.ARMOR_STAND) {
