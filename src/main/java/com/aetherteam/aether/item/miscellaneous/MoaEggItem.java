@@ -13,7 +13,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
@@ -37,6 +36,7 @@ import javax.annotation.Nullable;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class MoaEggItem extends Item {
     private static final Map<ResourceKey<MoaType>, MoaEggItem> BY_ID = new IdentityHashMap<>();
@@ -90,9 +90,7 @@ public class MoaEggItem extends Item {
                     relativePos = blockPos.relative(direction);
                 }
 
-                ItemStack spawnStack = this.getStackWithTags(itemStack, false, this.getMoaType(), false, true); // Setup tags for spawning entity.
-                Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, relativePos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, relativePos) && direction == Direction.UP);
-                if (entity != null) {
+                if (AetherEntityTypes.MOA.get().spawn(serverLevel, this.getStackWithTags(serverLevel, itemStack, player, false, this.getMoaType(), false, true), relativePos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, relativePos) && direction == Direction.UP) != null) {
                     level.gameEvent(player, GameEvent.ENTITY_PLACE, blockPos);
                 }
                 return InteractionResult.CONSUME;
@@ -106,7 +104,7 @@ public class MoaEggItem extends Item {
      * [CODE COPY] - {@link net.minecraft.world.item.SpawnEggItem#use(Level, Player, InteractionHand)}<br><br>
      * Modified for Moa spawning specifically and ensuring all the Moa's NBT tags are set.
      *
-     * @param level  The {@link Level} of the user.
+     * @param level  The {@link Level} of the user.t
      * @param player The {@link Player} using this item.
      * @param hand   The {@link InteractionHand} in which the item is being used.
      */
@@ -124,9 +122,7 @@ public class MoaEggItem extends Item {
                 if (!(level.getBlockState(blockpos).getBlock() instanceof LiquidBlock)) {
                     return InteractionResultHolder.pass(heldStack);
                 } else if (level.mayInteract(player, blockpos) && player.mayUseItemAt(blockpos, hitResult.getDirection(), heldStack)) {
-                    ItemStack spawnStack = this.getStackWithTags(heldStack, false, this.getMoaType(), false, true);
-                    Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, blockpos, MobSpawnType.SPAWN_EGG, false, false);
-                    if (entity == null) {
+                    if (AetherEntityTypes.MOA.get().spawn(serverLevel, this.getStackWithTags(serverLevel, heldStack, player, false, this.getMoaType(), false, true), blockpos, MobSpawnType.SPAWN_EGG, false, false) == null) {
                         return InteractionResultHolder.pass(heldStack);
                     } else {
                         player.awardStat(Stats.ITEM_USED.get(this));
@@ -152,14 +148,14 @@ public class MoaEggItem extends Item {
      * @param isPlayerGrown @{link Boolean} for if the Moa was spawned as grown by a player.
      * @return The {@link ItemStack} with the applied tags.
      */
-    public ItemStack getStackWithTags(ItemStack stack, boolean isBaby, ResourceKey<MoaType> moaType, boolean isHungry, boolean isPlayerGrown) {
+    public Consumer<Moa> getStackWithTags(ServerLevel serverLevel, ItemStack stack, Player player, boolean isBaby, ResourceKey<MoaType> moaType, boolean isHungry, boolean isPlayerGrown) {
         ItemStack itemStack = stack.copy();
-//        CompoundTag tag = itemStack.getOrCreateTag();
-//        tag.putBoolean("IsBaby", isBaby);
-//        tag.putString("MoaType", moaType.location().toString());
-//        tag.putBoolean("Hungry", isHungry);
-//        tag.putBoolean("PlayerGrown", isPlayerGrown);
-        return itemStack;
+        return EntityType.appendDefaultStackConfig(consumerEntity -> {
+            consumerEntity.setBaby(isBaby);
+            consumerEntity.setMoaTypeByKey(moaType);
+            consumerEntity.setHungry(isHungry);
+            consumerEntity.setPlayerGrown(isPlayerGrown);
+        }, serverLevel, itemStack, player);
     }
 
     @OnlyIn(Dist.CLIENT)

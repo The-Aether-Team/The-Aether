@@ -316,7 +316,7 @@ public class Aether {
      * @param title       The {@link String} title of the resource pack.
      * @param description The {@link String} description of the resource pack.
      */
-    private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, String name, String title, String description) { //todo verify
+    private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, String name, String title, String description) {
         PackLocationInfo locationInfo = new PackLocationInfo(name, Component.translatable(title), PackSource.BUILT_IN, Optional.empty());
         Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
         PathPackResources basePack = new PathPackResources(locationInfo, baseResourcePath);
