@@ -218,25 +218,6 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
                     }
                 }, serverLevel, itemStack, player), spawnPos, MobSpawnType.TRIGGERED, true, false);
                 if (entity != null) {
-//                    if (entity instanceof Moa moa) {
-//                        if (tag != null) { // Applies NBT when spawned from incubation. //todo
-//                            if (tag.contains("IsBaby")) {
-//                                moa
-//                            }
-//                            if (tag.contains("MoaType")) {
-//                                ResourceKey<MoaType> moaTypeKey = AetherMoaTypes.getResourceKey(level.registryAccess(), tag.getString("MoaType"));
-//                                if (moaTypeKey != null) {
-//                                    moa.setMoaTypeByKey(moaTypeKey);
-//                                }
-//                            }
-//                            if (tag.contains("Hungry")) {
-//                                moa.setHungry(tag.getBoolean("Hungry"));
-//                            }
-//                            if (tag.contains("PlayerGrown")) {
-//                                moa.setPlayerGrown(tag.getBoolean("PlayerGrown"));
-//                            }
-//                        }
-//                    }
                     entity.setCustomName(customName);
                     if (this.player != null) {
                         AetherAdvancementTriggers.INCUBATION_TRIGGER.get().trigger(this.player, itemStack);
