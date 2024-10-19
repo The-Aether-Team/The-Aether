@@ -533,31 +533,28 @@ public class EntityHooks {
      * @return The new {@link Collection} of {@link ItemEntity} drops.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onCurioDrops(CurioDropsEvent)
      */
-    public static Collection<ItemEntity> handleEntityCurioDrops(LivingEntity entity, Collection<ItemEntity> itemDrops, boolean recentlyHit, int looting) {
+    public static List<ItemStack> handleEntityCurioDrops(LivingEntity entity, List<ItemStack> itemStacks, boolean recentlyHit, int looting) {
         if (entity instanceof Mob mob && mob.hasData(AetherDataAttachments.MOB_ACCESSORY)) {
             SlotTypeReference[] allSlots = { AetherAccessorySlots.getGlovesSlotType(), AetherAccessorySlots.getPendantSlotType() };
             for (SlotTypeReference identifier : allSlots) {
-                List<ItemStack> itemStacks = itemDrops.stream().map(ItemEntity::getItem).filter((stack) -> AetherMixinHooks.getIdentifierForItem(mob, stack).equals(identifier)).toList();
                 if (!itemStacks.isEmpty()) {
                     ItemStack itemStack = itemStacks.get(0);
                     float f = mob.getData(AetherDataAttachments.MOB_ACCESSORY).getEquipmentDropChance(identifier);
                     boolean flag = f > 1.0F;
                     if (!itemStack.isEmpty()) {
-                        itemDrops.removeIf((itemEntity) -> ItemStack.isSameItemSameComponents(itemEntity.getItem(), itemStack));
+                        itemStacks.removeIf((stack) -> ItemStack.isSameItemSameComponents(stack, itemStack));
                     }
                     if (!itemStack.isEmpty() && itemStack.getEnchantmentLevel(entity.level().holderOrThrow(Enchantments.VANISHING_CURSE)) == 0 && recentlyHit && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f) {
                         if (!flag && itemStack.isDamageableItem()) {
                             itemStack.setDamageValue(itemStack.getMaxDamage() - mob.getRandom().nextInt(1 + mob.getRandom().nextInt(Math.max(itemStack.getMaxDamage() - 3, 1))));
                         }
-                        ItemEntity itemEntity = new ItemEntity(mob.level(), mob.getX(), mob.getY(), mob.getZ(), itemStack);
-                        itemEntity.setDefaultPickUpDelay();
-                        itemDrops.add(itemEntity);
+                        itemStacks.add(itemStack);
                     }
                 }
             }
 
         }
-        return itemDrops;
+        return itemStacks;
     }
 
     /**
