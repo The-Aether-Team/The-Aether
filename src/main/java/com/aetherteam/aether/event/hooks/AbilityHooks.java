@@ -122,37 +122,6 @@ public class AbilityHooks {
         }
 
         /**
-         * Handles ability for {@link ZaniteAccessory} for Zanite Rings (accounts for if multiple are equipped).
-         *
-         * @see ZaniteAccessory#handleMiningSpeed(float, ItemStack)
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
-         */
-        public static float handleZaniteRingAbility(LivingEntity entity, float speed) {
-            float newSpeed = speed;
-            List<SlotEntryReference> slotResults = EquipmentUtil.getZaniteRings(entity);
-            for (SlotEntryReference slotResult : slotResults) {
-                if (slotResult != null) {
-                    newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, slotResult.stack());
-                }
-            }
-            return newSpeed;
-        }
-
-        /**
-         * Handles ability for {@link ZaniteAccessory} for the Zanite Pendant.
-         *
-         * @see ZaniteAccessory#handleMiningSpeed(float, ItemStack)
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
-         */
-        public static float handleZanitePendantAbility(LivingEntity entity, float speed) {
-            SlotEntryReference slotResult = EquipmentUtil.getZanitePendant(entity);
-            if (slotResult != null) {
-                speed = ZaniteAccessory.handleMiningSpeed(speed, slotResult.stack());
-            }
-            return speed;
-        }
-
-        /**
          * Checks whether an entity can be targeted while wearing an Invisibility Cloak.
          *
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onTargetSet(LivingEvent.LivingVisibilityEvent)

@@ -11,7 +11,7 @@ public interface ZaniteAccessory {
      * @param stack The {@link ItemStack} of the Curio.
      * @return The buffed {@link Float} value.
      */
-    static float handleMiningSpeed(float speed, ItemStack stack) {
+    default float handleMiningSpeed(float speed, ItemStack stack) {
         return speed * (1.4F + (((float) stack.getDamageValue()) / (((float) stack.getMaxDamage()) * 3.0F)));
     }
 }

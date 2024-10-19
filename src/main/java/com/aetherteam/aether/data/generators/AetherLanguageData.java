@@ -924,19 +924,12 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addKeyInfo("invisibility_toggle.desc", "Toggle Invisibility");
 
 
-        this.addCuriosIdentifier("aether_pendant", "Pendant");
-        this.addCuriosIdentifier("aether_cape", "Cape");
-        this.addCuriosIdentifier("aether_ring", "Ring");
-        this.addCuriosIdentifier("aether_shield", "Shield");
-        this.addCuriosIdentifier("aether_gloves", "Gloves");
-        this.addCuriosIdentifier("aether_accessory", "Accessory");
-
-        this.addCuriosModifier("aether_pendant", "When around neck:");
-        this.addCuriosModifier("aether_cape", "When on back:");
-        this.addCuriosModifier("aether_ring", "When worn as ring:");
-        this.addCuriosModifier("aether_shield", "When worn as shield:");
-        this.addCuriosModifier("aether_gloves", "When on hands:");
-        this.addCuriosModifier("aether_accessory", "When worn as accessory:");
+        this.addAccessoriesIdentifier("pendant_slot", "Pendant");
+        this.addAccessoriesIdentifier("cape_slot", "Cape");
+        this.addAccessoriesIdentifier("ring_slot", "Ring");
+        this.addAccessoriesIdentifier("shield_slot", "Shield");
+        this.addAccessoriesIdentifier("gloves_slot", "Gloves");
+        this.addAccessoriesIdentifier("accessory_slot", "Accessory");
 
         this.addLore(AetherItems.AECHOR_PETAL, "The petal of an Aechor Plant; they have a sweet aroma to them. These are a Moa's favorite food and can be used to feed baby Moas.");
         this.addLore(AetherBlocks.AEROGEL, "The result of the Aether's unique climate and lava combining. These blocks can be crafted into various decorative blocks and are blast-resistant.");

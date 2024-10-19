@@ -1,8 +1,15 @@
 package com.aetherteam.aether.item.accessories.ring;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.inventory.AetherAccessorySlots;
 import com.aetherteam.aether.item.accessories.abilities.ZaniteAccessory;
+import io.wispforest.accessories.api.attributes.AccessoryAttributeBuilder;
+import io.wispforest.accessories.api.slot.SlotReference;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
@@ -12,6 +19,13 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 public class ZaniteRingItem extends RingItem implements ZaniteAccessory {
     public ZaniteRingItem(Properties properties) {
         super(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ZANITE_RING, properties);
+    }
+
+    @Override
+    public void getDynamicModifiers(ItemStack stack, SlotReference reference, AccessoryAttributeBuilder builder) {
+        if (reference.slotName().equals(AetherAccessorySlots.RING_SLOT_LOCATION.toString())) {
+            builder.addStackable(Attributes.MINING_EFFICIENCY, new AttributeModifier(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "zanite_ring_attack_damage_" + reference.slot()), this.handleMiningSpeed(1.0F, stack), AttributeModifier.Operation.ADD_VALUE));
+        }
     }
 
     @Override

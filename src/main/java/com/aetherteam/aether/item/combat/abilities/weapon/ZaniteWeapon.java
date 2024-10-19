@@ -14,7 +14,7 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import java.util.concurrent.atomic.AtomicReference;
 
 public interface ZaniteWeapon {
-    ResourceLocation DAMAGE_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "zanite_modified_attack_damage");
+    ResourceLocation DAMAGE_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "zanite_weapon_attack_damage");
 
     default ItemAttributeModifiers.Entry increaseDamage(ItemAttributeModifiers modifiers, ItemStack stack) {
         return new ItemAttributeModifiers.Entry(Attributes.ATTACK_DAMAGE,

@@ -14,7 +14,7 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import java.util.concurrent.atomic.AtomicReference;
 
 public interface ZaniteTool {
-    ResourceLocation MINING_EFFICIENCY_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "zanite_modified_mining_efficiency");
+    ResourceLocation MINING_EFFICIENCY_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "zanite_tool_mining_efficiency");
 
     /**
      * Calculates mining speed increase using the default mining speed inputted into the Zanite value buff function.
