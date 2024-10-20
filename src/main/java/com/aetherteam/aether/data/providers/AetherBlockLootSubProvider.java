@@ -2,6 +2,7 @@ package com.aetherteam.aether.data.providers;
 
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.item.components.AetherDataComponents;
 import com.aetherteam.aether.loot.functions.DoubleDrops;
 import com.aetherteam.aether.loot.functions.SpawnTNT;
 import com.aetherteam.aether.loot.functions.SpawnXP;
@@ -19,10 +20,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
-import net.minecraft.world.level.storage.loot.functions.CopyCustomDataFunction;
-import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
@@ -143,9 +141,10 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
         return LootTable.lootTable().withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(LootItem.lootTableItem(block)
                         .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                        .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY) //todo
-                                .copy("Locked", "BlockEntityTag.Locked")
-                                .copy("Kind", "BlockEntityTag.Kind"))))
+                        .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                            .include(AetherDataComponents.LOCKED.get())
+                            .include(AetherDataComponents.DUNGEON_KIND.get()))
+                ))
         );
     }
 

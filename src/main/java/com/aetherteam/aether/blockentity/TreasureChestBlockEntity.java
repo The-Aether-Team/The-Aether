@@ -2,10 +2,14 @@ package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.item.components.AetherDataComponents;
+import com.aetherteam.aether.item.components.DungeonKind;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -226,6 +230,32 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         double d1 = pos.getY() + 0.5;
         double d2 = pos.getZ() + 0.5;
         level.playSound(null, d0, d1, d2, sound, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+    }
+
+    @Override
+    protected void applyImplicitComponents(BlockEntity.DataComponentInput componentInput) {
+        super.applyImplicitComponents(componentInput);
+        this.setLocked(componentInput.getOrDefault(AetherDataComponents.LOCKED, true));
+        DungeonKind kind = componentInput.get(AetherDataComponents.DUNGEON_KIND);
+        if (kind != null) {
+            this.setKind(kind.id());
+        } else {
+            this.setKind(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze"));
+        }
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        super.collectImplicitComponents(components);
+        components.set(AetherDataComponents.LOCKED, this.getLocked());
+        components.set(AetherDataComponents.DUNGEON_KIND, new DungeonKind(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze")));
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag tag) {
+        super.removeComponentsFromTag(tag);
+        tag.remove("Locked");
+        tag.remove("Kind");
     }
 
     @Override

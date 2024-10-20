@@ -15,7 +15,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public record PortalTravelSoundPacket() implements CustomPacketPayload {
     public static final Type<PortalTravelSoundPacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "play_portal_travel_sound"));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, PortalTravelSoundPacket> STREAM_CODEC = StreamCodec.unit(new PortalTravelSoundPacket()); //todo verify
+    public static final StreamCodec<RegistryFriendlyByteBuf, PortalTravelSoundPacket> STREAM_CODEC = StreamCodec.unit(new PortalTravelSoundPacket());
 
     @Override
     public Type<PortalTravelSoundPacket> type() {

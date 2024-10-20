@@ -87,7 +87,7 @@ public class GuiHooks {
      */
     @Nullable
     public static AccessoryButton setupAccessoryButton(Screen screen, Tuple<Integer, Integer> offsets) {
-        AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen); //todo
+        AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen);
         if (containerScreen != null) {
             return new AccessoryButton(containerScreen, containerScreen.getGuiLeft() + offsets.getA(), containerScreen.getGuiTop() + offsets.getB(), AetherAccessoriesScreen.ACCESSORIES_BUTTON);
         }
@@ -103,7 +103,7 @@ public class GuiHooks {
      */
     @Nullable
     private static AbstractContainerScreen<?> canCreateAccessoryButtonForScreen(Screen screen) {
-        if (screen instanceof InventoryScreen || screen instanceof AccessoriesScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AetherAccessoriesScreen && shouldAddButton)) { //todo
+        if (screen instanceof InventoryScreen || screen instanceof AccessoriesScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AetherAccessoriesScreen && shouldAddButton)) {
             return (AbstractContainerScreen<?>) screen;
         } else if (screen instanceof AetherAccessoriesScreen) {
             shouldAddButton = true;

@@ -38,6 +38,7 @@ import com.aetherteam.aether.item.combat.AetherArmorMaterials;
 import com.aetherteam.aether.item.combat.loot.FlamingSwordItem;
 import com.aetherteam.aether.item.combat.loot.HolySwordItem;
 import com.aetherteam.aether.item.combat.loot.PigSlayerItem;
+import com.aetherteam.aether.item.components.AetherDataComponents;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
 import com.aetherteam.aether.loot.modifiers.AetherLootModifiers;
@@ -149,7 +150,8 @@ public class Aether {
                 AetherCreativeTabs.CREATIVE_MODE_TABS,
                 AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDES,
                 AetherDataAttachments.ATTACHMENTS,
-                AetherAdvancementTriggers.TRIGGERS
+                AetherAdvancementTriggers.TRIGGERS,
+                AetherDataComponents.DATA_COMPONENT_TYPES
         };
 
         for (DeferredRegister<?> register : registers) {
@@ -316,7 +318,7 @@ public class Aether {
      * @param title       The {@link String} title of the resource pack.
      * @param description The {@link String} description of the resource pack.
      */
-    private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, String name, String title, String description) { //todo verify
+    private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, String name, String title, String description) {
         PackLocationInfo locationInfo = new PackLocationInfo(name, Component.translatable(title), PackSource.BUILT_IN, Optional.empty());
         Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
         PathPackResources basePack = new PathPackResources(locationInfo, baseResourcePath);

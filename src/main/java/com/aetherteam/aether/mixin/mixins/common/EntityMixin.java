@@ -66,7 +66,7 @@ public class EntityMixin {
      * @param entity The {@link Entity}
      */
     @Nullable
-    private static Entity entityFell(Entity entity) { //todo portal stuff
+    private static Entity entityFell(Entity entity) {
         Level serverLevel = entity.level();
         MinecraftServer minecraftserver = serverLevel.getServer();
         if (minecraftserver != null) {

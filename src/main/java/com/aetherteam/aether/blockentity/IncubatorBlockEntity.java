@@ -26,6 +26,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -200,36 +201,23 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
      */
     private boolean incubate(@Nullable RecipeHolder<IncubationRecipe> recipe, NonNullList<ItemStack> stacks) {
         if (recipe != null && this.canIncubate(recipe, stacks)) {
-            ItemStack itemStack = stacks.get(0);
+            ItemStack itemStack = stacks.getFirst();
             EntityType<?> entityType = recipe.value().getEntity();
             BlockPos spawnPos = this.getBlockPos().above();
             if (this.level != null && !this.level.isClientSide() && this.level instanceof ServerLevel serverLevel) {
-                CompoundTag tag = null;
+                CompoundTag tag;
                 if (recipe.value().getTag().isPresent()) {
                     tag = recipe.value().getTag().get();
+                } else {
+                    tag = null;
                 }
                 Component customName = itemStack.has(DataComponents.CUSTOM_NAME) ? itemStack.getHoverName() : null;
-                Entity entity = entityType.spawn(serverLevel, itemStack, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
-                if (entity != null) {
-                    if (entity instanceof Moa moa) {
-                        if (tag != null) { // Applies NBT when spawned from incubation. //todo
-                            if (tag.contains("IsBaby")) {
-                                moa.setBaby(tag.getBoolean("IsBaby"));
-                            }
-                            if (tag.contains("MoaType")) {
-                                ResourceKey<MoaType> moaTypeKey = AetherMoaTypes.getResourceKey(level.registryAccess(), tag.getString("MoaType"));
-                                if (moaTypeKey != null) {
-                                    moa.setMoaTypeByKey(moaTypeKey);
-                                }
-                            }
-                            if (tag.contains("Hungry")) {
-                                moa.setHungry(tag.getBoolean("Hungry"));
-                            }
-                            if (tag.contains("PlayerGrown")) {
-                                moa.setPlayerGrown(tag.getBoolean("PlayerGrown"));
-                            }
-                        }
+                Entity entity = entityType.spawn(serverLevel, EntityType.appendDefaultStackConfig(consumerEntity -> {
+                    if (tag != null && consumerEntity instanceof LivingEntity livingEntity) {
+                        livingEntity.readAdditionalSaveData(tag);
                     }
+                }, serverLevel, itemStack, player), spawnPos, MobSpawnType.TRIGGERED, true, false);
+                if (entity != null) {
                     entity.setCustomName(customName);
                     if (this.player != null) {
                         AetherAdvancementTriggers.INCUBATION_TRIGGER.get().trigger(this.player, itemStack);
@@ -407,7 +395,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
         this.incubationTotalTime = tag.getInt("IncubationTotalTime");
         CompoundTag compoundtag = tag.getCompound("RecipesUsed");
         for (String string : compoundtag.getAllKeys()) {
-            this.recipesUsed.put(ResourceLocation.withDefaultNamespace(string), compoundtag.getInt(string));
+            this.recipesUsed.put(ResourceLocation.parse(string), compoundtag.getInt(string));
         }
     }
 

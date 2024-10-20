@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 
 public class Sentry extends Slime {
@@ -111,15 +112,16 @@ public class Sentry extends Slime {
      * @param entity The colliding {@link Entity}.
      */
     protected void explodeAt(LivingEntity entity) {
-        if (this.distanceToSqr(entity) < 1.5 && this.isAwake() && this.hasLineOfSight(entity) && entity.hurt(this.damageSources().mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
+        DamageSource damageSource = this.damageSources().mobAttack(this);
+        if (this.distanceToSqr(entity) < 1.5 && this.isAwake() && this.hasLineOfSight(entity) && entity.hurt(damageSource, 1.0F) && this.tickCount > 20 && this.isAlive()) {
             entity.push(0.3, 0.4, 0.3);
             this.level().explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Level.ExplosionInteraction.MOB);
             this.playSound(SoundEvents.GENERIC_EXPLODE.value(), 1.0F, 0.2F * (this.getRandom().nextFloat() - this.getRandom().nextFloat()) + 1);
             if (this.level() instanceof ServerLevel level) {
                 level.broadcastEntityEvent(this, (byte) 70);
                 level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.getX(), this.getY(), this.getZ(), 1, 0.0, 0.0, 0.0, 0.5);
+                EnchantmentHelper.doPostAttackEffects(level, entity, damageSource);
             }
-//            this.doEnchantDamageEffects(this, entity);
             this.discard();
         }
     }
@@ -182,7 +184,7 @@ public class Sentry extends Slime {
 
     @Override
     public EntityDimensions getDefaultDimensions(Pose pose) {
-        return super.getDimensions(pose).scale(1.76F);
+        return super.getDefaultDimensions(pose).scale(1.76F);
     }
 
     @Override

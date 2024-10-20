@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 
 public class SkyrootMobBucketItem extends MobBucketItem {
-    public SkyrootMobBucketItem(EntityType<?> entitySupplier, Fluid fluidSupplier, SoundEvent soundSupplier, Item.Properties properties) { //todo may crash
+    public SkyrootMobBucketItem(EntityType<?> entitySupplier, Fluid fluidSupplier, SoundEvent soundSupplier, Item.Properties properties) {
         super(entitySupplier, fluidSupplier, soundSupplier, properties);
     }
 

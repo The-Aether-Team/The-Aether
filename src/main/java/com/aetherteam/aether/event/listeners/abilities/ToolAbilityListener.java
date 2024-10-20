@@ -24,8 +24,6 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 public class ToolAbilityListener {
-    public static InteractionHand INTERACTION_HAND;
-
     /**
      * @see Aether#eventSetup()
      */
@@ -35,12 +33,6 @@ public class ToolAbilityListener {
         bus.addListener(ToolAbilityListener::doHolystoneAbility);
         bus.addListener(ToolAbilityListener::modifyBreakSpeed);
         bus.addListener(ToolAbilityListener::doGoldenOakStripping);
-        bus.addListener(ToolAbilityListener::onEntityAttack);
-        bus.addListener(ToolAbilityListener::onEntityInteractSpecific);
-        bus.addListener(ToolAbilityListener::onEntityInteract);
-        bus.addListener(ToolAbilityListener::onEntityInteractRightClickBlock);
-        bus.addListener(ToolAbilityListener::onEntityInteractLeftClickBlock);
-        bus.addListener(ToolAbilityListener::onEntityInteractRightClickItem);
     }
 
     /**
@@ -104,70 +96,6 @@ public class ToolAbilityListener {
         UseOnContext context = event.getContext();
         if (!event.isSimulated() && !event.isCanceled()) {
             AbilityHooks.ToolHooks.stripGoldenOak(levelAccessor, oldState, itemStack, ItemAbility, context);
-        }
-    }
-
-    /**
-     * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
-     */
-    public static void onEntityAttack(AttackEntityEvent event) {
-        checkEntityTooFar(event, event.getTarget(), event.getEntity(), InteractionHand.MAIN_HAND);
-    }
-
-    /**
-     * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
-     */
-    public static void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
-        checkEntityTooFar(event, event.getTarget(), event.getEntity(), event.getHand());
-    }
-
-    /**
-     * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
-     */
-    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        checkEntityTooFar(event, event.getTarget(), event.getEntity(), event.getHand());
-    }
-
-    /**
-     * @see ToolAbilityListener#checkBlockTooFar(PlayerEvent, Player, InteractionHand)
-     */
-    public static void onEntityInteractRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        checkBlockTooFar(event, event.getEntity(), event.getHand());
-    }
-
-    /**
-     * @see ToolAbilityListener#checkBlockTooFar(PlayerEvent, Player, InteractionHand)
-     */
-    public static void onEntityInteractLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-        checkBlockTooFar(event, event.getEntity(), event.getHand());
-    }
-
-    /**
-     * @see com.aetherteam.aether.mixin.mixins.common.ItemMixin#getPlayerPOVHitResult(Level, Player, ClipContext.Fluid, CallbackInfoReturnable)
-     */
-    public static void onEntityInteractRightClickItem(PlayerInteractEvent.RightClickItem event) {
-        INTERACTION_HAND = event.getHand();
-    }
-
-    /**
-     * Cancels the given event if the targeted entity is too far away.
-     *
-     * @see AbilityHooks.ToolHooks#entityTooFar(Entity, Player, InteractionHand)
-     */
-    private static void checkEntityTooFar(PlayerEvent event, Entity target, Player player, InteractionHand hand) {
-        if (event instanceof ICancellableEvent cancellable && !cancellable.isCanceled() && AbilityHooks.ToolHooks.entityTooFar(target, player, hand)) {
-            cancellable.setCanceled(true);
-        }
-    }
-
-    /**
-     * Cancels the given event if the targeted block is too far away.
-     *
-     * @see AbilityHooks.ToolHooks#blockTooFar(Player, InteractionHand)
-     */
-    private static void checkBlockTooFar(PlayerEvent event, Player player, InteractionHand hand) {
-        if (event instanceof ICancellableEvent cancellable && !cancellable.isCanceled() && AbilityHooks.ToolHooks.blockTooFar(player, hand)) {
-            cancellable.setCanceled(true);
         }
     }
 }

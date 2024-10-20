@@ -70,7 +70,7 @@ public class WorldPreviewListener {
     /**
      * @see WorldPreviewHooks#hideOverlays()
      */
-    public static void onRenderOverlay(RenderGuiLayerEvent.Pre event) { //todo
+    public static void onRenderOverlay(RenderGuiLayerEvent.Pre event) {
         if (WorldPreviewHooks.hideOverlays()) {
             event.setCanceled(true);
         }

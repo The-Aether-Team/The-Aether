@@ -2,6 +2,8 @@ package com.aetherteam.aether.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.EntityHooks;
+import io.wispforest.accessories.api.events.OnDeathCallback;
+import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -13,6 +15,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
@@ -24,7 +28,9 @@ import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public class EntityListener {
@@ -40,10 +46,18 @@ public class EntityListener {
         bus.addListener(EntityListener::onShieldBlock);
         bus.addListener(EntityListener::onLightningStrike);
         bus.addListener(EntityListener::onPlayerDrops);
-//        bus.addListener(EntityListener::onCurioDrops);
         bus.addListener(EntityListener::onDropExperience);
         bus.addListener(EntityListener::onEffectApply);
         bus.addListener(EntityListener::onEntitySplit);
+
+        OnDeathCallback.EVENT.register((currentState, entity, capability, damageSource, droppedStacks) -> {
+            List<ItemStack> droppedStacksCopy = new ArrayList<>(droppedStacks);
+            boolean recentlyHit = entity.hurtMarked;
+            int looting = EnchantmentHelper.getEnchantmentLevel(entity.level().registryAccess().holderOrThrow(Enchantments.LOOTING), entity);
+            droppedStacks.clear();
+            droppedStacks.addAll(EntityHooks.handleEntityCurioDrops(entity, droppedStacksCopy, recentlyHit, looting));
+            return TriState.DEFAULT;
+        });
     }
 
     /**
@@ -130,19 +144,6 @@ public class EntityListener {
         Collection<ItemEntity> itemDrops = event.getDrops();
         EntityHooks.trackDrops(entity, itemDrops);
     }
-
-    /**
-     * @see EntityHooks#handleEntityCurioDrops(LivingEntity, Collection, boolean, int)
-     */
-//    public static void onCurioDrops(CurioDropsEvent event) { //todo
-//        LivingEntity entity = event.getEntity();
-//        Collection<ItemEntity> itemDrops = event.getDrops();
-//        Collection<ItemEntity> itemDropsCopy = new ArrayList<>(itemDrops);
-//        boolean recentlyHit = event.isRecentlyHit();
-//        int looting = event.getLootingLevel();
-//        itemDrops.clear();
-//        itemDrops.addAll(EntityHooks.handleEntityCurioDrops(entity, itemDropsCopy, recentlyHit, looting));
-//    }
 
     /**
      * @see EntityHooks#modifyExperience(LivingEntity, int)

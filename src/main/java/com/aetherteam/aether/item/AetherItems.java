@@ -25,6 +25,8 @@ import com.aetherteam.aether.item.accessories.ring.RingItem;
 import com.aetherteam.aether.item.accessories.ring.ZaniteRingItem;
 import com.aetherteam.aether.item.combat.*;
 import com.aetherteam.aether.item.combat.loot.*;
+import com.aetherteam.aether.item.components.AetherDataComponents;
+import com.aetherteam.aether.item.components.DungeonKind;
 import com.aetherteam.aether.item.food.AetherFoods;
 import com.aetherteam.aether.item.food.GummySwetItem;
 import com.aetherteam.aether.item.food.HealingStoneItem;
@@ -234,9 +236,9 @@ public class AetherItems {
     // Misc
     public static final DeferredItem<Item> VICTORY_MEDAL = ITEMS.register("victory_medal", () -> new Item(new Item.Properties().stacksTo(10).rarity(AETHER_LOOT)));
 
-    public static final DeferredItem<Item> BRONZE_DUNGEON_KEY = ITEMS.register("bronze_dungeon_key", () -> new DungeonKeyItem(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
-    public static final DeferredItem<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key", () -> new DungeonKeyItem(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
-    public static final DeferredItem<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key", () -> new DungeonKeyItem(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "gold"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
+    public static final DeferredItem<Item> BRONZE_DUNGEON_KEY = ITEMS.register("bronze_dungeon_key", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().component(AetherDataComponents.DUNGEON_KIND, new DungeonKind(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "bronze")))));
+    public static final DeferredItem<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().component(AetherDataComponents.DUNGEON_KIND, new DungeonKind(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "silver")))));
+    public static final DeferredItem<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().component(AetherDataComponents.DUNGEON_KIND, new DungeonKind(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "gold")))));
 
     public static final DeferredItem<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(AetherJukeboxSongs.AETHER_TUNE)));
     public static final DeferredItem<Item> MUSIC_DISC_ASCENDING_DAWN = ITEMS.register("music_disc_ascending_dawn", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(AetherJukeboxSongs.ASCENDING_DAWN)));
@@ -356,14 +358,14 @@ public class AetherItems {
     public static ItemStack createSwetBannerItemStack(HolderGetter<BannerPattern> patternRegistry) {
         ItemStack bannerStack = new ItemStack(Items.BLACK_BANNER);
         BannerPatternLayers layers = new BannerPatternLayers.Builder()
-            .addIfRegistered(patternRegistry, BannerPatterns.STRIPE_DOWNLEFT, DyeColor.CYAN)
-            .addIfRegistered(patternRegistry, BannerPatterns.STRIPE_BOTTOM, DyeColor.CYAN)
-            .addIfRegistered(patternRegistry, BannerPatterns.STRIPE_LEFT, DyeColor.CYAN)
-            .addIfRegistered(patternRegistry, BannerPatterns.HALF_HORIZONTAL, DyeColor.BLACK)
-            .addIfRegistered(patternRegistry, BannerPatterns.STRAIGHT_CROSS, DyeColor.CYAN)
-            .addIfRegistered(patternRegistry, BannerPatterns.BORDER, DyeColor.WHITE)
-            .addIfRegistered(patternRegistry, BannerPatterns.GRADIENT_UP, DyeColor.LIGHT_BLUE)
-            .addIfRegistered(patternRegistry, BannerPatterns.GRADIENT, DyeColor.LIGHT_BLUE)
+            .add(patternRegistry.getOrThrow(BannerPatterns.STRIPE_DOWNLEFT), DyeColor.CYAN)
+            .add(patternRegistry.getOrThrow(BannerPatterns.STRIPE_BOTTOM), DyeColor.CYAN)
+            .add(patternRegistry.getOrThrow(BannerPatterns.STRIPE_LEFT), DyeColor.CYAN)
+            .add(patternRegistry.getOrThrow(BannerPatterns.HALF_HORIZONTAL), DyeColor.BLACK)
+            .add(patternRegistry.getOrThrow(BannerPatterns.STRAIGHT_CROSS), DyeColor.CYAN)
+            .add(patternRegistry.getOrThrow(BannerPatterns.BORDER), DyeColor.WHITE)
+            .add(patternRegistry.getOrThrow(BannerPatterns.GRADIENT_UP), DyeColor.LIGHT_BLUE)
+            .add(patternRegistry.getOrThrow(BannerPatterns.GRADIENT), DyeColor.LIGHT_BLUE)
             .build();
         bannerStack.set(DataComponents.BANNER_PATTERNS, layers);
         bannerStack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);

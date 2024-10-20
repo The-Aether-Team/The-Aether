@@ -34,14 +34,4 @@ public class AccessoryItem extends Item implements Accessory { // Vanishable
     public @Nullable SoundEventData getEquipSound(ItemStack stack, SlotReference reference) {
         return new SoundEventData(this.soundEventSupplier, 1.0F, 1.0F);
     }
-
-//    @Override //todo enchantments
-//    public ItemStack applyEnchantments(ItemStack stack, List<EnchantmentInstance> enchantments) {
-//        return super.applyEnchantments(stack, enchantments);
-//    }
-//
-//    @Override
-//    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-//        return super.canApplyAtEnchantingTable(stack, enchantment) || enchantment == Enchantments.BINDING_CURSE;
-//    }
 }
