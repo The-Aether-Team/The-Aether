@@ -1,4 +1,4 @@
-// 1.21	2024-10-12T19:57:00.7647527	Loot Tables
+// 1.21	2024-10-19T19:37:33.7885269	Loot Tables
 6fd07ff3ea848d0b3b26cbf2b2d5c37dd5dc8b9a data/aether/loot_table/advancements/enter_aether.json
 a2337d3e3c05d3efabc3f907351bfe480fd09caa data/aether/loot_table/blocks/aerogel.json
 cb18a05b606bd3951085b27c35172c0e9867f0b0 data/aether/loot_table/blocks/aerogel_slab.json
@@ -119,7 +119,7 @@ e8fa1a6e34414890f3326e0636d135d6a41ad577 data/aether/loot_table/blocks/trapped_a
 af6bdc13eba1a9e2e2d24785ef48544ecfd57444 data/aether/loot_table/blocks/trapped_light_angelic_stone.json
 d073f4901d9be76d42a05e597d99525649167544 data/aether/loot_table/blocks/trapped_light_hellfire_stone.json
 b3fe66f49fb6d781b0832ccf019e66d4d3f41ca9 data/aether/loot_table/blocks/trapped_sentry_stone.json
-7e9005595199c64d6970b7e8243b3aff39ed3e60 data/aether/loot_table/blocks/treasure_chest.json
+78db9b56b8f8614a442ff7943973e6ab24cc2e8f data/aether/loot_table/blocks/treasure_chest.json
 e8f7b8c4f5688a6aa1936428bb70b0312b9e80cf data/aether/loot_table/blocks/treasure_doorway_angelic_stone.json
 0f76700e128c276979f77d3ef598ae2abed5e09d data/aether/loot_table/blocks/treasure_doorway_carved_stone.json
 919177a5f5e3b3d10ca47085a6caa28da698f3e6 data/aether/loot_table/blocks/treasure_doorway_hellfire_stone.json

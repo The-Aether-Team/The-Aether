@@ -2,10 +2,12 @@ package com.aetherteam.aether.block.dungeon;
 
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
-import com.aetherteam.aether.item.miscellaneous.DungeonKeyItem;
+import com.aetherteam.aether.item.components.AetherDataComponents;
+import com.aetherteam.aether.item.components.DungeonKind;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
@@ -118,43 +121,49 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
      */
     @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) { //todo
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
-            ResourceLocation kind = treasureChestBlockEntity.getKind();
-
-            InteractionHand useHand = null;
-            if ((player.getMainHandItem().getItem() instanceof DungeonKeyItem dungeonKeyItem) && kind.equals(dungeonKeyItem.getDungeonType())) {
-                useHand = InteractionHand.MAIN_HAND;
-            } else if ((player.getOffhandItem().getItem() instanceof DungeonKeyItem dungeonKeyItem) && kind.equals(dungeonKeyItem.getDungeonType())) {
-                useHand = InteractionHand.OFF_HAND;
-            }
-
-            if (treasureChestBlockEntity.getLocked()) {
-                if (useHand != null) {
-                    ItemStack key = player.getItemInHand(useHand);
-                    if (!key.isEmpty() && treasureChestBlockEntity.tryUnlock(player)) {
-                        if (level.isClientSide()) {
-                            player.swing(useHand);
-                        }
-                        if (player instanceof ServerPlayer) {
-                            player.awardStat(Stats.ITEM_USED.get(key.getItem()));
-                        }
-                        if (!player.getAbilities().instabuild) {
-                            key.shrink(1);
-                        }
-                        return InteractionResult.CONSUME;
+            if (!treasureChestBlockEntity.getLocked()) {
+                if (level.isClientSide()) {
+                    return InteractionResult.SUCCESS;
+                } else {
+                    MenuProvider menuprovider = this.getMenuProvider(state, level, pos);
+                    if (menuprovider != null) {
+                        player.openMenu(menuprovider);
+                        player.awardStat(Stats.CUSTOM.get(Stats.OPEN_CHEST));
+                        PiglinAi.angerNearbyPiglins(player, true);
                     }
+
+                    return InteractionResult.CONSUME;
                 }
-                player.displayClientMessage(Component.translatable(kind.getNamespace() + "." + kind.getPath() + "_treasure_chest_locked"), true);
-            } else {
-                MenuProvider menuProvider = this.getMenuProvider(state, level, pos);
-                player.openMenu(menuProvider);
-                player.awardStat(Stats.CUSTOM.get(Stats.OPEN_CHEST));
-                PiglinAi.angerNearbyPiglins(player, true);
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
+            ResourceLocation kind = treasureChestBlockEntity.getKind();
+            if (treasureChestBlockEntity.getLocked()) {
+                DungeonKind type = stack.get(AetherDataComponents.DUNGEON_KIND);
+                if (type != null && type.id().equals(treasureChestBlockEntity.getKind())) {
+                    if (!stack.isEmpty() && treasureChestBlockEntity.tryUnlock(player)) {
+                        if (player instanceof ServerPlayer) {
+                            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+                        }
+                        if (!player.getAbilities().instabuild) {
+                            stack.shrink(1);
+                        }
+                        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                    }
+                }
+                player.displayClientMessage(Component.translatable(kind.getNamespace() + "." + kind.getPath() + "_treasure_chest_locked"), true);
+            }
+        }
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -288,10 +297,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
         ItemStack stack = super.getCloneItemStack(level, pos, state);
         TreasureChestBlockEntity treasureChestBlockEntity = (TreasureChestBlockEntity) level.getBlockEntity(pos);
         if (treasureChestBlockEntity != null) {
-            CompoundTag compound = new CompoundTag();
-            compound.putBoolean("Locked", treasureChestBlockEntity.getLocked());
-            compound.putString("Kind", treasureChestBlockEntity.getKind().toString());
-//            stack.addTagElement("BlockEntityTag", compound);
+            stack.applyComponents(treasureChestBlockEntity.collectComponents());
         }
         return stack;
     }

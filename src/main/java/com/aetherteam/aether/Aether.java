@@ -38,6 +38,7 @@ import com.aetherteam.aether.item.combat.AetherArmorMaterials;
 import com.aetherteam.aether.item.combat.loot.FlamingSwordItem;
 import com.aetherteam.aether.item.combat.loot.HolySwordItem;
 import com.aetherteam.aether.item.combat.loot.PigSlayerItem;
+import com.aetherteam.aether.item.components.AetherDataComponents;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
 import com.aetherteam.aether.loot.modifiers.AetherLootModifiers;
@@ -149,7 +150,8 @@ public class Aether {
                 AetherCreativeTabs.CREATIVE_MODE_TABS,
                 AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDES,
                 AetherDataAttachments.ATTACHMENTS,
-                AetherAdvancementTriggers.TRIGGERS
+                AetherAdvancementTriggers.TRIGGERS,
+                AetherDataComponents.DATA_COMPONENT_TYPES
         };
 
         for (DeferredRegister<?> register : registers) {

@@ -12,18 +12,10 @@
               "source": "block_entity"
             },
             {
-              "function": "minecraft:copy_custom_data",
-              "ops": [
-                {
-                  "op": "replace",
-                  "source": "Locked",
-                  "target": "BlockEntityTag.Locked"
-                },
-                {
-                  "op": "replace",
-                  "source": "Kind",
-                  "target": "BlockEntityTag.Kind"
-                }
+              "function": "minecraft:copy_components",
+              "include": [
+                "aether:locked",
+                "aether:dungeon_kind"
               ],
               "source": "block_entity"
             }
