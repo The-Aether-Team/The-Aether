@@ -55,7 +55,7 @@ public class PlayerMixin {
     private void isModelPartShown(PlayerModelPart part, CallbackInfoReturnable<Boolean> cir) {
         Player player = (Player) (Object) this;
         if (EquipmentUtil.hasCape(player) && AetherMixinHooks.isCapeVisible(player)) {
-            cir.setReturnValue(true); //todo
+            cir.setReturnValue(true);
         }
     }
 }
