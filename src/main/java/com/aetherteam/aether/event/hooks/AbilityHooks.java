@@ -12,34 +12,29 @@ import com.aetherteam.aether.entity.projectile.dart.EnchantedDart;
 import com.aetherteam.aether.entity.projectile.dart.GoldenDart;
 import com.aetherteam.aether.entity.projectile.dart.PoisonDart;
 import com.aetherteam.aether.item.EquipmentUtil;
-import com.aetherteam.aether.item.accessories.abilities.ZaniteAccessory;
 import com.aetherteam.aether.item.combat.abilities.weapon.ZaniteWeapon;
 import com.aetherteam.aether.item.tools.abilities.HolystoneTool;
-import com.aetherteam.aether.item.tools.abilities.ValkyrieTool;
 import com.aetherteam.aether.item.tools.abilities.ZaniteTool;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.loot.AetherLootContexts;
 import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.util.concurrent.AtomicDouble;
 import io.wispforest.accessories.api.AccessoriesAPI;
 import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
@@ -69,6 +64,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class AbilityHooks {
     public static class AccessoryHooks {
@@ -419,27 +415,32 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onEntityDamage(LivingDamageEvent)
          */
         public static float reduceWeaponEffectiveness(LivingEntity target, Entity source, float damage) {
-//            if (AetherConfig.SERVER.tools_debuff.get() && !target.level().isClientSide()) { // Checks if tool debuffs are enabled and if the level is on the server side.
-//                double pow = Math.max(Math.pow(damage, damage > 1.0 ? 0.6 : 1.6), 1.0);
-//                if (source instanceof LivingEntity livingEntity) {
-//                    ItemStack stack = livingEntity.getMainHandItem();
-//                    if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) { // Checks if the target is an Aether entity.
-//                        if (!stack.isEmpty() && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).isEmpty() && stack.getAttributeModifiers(EquipmentSlot.MAINHAND).containsKey(Attributes.ATTACK_DAMAGE) && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).isEmpty()) { // Checks if the attacking item is a weapon.
-//                            double value = stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().mapToDouble(AttributeModifier::getAmount).sum(); // Used for checking if the attack damage from the item is greater than the attacker's default (fist).
-//                            if (value > livingEntity.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) { // Checks if the attacking item is non-Aether.
-//                                damage = (float) pow;
-//                            }
-//                        }
-//                    }
-//                } else if (source instanceof Projectile) { // Used for reducing projectile weapon effectiveness.
-//                    if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) { // Checks if the target is an Aether entity.
-//                        if ((!source.getType().getDescriptionId().startsWith("entity.aether") && !source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) // Checks if the projectile is non-Aether.
-//                                && (!(source instanceof AbstractArrow abstractArrow) || !abstractArrow.hasData(AetherDataAttachments.PHOENIX_ARROW) || !abstractArrow.getData(AetherDataAttachments.PHOENIX_ARROW).isPhoenixArrow())) { // Special check against Phoenix Arrows.
-//                            damage = (float) pow;
-//                        }
-//                    }
-//                }
-//            }
+            if (AetherConfig.SERVER.tools_debuff.get() && !target.level().isClientSide()) { // Checks if tool debuffs are enabled and if the level is on the server side.
+                double pow = Math.max(Math.pow(damage, damage > 1.0 ? 0.6 : 1.6), 1.0);
+                if (source instanceof LivingEntity livingEntity) {
+                    ItemStack stack = livingEntity.getMainHandItem();
+                    if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) { // Checks if the target is an Aether entity.
+                        if (!stack.isEmpty()) {
+                            AtomicDouble value = new AtomicDouble(); // Used for checking if the attack damage from the item is greater than the attacker's default (fist).
+                            stack.forEachModifier(EquipmentSlotGroup.MAINHAND, (attribute, modifier) -> {
+                                if (attribute.is(Attributes.ATTACK_DAMAGE)) {
+                                    value.set(value.get() + modifier.amount());
+                                }
+                            });
+                            if (value.get() > livingEntity.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) { // Checks if the attacking item is non-Aether.
+                                damage = (float) pow;
+                            }
+                        }
+                    }
+                } else if (source instanceof Projectile) { // Used for reducing projectile weapon effectiveness.
+                    if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) { // Checks if the target is an Aether entity.
+                        if ((!source.getType().getDescriptionId().startsWith("entity.aether") && !source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) // Checks if the projectile is non-Aether.
+                                && (!(source instanceof AbstractArrow abstractArrow) || !abstractArrow.hasData(AetherDataAttachments.PHOENIX_ARROW) || !abstractArrow.getData(AetherDataAttachments.PHOENIX_ARROW).isPhoenixArrow())) { // Special check against Phoenix Arrows.
+                            damage = (float) pow;
+                        }
+                    }
+                }
+            }
             return damage;
         }
 
@@ -453,18 +454,21 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onEntityDamage(LivingDamageEvent)
          */
         public static float reduceArmorEffectiveness(LivingEntity target, @Nullable Entity source, float damage) {
-//            if (source != null) {
-//                if ((source.getType().getDescriptionId().startsWith("entity.aether") || source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY) && !source.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY))) { // Checks if the attacker is an Aether entity.
-//                    for (ItemStack stack : target.getArmorSlots()) {
-//                        if (stack.getItem() instanceof ArmorItem armorItem && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) { // Checks if the armor is non-Aether.
-//                            if (!stack.getAttributeModifiers(armorItem.getEquipmentSlot()).isEmpty() && stack.getAttributeModifiers(armorItem.getEquipmentSlot()).containsKey(Attributes.ARMOR) && !stack.getAttributeModifiers(armorItem.getEquipmentSlot()).get(Attributes.ARMOR).isEmpty()) { // Checks if the armor has an armor modifier attribute.
-//                                double value = stack.getAttributeModifiers(armorItem.getEquipmentSlot()).get(Attributes.ARMOR).stream().mapToDouble((attributeModifier) -> attributeModifier.getAmount() / 15).sum();
-//                                damage += value;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
+            if (source != null) {
+                if ((source.getType().getDescriptionId().startsWith("entity.aether") || source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY) && !source.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY))) { // Checks if the attacker is an Aether entity.
+                    for (ItemStack stack : target.getArmorSlots()) {
+                        if (stack.getItem() instanceof ArmorItem armorItem && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) { // Checks if the armor is non-Aether.
+                            AtomicDouble value = new AtomicDouble();
+                            stack.forEachModifier(armorItem.getEquipmentSlot(), (attribute, modifier) -> { // Checks if the armor has an armor modifier attribute.
+                                if (attribute.is(Attributes.ARMOR)) {
+                                    value.set(value.get() + (modifier.amount() / 15));
+                                }
+                            });
+                            damage += (float) value.get();
+                        }
+                    }
+                }
+            }
             return damage;
         }
     }
