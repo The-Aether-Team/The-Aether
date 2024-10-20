@@ -136,7 +136,7 @@ public abstract class AbstractWhirlwind extends Mob {
                 .stream().filter((entity -> !entity.getType().is(AetherTags.Entities.WHIRLWIND_UNAFFECTED))).toList();
         for (Entity entity : entityList) {
             double x = (float) entity.getX();
-            double y = (float) entity.getY(); // - entity.getMyRidingOffset(this) * 0.6F
+            double y = (float) entity.getY() - entity.getPassengerRidingPosition(this).y() * 0.6F;
             double z = (float) entity.getZ();
             double distance = this.distanceTo(entity);
             double d1 = y - this.getY();
