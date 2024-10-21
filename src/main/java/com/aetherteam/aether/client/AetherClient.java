@@ -139,7 +139,6 @@ public class AetherClient {
         AudioListener.listen(bus);
         DimensionClientListener.listen(bus);
         GuiListener.listen(bus);
-        HandRenderListener.listen(bus);
         LevelClientListener.listen(bus);
         MenuListener.listen(bus);
         WorldPreviewListener.listen(bus);

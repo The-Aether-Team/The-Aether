@@ -1,8 +1,10 @@
 package com.aetherteam.aether.client.renderer.accessory;
 
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.accessory.model.GlovesModel;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
+import com.aetherteam.aether.mixin.mixins.client.accessor.ItemInHandRendererAccessor;
 import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -19,13 +21,17 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.FastColor;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.item.component.DyedItemColor;
 
@@ -98,6 +104,19 @@ public class GlovesRenderer implements AccessoryRenderer {
         }
     }
 
+    @Override
+    public boolean shouldRenderInFirstPerson(HumanoidArm arm, ItemStack stack, SlotReference reference) {
+        return !(reference.entity() instanceof Player player) || !player.getData(AetherDataAttachments.AETHER_PLAYER).isWearingInvisibilityCloak();
+    }
+
+    @Override
+    public <M extends LivingEntity> void renderOnFirstPerson(HumanoidArm arm, ItemStack stack, SlotReference reference, PoseStack matrices, EntityModel<M> model, MultiBufferSource multiBufferSource, int light) {
+        LivingEntity livingEntity = reference.entity();
+        if (livingEntity instanceof AbstractClientPlayer player) {
+            this.renderFirstPerson(stack, matrices, multiBufferSource, light, player, arm);
+        }
+    }
+
     /**
      * Renders a glove in the player's hand in first person.
      *
@@ -109,6 +128,7 @@ public class GlovesRenderer implements AccessoryRenderer {
      * @param arm         The {@link HumanoidArm} to render on.
      */
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm) {
+        poseStack.pushPose();
         GlovesModel model = this.glovesFirstPerson;
         GlovesModel trimModel = this.glovesTrimFirstPerson;
 
@@ -126,6 +146,16 @@ public class GlovesRenderer implements AccessoryRenderer {
         ModelPart gloveArm = arm == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
         gloveArm.visible = true;
         gloveArm.xRot = 0.0F;
+
+        boolean isSlim = player.getSkin().model() == PlayerSkin.Model.SLIM;
+        boolean flag = arm != HumanoidArm.LEFT;
+        float f = flag ? 1.0F : -1.0F;
+        float offset = 0.0375F;
+        if (isSlim) {
+            offset = 0.0425F;
+        }
+        poseStack.translate((f * offset) - 0.0025, 0.0025, -0.0025);
+
         gloveArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, color);
 
         ArmorTrim trim = stack.get(DataComponents.TRIM);
@@ -147,5 +177,6 @@ public class GlovesRenderer implements AccessoryRenderer {
         if (stack.hasFoil()) {
             gloveArm.render(poseStack, buffer.getBuffer(RenderType.armorEntityGlint()), packedLight, OverlayTexture.NO_OVERLAY);
         }
+        poseStack.popPose();
     }
 }
