@@ -2,10 +2,7 @@ package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
-import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
-import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
-import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.inventory.menu.IncubatorMenu;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
@@ -17,7 +14,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

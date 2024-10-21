@@ -7,11 +7,9 @@ import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.wispforest.accessories.api.client.AccessoryRenderer;
-import io.wispforest.accessories.api.client.SimpleAccessoryRenderer;
 import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -31,7 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.item.component.DyedItemColor;
 
-public class GlovesRenderer implements SimpleAccessoryRenderer {
+public class GlovesRenderer implements AccessoryRenderer {
     private final GlovesModel glovesModel;
     private final GlovesModel glovesTrimModel;
     private final GlovesModel glovesModelSlim;
@@ -68,7 +66,6 @@ public class GlovesRenderer implements SimpleAccessoryRenderer {
      */
     @Override
     public <M extends LivingEntity> void render(ItemStack stack, SlotReference reference, PoseStack poseStack, EntityModel<M> entityModel, MultiBufferSource buffer, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        LivingEntity livingEntity = reference.entity();
         GlovesItem glovesItem = (GlovesItem) stack.getItem();
         GlovesModel model = this.glovesModel;
         GlovesModel trimModel = this.glovesTrimModel;
@@ -80,8 +77,8 @@ public class GlovesRenderer implements SimpleAccessoryRenderer {
             trimModel = playerModelAccessor.aether$getSlim() ? this.glovesTrimModelSlim : this.glovesTrimModel;
         }
 
-        this.align(stack, reference, model, poseStack);
-        this.align(stack, reference, trimModel, poseStack);
+        AccessoryRenderer.followBodyRotations(reference.entity(), model);
+        AccessoryRenderer.followBodyRotations(reference.entity(), trimModel);
 
         int color = stack.is(ItemTags.DYEABLE) ? FastColor.ARGB32.opaque(DyedItemColor.getOrDefault(stack, -6265536)) : -1;
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.armorCutoutNoCull(texture));
@@ -98,13 +95,6 @@ public class GlovesRenderer implements SimpleAccessoryRenderer {
 
         if (stack.hasFoil()) {
             model.renderToBuffer(poseStack, buffer.getBuffer(RenderType.armorEntityGlint()), packedLight, OverlayTexture.NO_OVERLAY);
-        }
-    }
-
-    @Override
-    public <M extends LivingEntity> void align(ItemStack stack, SlotReference reference, EntityModel<M> model, PoseStack poseStack) {
-        if (model instanceof HumanoidModel<? extends LivingEntity> humanoidModel) {
-            AccessoryRenderer.followBodyRotations(reference.entity(), (HumanoidModel<LivingEntity>) humanoidModel);
         }
     }
 

@@ -8,7 +8,6 @@ import com.aetherteam.nitrogen.ConstantsUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.wispforest.accessories.api.client.AccessoryRenderer;
-import io.wispforest.accessories.api.client.SimpleAccessoryRenderer;
 import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
@@ -29,7 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
-public class ShieldOfRepulsionRenderer implements SimpleAccessoryRenderer {
+public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
     private final HumanoidModel<LivingEntity> shieldModel;
     private final PlayerModel<LivingEntity> shieldModelSlim;
     public final HumanoidModel<LivingEntity> shieldModelArm;
@@ -84,19 +83,11 @@ public class ShieldOfRepulsionRenderer implements SimpleAccessoryRenderer {
                 texture = shield.getShieldOfRepulsionInactiveTexture();
             }
         }
+        entityModel.copyPropertiesTo((EntityModel<M>) model);
 
-        this.align(stack, reference, model, matrices);
+        AccessoryRenderer.followBodyRotations(reference.entity(), model);
         VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(multiBufferSource, RenderType.entityTranslucent(texture), false);
         model.renderToBuffer(matrices, consumer, light, OverlayTexture.NO_OVERLAY);
-    }
-
-
-    @Override
-    public <M extends LivingEntity> void align(ItemStack stack, SlotReference reference, EntityModel<M> model, PoseStack poseStack) {
-        if (model instanceof HumanoidModel<? extends LivingEntity> humanoidModel) {
-            AccessoryRenderer.translateToFace(poseStack, humanoidModel, reference.entity());
-            AccessoryRenderer.followBodyRotations(reference.entity(), (HumanoidModel<LivingEntity>) humanoidModel);
-        }
     }
 
     /**
