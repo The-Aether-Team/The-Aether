@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "amount": 2,
+  "operation": "set",
+  "order": 1000,
+  "icon": "accessories:gui/slot/charm",
+  "validators": [
+    "aether:accessory_items"
+  ]
+}

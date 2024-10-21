@@ -1,4 +1,0 @@
-{
-  "entities": ["player"],
-  "slots": ["aether_accessory", "aether_cape", "aether_gloves", "aether_pendant", "aether_ring", "aether_shield"]
-}

@@ -1,4 +1,0 @@
-{
-  "entities": ["zombie", "zombie_villager", "husk", "skeleton", "stray", "piglin", "zombified_piglin"],
-  "slots": ["aether_gloves", "aether_pendant"]
-}

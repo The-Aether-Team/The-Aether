@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "entities": [
+    "zombie",
+    "zombie_villager",
+    "husk",
+    "skeleton",
+    "stray",
+    "piglin",
+    "zombified_piglin"
+  ],
+  "slots": [
+    "hand",
+    "necklace"
+  ]
+}

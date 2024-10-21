@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "amount": 1,
+  "operation": "set",
+  "order": 1000,
+  "icon": "accessories:gui/slot/necklace",
+  "validators": [
+    "aether:pendant_items"
+  ]
+}

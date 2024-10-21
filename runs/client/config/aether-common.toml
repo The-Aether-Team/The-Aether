@@ -1,6 +1,4 @@
 [Gameplay]
-	#Use the default Curios menu instead of the Aether's Accessories Menu. WARNING: Do not enable this without emptying your equipped accessories
-	"Use default Curios' menu" = false
 	#On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with
 	"Gives player Aether Portal Frame item" = false
 	#When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot
@@ -11,6 +9,8 @@
 	"Repeat Sun Spirit's battle dialogue" = true
 	#Determines if a message that links The Aether mod's Patreon should show
 	"Show Patreon message" = true
+	#Use the default Accessories menu instead of the Aether's Accessories Menu. WARNING: Do not enable this without emptying your equipped accessories
+	"Use default Accessories' menu" = true
 
 ["Data Pack"]
 	#Sets the Aether Temporary Freezing data pack to be added to new worlds automatically
