@@ -128,7 +128,6 @@ public class GlovesRenderer implements AccessoryRenderer {
      * @param arm         The {@link HumanoidArm} to render on.
      */
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm) {
-        poseStack.pushPose();
         GlovesModel model = this.glovesFirstPerson;
         GlovesModel trimModel = this.glovesTrimFirstPerson;
 
@@ -177,6 +176,5 @@ public class GlovesRenderer implements AccessoryRenderer {
         if (stack.hasFoil()) {
             gloveArm.render(poseStack, buffer.getBuffer(RenderType.armorEntityGlint()), packedLight, OverlayTexture.NO_OVERLAY);
         }
-        poseStack.popPose();
     }
 }
