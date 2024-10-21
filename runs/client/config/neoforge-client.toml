@@ -1,8 +1,0 @@
-#EXPERIMENTAL: Enable the NeoForge block rendering pipeline - fixes the lighting of custom models.
-experimentalForgeLightPipelineEnabled = false
-#When enabled, NeoForge will show any warnings that occurred during loading.
-showLoadWarnings = true
-#Set to true to use a combined DEPTH_STENCIL attachment instead of two separate ones.
-useCombinedDepthStencilAttachment = false
-#A config option mainly for developers. Logs out configuration values that do not have translations when running a client in a development environment.
-logUntranslatedConfigurationWarnings = true

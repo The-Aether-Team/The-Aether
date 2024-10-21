@@ -1,5 +1,0 @@
-haloEnabled:true
-haloColor:
-developerGlowEnabled:false
-developerGlowColor:
-moaSkin:
