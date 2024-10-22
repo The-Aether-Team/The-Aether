@@ -2,7 +2,7 @@
   "replace": true,
   "amount": 2,
   "operation": "set",
-  "order": 1000,
+  "order": 1100,
   "icon": "accessories:gui/slot/charm",
   "validators": [
     "accessories:tag",

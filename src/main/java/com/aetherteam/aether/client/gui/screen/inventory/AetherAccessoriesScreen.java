@@ -6,13 +6,17 @@ import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.inventory.menu.AetherAccessoriesMenu;
+import com.aetherteam.aether.mixin.mixins.client.accessor.ScreenAccessor;
 import com.aetherteam.aether.network.packet.serverbound.ClearItemPacket;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.mojang.blaze3d.platform.InputConstants;
 import io.wispforest.accessories.AccessoriesInternals;
+import io.wispforest.accessories.api.menu.AccessoriesBasedSlot;
 import io.wispforest.accessories.client.gui.AccessoriesScreen;
+import io.wispforest.accessories.client.gui.ToggleButton;
+import io.wispforest.accessories.menu.AccessoriesInternalSlot;
 import io.wispforest.accessories.networking.AccessoriesNetworking;
 import io.wispforest.accessories.networking.server.NukeAccessories;
 import net.minecraft.client.Minecraft;
@@ -38,6 +42,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * [CODE COPY] - {@link CuriosScreen}.<br>
@@ -55,6 +61,7 @@ public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<Aeth
     private static final ResourceLocation RECIPE_BUTTON_LOCATION = ResourceLocation.withDefaultNamespace("textures/gui/recipe_button.png");
 
     private static final SimpleContainer DESTROY_ITEM_CONTAINER = new SimpleContainer(1);
+    private final Map<AccessoriesBasedSlot, ToggleButton> cosmeticButtons = new LinkedHashMap<>();
     private final RecipeBookComponent recipeBookComponent = new RecipeBookComponent();
     private boolean widthTooNarrow;
     private boolean buttonClicked;
@@ -180,22 +187,20 @@ public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<Aeth
     }
 
     private void updateRenderButtons() {
-//        ScreenAccessor screenAccessor = (ScreenAccessor) this;
-//        screenAccessor.aether$getNarratables().removeIf(widget -> widget instanceof RenderButton);
-//        this.children().removeIf(widget -> widget instanceof RenderButton);
-//        this.renderables.removeIf(widget -> widget instanceof RenderButton);
-//        for (Slot inventorySlot : this.getMenu().slots) {
-//            if (inventorySlot instanceof CurioSlot curioSlot && !(inventorySlot instanceof CosmeticCurioSlot)) {
-//                this.addRenderableWidget(new RenderButton(curioSlot, this.getGuiLeft() + inventorySlot.x + 11, this.getGuiTop() + inventorySlot.y - 3, 8, 8, 75, 0, CURIO_INVENTORY,
-//                        (button) -> PacketDistributor.SERVER.noArg().send(new CPacketToggleRender(curioSlot.getIdentifier(), inventorySlot.getSlotIndex()))) {
-//                    @Override
-//                    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-//                        this.setX(AccessoriesScreen.this.getGuiLeft() + inventorySlot.x + 11);
-//                        this.setY(AccessoriesScreen.this.getGuiTop() + inventorySlot.y - 3);
-//                    }
-//                });
-//            }
-//        }
+        ScreenAccessor screenAccessor = (ScreenAccessor) this;
+        screenAccessor.aether$getNarratables().removeIf(widget -> widget instanceof ToggleButton);
+        this.children().removeIf(widget -> widget instanceof ToggleButton);
+        this.cosmeticButtons.clear();
+        for (Slot slot : this.menu.slots) {
+            if (slot instanceof AccessoriesBasedSlot accessoriesSlot) {
+                ToggleButton slotButton = ToggleButton.ofSlot(slot.x + this.leftPos + 13, slot.y + this.topPos - 2, 0, accessoriesSlot);
+
+                slotButton.visible = accessoriesSlot.isActive();
+                slotButton.active = accessoriesSlot.isActive();
+
+                this.cosmeticButtons.put(accessoriesSlot, this.addWidget(slotButton));
+            }
+        }
     }
 
     @Override
@@ -207,6 +212,10 @@ public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<Aeth
             this.getRecipeBookComponent().render(guiGraphics, mouseX, mouseY, partialTicks);
             super.render(guiGraphics, mouseX, mouseY, partialTicks);
             this.getRecipeBookComponent().renderGhostRecipe(guiGraphics, this.getGuiLeft(), this.getGuiTop(), false, partialTicks);
+
+            for (var cosmeticButton : this.cosmeticButtons.values()) {
+                cosmeticButton.render(guiGraphics, mouseX, mouseY, partialTicks);
+            }
 
 //            boolean isButtonHovered = false;
 //            for (Renderable renderable : this.renderables) {

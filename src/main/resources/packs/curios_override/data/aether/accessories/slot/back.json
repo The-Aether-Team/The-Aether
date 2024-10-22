@@ -2,7 +2,7 @@
   "replace": true,
   "amount": 1,
   "operation": "set",
-  "order": 800,
+  "order": 900,
   "icon": "accessories:gui/slot/back",
   "validators": [
     "accessories:tag",
