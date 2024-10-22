@@ -24,6 +24,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
@@ -50,15 +51,13 @@ import java.util.Map;
  * [CODE COPY] - {@link InventoryScreen}.<br><br>
  * Modified to register slots for Aether accessories only.
  */
-public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<AetherAccessoriesMenu> implements RecipeUpdateListener, RecipeBookBehavior<AetherAccessoriesMenu, AetherAccessoriesScreen> { //todo
+public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<AetherAccessoriesMenu> implements RecipeUpdateListener, RecipeBookBehavior<AetherAccessoriesMenu, AetherAccessoriesScreen> {
     public static final WidgetSprites ACCESSORIES_BUTTON = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "inventory/accessories_button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "inventory/accessories_button_highlighted"));
     public static final WidgetSprites SKINS_BUTTON = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/skins_button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/skins_button_highlighted"));
     public static final WidgetSprites CUSTOMIZATION_BUTTON = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "customization/customization_button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "customization/customization_button_highlighted"));
 
     private static final ResourceLocation ACCESSORIES_INVENTORY = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/inventory/accessories.png");
     private static final ResourceLocation ACCESSORIES_INVENTORY_CREATIVE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/inventory/accessories_creative.png");
-//    private static final ResourceLocation CURIO_INVENTORY = ResourceLocation.withDefaultNamespace(CuriosConstants.MOD_ID, "textures/gui/curios/inventory.png");
-    private static final ResourceLocation RECIPE_BUTTON_LOCATION = ResourceLocation.withDefaultNamespace("textures/gui/recipe_button.png");
 
     private static final SimpleContainer DESTROY_ITEM_CONTAINER = new SimpleContainer(1);
     private final Map<AccessoriesBasedSlot, ToggleButton> cosmeticButtons = new LinkedHashMap<>();
@@ -217,23 +216,22 @@ public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<Aeth
                 cosmeticButton.render(guiGraphics, mouseX, mouseY, partialTicks);
             }
 
-//            boolean isButtonHovered = false;
-//            for (Renderable renderable : this.renderables) {
-//                if (renderable instanceof RenderButton renderButton) {
-//                    renderButton.renderButtonOverlay(guiGraphics, mouseX, mouseY, partialTicks);
-//                    if (renderButton.isHovered()) {
-//                        isButtonHovered = true;
-//                    }
-//                }
-//            }
-//            this.isRenderButtonHovered = isButtonHovered;
-//            LocalPlayer clientPlayer = Minecraft.getInstance().player;
-//            if (!this.isRenderButtonHovered && clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty() && this.getSlotUnderMouse() != null) {
-//                Slot slot = this.getSlotUnderMouse();
-//                if (slot instanceof CurioSlot curioSlot && !slot.hasItem()) {
-//                    guiGraphics.renderTooltip(this.font, Component.literal(curioSlot.getSlotName()), mouseX, mouseY);
-//                }
-//            }
+            boolean isButtonHovered = false;
+            for (GuiEventListener widget : this.children()) {
+                if (widget instanceof ToggleButton renderButton) {
+                    if (renderButton.isHovered()) {
+                        isButtonHovered = true;
+                    }
+                }
+            }
+            this.isRenderButtonHovered = isButtonHovered;
+            LocalPlayer clientPlayer = Minecraft.getInstance().player;
+            if (!this.isRenderButtonHovered && clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty() && this.getSlotUnderMouse() != null) {
+                Slot slot = this.getSlotUnderMouse();
+                if (slot instanceof AccessoriesBasedSlot curioSlot && !slot.hasItem()) {
+                    guiGraphics.renderTooltip(this.font, Component.translatable(curioSlot.slotType().translation()), mouseX, mouseY);
+                }
+            }
 
             if (this.getMinecraft().player != null) {
                 if (this.getMinecraft().player.isCreative() && this.destroyItemSlot == null) {
@@ -279,10 +277,10 @@ public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<Aeth
         Minecraft minecraft = this.getMinecraft();
         LocalPlayer clientPlayer = minecraft.player;
         if (clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty()) {
-            if (this.isRenderButtonHovered) {
-                guiGraphics.renderTooltip(this.font, Component.translatable("gui.curios.toggle"), mouseX, mouseY);
-            } else if (this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
-                guiGraphics.renderTooltip(this.font, this.hoveredSlot.getItem(), mouseX, mouseY);
+            if (!this.isRenderButtonHovered) {
+                if (this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
+                    guiGraphics.renderTooltip(this.font, this.hoveredSlot.getItem(), mouseX, mouseY);
+                }
             }
         }
     }
