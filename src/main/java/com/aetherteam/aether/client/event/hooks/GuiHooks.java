@@ -61,20 +61,7 @@ public class GuiHooks {
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(ScreenEvent.Init.Post)
      */
     public static boolean isAccessoryButtonEnabled() {
-        return !AetherConfig.CLIENT.disable_accessory_button.get() && areAccessoryTagsFilled();
-    }
-
-    /**
-     * @return Whether any tags for accessories are empty, as a {@link Boolean}.
-     */
-    private static boolean areAccessoryTagsFilled() {
-        boolean flag = true;
-//        for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) { //todo
-//            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", string))).spliterator().estimateSize() == 0) {
-//                flag = false;
-//            }
-//        }
-        return flag;
+        return !AetherConfig.CLIENT.disable_accessory_button.get() && !AetherConfig.COMMON.use_default_accessories_menu.get();
     }
 
     /**
