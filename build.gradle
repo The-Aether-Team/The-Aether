@@ -82,7 +82,7 @@ dependencies {
         jarJar.pin(it, "${project.accessories_version}+${project.minecraft_version}")
     }
 
-    runtimeOnly "io.github.flemmli97:debugutils:${project.minecraft_version}-${project.debugutils_version}-neoforge"
+    runtimeOnly "io.github.flemmli97:debugutils:1.21-${project.debugutils_version}-neoforge"
 
     compileOnly "mezz.jei:jei-${project.minecraft_version}-common-api:${project.jei_version}"
     compileOnly "mezz.jei:jei-${project.minecraft_version}-neoforge:${project.jei_version}"
@@ -92,10 +92,11 @@ dependencies {
 
 //    implementation fileTree(dir: 'libs', include: '*.jar')
 
-    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
     compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
     compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
+
+    implementation("org.sinytra.forgified-fabric-api:fabric-api-base:0.4.42+d1308dedd1"){ exclude group: "fabric-api" }
 }
 
 repositories {

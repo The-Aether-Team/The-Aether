@@ -12,7 +12,7 @@ import io.wispforest.accessories.api.AccessoriesContainer;
 import io.wispforest.accessories.api.slot.SlotEntryReference;
 import io.wispforest.accessories.api.slot.SlotReference;
 import io.wispforest.accessories.api.slot.SlotTypeReference;
-import io.wispforest.accessories.compat.AccessoriesConfig;
+import io.wispforest.accessories.compat.config.RenderSlotTarget;
 import io.wispforest.accessories.impl.ExpandedSimpleContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
@@ -47,8 +47,8 @@ public class AetherMixinHooks {
                 AccessoriesContainer accessoriesContainer = accessories.getContainer(identifier.type());
                 if (accessoriesContainer != null) {
                     ExpandedSimpleContainer simpleContainer = accessoriesContainer.getAccessories();
-                    List<AccessoriesConfig.RenderSlotTarget> disabledTargetType = Accessories.getConfig().clientData.disabledDefaultRenders;
-                    for (AccessoriesConfig.RenderSlotTarget target : disabledTargetType) {
+                    List<RenderSlotTarget> disabledTargetType = Accessories.config().clientOptions.disabledDefaultRenders();
+                    for (RenderSlotTarget target : disabledTargetType) {
                         if (identifier.slotName().equals(target.slotType) && target.targetType.isValid(simpleContainer.getItem(id).getItem())) {
                             return false;
                         }
