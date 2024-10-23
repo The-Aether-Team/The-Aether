@@ -2,7 +2,6 @@ package com.aetherteam.aether.mixin;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.WorldDisplayHelper;
-import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.item.accessories.pendant.PendantItem;
@@ -10,12 +9,7 @@ import com.mojang.datafixers.util.Pair;
 import io.wispforest.accessories.Accessories;
 import io.wispforest.accessories.api.AccessoriesCapability;
 import io.wispforest.accessories.api.AccessoriesContainer;
-import io.wispforest.accessories.api.client.AccessoriesRendererRegistry;
-import io.wispforest.accessories.api.client.AccessoryRenderer;
-import io.wispforest.accessories.api.slot.SlotEntryReference;
-import io.wispforest.accessories.api.slot.SlotReference;
 import io.wispforest.accessories.api.slot.SlotTypeReference;
-import io.wispforest.accessories.compat.config.RenderSlotTarget;
 import io.wispforest.accessories.impl.ExpandedSimpleContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
@@ -27,8 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 public class AetherMixinHooks {

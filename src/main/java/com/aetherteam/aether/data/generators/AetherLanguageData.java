@@ -1233,8 +1233,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addProTip("golden_apples", "The leaves of Golden Oak trees occasionally drop Golden Apples.");
 
 
-        this.addServerConfig("gameplay", "button", "Gameplay");
-        this.addServerConfig("gameplay", "tooltip", "Gameplay");
         this.addServerConfig("gameplay", "enable_bed_explosions", "Vanilla's beds will explode in the Aether");
         this.addServerConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether");
         this.addServerConfig("gameplay", "edible_ambrosium", "Ambrosium Shards can be eaten to restore a half heart of health");
