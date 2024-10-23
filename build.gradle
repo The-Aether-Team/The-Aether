@@ -1,11 +1,9 @@
-import net.neoforged.gradle.common.tasks.JarJar
-
 plugins {
     id 'java-library'
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version "${neogradle_version}"
+    id 'net.neoforged.moddev' version "${moddevgradle_version}"
     id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
@@ -24,31 +22,43 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+neoForge {
+    version = project.neo_version
 
-runs {
-    configureEach {
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-        systemProperty  'forge.logging.console.level', 'info'
+    accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
 
-        modSource project.sourceSets.main
+    runs {
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.INFO
+        }
+
+        client {
+            client()
+            systemProperty 'forge.enabledGameTestNamespaces', mod_id
+        }
+
+        server {
+            server()
+            systemProperty 'forge.enabledGameTestNamespaces', mod_id
+            programArgument '--nogui'
+        }
+
+        gameTestServer {
+            type = "gameTestServer"
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath(), '--existing', file('src/generated/resources/').getAbsolutePath(), '--existing-mod', 'nitrogen_internals', '--existing-mod', 'cumulus_menus'
+        }
     }
 
-    client {
-        systemProperty 'forge.enabledGameTestNamespaces', mod_id
-    }
-
-    server {
-        systemProperty 'forge.enabledGameTestNamespaces', mod_id
-        programArgument '--nogui'
-    }
-
-    gameTestServer {
-        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
-    }
-
-    data {
-        programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath(), '--existing', file('src/generated/resources/').getAbsolutePath(), '--existing-mod', 'nitrogen_internals', '--existing-mod', 'cumulus_menus'
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
     }
 }
 
@@ -60,26 +70,34 @@ processResources {
     exclude '.cache/'
 }
 
-dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
 
+dependencies {
     implementation "com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}"
     implementation "com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}"
     implementation "io.wispforest:accessories-neoforge:${project.accessories_version}+${project.minecraft_version}"
 
     jarJar("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}") {
-        jarJar.ranged(it, "[${project.nitrogen_version},)")
-        jarJar.pin(it, "${project.nitrogen_version}")
+        version {
+            strictly "[${project.nitrogen_version},)"
+            prefer "${project.nitrogen_version}"
+        }
     }
 
     jarJar("com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}") {
-        jarJar.ranged(it, "[${project.cumulus_version},)")
-        jarJar.pin(it, "${project.cumulus_version}")
+        version {
+            strictly "[${project.cumulus_version},)"
+            prefer "${project.cumulus_version}"
+        }
     }
 
     jarJar("io.wispforest:accessories-neoforge:${project.accessories_version}+${project.minecraft_version}") {
-        jarJar.ranged(it, "[${project.accessories_version}+${project.minecraft_version},)")
-        jarJar.pin(it, "${project.accessories_version}+${project.minecraft_version}")
+        version {
+            strictly "[${project.accessories_version}+${project.minecraft_version},)"
+            prefer "${project.accessories_version}+${project.minecraft_version}"
+        }
     }
 
     runtimeOnly "io.github.flemmli97:debugutils:1.21-${project.debugutils_version}-neoforge"
@@ -117,7 +135,7 @@ repositories {
     mavenLocal()
 }
 
-tasks.withType(ProcessResources).configureEach {
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
         mod_id                 : mod_id,
         mod_name               : mod_name,
@@ -136,23 +154,16 @@ tasks.withType(ProcessResources).configureEach {
         loader_version_range   : loader_version_range
     ]
     inputs.properties replaceProperties
-
-    filesMatching(['META-INF/neoforge.mods.toml']) {
-        expand replaceProperties
-    }
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
 }
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
     options.compilerArgs << "-Xmaxerrs" << "9000"
-}
-
-tasks.named('jar', Jar).configure {
-    archiveClassifier = 'no-embeds'
-}
-
-tasks.named('jarJar', JarJar).configure {
-    archiveClassifier = ''
 }
 
 tasks.register('sourceJar', Jar) {
@@ -165,15 +176,11 @@ compileJava {
     options.incremental = false
 }
 
-build {
-    dependsOn 'jarJar'
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
             artifactId project.archivesBaseName
-            artifact project.tasks.jarJar
+            artifact project.tasks.jar
             artifact project.sourceJar
         }
     }
@@ -198,7 +205,7 @@ curseforge {
         changelogType = "markdown"
         addGameVersion("${minecraft_version}")
         addGameVersion("NeoForge")
-        mainArtifact(tasks.jarJar) {
+        mainArtifact(tasks.jar) {
             displayName = "${project.mod_name} - ${version}"
             relations {
 //                embeddedLibrary "curios"
@@ -215,7 +222,7 @@ modrinth {
     versionType = "${version_type}"
     versionName = "${mod_name} - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
-    uploadFile = tasks.jarJar
+    uploadFile = tasks.jar
     gameVersions = ["${minecraft_version}"]
     loaders = ["neoforge"]
     dependencies {
