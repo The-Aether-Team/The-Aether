@@ -176,7 +176,7 @@ public class MoaSkinsScreen extends Screen {
 
     @Override
     public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        super.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTransparentBackground(guiGraphics);
         this.renderWindow(guiGraphics);
         this.renderSlots(guiGraphics, mouseX, mouseY);
         this.renderInterface(guiGraphics, mouseX, mouseY, partialTicks);

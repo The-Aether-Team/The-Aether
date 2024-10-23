@@ -226,7 +226,8 @@ public class AetherCustomizationsScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        this.renderTransparentBackground(guiGraphics);
         guiGraphics.drawCenteredString(this.font, this.getTitle(), this.width / 2, 15, 16777215);
         guiGraphics.drawCenteredString(this.font, Component.translatable("gui.aether.customization.color"), (this.width / 2 - 65) + 184, (this.height / 2 - 10) - 14, 16777215);
         if (this.getMinecraft().player != null) {
@@ -249,7 +250,6 @@ public class AetherCustomizationsScreen extends Screen {
                 this.developerGlowColor = "";
             }
         }
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
     @Override

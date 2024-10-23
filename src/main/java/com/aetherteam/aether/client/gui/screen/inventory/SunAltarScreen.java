@@ -28,7 +28,7 @@ public class SunAltarScreen extends Screen {
 
     @Override
     public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        super.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTransparentBackground(guiGraphics);
         int xSize = 176;
         int ySize = 79;
         int x = (this.width - xSize) / 2;
