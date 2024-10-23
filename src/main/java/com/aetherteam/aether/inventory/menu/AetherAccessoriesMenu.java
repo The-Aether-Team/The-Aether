@@ -203,12 +203,12 @@ public class AetherAccessoriesMenu extends InventoryMenu {
         Set<Integer> slots = new HashSet<>();
         for (SlotType identifier : slotData) {
             switch (identifier.name()) { //todo
-                case "aether_pendant" -> slots.add(46);
-                case "aether_cape" -> slots.add(47);
-                case "aether_shield" -> slots.add(48);
-                case "aether_ring" -> slots.addAll(Set.of(49, 50));
-                case "aether_gloves" -> slots.add(51);
-                case "aether_accessory" -> slots.addAll(Set.of(52, 53));
+                case "pendant_slot" -> slots.add(46);
+                case "cape_slot" -> slots.add(47);
+                case "shield_slot" -> slots.add(48);
+                case "ring_slot" -> slots.addAll(Set.of(49, 50));
+                case "gloves_slot" -> slots.add(51);
+                case "accessory_slot" -> slots.addAll(Set.of(52, 53));
             }
         }
         slots.removeIf(index -> this.slots.get(index).hasItem());

@@ -3,7 +3,6 @@ package com.aetherteam.aether.client.renderer.accessory.layer;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
-import com.aetherteam.aether.inventory.AetherAccessorySlots;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -40,7 +39,7 @@ public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, ArmorStand livingEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-        SlotTypeReference identifier = AetherAccessorySlots.getCapeSlotType();
+        SlotTypeReference identifier = CapeItem.getStaticIdentifier();
         AccessoriesCapability accessories = AccessoriesCapability.get(livingEntity);
         if (accessories != null) {
             AccessoriesContainer accessoriesContainer = accessories.getContainer(identifier);

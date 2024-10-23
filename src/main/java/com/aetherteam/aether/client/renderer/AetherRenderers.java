@@ -182,6 +182,11 @@ public class AetherRenderers {
      * @see com.aetherteam.aether.client.AetherClient#clientSetup(FMLClientSetupEvent)
      */
     public static void registerCuriosRenderers() {
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.IRON_RING.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.GOLDEN_RING.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.ZANITE_RING.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.ICE_RING.get());
+
         AccessoriesRendererRegistry.registerRenderer(AetherItems.IRON_PENDANT.get(), PendantRenderer::new);
         AccessoriesRendererRegistry.registerRenderer(AetherItems.GOLDEN_PENDANT.get(), PendantRenderer::new);
         AccessoriesRendererRegistry.registerRenderer(AetherItems.ZANITE_PENDANT.get(), PendantRenderer::new);
@@ -200,6 +205,18 @@ public class AetherRenderers {
         AccessoriesRendererRegistry.registerRenderer(AetherItems.OBSIDIAN_GLOVES.get(), GlovesRenderer::new);
         AccessoriesRendererRegistry.registerRenderer(AetherItems.VALKYRIE_GLOVES.get(), GlovesRenderer::new);
 
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.RED_CAPE.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.BLUE_CAPE.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.YELLOW_CAPE.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.WHITE_CAPE.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.AGILITY_CAPE.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.SWET_CAPE.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.INVISIBILITY_CLOAK.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.VALKYRIE_CAPE.get());
+
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.GOLDEN_FEATHER.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.REGENERATION_STONE.get());
+        AccessoriesRendererRegistry.registerNoRenderer(AetherItems.IRON_BUBBLE.get());
         AccessoriesRendererRegistry.registerRenderer(AetherItems.SHIELD_OF_REPULSION.get(), ShieldOfRepulsionRenderer::new);
     }
 

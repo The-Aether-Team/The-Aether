@@ -13,11 +13,12 @@ import com.aetherteam.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.aetherteam.aether.entity.passive.FlyingCow;
 import com.aetherteam.aether.entity.passive.MountableAnimal;
 import com.aetherteam.aether.entity.projectile.crystal.ThunderCrystal;
-import com.aetherteam.aether.inventory.AetherAccessorySlots;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
+import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
+import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.aetherteam.aether.item.accessories.pendant.PendantItem;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import io.wispforest.accessories.api.AccessoriesCapability;
@@ -108,8 +109,8 @@ public class EntityHooks {
         if (entity instanceof Mob mob && mob.level() instanceof ServerLevel) {
             RandomSource random = mob.getRandom();
             EntityType<?> entityType = mob.getType();
-            SlotTypeReference[] allSlots = { AetherAccessorySlots.getGlovesSlotType(), AetherAccessorySlots.getPendantSlotType() };
-            SlotTypeReference[] gloveSlots = { AetherAccessorySlots.getGlovesSlotType() };
+            SlotTypeReference[] allSlots = { GlovesItem.getStaticIdentifier(), PendantItem.getStaticIdentifier() };
+            SlotTypeReference[] gloveSlots = { GlovesItem.getStaticIdentifier() };
             if (entityType == EntityType.PIGLIN) {
                 if (mob instanceof AbstractPiglin abstractPiglin && abstractPiglin.isAdult()) {
                     for (SlotTypeReference identifier : allSlots) {
@@ -181,7 +182,7 @@ public class EntityHooks {
      */
     @Nullable
     private static Item getEquipmentForSlot(SlotTypeReference identifier, Holder<ArmorMaterial> armorMaterial) {
-        if (identifier.equals(AetherAccessorySlots.getGlovesSlotType())) {
+        if (identifier.equals(GlovesItem.getStaticIdentifier())) {
             if (armorMaterial.is(ArmorMaterials.LEATHER)) {
                 return AetherItems.LEATHER_GLOVES.get();
             } else if (armorMaterial.is(ArmorMaterials.GOLD)) {
@@ -193,7 +194,7 @@ public class EntityHooks {
             } else if (armorMaterial.is(ArmorMaterials.DIAMOND)) {
                 return AetherItems.DIAMOND_GLOVES.get();
             }
-        } else if (identifier.equals(AetherAccessorySlots.getPendantSlotType())) {
+        } else if (identifier.equals(PendantItem.getStaticIdentifier())) {
             if (armorMaterial.is(ArmorMaterials.IRON)) {
                 return AetherItems.IRON_PENDANT.get();
             } else if (armorMaterial.is(ArmorMaterials.GOLD)) {
@@ -339,35 +340,37 @@ public class EntityHooks {
             if (!stack.isEmpty()) { // Equip behavior.
                 if (stack.is(AetherTags.Items.ACCESSORIES)) {
                     SlotTypeReference identifier = null;
-                    if (stack.getItem() instanceof SlotIdentifierHolder slotIdentifierHolder)
+                    if (stack.getItem() instanceof SlotIdentifierHolder slotIdentifierHolder) {
                         identifier = slotIdentifierHolder.getIdentifier();
-
-                    AccessoriesCapability accessories = AccessoriesCapability.get(armorStand);
-                    if (accessories != null) {
-                        AccessoriesContainer accessoriesContainer = accessories.getContainer(identifier);
-                        if (accessoriesContainer != null) {
-                            ItemStack itemStack = accessoriesContainer.getAccessories().getItem(0);
-                            if (stack.getItem() instanceof AccessoryItem accessoryItem) {
-                                SlotReferenceImpl slotContext = new SlotReferenceImpl(armorStand, identifier.slotName(), 0);
-                                accessoriesContainer.getAccessories().setItem(0, stack.copy());
-                                if (accessoryItem instanceof GlovesItem glovesItem) {
-                                    armorStand.level().playSound(null, armorStand.blockPosition(), glovesItem.getEquipSound(stack, slotContext).event().value(), armorStand.getSoundSource(), 1, 1);
-                                } else if (accessoryItem instanceof PendantItem pendantItem) {
-                                    armorStand.level().playSound(null, armorStand.blockPosition(), pendantItem.getEquipSound(stack, slotContext).event().value(), armorStand.getSoundSource(), 1, 1);
-                                } else {
-                                    armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC.value(), armorStand.getSoundSource(), 1, 1);
+                    }
+                    if (identifier != null) {
+                        AccessoriesCapability accessories = AccessoriesCapability.get(armorStand);
+                        if (accessories != null) {
+                            AccessoriesContainer accessoriesContainer = accessories.getContainer(identifier);
+                            if (accessoriesContainer != null) {
+                                ItemStack itemStack = accessoriesContainer.getAccessories().getItem(0);
+                                if (stack.getItem() instanceof AccessoryItem accessoryItem) {
+                                    SlotReferenceImpl slotContext = new SlotReferenceImpl(armorStand, identifier.slotName(), 0);
+                                    accessoriesContainer.getAccessories().setItem(0, stack.copy());
+                                    if (accessoryItem instanceof GlovesItem glovesItem) {
+                                        armorStand.level().playSound(null, armorStand.blockPosition(), glovesItem.getEquipSound(stack, slotContext).event().value(), armorStand.getSoundSource(), 1, 1);
+                                    } else if (accessoryItem instanceof PendantItem pendantItem) {
+                                        armorStand.level().playSound(null, armorStand.blockPosition(), pendantItem.getEquipSound(stack, slotContext).event().value(), armorStand.getSoundSource(), 1, 1);
+                                    } else {
+                                        armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC.value(), armorStand.getSoundSource(), 1, 1);
+                                    }
+                                    if (identifier.slotName().equals(GlovesItem.getStaticIdentifier().slotName())) {
+                                        armorStand.setShowArms(true);
+                                    }
+                                    if (!player.isCreative()) {
+                                        int count = stack.getCount();
+                                        stack.shrink(count);
+                                    }
+                                    if (!itemStack.isEmpty()) {
+                                        player.setItemInHand(hand, itemStack);
+                                    }
+                                    return Optional.of(InteractionResult.SUCCESS);
                                 }
-                                if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
-                                    armorStand.setShowArms(true);
-                                }
-                                if (!player.isCreative()) {
-                                    int count = stack.getCount();
-                                    stack.shrink(count);
-                                }
-                                if (!itemStack.isEmpty()) {
-                                    player.setItemInHand(hand, itemStack);
-                                }
-                                return Optional.of(InteractionResult.SUCCESS);
                             }
                         }
                     }
@@ -408,10 +411,10 @@ public class EntityHooks {
         double z = isSmall ? pos.z * 2.0 : pos.z;
         double front = axis == Direction.Axis.X ? z : x;
         double vertical = isSmall ? pos.y * 2.0 : pos.y;
-        SlotTypeReference glovesIdentifier = AetherAccessorySlots.getGlovesSlotType();
-        SlotTypeReference pendantIdentifier = AetherAccessorySlots.getPendantSlotType();
-        SlotTypeReference capeIdentifier = AetherAccessorySlots.getCapeSlotType();
-        SlotTypeReference shieldIdentifier = AetherAccessorySlots.getShieldSlotType();
+        SlotTypeReference glovesIdentifier = GlovesItem.getStaticIdentifier();
+        SlotTypeReference pendantIdentifier = PendantItem.getStaticIdentifier();
+        SlotTypeReference capeIdentifier = CapeItem.getStaticIdentifier();
+        SlotTypeReference shieldIdentifier = ShieldOfRepulsionItem.getStaticIdentifier();
         if (!getItemByIdentifier(armorStand, glovesIdentifier).isEmpty()
                 && Math.abs(front) >= (isSmall ? 0.15 : 0.2)
                 && vertical >= (isSmall ? 0.65 : 0.75)
@@ -534,7 +537,7 @@ public class EntityHooks {
      */
     public static List<ItemStack> handleEntityCurioDrops(LivingEntity entity, List<ItemStack> itemStacks, boolean recentlyHit, int looting) {
         if (entity instanceof Mob mob && mob.hasData(AetherDataAttachments.MOB_ACCESSORY)) {
-            SlotTypeReference[] allSlots = { AetherAccessorySlots.getGlovesSlotType(), AetherAccessorySlots.getPendantSlotType() };
+            SlotTypeReference[] allSlots = { GlovesItem.getStaticIdentifier(), PendantItem.getStaticIdentifier() };
             for (SlotTypeReference identifier : allSlots) {
                 if (!itemStacks.isEmpty()) {
                     ItemStack itemStack = itemStacks.get(0);
@@ -569,7 +572,7 @@ public class EntityHooks {
             AccessoriesCapability accessories = AccessoriesCapability.get(entity);
             if (accessories != null) {
                 if (experience > 0) {
-                    SlotTypeReference[] allSlots = { AetherAccessorySlots.getGlovesSlotType(), AetherAccessorySlots.getPendantSlotType() };
+                    SlotTypeReference[] allSlots = { GlovesItem.getStaticIdentifier(), PendantItem.getStaticIdentifier() };
                     for (SlotTypeReference identifier : allSlots) {
                         AccessoriesContainer accessoriesContainer = accessories.getContainer(identifier);
                         if (accessoriesContainer != null) {

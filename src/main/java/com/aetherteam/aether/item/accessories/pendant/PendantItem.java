@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.accessories.pendant;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.inventory.AetherAccessorySlots;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
@@ -35,13 +36,10 @@ public class PendantItem extends AccessoryItem implements SlotIdentifierHolder {
      */
     @Override
     public SlotTypeReference getIdentifier() {
-        return AetherAccessorySlots.getPendantSlotType();
+        return getStaticIdentifier();
     }
 
-//    /**
-//     * @return {@link PendantItem}'s own identifier for its accessory slot.
-//     */
-//    public static String getIdentifierStatic() {
-//        return AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
-//    }
+    public static SlotTypeReference getStaticIdentifier() {
+        return AetherConfig.COMMON.use_default_accessories_menu.get() ? new SlotTypeReference("necklace") : AetherAccessorySlots.getPendantSlotType();
+    }
 }

@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.accessories.miscellaneous;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.inventory.AetherAccessorySlots;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
@@ -39,13 +40,10 @@ public class ShieldOfRepulsionItem extends AccessoryItem implements SlotIdentifi
      */
     @Override
     public SlotTypeReference getIdentifier() {
-        return AetherAccessorySlots.getShieldSlotType();
+        return getStaticIdentifier();
     }
 
-//    /**
-//     * @return {@link ShieldOfRepulsionItem}'s own identifier for its accessory slot.
-//     */
-//    public static String getIdentifierStatic() {
-//        return AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
-//    }
+    public static SlotTypeReference getStaticIdentifier() {
+        return AetherConfig.COMMON.use_default_accessories_menu.get() ? new SlotTypeReference("back") : AetherAccessorySlots.getShieldSlotType();
+    }
 }

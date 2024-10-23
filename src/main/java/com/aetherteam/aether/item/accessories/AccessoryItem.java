@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.DispenserBlock;
 import org.jetbrains.annotations.Nullable;
 
-public class AccessoryItem extends Item implements Accessory { // Vanishable
+public class AccessoryItem extends Item implements Accessory {
     private final Holder<SoundEvent> soundEventSupplier;
 
     public AccessoryItem(Properties properties) {

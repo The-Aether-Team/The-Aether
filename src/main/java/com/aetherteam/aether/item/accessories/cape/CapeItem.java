@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.accessories.cape;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.inventory.AetherAccessorySlots;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
@@ -35,13 +36,10 @@ public class CapeItem extends AccessoryItem implements SlotIdentifierHolder {
      */
     @Override
     public SlotTypeReference getIdentifier() {
-        return AetherAccessorySlots.getCapeSlotType();
+        return getStaticIdentifier();
     }
 
-//    /**
-//     * @return {@link CapeItem}'s own identifier for its accessory slot.
-//     */
-//    public static String getIdentifierStatic() {
-//        return AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
-//    }
+    public static SlotTypeReference getStaticIdentifier() {
+        return AetherConfig.COMMON.use_default_accessories_menu.get() ? new SlotTypeReference("cape") : AetherAccessorySlots.getCapeSlotType();
+    }
 }
