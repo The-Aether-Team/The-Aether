@@ -6,9 +6,12 @@ import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.item.accessories.pendant.PendantItem;
+import com.mojang.datafixers.util.Pair;
 import io.wispforest.accessories.Accessories;
 import io.wispforest.accessories.api.AccessoriesCapability;
 import io.wispforest.accessories.api.AccessoriesContainer;
+import io.wispforest.accessories.api.client.AccessoriesRendererRegistry;
+import io.wispforest.accessories.api.client.AccessoryRenderer;
 import io.wispforest.accessories.api.slot.SlotEntryReference;
 import io.wispforest.accessories.api.slot.SlotReference;
 import io.wispforest.accessories.api.slot.SlotTypeReference;
@@ -26,6 +29,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 public class AetherMixinHooks {
     private static final ResourceLocation SWUFF_CAPE_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
@@ -37,27 +41,28 @@ public class AetherMixinHooks {
      * @return Whether the cape is visible, as a {@link Boolean}.
      * @see com.aetherteam.aether.mixin.mixins.client.PlayerSkinMixin
      */
-    public static boolean isCapeVisible(LivingEntity livingEntity) {
-        Optional<SlotEntryReference> slotResult = EquipmentUtil.findFirstAccessory(livingEntity, (item) -> item.getItem() instanceof CapeItem);
-        if (slotResult.isPresent()) {
-            AccessoriesCapability accessories = AccessoriesCapability.get(livingEntity);
-            if (accessories != null) {
-                SlotReference identifier = slotResult.get().reference();
-                int id = identifier.slot();
-                AccessoriesContainer accessoriesContainer = accessories.getContainer(identifier.type());
-                if (accessoriesContainer != null) {
-                    ExpandedSimpleContainer simpleContainer = accessoriesContainer.getAccessories();
-                    List<RenderSlotTarget> disabledTargetType = Accessories.config().clientOptions.disabledDefaultRenders();
-                    for (RenderSlotTarget target : disabledTargetType) {
-                        if (identifier.slotName().equals(target.slotType) && target.targetType.isValid(simpleContainer.getItem(id).getItem())) {
-                            return false;
-                        }
+    public static ItemStack isCapeVisible(LivingEntity livingEntity) {
+        AccessoriesCapability accessories = AccessoriesCapability.get(livingEntity);
+        if (accessories != null) {
+            AccessoriesContainer accessoriesContainer = accessories.getContainer(CapeItem.getStaticIdentifier());
+
+            if (accessoriesContainer != null) {
+                ExpandedSimpleContainer simpleAccessoriesContainer = accessoriesContainer.getAccessories();
+                ExpandedSimpleContainer simpleCosmeticsContainer = accessoriesContainer.getCosmeticAccessories();
+
+                Pair<Integer, ItemStack> stack = StreamSupport.stream(simpleAccessoriesContainer.spliterator(), true).findFirst().orElse(null);
+                Pair<Integer, ItemStack> cosmeticStack = StreamSupport.stream(simpleCosmeticsContainer.spliterator(), true).findFirst().orElse(null);
+                if (cosmeticStack != null && !cosmeticStack.getSecond().isEmpty() && Accessories.config().clientOptions.showCosmeticAccessories()) {
+                    stack = cosmeticStack;
+                }
+                if (stack != null) {
+                    if (accessoriesContainer.shouldRender(stack.getFirst())) {
+                        return stack.getSecond();
                     }
-                    return true;
                 }
             }
         }
-        return false;
+        return ItemStack.EMPTY;
     }
 
     /**

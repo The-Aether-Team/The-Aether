@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -22,9 +23,9 @@ public class PlayerSkinMixin {
     @ModifyReturnValue(at = @At("RETURN"), method = "capeTexture")
     private ResourceLocation capeTexture(ResourceLocation original) {
         Player player = Minecraft.getInstance().player;
-        SlotEntryReference result = EquipmentUtil.getCape(player);
-        if (result != null && AetherMixinHooks.isCapeVisible(player)) {
-            ResourceLocation texture = AetherMixinHooks.getCapeTexture(result.stack());
+        ItemStack stack = AetherMixinHooks.isCapeVisible(player);
+        if (!stack.isEmpty()) {
+            ResourceLocation texture = AetherMixinHooks.getCapeTexture(stack);
             if (texture != null)
                 return texture;
         }

@@ -8,6 +8,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerModelPart;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -54,7 +55,8 @@ public class PlayerMixin {
     @Inject(at = @At(value = "HEAD"), method = "isModelPartShown(Lnet/minecraft/world/entity/player/PlayerModelPart;)Z", cancellable = true)
     private void isModelPartShown(PlayerModelPart part, CallbackInfoReturnable<Boolean> cir) {
         Player player = (Player) (Object) this;
-        if (EquipmentUtil.hasCape(player) && AetherMixinHooks.isCapeVisible(player)) {
+        ItemStack stack = AetherMixinHooks.isCapeVisible(player);
+        if (!stack.isEmpty()) {
             cir.setReturnValue(true);
         }
     }

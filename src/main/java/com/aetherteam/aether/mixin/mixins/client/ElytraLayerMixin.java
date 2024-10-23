@@ -28,10 +28,9 @@ public class ElytraLayerMixin<T extends LivingEntity> {
     @ModifyReturnValue(at = @At("RETURN"), method = "getElytraTexture(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/resources/ResourceLocation;", remap = false)
     private ResourceLocation getElytraTexture(ResourceLocation original, @Local(ordinal = 0, argsOnly = true) ItemStack stack, @Local(ordinal = 0, argsOnly = true) T entity) {
         if (entity instanceof ArmorStand armorStand) {
-            Player player = Minecraft.getInstance().player;
-            SlotEntryReference result = EquipmentUtil.getCape(armorStand);
-            if (result != null && AetherMixinHooks.isCapeVisible(player)) {
-                ResourceLocation texture = AetherMixinHooks.getCapeTexture(result.stack());
+            ItemStack capeStack = AetherMixinHooks.isCapeVisible(armorStand);
+            if (!capeStack.isEmpty()) {
+                ResourceLocation texture = AetherMixinHooks.getCapeTexture(capeStack);
                 if (texture != null)
                     return texture;
             }
