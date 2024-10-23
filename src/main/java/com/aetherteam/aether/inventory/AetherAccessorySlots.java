@@ -51,6 +51,7 @@ public class AetherAccessorySlots implements UniqueSlotHandling.RegistrationCall
         if (!AetherConfig.COMMON.use_default_accessories_menu.get()) {
             GLOVES_SLOT = factory.create(GLOVES_SLOT_LOCATION, 1).slotPredicates(GLOVES_PREDICATE).validTypes(
                 EntityType.PLAYER,
+                EntityType.ARMOR_STAND,
                 EntityType.ZOMBIE,
                 EntityType.ZOMBIE_VILLAGER,
                 EntityType.HUSK,
@@ -62,6 +63,7 @@ public class AetherAccessorySlots implements UniqueSlotHandling.RegistrationCall
             RING_SLOT = factory.create(RING_SLOT_LOCATION, 2).slotPredicates(RING_PREDICATE).validTypes(EntityType.PLAYER).allowEquipFromUse(true).build();
             PENDANT_SLOT = factory.create(PENDANT_SLOT_LOCATION, 1).slotPredicates(PENDANT_PREDICATE).validTypes(
                 EntityType.PLAYER,
+                EntityType.ARMOR_STAND,
                 EntityType.ZOMBIE,
                 EntityType.ZOMBIE_VILLAGER,
                 EntityType.HUSK,
@@ -70,9 +72,9 @@ public class AetherAccessorySlots implements UniqueSlotHandling.RegistrationCall
                 EntityType.PIGLIN,
                 EntityType.ZOMBIFIED_PIGLIN
             ).allowEquipFromUse(true).build();
-            CAPE_SLOT = factory.create(CAPE_SLOT_LOCATION, 1).slotPredicates(CAPE_PREDICATE).validTypes(EntityType.PLAYER).allowEquipFromUse(true).build();
-            SHIELD_SLOT = factory.create(SHIELD_SLOT_LOCATION, 1).slotPredicates(SHIELD_PREDICATE).validTypes(EntityType.PLAYER).allowEquipFromUse(true).build();
-            ACCESSORY_SLOT = factory.create(ACCESSORY_SLOT_LOCATION, 2).slotPredicates(ACCESSORY_PREDICATE).validTypes(EntityType.PLAYER).allowEquipFromUse(true).build();
+            CAPE_SLOT = factory.create(CAPE_SLOT_LOCATION, 1).slotPredicates(CAPE_PREDICATE).validTypes(EntityType.PLAYER, EntityType.ARMOR_STAND).allowEquipFromUse(true).build();
+            SHIELD_SLOT = factory.create(SHIELD_SLOT_LOCATION, 1).slotPredicates(SHIELD_PREDICATE).validTypes(EntityType.PLAYER, EntityType.ARMOR_STAND).allowEquipFromUse(true).build();
+            ACCESSORY_SLOT = factory.create(ACCESSORY_SLOT_LOCATION, 2).slotPredicates(ACCESSORY_PREDICATE).validTypes(EntityType.PLAYER, EntityType.ARMOR_STAND).allowEquipFromUse(true).build();
         }
     }
 

@@ -172,7 +172,7 @@ public class AetherConfig {
         public Common(ModConfigSpec.Builder builder) {
             builder.push("Gameplay");
             use_default_accessories_menu = builder
-                    .worldRestart()
+                    .gameRestart()
                     .comment("Use the default Accessories menu instead of the Aether's Accessories Menu. WARNING: Do not enable this without emptying your equipped accessories")
                     .translation("config.aether.common.gameplay.use_curios_menu")
                     .define("Use default Accessories' menu", false);

@@ -87,6 +87,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
@@ -168,6 +170,8 @@ public class Aether {
         mod.registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 
         if (dist == Dist.CLIENT) {
+            mod.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+
             AetherClient.clientInit(bus);
         }
     }
