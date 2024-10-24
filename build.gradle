@@ -25,7 +25,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 neoForge {
     version = project.neo_version
 
-    accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformers = project.files('src/main/templates/accesstransformer.cfg')
 
     runs {
         configureEach {
@@ -155,7 +155,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
     ]
     inputs.properties replaceProperties
     expand replaceProperties
-    from "src/main/templates"
+    from "src/main/templates/META-INF"
     into "build/generated/sources/modMetadata"
 }
 sourceSets.main.resources.srcDir generateModMetadata

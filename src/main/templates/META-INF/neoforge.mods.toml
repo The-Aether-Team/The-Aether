@@ -13,7 +13,7 @@ issueTrackerURL = "${mod_tracker}"
     credits = "${mod_credits}"
     authors = "${mod_authors}"
     description = '''${mod_description}'''
-    enumExtensions = "META-INF/enumextensions.json"
+    enumExtensions = "enumextensions.json"
 
 [[dependencies.${mod_id}]]
     modId = "neoforge"
