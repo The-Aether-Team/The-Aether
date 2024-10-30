@@ -48,7 +48,6 @@ public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel> {
             } else {
                 int i;
                 if (sheepuff.hasCustomName() && sheepuff.getName().getString().equals("jeb_")) {
-                    int j = 25;
                     int k = sheepuff.tickCount / 25 + sheepuff.getId();
                     int l = DyeColor.values().length;
                     int i1 = k % l;
@@ -58,7 +57,7 @@ public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel> {
                     int l1 = Sheep.getColor(DyeColor.byId(j1));
                     i = FastColor.ARGB32.lerp(f, k1, l1);
                 } else {
-                    i = Sheep.getColor(sheepuff.getColor());
+                    i = Sheepuff.getColor(sheepuff.getColor());
                 }
                 coloredCutoutModelCopyLayerRender(this.getParentModel(), woolModel, SHEEPUFF_WOOL_TEXTURE, poseStack, buffer, packedLight, sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, i);
             }

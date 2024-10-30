@@ -111,7 +111,7 @@ public class BronzeDungeonBuilder {
             }
 
             this.propagateRooms(defaultRoom, chunkPos, true);
-            StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
+            StructurePiece lobby = this.nodes.getLast();
             this.buildEndTunnel(lobby, startPos);
             this.buildSurfaceTunnel(genContext.heightAccessor(), genContext.chunkGenerator(), genContext.randomState());
 
@@ -307,7 +307,7 @@ public class BronzeDungeonBuilder {
      * @param builder The {@link StructurePiecesBuilder} for the structure.
      */
     public void populatePiecesBuilder(StructurePiecesBuilder builder) {
-        StructurePiece bossRoom = this.nodes.remove(0);
+        StructurePiece bossRoom = this.nodes.removeFirst();
         this.nodes.forEach(builder::addPiece);
         this.edges.values().forEach(map -> map.values().forEach(connection -> builder.addPiece(connection.hallway)));
         // Add the tunnel at the end to make sure the tunnel doesn't dig into the boss room, since we have special doorway blocks.

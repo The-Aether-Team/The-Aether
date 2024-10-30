@@ -32,15 +32,13 @@ public class AercloudBlock extends HalfTransparentBlock {
     }
 
     /**
-     * Slows an entity's movement and resets their fall damage when inside an Aercloud block.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * Slows an entity's movement and resets their fall damage when inside an Aercloud block.
      *
      * @param state  The {@link BlockState} of the block.
      * @param level  The {@link Level} the block is in.
      * @param pos    The {@link BlockPos} of the block.
      * @param entity The {@link Entity} in the block.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         entity.resetFallDistance();
@@ -63,19 +61,11 @@ public class AercloudBlock extends HalfTransparentBlock {
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
     }
 
-    /**
-     * [CODE COPY] - {@link net.minecraft.world.level.block.AbstractGlassBlock#propagatesSkylightDown(BlockState, BlockGetter, BlockPos)}.
-     */
     @Override
     public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
         return false;
     }
 
-    /**
-     * [CODE COPY] - {@link net.minecraft.world.level.block.AbstractGlassBlock#getShadeBrightness(BlockState, BlockGetter, BlockPos)}.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
         return 0.25F;
@@ -84,8 +74,7 @@ public class AercloudBlock extends HalfTransparentBlock {
     /**
      * [CODE COPY] - {@link net.minecraft.world.level.block.PowderSnowBlock#getCollisionShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
      * Resolves a quirk with fall behavior where an entity will still receive fall damage if falling fast enough into a block with a shape like {@link AercloudBlock#COLLISION_SHAPE},
-     * even if the fall damage should be negated.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * even if the fall damage should be negated.
      *
      * @param state   The {@link BlockState} of the block.
      * @param level   The {@link Level} the block is in.
@@ -93,7 +82,6 @@ public class AercloudBlock extends HalfTransparentBlock {
      * @param context The {@link CollisionContext} of the entity with the block.
      * @return The collision {@link VoxelShape} of the block.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (!this.getDefaultCollisionShape(state, level, pos, context).isEmpty() && level.getBlockState(pos.above()).getBlock() instanceof AercloudBlock) {
@@ -115,10 +103,8 @@ public class AercloudBlock extends HalfTransparentBlock {
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraft.world.level.block.AbstractGlassBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * [CODE COPY] - {@link net.minecraft.world.level.block.TransparentBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return Shapes.empty();

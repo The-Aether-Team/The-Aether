@@ -10,7 +10,7 @@ import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
 
 public class AetherPlayerClientListener {
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void listen(IEventBus bus) {
         bus.addListener(AetherPlayerClientListener::onMove);

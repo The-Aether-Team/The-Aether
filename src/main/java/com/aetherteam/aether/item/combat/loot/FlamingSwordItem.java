@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 public class FlamingSwordItem extends SwordItem {
@@ -19,7 +20,7 @@ public class FlamingSwordItem extends SwordItem {
     }
 
     /**
-     * @see Aether#eventSetup()
+     * @see Aether#eventSetup(IEventBus) 
      * @see FlamingSwordItem#handleFlamingSwordAbility(LivingEntity, DamageSource)
      */
     public static void onLivingDamage(LivingDamageEvent.Post event) {

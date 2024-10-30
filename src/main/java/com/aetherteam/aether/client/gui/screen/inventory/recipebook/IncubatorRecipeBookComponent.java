@@ -52,9 +52,9 @@ public class IncubatorRecipeBookComponent extends RecipeBookComponent {
             this.ghostRecipe.addIngredient(this.fuels, fuelSlot.x, fuelSlot.y);
         }
 
-        Ingredient ingredient = recipe.value().getIngredients().get(0);
+        Ingredient ingredient = recipe.value().getIngredients().getFirst();
         if (!ingredient.isEmpty()) {
-            Slot eggSlot = slots.get(0);
+            Slot eggSlot = slots.getFirst();
             this.ghostRecipe.addIngredient(ingredient, eggSlot.x, eggSlot.y);
         }
     }

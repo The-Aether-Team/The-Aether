@@ -11,7 +11,7 @@ import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 
 public class AccessoryAbilityClientListener {
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus) 
      */
     public static void listen(IEventBus bus) {
         bus.addListener(AccessoryAbilityClientListener::onRenderPlayer);

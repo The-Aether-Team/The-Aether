@@ -41,10 +41,8 @@ public class BerryBushBlock extends AetherBushBlock {
 
     /**
      * [CODE COPY] - {@link net.minecraft.world.level.block.SweetBerryBushBlock#entityInside(BlockState, Level, BlockPos, Entity)}.<br><br>
-     * Modified to remove damage behavior.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * Modified to remove damage behavior.
      */
-    @SuppressWarnings("deprecation")
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (AetherConfig.SERVER.berry_bush_consistency.get()) {
             if (entity instanceof LivingEntity && entity.getType() != EntityType.FOX && entity.getType() != EntityType.BEE) {
@@ -116,10 +114,8 @@ public class BerryBushBlock extends AetherBushBlock {
 
     /**
      * [CODE COPY] - {@link net.minecraft.world.level.block.state.BlockBehaviour#getCollisionShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
-     * Modified to have a try/catch with a config check.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * Modified to have a try/catch with a config check.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         try {

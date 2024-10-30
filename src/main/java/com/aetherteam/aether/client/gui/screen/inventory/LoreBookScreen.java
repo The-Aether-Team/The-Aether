@@ -78,7 +78,7 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
         Component item = Component.translatable("gui.aether.book_of_lore.item");
         this.drawRightBookText(guiGraphics, this.font, item, 78, 67);
 
-        ItemStack itemStack = this.getMenu().slots.get(0).getItem();
+        ItemStack itemStack = this.getMenu().slots.getFirst().getItem();
         if (!itemStack.isEmpty()) { // Checks if there is an item placed in the book.
             String entryKey = this.getMenu().getLoreEntryKey(itemStack); // Get the translation key for the item's lore entry.
 

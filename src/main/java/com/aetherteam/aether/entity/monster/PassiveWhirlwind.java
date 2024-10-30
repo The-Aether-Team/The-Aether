@@ -2,7 +2,6 @@ package com.aetherteam.aether.entity.monster;
 
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.loot.AetherLoot;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -32,7 +31,6 @@ public class PassiveWhirlwind extends AbstractWhirlwind {
      * @param difficulty The {@link DifficultyInstance} of the game.
      * @param reason     The {@link MobSpawnType} reason.
      * @param spawnData  The {@link SpawnGroupData}.
-     * @param tag        The {@link CompoundTag} to apply to this entity.
      * @return The {@link SpawnGroupData} to return.
      */
     @Override

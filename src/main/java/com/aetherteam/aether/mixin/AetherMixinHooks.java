@@ -1,10 +1,10 @@
 package com.aetherteam.aether.mixin;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.item.accessories.pendant.PendantItem;
+import com.aetherteam.aether.mixin.mixins.common.accessor.MinecraftServerAccessor;
 import com.mojang.datafixers.util.Pair;
 import io.wispforest.accessories.Accessories;
 import io.wispforest.accessories.api.AccessoriesCapability;
@@ -82,8 +82,8 @@ public class AetherMixinHooks {
      * @see com.aetherteam.aether.mixin.mixins.common.DirectoryLockMixin
      */
     public static boolean canUnlockLevel(Path basePath) {
-        if (Minecraft.getInstance().screen != null && Minecraft.getInstance().screen instanceof SelectWorldScreen) {
-            return basePath.getFileName().toString().equals(WorldDisplayHelper.getLevelSummary().getLevelId());
+        if (Minecraft.getInstance().screen != null && Minecraft.getInstance().screen instanceof SelectWorldScreen && Minecraft.getInstance().getSingleplayerServer() != null) {
+            return basePath.getFileName().toString().equals(((MinecraftServerAccessor) Minecraft.getInstance().getSingleplayerServer()).aether$getStorageSource().getLevelId());
         }
         return false;
     }

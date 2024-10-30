@@ -1,7 +1,6 @@
 package com.aetherteam.aether.block.portal;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.client.sound.FadeOutSoundInstance;
@@ -55,12 +54,6 @@ public class AetherPortalBlock extends Block implements Portal {
         builder.add(AXIS);
     }
 
-    /**
-     * [CODE COPY] - {@link Entity#handleInsidePortal(BlockPos)}<br>
-     * [CODE COPY] - {@link Entity#handleNetherPortal()}.<br><br>
-     * Handle portal behavior with {@link AetherPlayerAttachment}.
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity.canUsePortal(false)) {
@@ -189,10 +182,6 @@ public class AetherPortalBlock extends Block implements Portal {
         }
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public BlockState rotate(BlockState state, Rotation rotation) {
         return switch (rotation) {

@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 public class ReloadListeners {
     /**
-     * @see Aether#eventSetup()
+     * @see Aether#eventSetup(IEventBus)
      */
     public static void reloadListenerSetup(AddReloadListenerEvent event) {
         event.addListener(new RecipeReloadListener());

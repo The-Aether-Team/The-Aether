@@ -48,7 +48,7 @@ public class SpawnXP extends LootItemConditionalFunction {
     }
 
     @Override
-    public LootItemFunctionType getType() {
+    public LootItemFunctionType<SpawnXP> getType() {
         return AetherLootFunctions.SPAWN_XP.get();
     }
 }

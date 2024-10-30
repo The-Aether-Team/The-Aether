@@ -16,10 +16,10 @@ public class MobAccessoryAttachment {
 
     public MobAccessoryAttachment() {
         this.accessoryDropChances = new HashMap<>(Map.ofEntries(
-                Map.entry("hands", 0.085F),
+                Map.entry("hand", 0.085F),
                 Map.entry("necklace", 0.085F),
-                Map.entry("aether_gloves", 0.085F),
-                Map.entry("aether_pendant", 0.085F)
+                Map.entry("aether:gloves_slot", 0.085F),
+                Map.entry("aether:pendant_slot", 0.085F)
         ));
     }
 
@@ -28,20 +28,20 @@ public class MobAccessoryAttachment {
     }
 
     public void setGuaranteedDrop(SlotTypeReference identifier) {
-        if (identifier.slotName().equals("hands") || identifier.slotName().equals("necklace") || identifier.slotName().equals("aether_gloves") || identifier.slotName().equals("aether_pendant")) {
+        if (this.accessoryDropChances.containsKey(identifier.slotName())) {
             this.getAccessoryDropChances().put(identifier.slotName(), 2.0F);
         }
     }
 
     public float getEquipmentDropChance(SlotTypeReference identifier) {
-        if (identifier.slotName().equals("hands") || identifier.slotName().equals("necklace") || identifier.slotName().equals("aether_gloves") || identifier.slotName().equals("aether_pendant")) {
+        if (this.accessoryDropChances.containsKey(identifier.slotName())) {
             return this.getAccessoryDropChances().get(identifier.slotName());
         }
         return 0.0F;
     }
 
     public void setDropChance(SlotTypeReference identifier, float chance) {
-        if (identifier.slotName().equals("hands") || identifier.slotName().equals("necklace") || identifier.slotName().equals("aether_gloves") || identifier.slotName().equals("aether_pendant")) {
+        if (this.accessoryDropChances.containsKey(identifier.slotName())) {
             this.getAccessoryDropChances().put(identifier.slotName(), chance);
         }
     }

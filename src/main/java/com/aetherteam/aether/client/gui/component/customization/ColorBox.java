@@ -27,7 +27,7 @@ public abstract class ColorBox extends EditBox {
                 this.setTextColor(14737632);
                 this.hasValidColor = false;
             }
-        } else if (this.getValue().length() == 0) { // Sets there to be no color if there is no input.
+        } else if (this.getValue().isEmpty()) { // Sets there to be no color if there is no input.
             this.setTextColor(14737632);
             this.hasValidColor = true;
         } else { // If the input is longer than 6 characters, it's not a valid hex code.

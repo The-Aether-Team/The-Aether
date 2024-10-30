@@ -48,7 +48,7 @@ public class SpawnTNT extends LootItemConditionalFunction {
     }
 
     @Override
-    public LootItemFunctionType getType() {
+    public LootItemFunctionType<SpawnTNT> getType() {
         return AetherLootFunctions.SPAWN_TNT.get();
     }
 }

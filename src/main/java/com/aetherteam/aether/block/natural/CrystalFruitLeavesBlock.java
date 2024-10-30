@@ -50,7 +50,7 @@ public class CrystalFruitLeavesBlock extends LeavesWithParticlesBlock {
     }
 
     /**
-     * [CODE COPY] - {@link Block#dropResources(BlockState, Level, BlockPos, BlockEntity, Entity, ItemStack, boolean)}.<br><br>
+     * [CODE COPY] - {@link Block#dropResources(BlockState, Level, BlockPos, BlockEntity, Entity, ItemStack)}.<br><br>
      * Modified to not drop Skyroot Sticks from leaves' loot table.
      */
     public static void dropResources(BlockState state, Level level, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack tool, boolean dropXp) {

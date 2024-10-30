@@ -146,7 +146,6 @@ public class Moa extends MountableAnimal implements WingedBird {
      * @param difficulty The {@link DifficultyInstance} of the game.
      * @param reason     The {@link MobSpawnType} reason.
      * @param spawnData  The {@link SpawnGroupData}.
-     * @param tag        The {@link CompoundTag} to apply to this entity.
      * @return The {@link SpawnGroupData} to return.
      */
     @Override
@@ -736,14 +735,16 @@ public class Moa extends MountableAnimal implements WingedBird {
     }
 
     /**
-     * Makes player-raised Moas immune to Inebriation.
+     * Makes player-raised Moas immune to Inebriation.<br><br>
+     * Warning for "deprecation" is suppressed because the method is fine to override.
      *
      * @param effect The {@link MobEffectInstance} to check whether this mob is affected by.
      * @return Whether the mob is affected.
      */
+    @SuppressWarnings("deprecation")
     @Override
     public boolean canBeAffected(MobEffectInstance effect) {
-        return (effect.getEffect() != AetherEffects.INEBRIATION.get() || !this.isPlayerGrown()) && super.canBeAffected(effect);
+        return (effect.getEffect().value() != AetherEffects.INEBRIATION.get() || !this.isPlayerGrown()) && super.canBeAffected(effect);
     }
 
     /**

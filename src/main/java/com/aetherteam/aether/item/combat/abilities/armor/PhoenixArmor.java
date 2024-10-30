@@ -20,7 +20,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public interface PhoenixArmor {
     /**
@@ -28,7 +29,7 @@ public interface PhoenixArmor {
      * Wearing Phoenix Armor also clears any fire from the wearer and spawns flame particles around them.
      *
      * @param entity The {@link LivingEntity} wearing the armor.
-     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
+     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(EntityTickEvent.Post)
      */
     static void boostLavaSwimming(LivingEntity entity) {
         if (EquipmentUtil.hasFullPhoenixSet(entity)) {
@@ -39,7 +40,7 @@ public interface PhoenixArmor {
                     var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
                     float defaultBoost = boostWithDepthStrider(entity, 1.75F, 1.0F);
                     data.setPhoenixSubmergeLength(Math.min(data.getPhoenixSubmergeLength() + 0.1, 1.0));
-                    defaultBoost *= data.getPhoenixSubmergeLength();
+                    defaultBoost *= (float) data.getPhoenixSubmergeLength();
                     entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                 } else {
                     float defaultBoost = boostWithDepthStrider(entity, 1.75F, 1.0F);
@@ -65,7 +66,7 @@ public interface PhoenixArmor {
      * Boosts the entity's vertical movement in lava if wearing a full set of Phoenix Armor. The default boost is modified based on duration in lava and whether the boots have Depth Strider.<br><br>
      *
      * @param entity The {@link LivingEntity} wearing the armor.
-     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
+     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(EntityTickEvent.Post)
      */
     static void boostVerticalLavaSwimming(LivingEntity entity) {
         if (EquipmentUtil.hasFullPhoenixSet(entity)) {
@@ -76,7 +77,7 @@ public interface PhoenixArmor {
                     var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
                     float defaultBoost = boostWithDepthStrider(entity, 1.5F, 0.05F);
                     data.setPhoenixSubmergeLength(Math.min(data.getPhoenixSubmergeLength() + 0.1, 1.0));
-                    defaultBoost *= data.getPhoenixSubmergeLength();
+                    defaultBoost *= (float) data.getPhoenixSubmergeLength();
                     if (entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
                         entity.setDeltaMovement(entity.getDeltaMovement().multiply(1.0, defaultBoost, 1.0));
                     }
@@ -109,11 +110,11 @@ public interface PhoenixArmor {
 
     /**
      * Slowly increments a timer to convert a player's Phoenix Armor if they're in water, rain, or a bubble column.<br><br>
-     * This is done by looping through the armor {@link EquipmentSlot}s and also checking with {@link top.theillusivec4.curios.common.CuriosHelper#findFirstCurio(LivingEntity, Item)} for the gloves.<br><br>
+     * This is done by looping through the armor {@link EquipmentSlot}s and also checking with {@link EquipmentUtil#getAccessory(LivingEntity, Item)} for the gloves.<br><br>
      * The methods used for this are {@link PhoenixArmor#breakPhoenixArmor(LivingEntity, ItemStack, ItemStack, EquipmentSlot)} and {@link PhoenixArmor#breakPhoenixGloves(LivingEntity, SlotEntryReference, ItemStack)}.
      *
      * @param entity The {@link LivingEntity} wearing the armor.
-     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
+     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(EntityTickEvent.Post)
      */
     static void damageArmor(LivingEntity entity) {
         if (entity instanceof Player player) {
@@ -169,7 +170,7 @@ public interface PhoenixArmor {
      * Replaces the gloves stack and copies over its tags and enchantments.
      *
      * @param entity       The {@link LivingEntity} wearing the armor.
-     * @param slotResult   The {@link SlotEntryReference} of the Curio item.
+     * @param slotResult   The {@link SlotEntryReference} of the accessory item.
      * @param outcomeStack The replacement {@link ItemStack}.
      */
     private static void breakPhoenixGloves(LivingEntity entity, SlotEntryReference slotResult, ItemStack outcomeStack) {
@@ -192,7 +193,7 @@ public interface PhoenixArmor {
      * @param entity The {@link LivingEntity} wearing the armor.
      * @param source The attacking {@link DamageSource}.
      * @return Whether the fire damage should be cancelled, as a {@link Boolean}.
-     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityAttack(LivingAttackEvent)
+     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityAttack(LivingIncomingDamageEvent)
      */
     static boolean extinguishUser(LivingEntity entity, DamageSource source) {
         return EquipmentUtil.hasFullPhoenixSet(entity) && source.is(DamageTypeTags.IS_FIRE);

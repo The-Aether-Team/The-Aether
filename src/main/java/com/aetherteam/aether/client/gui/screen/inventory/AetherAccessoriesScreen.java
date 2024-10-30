@@ -45,9 +45,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * [CODE COPY] - {@link CuriosScreen}.<br>
  * [CODE COPY] - {@link InventoryScreen}.<br><br>
- * Modified to register slots for Aether accessories only.
+ * Modified to register slots for Aether accessories.
  */
 public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<AetherAccessoriesMenu> implements RecipeUpdateListener, RecipeBookBehavior<AetherAccessoriesMenu, AetherAccessoriesScreen> {
     public static final WidgetSprites ACCESSORIES_BUTTON = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "inventory/accessories_button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "inventory/accessories_button_highlighted"));
@@ -74,7 +73,6 @@ public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<Aeth
     @Override
     public void init() {
         super.init();
-        // Basic Curio-based initialization.
         if (this.getMinecraft().player != null) {
             this.imageWidth = this.getMinecraft().player.isCreative() ? 176 + this.creativeXOffset() : 176;
         }
@@ -118,7 +116,6 @@ public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<Aeth
     }
 
     /**
-     * [CODE COPY] - {@link CuriosScreen#updateScreenPosition()}.<br>
      * [CODE COPY] - {@link RecipeBookComponent#updateScreenPosition(int, int)}.
      */
     private void updateScreenPosition() {
@@ -226,8 +223,8 @@ public class AetherAccessoriesScreen extends EffectRenderingInventoryScreen<Aeth
             LocalPlayer clientPlayer = Minecraft.getInstance().player;
             if (!this.isRenderButtonHovered && clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty() && this.getSlotUnderMouse() != null) {
                 Slot slot = this.getSlotUnderMouse();
-                if (slot instanceof AccessoriesBasedSlot curioSlot && !slot.hasItem()) {
-                    guiGraphics.renderTooltip(this.font, Component.translatable(curioSlot.slotType().translation()), mouseX, mouseY);
+                if (slot instanceof AccessoriesBasedSlot accessorySlot && !slot.hasItem()) {
+                    guiGraphics.renderTooltip(this.font, Component.translatable(accessorySlot.slotType().translation()), mouseX, mouseY);
                 }
             }
 

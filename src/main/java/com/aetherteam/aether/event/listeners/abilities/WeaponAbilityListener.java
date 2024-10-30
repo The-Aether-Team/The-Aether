@@ -15,7 +15,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 public class WeaponAbilityListener {
     /**
-     * @see Aether#eventSetup()
+     * @see Aether#eventSetup(IEventBus) 
      */
     public static void listen(IEventBus bus) {
         bus.addListener(WeaponAbilityListener::onDartHurt);

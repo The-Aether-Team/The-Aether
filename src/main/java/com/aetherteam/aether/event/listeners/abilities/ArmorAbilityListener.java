@@ -17,7 +17,7 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class ArmorAbilityListener {
     /**
-     * @see Aether#eventSetup()
+     * @see Aether#eventSetup(IEventBus)
      */
     public static void listen(IEventBus bus) {
         bus.addListener(ArmorAbilityListener::onEntityUpdate);

@@ -26,7 +26,7 @@ public class CloudStaffItem extends Item {
     /**
      * Summons two Cloud Minions if the player has none summoned, spawning particles and taking 1 durability off the item. If the player already has Cloud Minions, nothing happens. <br><br>
      * If the player shifts and right clicks, the Cloud Minions are despawned.<br><br>
-     * The tracking for whether Cloud Minions are summoned or not is handled with {@link AetherPlayerAttachment#setCloudMinions(CloudMinion, CloudMinion)} and {@link AetherPlayerAttachment#getCloudMinions()}.
+     * The tracking for whether Cloud Minions are summoned or not is handled with {@link AetherPlayerAttachment#setCloudMinions(Player, CloudMinion, CloudMinion)} and {@link AetherPlayerAttachment#getCloudMinions()}.
      *
      * @param level  The {@link Level} of the user.
      * @param player The {@link Player} using this item.
@@ -64,10 +64,11 @@ public class CloudStaffItem extends Item {
      *
      * @param stack  The {@link ItemStack} being swung.
      * @param entity The swinging {@link LivingEntity}.
+     * @param hand The {@link InteractionHand} being swung.
      * @return Whether the item was successfully swung (we don't change this, so it uses the superclass' behavior), as a {@link Boolean}.
      */
     @Override
-    public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
+    public boolean onEntitySwing(ItemStack stack, LivingEntity entity, InteractionHand hand) {
         if (entity instanceof Player player) {
             var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
             if (!player.getCooldowns().isOnCooldown(this) && data.isHitting()) {
@@ -84,7 +85,7 @@ public class CloudStaffItem extends Item {
                 }
             }
         }
-        return super.onEntitySwing(stack, entity);
+        return super.onEntitySwing(stack, entity, hand);
     }
 
     /**

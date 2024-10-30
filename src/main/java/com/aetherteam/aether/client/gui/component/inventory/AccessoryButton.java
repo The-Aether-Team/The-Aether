@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
- * [CODE COPY] - {@link top.theillusivec4.curios.client.gui.CuriosButton}.<br><br>
  * Opens the {@link AetherAccessoriesScreen} instead.
  */
 public class AccessoryButton extends ImageButton {

@@ -21,6 +21,7 @@ import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -115,7 +116,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * @param difficulty The {@link DifficultyInstance} of the game.
      * @param reason     The {@link MobSpawnType} reason.
      * @param spawnData  The {@link SpawnGroupData}.
-     * @param tag        The {@link CompoundTag} to apply to this entity.
      * @return The {@link SpawnGroupData} to return.
      */
     @Override
@@ -725,7 +725,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     }
 
     /**
-     * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag)
+     * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag, HolderLookup.Provider)
      */
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
@@ -743,7 +743,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     }
 
     /**
-     * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag)
+     * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag, HolderLookup.Provider)
      */
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
@@ -764,7 +764,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     }
 
     /**
-     * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag)
+     * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag, HolderLookup.Provider)
      */
     @Override
     public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
@@ -774,7 +774,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     }
 
     /**
-     * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag)
+     * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag, HolderLookup.Provider)
      */
     @Override
     public void readSpawnData(RegistryFriendlyByteBuf additionalData) {

@@ -6,7 +6,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.RecipeBookMenu;
@@ -19,7 +18,6 @@ import net.minecraft.world.item.crafting.RecipeInput;
  * Cleaned up and made more abstract to mostly only have {@link RecipeBookComponent}-specific code.
  */
 public abstract class AbstractRecipeBookScreen<A extends RecipeInput, B extends Recipe<A>, T extends RecipeBookMenu<A, B>, S extends RecipeBookComponent> extends AbstractContainerScreen<T> implements RecipeUpdateListener, RecipeBookBehavior<T, AbstractRecipeBookScreen<A, B, T, S>> {
-    private static final ResourceLocation RECIPE_BUTTON_LOCATION = ResourceLocation.withDefaultNamespace("textures/gui/recipe_button.png");
     protected final S recipeBookComponent;
     protected boolean widthTooNarrow;
 

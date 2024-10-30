@@ -14,7 +14,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
@@ -31,18 +30,16 @@ public class IncubationBuilder implements RecipeBuilder {
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     @Nullable
     private String group;
-    private final RecipeSerializer<IncubationRecipe> serializer;
 
-    public IncubationBuilder(Ingredient ingredient, EntityType<?> entity, @Nullable CompoundTag tag, int incubationTime, RecipeSerializer<IncubationRecipe> serializer) {
+    public IncubationBuilder(Ingredient ingredient, EntityType<?> entity, @Nullable CompoundTag tag, int incubationTime) {
         this.ingredient = ingredient;
         this.entity = entity;
         this.tag = tag;
         this.incubationTime = incubationTime;
-        this.serializer = serializer;
     }
 
-    public static IncubationBuilder incubation(Ingredient ingredient, EntityType<?> entity, CompoundTag tag, int incubationTime, RecipeSerializer<IncubationRecipe> serializer) {
-        return new IncubationBuilder(ingredient, entity, tag, incubationTime, serializer);
+    public static IncubationBuilder incubation(Ingredient ingredient, EntityType<?> entity, CompoundTag tag, int incubationTime) {
+        return new IncubationBuilder(ingredient, entity, tag, incubationTime);
     }
 
     @Override

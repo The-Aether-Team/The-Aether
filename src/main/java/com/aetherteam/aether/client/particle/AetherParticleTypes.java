@@ -6,6 +6,7 @@ import net.minecraft.client.particle.SnowflakeParticle;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -24,7 +25,7 @@ public class AetherParticleTypes {
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> ZEPHYR_SNOWFLAKE = PARTICLES.register("zephyr_snowflake", () -> new SimpleParticleType(false));
 
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(AETHER_PORTAL.get(), AetherPortalParticle.Factory::new);

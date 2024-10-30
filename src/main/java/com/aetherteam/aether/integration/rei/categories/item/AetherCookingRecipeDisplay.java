@@ -48,12 +48,12 @@ public class AetherCookingRecipeDisplay<T extends Recipe<?>> extends BasicDispla
 
     private static List<EntryIngredient> getInput(Recipe<?> recipe) {
         if (recipe instanceof AltarRepairRecipe) {
-            ItemStack damagedItem = recipe.getIngredients().get(0).getItems()[0].copy();
+            ItemStack damagedItem = recipe.getIngredients().getFirst().getItems()[0].copy();
             damagedItem.setDamageValue(damagedItem.getMaxDamage() * 3 / 4);
 
             return List.of(EntryIngredients.of(damagedItem));
         } else {
-            return List.of(EntryIngredients.ofIngredient(recipe.getIngredients().get(0)));
+            return List.of(EntryIngredients.ofIngredient(recipe.getIngredients().getFirst()));
         }
     }
 

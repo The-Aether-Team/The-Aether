@@ -20,6 +20,7 @@ import com.aetherteam.aether.network.packet.clientbound.BossInfoPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -391,8 +392,10 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * [CODE COPY] - {@link LivingEntity#canBeAffected(MobEffectInstance)}.<br><br>
+     * Warning for "deprecation" is suppressed because the method is fine to override.<br><br>
      * The Sun Spirit is immune to all effects unless the event hook determines otherwise.
      */
+    @SuppressWarnings("deprecation")
     @Override //code copy
     public boolean canBeAffected(MobEffectInstance pEffectInstance) {
         MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, pEffectInstance);
@@ -695,7 +698,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     }
 
     /**
-     * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag)
+     * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag, HolderLookup.Provider)
      */
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
@@ -708,7 +711,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     }
 
     /**
-     * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag)
+     * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag, HolderLookup.Provider)
      */
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {

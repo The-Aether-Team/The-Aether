@@ -85,7 +85,7 @@ public class LevelClientHooks {
                 }
             } else { // For checking to remove overlays from the world.
                 List<BlockPos> positions = positionsForTypes.get(type);
-                if (positions.size() > 0 && level.getRandom().nextInt(100) == 0) {
+                if (!positions.isEmpty() && level.getRandom().nextInt(100) == 0) {
                     BlockPos pos = positions.get(level.getRandom().nextInt(positions.size()));
                     if (!stack.is(level.getBlockState(pos).getBlock().asItem())) { // Remove an overlay if the corresponding dungeon block item is not held.
                         positions.remove(pos);

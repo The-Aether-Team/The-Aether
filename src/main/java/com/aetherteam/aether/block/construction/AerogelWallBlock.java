@@ -14,23 +14,19 @@ public class AerogelWallBlock extends WallBlock {
     }
 
     /**
-     * Relevant to lighting checks for blocks that aren't full cubes and neighboring blocks.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * Relevant to lighting checks for blocks that aren't full cubes and neighboring blocks.
      *
      * @param state The {@link BlockState} of the block.
      * @return Whether to use the shape for light occlusion, as a {@link Boolean}.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public boolean useShapeForLightOcclusion(BlockState state) {
         return true;
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraft.world.level.block.AbstractGlassBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * [CODE COPY] - {@link net.minecraft.world.level.block.TransparentBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return Shapes.empty();

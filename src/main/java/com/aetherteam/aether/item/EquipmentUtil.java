@@ -45,7 +45,7 @@ public final class EquipmentUtil {
      * Searches for gloves in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotEntryReference} for the curio item.
+     * @return The {@link SlotEntryReference} for the accessory item.
      */
     @Nullable
     public static SlotEntryReference getGloves(LivingEntity entity) {
@@ -57,7 +57,7 @@ public final class EquipmentUtil {
      * Searches for Zanite Rings in an entity's accessory inventory and returns all the {@link SlotEntryReference} instances.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link List} of {@link SlotEntryReference}s for the curio items.
+     * @return The {@link List} of {@link SlotEntryReference}s for the accessory items.
      */
     public static List<SlotEntryReference> getZaniteRings(LivingEntity entity) {
         return getAccessories(entity, AetherItems.ZANITE_RING.get());
@@ -67,7 +67,7 @@ public final class EquipmentUtil {
      * Searches for a Zanite Pendant in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotEntryReference} for the curio item.
+     * @return The {@link SlotEntryReference} for the accessory item.
      */
     @Nullable
     public static SlotEntryReference getZanitePendant(LivingEntity entity) {
@@ -118,7 +118,7 @@ public final class EquipmentUtil {
      * Searches for a {@link CapeItem} in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotEntryReference} for the curio item.
+     * @return The {@link SlotEntryReference} for the accessory item.
      */
     @Nullable
     public static SlotEntryReference getCape(LivingEntity entity) {
@@ -126,10 +126,10 @@ public final class EquipmentUtil {
     }
 
     /**
-     * Checks if a curio {@link Item} exists in an entity's accessory inventory.
+     * Checks if an accessory {@link Item} exists in an entity's accessory inventory.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @param item   The curio {@link Item} to look for.
+     * @param item   The accessory {@link Item} to look for.
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasAccessory(LivingEntity entity, Item item) {
@@ -137,11 +137,11 @@ public final class EquipmentUtil {
     }
 
     /**
-     * Searches for a curio {@link Item} in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
+     * Searches for an accessory {@link Item} in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @param item   The curio {@link Item} to look for.
-     * @return The {@link SlotEntryReference} for the curio item.
+     * @param item   The accessory {@link Item} to look for.
+     * @return The {@link SlotEntryReference} for the accessory item.
      */
     @Nullable
     public static SlotEntryReference getAccessory(LivingEntity entity, Item item) {
@@ -149,11 +149,11 @@ public final class EquipmentUtil {
     }
 
     /**
-     * Searches for a curio {@link Item} in an entity's accessory inventory and returns all the {@link SlotEntryReference} instances.
+     * Searches for an accessory {@link Item} in an entity's accessory inventory and returns all the {@link SlotEntryReference} instances.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @param item   The curio {@link Item} to look for.
-     * @return The {@link List} of {@link SlotEntryReference}s for the curio items.
+     * @param item   The accessory {@link Item} to look for.
+     * @return The {@link List} of {@link SlotEntryReference}s for the accessory items.
      */
     public static List<SlotEntryReference> getAccessories(LivingEntity entity, Item item) {
         AccessoriesCapability accessories = AccessoriesCapability.get(entity);
@@ -261,16 +261,10 @@ public final class EquipmentUtil {
                 || findFirstAccessory(entity, gloves).isPresent();
     }
 
-    /**
-     * @see ICuriosItemHandler#findFirstCurio(Item)
-     */
     public static Optional<SlotEntryReference> findFirstAccessory(LivingEntity entity, Item item) {
         return findFirstAccessory(entity, (itemStack) -> itemStack.is(item));
     }
 
-    /**
-     * @see ICuriosItemHandler#findFirstCurio(Predicate)
-     */
     public static Optional<SlotEntryReference> findFirstAccessory(LivingEntity entity, Predicate<ItemStack> predicate) {
         AccessoriesCapability accessories = AccessoriesCapability.get(entity);
         if (accessories != null) {

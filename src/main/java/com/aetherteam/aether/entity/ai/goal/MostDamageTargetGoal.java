@@ -109,7 +109,7 @@ public class MostDamageTargetGoal extends TargetGoal {
     private void tickAggro() {
         if (++this.aiTicks >= 10) {
             this.aiTicks = 0;
-            for (ObjectIterator<Map.Entry<LivingEntity, Double>> iterator = this.attackers.entrySet().iterator(); iterator.hasNext(); ) {
+            for (ObjectIterator<Object2DoubleMap.Entry<LivingEntity>> iterator = this.attackers.object2DoubleEntrySet().iterator(); iterator.hasNext(); ) {
                 Map.Entry<LivingEntity, Double> entry = iterator.next();
                 LivingEntity livingEntity = entry.getKey();
                 Double oldAggro = entry.getValue();

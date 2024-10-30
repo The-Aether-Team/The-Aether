@@ -68,10 +68,6 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
         builder.add(FACING, WATERLOGGED);
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -91,10 +87,6 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
         return level.isClientSide() ? createTickerHelper(blockEntityType, this.blockEntityType(), TreasureChestBlockEntity::lidAnimateTick) : null;
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -104,19 +96,16 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
     }
 
     /**
-     * [CODE COPY] - {@link ChestBlock#use(BlockState, Level, BlockPos, Player, InteractionHand, BlockHitResult)}.<br><br>
-     * Handles behavior for checking if a chest is locked and being able to unlock the chest.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * [CODE COPY] - {@link ChestBlock#useWithoutItem(BlockState, Level, BlockPos, Player, BlockHitResult)}.<br><br>
+     * Handles behavior for checking if a chest is locked and being able to unlock the chest.
      *
      * @param state  The {@link BlockState} of the block.
      * @param level  The {@link Level} the block is in.
      * @param pos    The {@link BlockPos} of the block.
      * @param player The {@link Player} interacting with the block.
-     * @param hand   The {@link InteractionHand} the player interacts with.
      * @param hit    The {@link BlockHitResult} of the interaction.
      * @return The {@link InteractionResult} of the interaction.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -179,19 +168,11 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState stateOther, boolean flag) {
         if (!state.is(stateOther.getBlock())) {
@@ -213,7 +194,6 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
      * @param pos    The {@link BlockPos} of the block.
      * @return The {@link Float} for the destruction progress.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -247,28 +227,16 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
         return super.getExplosionResistance(state, level, pos, explosion);
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
         return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
@@ -299,28 +267,16 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
         return stack;
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         if (state.getValue(WATERLOGGED)) {

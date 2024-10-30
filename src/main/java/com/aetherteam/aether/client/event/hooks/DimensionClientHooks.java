@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent;
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -138,7 +139,7 @@ public class DimensionClientHooks {
     /**
      * Ticks time in clientside Aether levels.
      *
-     * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onClientTick(TickEvent.ClientTickEvent)
+     * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onClientTick(ClientTickEvent.Post)
      */
     public static void tickTime() {
         ClientLevel level = Minecraft.getInstance().level;

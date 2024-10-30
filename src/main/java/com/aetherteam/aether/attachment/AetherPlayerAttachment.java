@@ -221,7 +221,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
     }
 
     /**
-     * Handles functions when the player ticks from {@link net.neoforged.neoforge.event.entity.living.LivingEvent.LivingTickEvent}
+     * Handles functions when the player ticks from {@link net.neoforged.neoforge.event.tick.EntityTickEvent}
      */
     public void onUpdate(Player player) {
         this.syncAfterJoin(player);
@@ -476,7 +476,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
                     PacketDistributor.sendToPlayer(serverPlayer, new RemountAerbunnyPacket(player.getId(), aerbunny.getId()));
                 }
             }
-            this.setMountedAerbunnyTag(null);
+            this.setMountedAerbunnyTag(Optional.empty());
         }
     }
 

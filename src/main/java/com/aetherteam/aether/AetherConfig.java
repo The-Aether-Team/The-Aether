@@ -126,7 +126,7 @@ public class AetherConfig {
             sun_altar_dimensions = builder
                 .comment("Configures what dimensions are able to have their time changed by the Sun Altar")
                 .translation("config.aether.server.multiplayer.sun_altar_dimensions")
-                .defineList("Configure Sun Altar dimensions", List.of("aether:the_aether"), s -> s instanceof String);
+                .defineList("Configure Sun Altar dimensions", List.of("aether:the_aether"), () -> "", s -> s instanceof String);
             builder.pop();
 
             builder.push("Modpack");
@@ -174,7 +174,7 @@ public class AetherConfig {
             use_default_accessories_menu = builder
                     .gameRestart()
                     .comment("Use the default Accessories menu instead of the Aether's Accessories Menu. WARNING: Do not enable this without emptying your equipped accessories")
-                    .translation("config.aether.common.gameplay.use_curios_menu")
+                    .translation("config.aether.common.gameplay.use_default_accessories_menu")
                     .define("Use default Accessories' menu", false);
             start_with_portal = builder
                     .comment("On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with")
@@ -318,11 +318,11 @@ public class AetherConfig {
                     .translation("config.aether.client.gui.portal_text_y")
                     .define("Portal text y-coordinate in loading screens", 50);
             button_inventory_x = builder
-                    .comment("The x-coordinate of the accessories button in the inventory and curios menus")
+                    .comment("The x-coordinate of the accessories button in the inventory and accessories menus")
                     .translation("config.aether.client.gui.button_inventory_x")
                     .define("Button x-coordinate in inventory menus", 27);
             button_inventory_y = builder
-                    .comment("The y-coordinate of the accessories button in the inventory and curios menus")
+                    .comment("The y-coordinate of the accessories button in the inventory and accessories menus")
                     .translation("config.aether.client.gui.button_inventory_y")
                     .define("Button y-coordinate in inventory menus", 68);
             button_creative_x = builder

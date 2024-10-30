@@ -8,14 +8,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public interface NeptuneArmor {
     /**
      * Boosts the entity's movement in water or bubble columns if wearing a full set of Neptune Armor. The default boost is modified based on duration in water and whether the boots have Depth Strider.
      *
      * @param entity The {@link LivingEntity} wearing the armor.
-     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
+     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(EntityTickEvent.Post)
      */
     static void boostWaterSwimming(LivingEntity entity) {
         if (EquipmentUtil.hasFullNeptuneSet(entity)) {
@@ -24,7 +24,7 @@ public interface NeptuneArmor {
                     var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
                     float defaultBoost = boostWithDepthStrider(player);
                     data.setNeptuneSubmergeLength(Math.min(data.getNeptuneSubmergeLength() + 0.1, 1.0));
-                    defaultBoost *= data.getNeptuneSubmergeLength();
+                    defaultBoost *= (float) data.getNeptuneSubmergeLength();
                     player.moveRelative(0.04F * defaultBoost, new Vec3(player.xxa, player.yya, player.zza));
                     if (player.isSwimming() || player.getDeltaMovement().y() > 0 || player.isCrouching()) {
                         player.move(MoverType.SELF, player.getDeltaMovement().multiply(0.0, defaultBoost, 0.0));
@@ -58,7 +58,7 @@ public interface NeptuneArmor {
             defaultBoost += depthStriderModifier * 0.4F;
         }
         if (entity.isSwimming() && entity.getDeltaMovement().y() < 0) {
-            defaultBoost *= 0.5;
+            defaultBoost *= 0.5F;
         }
         return defaultBoost;
     }

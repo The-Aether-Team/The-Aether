@@ -65,7 +65,7 @@ public class WhirlwindSpawnEntity extends LootItemConditionalFunction {
     }
 
     @Override
-    public LootItemFunctionType getType() {
+    public LootItemFunctionType<WhirlwindSpawnEntity> getType() {
         return AetherLootFunctions.WHIRLWIND_SPAWN_ENTITY.get();
     }
 }

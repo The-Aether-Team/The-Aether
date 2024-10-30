@@ -16,14 +16,16 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 public class AccessoryAbilityListener {
     /**
-     * @see Aether#eventSetup()
+     * @see Aether#eventSetup(IEventBus)
      */
     public static void listen(IEventBus bus) {
         bus.addListener(AccessoryAbilityListener::onBlockBreak);
+        bus.addListener(AccessoryAbilityListener::onMiningSpeed);
         bus.addListener(AccessoryAbilityListener::onTargetSet);
         bus.addListener(AccessoryAbilityListener::onProjectileImpact);
         bus.addListener(AccessoryAbilityListener::onEntityHurt);
@@ -41,6 +43,18 @@ public class AccessoryAbilityListener {
         if (!event.isCanceled()) {
             AbilityHooks.AccessoryHooks.damageZaniteRing(player, level, state, pos);
             AbilityHooks.AccessoryHooks.damageZanitePendant(player, level, state, pos);
+        }
+    }
+
+    /**
+     * @see AbilityHooks.AccessoryHooks#handleZaniteRingAbility(LivingEntity, float)
+     * @see AbilityHooks.AccessoryHooks#handleZanitePendantAbility(LivingEntity, float)
+     */
+    public static void onMiningSpeed(PlayerEvent.BreakSpeed event) {
+        Player player = event.getEntity();
+        if (!event.isCanceled()) {
+            event.setNewSpeed(AbilityHooks.AccessoryHooks.handleZaniteRingAbility(player, event.getNewSpeed()));
+            event.setNewSpeed(AbilityHooks.AccessoryHooks.handleZanitePendantAbility(player, event.getNewSpeed()));
         }
     }
 

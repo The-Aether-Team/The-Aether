@@ -99,19 +99,6 @@ public class AetherMenuButton extends Button {
     }
 
     /**
-     * Modified the final offset multipliers.
-     */
-    private int getTextureY() {
-        int i = 1;
-        if (!this.isActive()) {
-            i = 0;
-        } else if (this.isHoveredOrFocused()) {
-            i = 2;
-        }
-        return i * 40;
-    }
-
-    /**
      * Determines the color for the button text depending on if its hovered over.
      *
      * @param mouseX The {@link Integer} for the mouse's x-position.

@@ -12,7 +12,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
  */
 public class AetherTimeListener {
     /**
-     * @see Aether#eventSetup()
+     * @see Aether#eventSetup(IEventBus)
      */
     public static void listen(IEventBus bus) {
         bus.addListener(AetherTimeListener::onLogin);

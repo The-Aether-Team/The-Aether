@@ -35,7 +35,7 @@ public class HolidayTreeDecorator extends TreeDecorator {
     public void place(Context context) {
         List<BlockPos> logPositions = context.logs();
         if (!logPositions.isEmpty()) {
-            int i = logPositions.get(0).getY();
+            int i = logPositions.getFirst().getY();
             logPositions.stream().filter((logs) -> logs.getY() == i).forEach((logPos) -> this.placeCircle(context, logPos));
         }
     }

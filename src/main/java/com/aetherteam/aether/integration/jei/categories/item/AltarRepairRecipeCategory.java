@@ -36,7 +36,7 @@ public class AltarRepairRecipeCategory extends AbstractAetherCookingRecipeCatego
     public void setRecipe(IRecipeLayoutBuilder builder, AltarRepairRecipe recipe, IFocusGroup focusGroup) {
         NonNullList<Ingredient> recipeIngredients = recipe.getIngredients();
 
-        ItemStack damagedItem = recipeIngredients.get(0).getItems()[0].copy();
+        ItemStack damagedItem = recipeIngredients.getFirst().getItems()[0].copy();
         damagedItem.setDamageValue(damagedItem.getMaxDamage() * 3 / 4);
 
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(Ingredient.of(damagedItem));

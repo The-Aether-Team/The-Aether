@@ -13,12 +13,12 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.JukeboxSong;
 
 public class AetherJukeboxSongs {
-    public static ResourceKey<JukeboxSong> AETHER_TUNE = create("aether_tune");
-    public static ResourceKey<JukeboxSong> ASCENDING_DAWN = create("ascending_dawn");
-    public static ResourceKey<JukeboxSong> CHINCHILLA = create("chinchilla");
-    public static ResourceKey<JukeboxSong> HIGH = create("high");
-    public static ResourceKey<JukeboxSong> KLEPTO = create("klepto");
-    public static ResourceKey<JukeboxSong> SLIDERS_WRATH = create("sliders_wrath");
+    public static final ResourceKey<JukeboxSong> AETHER_TUNE = create("aether_tune");
+    public static final ResourceKey<JukeboxSong> ASCENDING_DAWN = create("ascending_dawn");
+    public static final ResourceKey<JukeboxSong> CHINCHILLA = create("chinchilla");
+    public static final ResourceKey<JukeboxSong> HIGH = create("high");
+    public static final ResourceKey<JukeboxSong> KLEPTO = create("klepto");
+    public static final ResourceKey<JukeboxSong> SLIDERS_WRATH = create("sliders_wrath");
 
     private static ResourceKey<JukeboxSong> create(String pName) {
         return ResourceKey.create(Registries.JUKEBOX_SONG, ResourceLocation.fromNamespaceAndPath(Aether.MODID, pName));

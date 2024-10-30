@@ -133,7 +133,7 @@ public class IncubatorMenu extends RecipeBookMenu<SingleRecipeInput, IncubationR
     }
 
     public boolean isFuel(ItemStack stack) {
-        return stack.getItem().builtInRegistryHolder().getData(AetherDataMaps.INCUBATOR_FUEL) != null;
+        return stack.getItemHolder().getData(AetherDataMaps.INCUBATOR_FUEL) != null;
     }
 
     public int getIncubationProgressScaled() {

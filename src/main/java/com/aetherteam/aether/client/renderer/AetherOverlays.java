@@ -33,6 +33,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 
 public class AetherOverlays {
@@ -64,7 +65,7 @@ public class AetherOverlays {
     private static final ResourceLocation TEXTURE_LIFE_SHARD_FROZEN_HALF = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_frozen_half");
 
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void registerOverlays(RegisterGuiLayersEvent event) {
         event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "aether_portal_overlay"), (guiGraphics, partialTicks) -> {
@@ -214,7 +215,7 @@ public class AetherOverlays {
     private static void renderVignette(GuiGraphics guiGraphics, Window window, double effectScale, float alpha, ResourceLocation resource) {
         PoseStack poseStack = guiGraphics.pose();
         poseStack.pushPose();
-        alpha *= Math.sqrt(effectScale);
+        alpha *= (float) Math.sqrt(effectScale);
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
         RenderSystem.enableBlend();
@@ -283,15 +284,15 @@ public class AetherOverlays {
     }
 
     /**
-     * [CODE COPY] - {@link Gui#renderPlayerHealth(GuiGraphics)}.<br><br>
+     * [CODE COPY] - {@link Gui#renderHealthLevel(GuiGraphics)}.<br><br>
      * Stripped down to only use what is necessary.<br>
      * Renders silver heart textures over the extra hearts given by Life Shards.
      *
      * @param guiGraphics The {@link GuiGraphics} for rendering.
-     * @param gui         The {@link ExtendedGui} included in rendering.
+     * @param minecraft   The {@link Minecraft} instance.
+     * @param window      The {@link Window} of the screen.
+     * @param gui         The {@link Gui} included in rendering.
      * @param player      The {@link LocalPlayer}.
-     * @param width       The {@link Integer} for the screen width.
-     * @param height      The {@link Integer} for the screen height.
      */
     private static void renderSilverLifeShardHearts(GuiGraphics guiGraphics, Minecraft minecraft, Window window, Gui gui, LocalPlayer player) {
         GuiAccessor guiAccessor = (GuiAccessor) gui;

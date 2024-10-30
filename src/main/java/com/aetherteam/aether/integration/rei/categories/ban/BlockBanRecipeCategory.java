@@ -35,7 +35,7 @@ public class BlockBanRecipeCategory extends AbstractPlacementBanRecipeCategory<B
         }
 
         if (display.getBlockStateIngredient() != null) {
-            widgets.add(Widgets.createSlot(startingPoint).entries(REIClientUtils.setupRendering(display.getInputEntries().get(0), display.getBlockStateIngredient().getPairs(), (tooltip) -> this.populateTooltip(display, tooltip))));
+            widgets.add(Widgets.createSlot(startingPoint).entries(REIClientUtils.setupRendering(display.getInputEntries().getFirst(), display.getBlockStateIngredient().getPairs(), (tooltip) -> this.populateTooltip(display, tooltip))));
         }
 
         return widgets;

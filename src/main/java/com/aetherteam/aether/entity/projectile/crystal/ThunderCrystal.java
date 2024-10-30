@@ -47,10 +47,10 @@ public class ThunderCrystal extends AbstractCrystal {
      */
     @Override
     protected void onHitEntity(EntityHitResult result) {
-        if (result.getEntity() instanceof LivingEntity target && target != this.getOwner()) {
-            target.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level(), AetherDamageTypes.THUNDER_CRYSTAL, this, this.getOwner()), 5.0F);
-            this.knockback(0.1, this.position().subtract(target.position())); // Apply knockback to the projectile from the distance difference between the projectile and hit entity.
-            target.knockback(0.25, this.getX() - target.getX(), this.getZ() - target.getZ());
+        if (result.getEntity() instanceof LivingEntity livingTarget && livingTarget != this.getOwner()) {
+            livingTarget.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level(), AetherDamageTypes.THUNDER_CRYSTAL, this, this.getOwner()), 5.0F);
+            this.knockback(0.1, this.position().subtract(livingTarget.position())); // Apply knockback to the projectile from the distance difference between the projectile and hit entity.
+            livingTarget.knockback(0.25, this.getX() - livingTarget.getX(), this.getZ() - livingTarget.getZ());
         }
     }
 
@@ -94,7 +94,7 @@ public class ThunderCrystal extends AbstractCrystal {
             serverLevel.sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2, 0.2, 0.2, 0.0);
             this.knockback(0.15 + amount / 8, this.position().subtract(source.getSourcePosition())); // Sets knockback movement in the direction of the damage.
         }
-        this.ticksInAir += amount * 10;
+        this.ticksInAir += (int) (amount * 10);
         return true;
     }
 

@@ -33,7 +33,7 @@ public class ItemBanRecipeCategory extends AbstractPlacementBanRecipeCategory<It
             startingPoint.translate(1, 1);
         }
 
-        widgets.add(Widgets.createSlot(startingPoint).entries(REIClientUtils.setupRendering(display.getInputEntries().get(0), (tooltip) -> this.populateTooltip(display, tooltip))));
+        widgets.add(Widgets.createSlot(startingPoint).entries(REIClientUtils.setupRendering(display.getInputEntries().getFirst(), (tooltip) -> this.populateTooltip(display, tooltip))));
 
         return widgets;
     }

@@ -77,7 +77,7 @@ public class GlowstoneRuinedPortalStructure extends Structure {
                 }
             }
         } else {
-            portalSetup = this.setups.get(0);
+            portalSetup = this.setups.getFirst();
         }
 
         if (portalSetup == null) {

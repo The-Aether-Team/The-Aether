@@ -10,7 +10,6 @@ import net.minecraft.world.entity.Entity;
 
 public class HaloModel<T extends Entity> extends EntityModel<T> {
     public final ModelPart halo;
-    public boolean crouching;
 
     public HaloModel(ModelPart root) {
         this.halo = root.getChild("halo");

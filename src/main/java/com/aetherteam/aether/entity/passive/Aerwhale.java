@@ -105,7 +105,7 @@ public class Aerwhale extends FlyingMob {
         if (this.isEffectiveAi() || this.isControlledByLocalInstance()) {
             List<Entity> passengers = this.getPassengers();
             if (!passengers.isEmpty()) {
-                Entity entity = passengers.get(0);
+                Entity entity = passengers.getFirst();
                 if (entity instanceof Player player) {
                     this.setYRot(player.getYRot() + 90F);
                     this.yRotO = this.getYRot();
@@ -243,7 +243,7 @@ public class Aerwhale extends FlyingMob {
     }
 
     /**
-     * [CODE COPY] - {@link Animal#getExperienceReward()}.
+     * [CODE COPY] - {@link Animal#getBaseExperienceReward()}.
      */
     @Override
     public int getBaseExperienceReward() {

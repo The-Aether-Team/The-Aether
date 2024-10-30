@@ -5,18 +5,21 @@ import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.aetherteam.nitrogen.ConstantsUtil;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import io.wispforest.accessories.api.client.AccessoryRenderer;
 import io.wispforest.accessories.api.slot.SlotReference;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -28,19 +31,30 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.function.BiFunction;
+
 public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
+    public static final BiFunction<ResourceLocation, Boolean, RenderType> SHIELD_OF_REPULSION_RENDER_TYPE = Util.memoize(
+        (location, state) -> {
+            RenderType.CompositeState renderType = RenderType.CompositeState.builder()
+                .setShaderState(RenderType.RENDERTYPE_ENTITY_TRANSLUCENT_SHADER)
+                .setTextureState(new RenderStateShard.TextureStateShard(location, false, false))
+                .setTransparencyState(RenderType.TRANSLUCENT_TRANSPARENCY)
+                .setCullState(RenderType.NO_CULL)
+                .setDepthTestState(RenderType.LEQUAL_DEPTH_TEST)
+                .setLightmapState(RenderType.LIGHTMAP)
+                .setOverlayState(RenderType.OVERLAY)
+                .createCompositeState(state);
+            return RenderType.create("aether:shield_of_repulsion", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 1536, true, true, renderType);
+        }
+    );
+
     private final HumanoidModel<LivingEntity> shieldModel;
-    private final PlayerModel<LivingEntity> shieldModelSlim;
     public final HumanoidModel<LivingEntity> shieldModelArm;
-    public final PlayerModel<LivingEntity> dummyArm;
-    public final PlayerModel<LivingEntity> dummyArmSlim;
 
     public ShieldOfRepulsionRenderer() {
         this.shieldModel = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION));
-        this.shieldModelSlim = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION_SLIM), true);
         this.shieldModelArm = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION_ARM));
-        this.dummyArm = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER), false);
-        this.dummyArmSlim = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER_SLIM), true);
     }
 
     /**
@@ -60,7 +74,7 @@ public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
      * @param headPitch         The {@link Float} for the head pitch rotation.
      */
     @Override
-    public <M extends LivingEntity> void render(ItemStack stack, SlotReference reference, PoseStack matrices, EntityModel<M> entityModel, MultiBufferSource multiBufferSource, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public <M extends LivingEntity> void render(ItemStack stack, SlotReference reference, PoseStack poseStack, EntityModel<M> entityModel, MultiBufferSource buffer, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         LivingEntity livingEntity = reference.entity();
         ShieldOfRepulsionItem shield = (ShieldOfRepulsionItem) stack.getItem();
         ResourceLocation texture;
@@ -68,7 +82,7 @@ public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
 
         if (livingEntity instanceof Player player && entityModel instanceof PlayerModel<?> playerModel) {
             PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
-            model = playerModelAccessor.aether$getSlim() ? this.shieldModelSlim : this.shieldModel;
+            model = this.shieldModel;
             if (!player.getData(AetherDataAttachments.AETHER_PLAYER).isMoving()) {
                 texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
             } else {
@@ -86,8 +100,8 @@ public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
         entityModel.copyPropertiesTo((EntityModel<M>) model);
 
         AccessoryRenderer.followBodyRotations(reference.entity(), model);
-        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(multiBufferSource, RenderType.entityTranslucent(texture), false);
-        model.renderToBuffer(matrices, consumer, light, OverlayTexture.NO_OVERLAY);
+        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, shieldOfRepulsionRenderType(texture), false);
+        model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
     }
 
     @Override
@@ -108,7 +122,7 @@ public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
      * This also renders a dummy model of the player's hand to get around an issue with transparency culling
      * normally making the player's hand invisible.
      *
-     * @param stack       The {@link ItemStack} for the Curio.
+     * @param stack       The {@link ItemStack} for the accessory.
      * @param poseStack   The rendering {@link PoseStack}.
      * @param buffer      The rendering {@link MultiBufferSource}.
      * @param packedLight The {@link Integer} for the packed lighting for rendering.
@@ -123,7 +137,7 @@ public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
     /**
      * Handles rendering the shield overlay model over the player's hands.
      *
-     * @param stack       The {@link ItemStack} for the Curio.
+     * @param stack       The {@link ItemStack} for the accessory.
      * @param model       The player's {@link HumanoidModel}.
      * @param poseStack   The rendering {@link PoseStack}.
      * @param buffer      The rendering {@link MultiBufferSource}.
@@ -187,5 +201,9 @@ public class ShieldOfRepulsionRenderer implements AccessoryRenderer {
         shieldArm.visible = true;
         shieldArm.xRot = 0.0F;
         shieldArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
+    }
+
+    public static RenderType shieldOfRepulsionRenderType(ResourceLocation location) {
+        return SHIELD_OF_REPULSION_RENDER_TYPE.apply(location, true);
     }
 }

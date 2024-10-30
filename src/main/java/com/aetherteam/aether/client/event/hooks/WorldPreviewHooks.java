@@ -62,7 +62,7 @@ public class WorldPreviewHooks {
      * Handles how the world should be displayed for the world preview. Rendering, sounds, and music are allowed to tick, but nothing else is.
      * This makes the world static and paused but also still animated.
      *
-     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onClientTick(TickEvent.ClientTickEvent)
+     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onClientTick(ClientTickEvent.Post)
      */
     public static void tickMenuWhenPaused() {
         Minecraft minecraft = Minecraft.getInstance();
@@ -105,7 +105,7 @@ public class WorldPreviewHooks {
 
     /**
      * @return Whether to hide player screen overlays in the world preview, as a {@link Boolean}.
-     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onRenderOverlay(RenderGuiOverlayEvent.Pre)
+     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onRenderOverlay(RenderGuiLayerEvent.Pre)
      */
     public static boolean hideOverlays() {
         return WorldDisplayHelper.isActive();

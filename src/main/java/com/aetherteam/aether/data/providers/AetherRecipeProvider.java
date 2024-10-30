@@ -170,7 +170,7 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
         tag.putString("MoaType", moaType.location().toString());
         tag.putBoolean("Hungry", true);
         tag.putBoolean("PlayerGrown", true);
-        return IncubationBuilder.incubation(Ingredient.of(ingredient), entity, tag, 1000, AetherRecipeSerializers.INCUBATION.get())
+        return IncubationBuilder.incubation(Ingredient.of(ingredient), entity, tag, 1000)
                 .unlockedBy(getHasName(ingredient), has(ingredient));
     }
 

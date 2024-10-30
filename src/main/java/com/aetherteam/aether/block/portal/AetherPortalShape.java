@@ -159,20 +159,20 @@ public class AetherPortalShape {
         return this.isValid() && this.numPortalBlocks == this.width * this.height;
     }
 
-    public static Vec3 findCollisionFreePosition(Vec3 pPos, ServerLevel pLevel, Entity pEntity, EntityDimensions pDimensions) {
-        if (!(pDimensions.width() > 4.0F) && !(pDimensions.height() > 4.0F)) {
-            double d0 = (double)pDimensions.height() / 2.0;
-            Vec3 vec3 = pPos.add(0.0, d0, 0.0);
-            VoxelShape voxelshape = Shapes.create(
-                AABB.ofSize(vec3, (double)pDimensions.width(), 0.0, (double)pDimensions.width()).expandTowards(0.0, 1.0, 0.0).inflate(1.0E-6)
+    public static Vec3 findCollisionFreePosition(Vec3 pos, ServerLevel level, Entity entity, EntityDimensions dimensions) {
+        if (!(dimensions.width() > 4.0F) && !(dimensions.height() > 4.0F)) {
+            double y = (double) dimensions.height() / 2.0;
+            Vec3 vec3 = pos.add(0.0, y, 0.0);
+            VoxelShape shape = Shapes.create(
+                AABB.ofSize(vec3, dimensions.width(), 0.0, dimensions.width()).expandTowards(0.0, 1.0, 0.0).inflate(1.0E-6)
             );
-            Optional<Vec3> optional = pLevel.findFreePosition(
-                pEntity, voxelshape, vec3, (double)pDimensions.width(), (double)pDimensions.height(), (double)pDimensions.width()
+            Optional<Vec3> optional = level.findFreePosition(
+                entity, shape, vec3, dimensions.width(), dimensions.height(), dimensions.width()
             );
-            Optional<Vec3> optional1 = optional.map(p_259019_ -> p_259019_.subtract(0.0, d0, 0.0));
-            return optional1.orElse(pPos);
+            Optional<Vec3> optionalPos = optional.map(vec -> vec.subtract(0.0, y, 0.0));
+            return optionalPos.orElse(pos);
         } else {
-            return pPos;
+            return pos;
         }
     }
 }

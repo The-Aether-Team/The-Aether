@@ -36,10 +36,8 @@ public class BerryBushStemBlock extends AetherBushBlock implements BonemealableB
 
     /**
      * [CODE COPY] - {@link net.minecraft.world.level.block.SweetBerryBushBlock#entityInside(BlockState, Level, BlockPos, Entity)}.<br><br>
-     * Modified to remove damage behavior.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * Modified to remove damage behavior.
      */
-    @SuppressWarnings("deprecation")
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (AetherConfig.SERVER.berry_bush_consistency.get()) {
             if (entity instanceof LivingEntity && entity.getType() != EntityType.FOX && entity.getType() != EntityType.BEE) {
@@ -49,15 +47,13 @@ public class BerryBushStemBlock extends AetherBushBlock implements BonemealableB
     }
 
     /**
-     * Turns a Berry Bush Stem into a Berry Bush with a 1/60 chance during a random tick, as long as the light level is 9 or above.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * Turns a Berry Bush Stem into a Berry Bush with a 1/60 chance during a random tick, as long as the light level is 9 or above.
      *
      * @param state  The {@link BlockState} of the block.
      * @param level  The {@link Level} the block is in.
      * @param pos    The {@link BlockPos} of the block.
      * @param random The {@link RandomSource} from the level.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.canCropGrow(level, pos, state, random.nextInt(60) == 0)) {
@@ -103,10 +99,6 @@ public class BerryBushStemBlock extends AetherBushBlock implements BonemealableB
         return true;
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;

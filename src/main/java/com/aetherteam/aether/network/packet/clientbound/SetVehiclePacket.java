@@ -11,7 +11,7 @@ import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
- * Sets a passenger to ride a vehicle. Called from {@link com.aetherteam.aether.event.hooks.DimensionHooks#entityFell}.
+ * Sets a passenger to ride a vehicle. Called from {@link com.aetherteam.aether.mixin.mixins.common.EntityMixin#entityFell(Entity)}.
  */
 public record SetVehiclePacket(int passengerID, int vehicleID) implements CustomPacketPayload {
     public static final Type<SetVehiclePacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "set_mount"));

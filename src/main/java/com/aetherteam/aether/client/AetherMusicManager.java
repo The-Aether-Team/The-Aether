@@ -227,6 +227,6 @@ public class AetherMusicManager {
     public static boolean isCreative(Holder<Biome> holder, Player player) {
         return player.level().dimension() != Level.END && player.level().dimension() != Level.NETHER && holder.is(AetherTags.Biomes.AETHER_MUSIC)
                 && !musicManager.isPlayingMusic(Musics.UNDER_WATER) && (!player.isUnderWater() || !holder.is(BiomeTags.PLAYS_UNDERWATER_MUSIC))
-                && player.getAbilities().instabuild && player.getAbilities().mayfly;
+                && player.getAbilities().instabuild && player.mayFly();
     }
 }

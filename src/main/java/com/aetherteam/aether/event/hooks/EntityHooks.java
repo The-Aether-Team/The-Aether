@@ -54,15 +54,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
-import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-import net.neoforged.neoforge.event.entity.living.MobSplitEvent;
+import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -175,10 +174,10 @@ public class EntityHooks {
     /**
      * Gets an accessory item from a slot identifier and armor material.
      *
-     * @param identifier     The {@link String} identifier for the slot.
-     * @param armorMaterials The {@link ArmorMaterial} to get an item from.
+     * @param identifier     The {@link SlotTypeReference} identifier for the slot.
+     * @param armorMaterial The {@link Holder<ArmorMaterial>} to get an item from.
      * @return The accessory {@link Item}.
-     * @see EntityHooks#equipAccessory(Mob, String, ArmorMaterials)
+     * @see EntityHooks#equipAccessory(Mob, SlotTypeReference, Holder)
      */
     @Nullable
     private static Item getEquipmentForSlot(SlotTypeReference identifier, Holder<ArmorMaterial> armorMaterial) {
@@ -249,7 +248,7 @@ public class EntityHooks {
      * Launches a mount when it interacts with a blue aercloud. This is handled as an event to get around a vanilla bug with it not working from the {@link com.aetherteam.aether.block.natural.BlueAercloudBlock} class.
      *
      * @param player The passenger {@link Player}.
-     * @see com.aetherteam.aether.event.listeners.EntityListener#onRiderTick(TickEvent.PlayerTickEvent)
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onRiderTick(PlayerTickEvent.Post)
      */
     public static void launchMount(Player player) {
         Entity mount = player.getVehicle();
@@ -475,7 +474,7 @@ public class EntityHooks {
      *
      * @param source The {@link DamageSource} to block.
      * @return Whether to disallow blocking, as a {@link Boolean}.
-     * @see com.aetherteam.aether.event.listeners.EntityListener#onShieldBlock(ShieldBlockEvent)
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onShieldBlock(LivingShieldBlockEvent)
      */
     public static boolean preventSliderShieldBlock(DamageSource source) {
         return source.getEntity() instanceof Slider;
@@ -529,18 +528,18 @@ public class EntityHooks {
      * Damages certain accessory items dropped from entities if they're not guaranteed drops.
      *
      * @param entity      The {@link LivingEntity} dropping the accessories.
-     * @param itemDrops   The {@link Collection} of {@link ItemEntity} drops.
+     * @param itemStacks   The {@link List} of {@link ItemStack} drops.
      * @param recentlyHit Whether the entity was recently hit, as a {@link Boolean}.
      * @param looting     The {@link Integer} for the looting enchantment value.
      * @return The new {@link Collection} of {@link ItemEntity} drops.
-     * @see com.aetherteam.aether.event.listeners.EntityListener#onCurioDrops(CurioDropsEvent)
+     * @see com.aetherteam.aether.event.listeners.EntityListener#listen(IEventBus)
      */
-    public static List<ItemStack> handleEntityCurioDrops(LivingEntity entity, List<ItemStack> itemStacks, boolean recentlyHit, int looting) {
-        if (entity instanceof Mob mob && mob.hasData(AetherDataAttachments.MOB_ACCESSORY)) {
+    public static List<ItemStack> handleEntityAccessoryDrops(LivingEntity entity, List<ItemStack> itemStacks, boolean recentlyHit, int looting) {
+        if (entity instanceof Mob mob) {
             SlotTypeReference[] allSlots = { GlovesItem.getStaticIdentifier(), PendantItem.getStaticIdentifier() };
             for (SlotTypeReference identifier : allSlots) {
                 if (!itemStacks.isEmpty()) {
-                    ItemStack itemStack = itemStacks.get(0);
+                    ItemStack itemStack = itemStacks.getFirst();
                     float f = mob.getData(AetherDataAttachments.MOB_ACCESSORY).getEquipmentDropChance(identifier);
                     boolean flag = f > 1.0F;
                     if (!itemStack.isEmpty()) {
@@ -597,7 +596,7 @@ public class EntityHooks {
      * @see com.aetherteam.aether.event.listeners.EntityListener#onEffectApply(MobEffectEvent.Applicable)
      */
     public static boolean preventInebriation(LivingEntity livingEntity, MobEffectInstance appliedInstance) {
-        return livingEntity.hasEffect(AetherEffects.REMEDY) && appliedInstance.getEffect() == AetherEffects.INEBRIATION.get();
+        return livingEntity.hasEffect(AetherEffects.REMEDY) && appliedInstance.getEffect().value() == AetherEffects.INEBRIATION.get();
     }
 
     /**

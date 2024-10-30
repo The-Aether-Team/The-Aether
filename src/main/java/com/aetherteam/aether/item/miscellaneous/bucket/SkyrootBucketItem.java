@@ -111,7 +111,8 @@ public class SkyrootBucketItem extends BucketItem {
         for (Map.Entry<Supplier<? extends Item>, Supplier<? extends Item>> entry : REPLACEMENTS.entrySet()) {
             if (filledItem.get() == entry.getKey().get()) {
                 Item replacedItem = entry.getValue().get();
-                ItemStack newStack = new ItemStack(replacedItem.builtInRegistryHolder(), 1, filledStack.getComponentsPatch());
+                ItemStack newStack = new ItemStack(replacedItem, 1);
+                newStack.applyComponents(filledStack.getComponentsPatch());
                 return newStack;
             }
         }

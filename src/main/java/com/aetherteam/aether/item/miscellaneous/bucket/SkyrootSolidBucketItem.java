@@ -5,13 +5,10 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SolidBucketItem;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
-
-import java.util.Map;
 
 public class SkyrootSolidBucketItem extends SolidBucketItem {
     public SkyrootSolidBucketItem(Block block, SoundEvent placeSound, Properties properties) {
@@ -34,22 +31,4 @@ public class SkyrootSolidBucketItem extends SolidBucketItem {
         }
         return interactionResult;
     }
-
-    /**
-     * This is used to pair a {@link net.minecraft.world.item.BlockItem} to a block, which we don't want to do because we don't want to pair our solid bucket items in place of vanilla's.
-     *
-     * @param blockToItemMap The {@link Map} pairing {@link Block}s to {@link Item}s.
-     * @param item           The {@link Item} to register.
-     */
-    @Override
-    public void registerBlocks(Map<Block, Item> blockToItemMap, Item item) { }
-
-    /**
-     * We don't register to the map, so we also don't allow removing from it. See {@link SkyrootSolidBucketItem#registerBlocks(Map, Item)}.
-     *
-     * @param blockToItemMap The {@link Map} pairing {@link Block}s to {@link Item}s.
-     * @param item           The {@link Item} to register.
-     */
-    @Override
-    public void removeFromBlockToItemMap(Map<Block, Item> blockToItemMap, Item item) { }
 }

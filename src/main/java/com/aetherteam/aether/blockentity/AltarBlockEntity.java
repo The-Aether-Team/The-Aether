@@ -30,7 +30,7 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity {
     @Override
     protected int getBurnDuration(ItemStack fuelStack) {
         if (!fuelStack.isEmpty()) {
-            var datamap = fuelStack.getItem().builtInRegistryHolder().getData(AetherDataMaps.ALTAR_FUEL);
+            var datamap = fuelStack.getItemHolder().getData(AetherDataMaps.ALTAR_FUEL);
             if (datamap != null) {
                 return datamap.burnTime();
             }

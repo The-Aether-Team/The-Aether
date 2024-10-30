@@ -19,6 +19,6 @@ public class FreezerMenu extends AbstractAetherFurnaceMenu {
 
     @Override
     public boolean isFuel(ItemStack stack) {
-        return stack.getItem().builtInRegistryHolder().getData(AetherDataMaps.FREEZER_FUEL) != null;
+        return stack.getItemHolder().getData(AetherDataMaps.FREEZER_FUEL) != null;
     }
 }

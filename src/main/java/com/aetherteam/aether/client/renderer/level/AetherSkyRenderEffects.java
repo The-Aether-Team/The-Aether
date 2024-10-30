@@ -27,7 +27,6 @@ import org.joml.Vector3f;
 import javax.annotation.Nullable;
 
 public class AetherSkyRenderEffects extends DimensionSpecialEffects {
-    private static final ResourceLocation CLOUDS_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/clouds.png");
     private static final ResourceLocation MOON_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/moon_phases.png");
     private static final ResourceLocation SUN_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/sun.png");
 
@@ -131,7 +130,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
     }
 
     /**
-     * [CODE COPY] - {@link LevelRenderer#renderClouds(PoseStack, Matrix4f, float, double, double, double)}.
+     * [CODE COPY] - {@link LevelRenderer#renderClouds(PoseStack, Matrix4f, Matrix4f, float, double, double, double)}.
      */
     @Override
     public boolean renderClouds(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, double camX, double camY, double camZ, Matrix4f modelViewMatrix, Matrix4f projectionMatrix) {
@@ -232,7 +231,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
     }
 
     /**
-     * [CODE COPY] - {@link LevelRenderer#renderSky(PoseStack, Matrix4f, float, Camera, boolean, Runnable)}.<br><br>
+     * [CODE COPY] - {@link LevelRenderer#renderSky(Matrix4f, Matrix4f, float, Camera, boolean, Runnable)}.<br><br>
      * Modified to make the sun and moon fade out when they dip under the horizon.
      */
     @Override
@@ -316,10 +315,9 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
 
     private boolean doesMobEffectBlockSky(Camera pCamera) {
         Entity entity = pCamera.getEntity();
-        if (!(entity instanceof LivingEntity)) {
+        if (!(entity instanceof LivingEntity livingentity)) {
             return false;
         } else {
-            LivingEntity livingentity = (LivingEntity)entity;
             return livingentity.hasEffect(MobEffects.BLINDNESS) || livingentity.hasEffect(MobEffects.DARKNESS);
         }
     }
@@ -372,7 +370,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
     }
 
     /**
-     * [CODE COPY] - {@link LevelRenderer#renderSky(PoseStack, Matrix4f, float, Camera, boolean, Runnable)}.<br><br>
+     * [CODE COPY] - {@link LevelRenderer#renderSky(Matrix4f, Matrix4f, float, Camera, boolean, Runnable)}.<br><br>
      * Copied parts of the middle segment that were used for sun/moon rendering.
      */
     private void drawCelestialBodies(float partialTick, PoseStack poseStack, ClientLevel level, Tesselator tesselator) {

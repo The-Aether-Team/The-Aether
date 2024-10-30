@@ -11,7 +11,7 @@ import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 
 public class LevelClientListener {
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus) 
      */
     public static void listen(IEventBus bus) {
         bus.addListener(LevelClientListener::onRenderLevelLast);

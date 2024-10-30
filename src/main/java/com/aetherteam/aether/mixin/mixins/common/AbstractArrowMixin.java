@@ -25,7 +25,7 @@ public class AbstractArrowMixin {
      * @param ci The {@link CallbackInfo} for the void method return.
      * @see AbstractArrowMixin#spawnParticles(AbstractArrow)
      */
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/Projectile;tick()V", shift = At.Shift.AFTER), method = "tick")
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/Projectile;tick()V", shift = At.Shift.AFTER), method = "tick()V")
     private void tick(CallbackInfo ci) {
         AbstractArrow arrow = (AbstractArrow) (Object) this;
         if (arrow.hasData(AetherDataAttachments.PHOENIX_ARROW)) {

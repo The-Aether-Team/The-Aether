@@ -6,12 +6,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(Boat.class)
 public interface BoatAccessor {
-    @Accessor("lastYd")
-    void aether$setLastYd(double lastYd);
-
-    @Accessor("status")
-    Boat.Status aether$getStatus();
-
     @Accessor("deltaRotation")
     float aether$getDeltaRotation();
 

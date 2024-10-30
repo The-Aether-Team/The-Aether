@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -56,7 +55,6 @@ public class DoorwayBlock extends Block {
      * @param level  The {@link Level} the block is in.
      * @param pos    The {@link BlockPos} of the block.
      * @param player The {@link Player} interacting with the block.
-     * @param hand   The {@link InteractionHand} the player interacts with.
      * @param hit    The {@link BlockHitResult} of the interaction.
      * @return The {@link InteractionResult} of the interaction.
      */
@@ -143,10 +141,6 @@ public class DoorwayBlock extends Block {
         }
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return state.getValue(INVISIBLE) ? RenderShape.INVISIBLE : super.getRenderShape(state);

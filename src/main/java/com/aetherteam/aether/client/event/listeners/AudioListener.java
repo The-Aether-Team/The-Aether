@@ -11,7 +11,7 @@ import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 
 public class AudioListener {
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void listen(IEventBus bus) {
         bus.addListener(AudioListener::onPlaySound);

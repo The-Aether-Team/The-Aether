@@ -20,10 +20,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * [CODE COPY] - {@link top.theillusivec4.curios.common.inventory.container.CuriosContainer}<br><br>
- * Heavily adapted to only set up Aether curio types.
- */
 public class AetherAccessoriesMenu extends InventoryMenu {
     private static final Map<EquipmentSlot, ResourceLocation> TEXTURE_EMPTY_SLOTS = Map.of(
         EquipmentSlot.FEET,
@@ -143,7 +139,7 @@ public class AetherAccessoriesMenu extends InventoryMenu {
             ItemStack itemStack1 = slot.getItem();
             itemStack = itemStack1.copy();
             EquipmentSlot equipmentSlot = player.getEquipmentSlotForItem(itemStack);
-            Collection<SlotType> curioTags = AccessoriesAPI.getValidSlotTypes(player, itemStack);
+            Collection<SlotType> accessorySlots = AccessoriesAPI.getValidSlotTypes(player, itemStack);
             if (index == 0) {
                 if (!this.moveItemStackTo(itemStack1, 17, 53, true)) {
                     return ItemStack.EMPTY;
@@ -162,8 +158,8 @@ public class AetherAccessoriesMenu extends InventoryMenu {
                 if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index < 53 && !curioTags.isEmpty() && !this.getEmptyCurioSlots(curioTags).isEmpty()) {
-                for (int i : this.getEmptyCurioSlots(curioTags)) {
+            } else if (index < 53 && !accessorySlots.isEmpty() && !this.getEmptyAccessorySlots(accessorySlots).isEmpty()) {
+                for (int i : this.getEmptyAccessorySlots(accessorySlots)) {
                     if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -199,7 +195,7 @@ public class AetherAccessoriesMenu extends InventoryMenu {
         return itemStack;
     }
 
-    private Set<Integer> getEmptyCurioSlots(Collection<SlotType> slotData) {
+    private Set<Integer> getEmptyAccessorySlots(Collection<SlotType> slotData) {
         Set<Integer> slots = new HashSet<>();
         for (SlotType identifier : slotData) {
             switch (identifier.name()) {

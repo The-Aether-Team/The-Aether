@@ -12,7 +12,7 @@ import net.neoforged.neoforge.client.event.*;
 
 public class WorldPreviewListener {
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void listen(IEventBus bus) {
         bus.addListener(EventPriority.LOWEST, WorldPreviewListener::onGuiOpenLowest);
@@ -59,7 +59,7 @@ public class WorldPreviewListener {
     }
 
     /**
-     * @see WorldPreviewHooks#angleCamera()
+     * @see WorldPreviewHooks#angleCamera(double)
      */
     public static void onCameraView(ViewportEvent.ComputeCameraAngles event) {
         double partialTick = event.getPartialTick();

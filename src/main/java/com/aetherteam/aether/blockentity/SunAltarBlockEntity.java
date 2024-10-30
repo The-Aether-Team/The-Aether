@@ -53,6 +53,10 @@ public class SunAltarBlockEntity extends BlockEntity implements Nameable {
         components.set(DataComponents.CUSTOM_NAME, this.name);
     }
 
+    /**
+     * Warning for "deprecation" is suppressed because the method is fine to override.
+     */
+    @SuppressWarnings("deprecation")
     @Override
     public void removeComponentsFromTag(CompoundTag tag) {
         tag.remove("CustomName");

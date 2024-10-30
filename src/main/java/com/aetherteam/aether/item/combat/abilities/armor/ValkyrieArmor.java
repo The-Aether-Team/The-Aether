@@ -7,14 +7,14 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public interface ValkyrieArmor {
     /**
      * Allows an entity temporary upwards flight if wearing a full set of Valkyrie Armor. This only works for players.
      *
      * @param entity The {@link LivingEntity} wearing the armor.
-     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
+     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(EntityTickEvent.Post)
      */
     static void handleFlight(LivingEntity entity) {
         if (EquipmentUtil.hasFullValkyrieSet(entity)) {

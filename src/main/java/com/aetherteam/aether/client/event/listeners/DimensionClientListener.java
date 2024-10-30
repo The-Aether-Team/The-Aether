@@ -11,7 +11,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 public class DimensionClientListener {
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus) 
      */
     public static void listen(IEventBus bus) {
         bus.addListener(DimensionClientListener::onRenderFog);

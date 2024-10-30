@@ -3,16 +3,13 @@ package com.aetherteam.aether.client.gui.component.inventory;
 import com.aetherteam.aether.network.packet.serverbound.SunAltarUpdatePacket;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class SunAltarSlider extends AbstractSliderButton {
-    private final Level level;
     private final int timeScale;
 
-    public SunAltarSlider(Level level, int x, int y, int width, int height, Component title, double value, int timeScale) {
+    public SunAltarSlider(int x, int y, int width, int height, Component title, double value, int timeScale) {
         super(x, y, width, height, title, value);
-        this.level = level;
         this.timeScale = timeScale;
     }
 

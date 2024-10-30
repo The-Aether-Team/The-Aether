@@ -53,7 +53,7 @@ public class AetherClient {
     public static void clientSetup(FMLClientSetupEvent event) {
         disableCumulusButton();
         Reflection.initialize(CustomizationsOptions.class);
-        AetherRenderers.registerCuriosRenderers();
+        AetherRenderers.registerAccessoryRenderers();
         event.enqueueWork(() -> {
             AetherAtlases.registerTreasureChestAtlases();
             AetherAtlases.registerWoodTypeAtlases();

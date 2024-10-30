@@ -2,6 +2,7 @@ package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import com.aetherteam.aether.mixin.mixins.common.accessor.MinecraftServerAccessor;
 import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -148,7 +149,7 @@ public class WorldDisplayHelper {
         try {
             List<LevelSummary> summaryList = new ArrayList<>(source.loadLevelSummaries(source.findLevelCandidates()).get());
             Collections.sort(summaryList); // Sorts the LevelSummaries by most recent to least recent.
-            if (summaryList.size() > 0) {
+            if (!summaryList.isEmpty()) {
                 LevelSummary summary = null;
 
                 for (int i = summaryList.size() - 1; i >= 0; i--) { // Looks for the most recent LevelSummary that isn't locked or disabled.
@@ -181,7 +182,11 @@ public class WorldDisplayHelper {
      * @return Whether they match, as a {@link Boolean}.
      */
     public static boolean sameSummaries(LevelSummary summary) {
-        return getLevelSummary().getLevelId().equals(summary.getLevelId());
+        String id = getLevelSummary().getLevelId();
+        if (Minecraft.getInstance().getSingleplayerServer() != null) {
+            id = ((MinecraftServerAccessor) Minecraft.getInstance().getSingleplayerServer()).aether$getStorageSource().getLevelId();
+        }
+        return id.equals(summary.getLevelId());
     }
 
     /**

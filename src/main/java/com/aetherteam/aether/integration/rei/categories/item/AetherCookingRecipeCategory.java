@@ -149,15 +149,15 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
         widgets.add(fuelWidget);
 
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1))
-                .entries(display.getInputEntries().get(0))
+                .entries(display.getInputEntries().getFirst())
                 .markInput());
 
         List<EntryIngredient> outputEntries = display.getOutputEntries();
 
-        if (outputEntries.size() > 0) {
+        if (!outputEntries.isEmpty()) {
             widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 61, startPoint.y + 9)));
             widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 9))
-                    .entries(outputEntries.get(0))
+                    .entries(outputEntries.getFirst())
                     .disableBackground()
                     .markOutput());
         }

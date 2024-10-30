@@ -22,7 +22,7 @@ public class DoubleDrops extends LootItemConditionalFunction {
     }
 
     /**
-     * Doubles the dropped stack through {@link SkyrootTool#doubleDrops(ItemStack, ItemStack, BlockState)}.
+     * Doubles the dropped stack through {@link SkyrootTool#doubleDrops(Level, ItemStack, ItemStack, BlockState)}.
      *
      * @param stack   The {@link ItemStack} for the loot pool.
      * @param context The {@link LootContext}.
@@ -45,7 +45,7 @@ public class DoubleDrops extends LootItemConditionalFunction {
     }
 
     @Override
-    public LootItemFunctionType getType() {
+    public LootItemFunctionType<DoubleDrops> getType() {
         return AetherLootFunctions.DOUBLE_DROPS.get();
     }
 }

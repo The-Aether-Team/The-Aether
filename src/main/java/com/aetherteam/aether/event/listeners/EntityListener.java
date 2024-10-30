@@ -35,7 +35,7 @@ import java.util.Optional;
 
 public class EntityListener {
     /**
-     * @see Aether#eventSetup()
+     * @see Aether#eventSetup(IEventBus)
      */
     public static void listen(IEventBus bus) {
         bus.addListener(EntityListener::onEntityJoin);
@@ -55,7 +55,7 @@ public class EntityListener {
             boolean recentlyHit = entity.hurtMarked;
             int looting = EnchantmentHelper.getEnchantmentLevel(entity.level().registryAccess().holderOrThrow(Enchantments.LOOTING), entity);
             droppedStacks.clear();
-            droppedStacks.addAll(EntityHooks.handleEntityCurioDrops(entity, droppedStacksCopy, recentlyHit, looting));
+            droppedStacks.addAll(EntityHooks.handleEntityAccessoryDrops(entity, droppedStacksCopy, recentlyHit, looting));
             return TriState.DEFAULT;
         });
     }

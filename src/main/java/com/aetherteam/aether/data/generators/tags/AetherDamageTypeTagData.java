@@ -36,8 +36,8 @@ public class AetherDamageTypeTagData extends TagsProvider<DamageType> {
                 AetherDamageTypes.ICE_CRYSTAL,
                 AetherDamageTypes.THUNDER_CRYSTAL
         );
-        this.tag(AetherTags.DamageTypes.IS_COLD).add(
-                AetherDamageTypes.ICE_CRYSTAL
+        this.tag(DamageTypeTags.NO_KNOCKBACK).add(
+            AetherDamageTypes.INEBRIATION
         );
         this.tag(DamageTypeTags.PANIC_CAUSES).add(
             AetherDamageTypes.CLOUD_CRYSTAL,
@@ -46,6 +46,9 @@ public class AetherDamageTypeTagData extends TagsProvider<DamageType> {
             AetherDamageTypes.ICE_CRYSTAL,
             AetherDamageTypes.INCINERATION,
             AetherDamageTypes.THUNDER_CRYSTAL
+        );
+        this.tag(AetherTags.DamageTypes.IS_COLD).add(
+            AetherDamageTypes.ICE_CRYSTAL
         );
     }
 }

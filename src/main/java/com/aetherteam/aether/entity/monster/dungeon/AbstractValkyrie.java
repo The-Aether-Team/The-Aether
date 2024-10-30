@@ -271,8 +271,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     public static class LungeGoal extends Goal {
         private final AbstractValkyrie valkyrie;
         private final double speedModifier;
+        private final int lungeCooldownMax;
         private int flyingTicks;
-        private int lungeCooldownMax;
 
         public LungeGoal(AbstractValkyrie valkyrie, double speedModifier, int lungeCooldownMax) {
             this.valkyrie = valkyrie;

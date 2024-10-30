@@ -31,28 +31,16 @@ public class UnstableObsidianBlock extends Block implements MeltingBehavior {
         builder.add(AGE);
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         this.tick(state, level, pos, random);
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         MeltingBehavior.super.tick(this, state, level, pos, random, AGE);
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         if (block.defaultBlockState().is(this) && MeltingBehavior.super.fewerNeigboursThan(block, level, pos, 2)) {

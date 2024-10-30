@@ -121,6 +121,9 @@ Trico-Everfire
 - Fixes to Aechor Plants being able to be leashed.
 - Fixes to unintentional jumping on Blue Aerclouds.
 
+TunefulTurnip
+- Fixes to a crash from the Gold Dungeon in modded biomes.
+
 YvanCywan
 - Made Skyroot Buckets work as fuel.
 

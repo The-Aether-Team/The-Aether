@@ -47,13 +47,11 @@ public class IcestoneBlock extends BaseEntityBlock {
     }
 
     /**
-     * Overrides {@link BaseEntityBlock#getRenderShape(BlockState)} so the render shape isn't {@link RenderShape#INVISIBLE}.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * Overrides {@link BaseEntityBlock#getRenderShape(BlockState)} so the render shape isn't {@link RenderShape#INVISIBLE}.
      *
      * @param state The {@link BlockState} of the block.
      * @return The {@link RenderShape} of the block.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;

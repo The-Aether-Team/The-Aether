@@ -8,7 +8,6 @@ import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import me.shedaniel.math.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -20,6 +19,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.tuple.Triple;
 
+import java.awt.*;
 import java.util.Map;
 import java.util.UUID;
 
@@ -58,7 +58,7 @@ public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>> exte
                     color = PerkUtil.getPerkColor(developerGlows.get(playerUUID).hexColor());
                 }
                 if (color != null) {
-                    this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, Color.ofRGBA(color.getLeft() * 255, color.getMiddle() * 255, color.getRight() * 255, 255).getColor());
+                    this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, new Color(color.getLeft() * 255, color.getMiddle() * 255, color.getRight() * 255, 255).getRGB());
                 } else {
                     this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY);
                 }

@@ -27,7 +27,7 @@ public abstract class SwetRenderer extends MobRenderer<Swet, SlimeModel<Swet>> {
     protected void scale(Swet swet, PoseStack poseStack, float partialTicks) {
         float scale = 1.5F;
         if (!swet.getPassengers().isEmpty()) {
-            scale += (swet.getPassengers().get(0).getBbWidth() + swet.getPassengers().get(0).getBbHeight()) * 0.75F;
+            scale += (swet.getPassengers().getFirst().getBbWidth() + swet.getPassengers().getFirst().getBbHeight()) * 0.75F;
         }
 
         float height = Mth.lerp(partialTicks, swet.getSwetHeightO(), swet.getSwetHeight());

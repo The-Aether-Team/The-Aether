@@ -8,6 +8,7 @@ import com.aetherteam.aether.recipe.recipes.item.AltarRepairRecipe;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.RecipeBookCategories;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RegisterRecipeBookCategoriesEvent;
 
 import java.util.function.Supplier;
@@ -31,7 +32,7 @@ public class AetherRecipeCategories {
      * To add sub-categories to be used by the search, use addAggregateCategories with the
      * search category as the first parameter.
      *
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void registerRecipeCategories(RegisterRecipeBookCategoriesEvent event) {
         // Enchanting

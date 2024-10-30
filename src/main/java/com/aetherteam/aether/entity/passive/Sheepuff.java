@@ -84,8 +84,8 @@ public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
         map.put(DyeColor.RED, Blocks.RED_WOOL);
         map.put(DyeColor.BLACK, Blocks.BLACK_WOOL);
     });
-    private static final Map<DyeColor, Integer> COLOR_BY_DYE = Maps.<DyeColor, Integer>newEnumMap(
-        Arrays.stream(DyeColor.values()).collect(Collectors.toMap(p_29868_ -> (DyeColor)p_29868_, Sheepuff::createSheepColor))
+    private static final Map<DyeColor, Integer> COLOR_BY_DYE = Maps.<DyeColor, Integer>newEnumMap( // Do not remove these explicit type arguments even if your dev environment says they can be removed.
+        Arrays.stream(DyeColor.values()).collect(Collectors.toMap(p_29868_ -> p_29868_, Sheepuff::createSheepColor))
     );
     private int eatAnimationTick, amountEaten;
     private EatAetherGrassGoal eatBlockGoal;

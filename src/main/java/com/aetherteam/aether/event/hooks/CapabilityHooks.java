@@ -9,8 +9,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class CapabilityHooks {
     public static class AetherPlayerHooks {
@@ -42,7 +42,7 @@ public class CapabilityHooks {
 
         /**
          * @see AetherPlayerAttachment#onUpdate(Player)
-         * @see com.aetherteam.aether.event.listeners.capability.AetherPlayerListener#onPlayerUpdate(LivingEvent.LivingTickEvent)
+         * @see com.aetherteam.aether.event.listeners.capability.AetherPlayerListener#onPlayerUpdate(EntityTickEvent.Post)
          */
         public static void update(LivingEntity entity) {
             if (entity instanceof Player player) {

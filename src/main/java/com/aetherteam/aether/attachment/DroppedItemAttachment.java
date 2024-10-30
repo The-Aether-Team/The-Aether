@@ -15,7 +15,6 @@ import java.util.Optional;
  * Capability class used to track {@link ItemEntity}s dropped by player death.
  *
  * @see com.aetherteam.aether.event.hooks.EntityHooks#trackDrops(LivingEntity, Collection)
- * @see com.aetherteam.aether.event.hooks.DimensionHooks#fallFromAether(Level)
  */
 public class DroppedItemAttachment {
     private Optional<Integer> ownerID;

@@ -6,6 +6,7 @@ import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable;
@@ -39,10 +40,10 @@ public class AetherDataMapData extends DataMapProvider {
         this.addCompost(compostables, AetherItems.WHITE_APPLE, 0.65F);
 
         var fuels = this.builder(NeoForgeDataMaps.FURNACE_FUELS);
-        fuels.add(AetherBlocks.AMBROSIUM_BLOCK.asItem().builtInRegistryHolder(), new FurnaceFuel(16000), false);
+        fuels.add(AetherBlocks.AMBROSIUM_BLOCK.toStack().getItemHolder(), new FurnaceFuel(16000), false);
         fuels.add(AetherItems.AMBROSIUM_SHARD, new FurnaceFuel(1600), false);
-        fuels.add(AetherBlocks.SKYROOT_PLANKS.asItem().builtInRegistryHolder(), new FurnaceFuel(300), false);
-        fuels.add(AetherBlocks.SKYROOT_BOOKSHELF.asItem().builtInRegistryHolder(), new FurnaceFuel(300), false);
+        fuels.add(AetherBlocks.SKYROOT_PLANKS.toStack().getItemHolder(), new FurnaceFuel(300), false);
+        fuels.add(AetherBlocks.SKYROOT_BOOKSHELF.toStack().getItemHolder(), new FurnaceFuel(300), false);
         fuels.add(AetherItems.SKYROOT_SWORD, new FurnaceFuel(200), false);
         fuels.add(AetherItems.SKYROOT_PICKAXE, new FurnaceFuel(200), false);
         fuels.add(AetherItems.SKYROOT_AXE, new FurnaceFuel(200), false);
@@ -53,19 +54,19 @@ public class AetherDataMapData extends DataMapProvider {
 
         var altar = this.builder(AetherDataMaps.ALTAR_FUEL);
         altar.add(AetherItems.AMBROSIUM_SHARD, new FurnaceFuel(250), false);
-        altar.add(AetherBlocks.AMBROSIUM_BLOCK.asItem().builtInRegistryHolder(), new FurnaceFuel(2500), false);
+        altar.add(AetherBlocks.AMBROSIUM_BLOCK.toStack().getItemHolder(), new FurnaceFuel(2500), false);
 
         var freezer = this.builder(AetherDataMaps.FREEZER_FUEL);
-        freezer.add(AetherBlocks.ICESTONE.asItem().builtInRegistryHolder(), new FurnaceFuel(400), false);
-        freezer.add(AetherBlocks.ICESTONE_SLAB.asItem().builtInRegistryHolder(), new FurnaceFuel(200), false);
-        freezer.add(AetherBlocks.ICESTONE_STAIRS.asItem().builtInRegistryHolder(), new FurnaceFuel(400), false);
-        freezer.add(AetherBlocks.ICESTONE_WALL.asItem().builtInRegistryHolder(), new FurnaceFuel(400), false);
+        freezer.add(AetherBlocks.ICESTONE.toStack().getItemHolder(), new FurnaceFuel(400), false);
+        freezer.add(AetherBlocks.ICESTONE_SLAB.toStack().getItemHolder(), new FurnaceFuel(200), false);
+        freezer.add(AetherBlocks.ICESTONE_STAIRS.toStack().getItemHolder(), new FurnaceFuel(400), false);
+        freezer.add(AetherBlocks.ICESTONE_WALL.toStack().getItemHolder(), new FurnaceFuel(400), false);
 
         var incubator = this.builder(AetherDataMaps.INCUBATOR_FUEL);
-        incubator.add(AetherBlocks.AMBROSIUM_TORCH.asItem().builtInRegistryHolder(), new FurnaceFuel(500), false);
+        incubator.add(AetherBlocks.AMBROSIUM_TORCH.toStack().getItemHolder(), new FurnaceFuel(500), false);
     }
 
     private void addCompost(DataMapProvider.Builder<Compostable, Item> map, ItemLike item, float chance) {
-        map.add(item.asItem().builtInRegistryHolder(), new Compostable(chance), false);
+        map.add(new ItemStack(item).getItemHolder(), new Compostable(chance), false);
     }
 }

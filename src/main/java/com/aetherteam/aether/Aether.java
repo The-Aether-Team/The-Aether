@@ -25,7 +25,6 @@ import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
 import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.entity.miscellaneous.SkyrootBoat;
 import com.aetherteam.aether.event.listeners.*;
 import com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener;
 import com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener;
@@ -39,6 +38,7 @@ import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.combat.AetherArmorMaterials;
+import com.aetherteam.aether.item.combat.ZaniteSwordItem;
 import com.aetherteam.aether.item.combat.loot.FlamingSwordItem;
 import com.aetherteam.aether.item.combat.loot.HolySwordItem;
 import com.aetherteam.aether.item.combat.loot.PigSlayerItem;
@@ -68,7 +68,6 @@ import io.wispforest.accessories.api.slot.UniqueSlotHandling;
 import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.core.dispenser.BoatDispenseItemBehavior;
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackLocationInfo;
@@ -296,7 +295,7 @@ public class Aether {
 
         // Data Packs
         this.setupAccessoriesPack(event);
-        this.setupCuriosOverridePack(event);
+        this.setupAccessoriesOverridePack(event);
         this.setupTemporaryFreezingPack(event);
         this.setupRuinedPortalPack(event);
     }
@@ -429,16 +428,16 @@ public class Aether {
     }
 
     /**
-     * A built-in data pack to set up the default slots for Curios.<br><br>
+     * A built-in data pack to set up the default slots for accessories.<br><br>
      * The pack is loaded and automatically applied if the {@link AetherConfig.Common#use_default_accessories_menu} config isn't enabled.
      */
     private void setupAccessoriesPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.SERVER_DATA && !AetherConfig.COMMON.use_default_accessories_menu.get()) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/accessories");
-            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.accessories.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.aether_accessories.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
                     source.accept(new Pack(
-                            new PackLocationInfo("builtin/aether_accessories", Component.translatable("pack.aether.accessories.title"), PackSource.BUILT_IN, Optional.empty()),
+                            new PackLocationInfo("builtin/aether_accessories", Component.translatable("pack.aether.aether_accessories.title"), PackSource.BUILT_IN, Optional.empty()),
                             new PathPackResources.PathResourcesSupplier(resourcePath),
                             new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true),
                             new PackSelectionConfig(true, Pack.Position.TOP, false)
@@ -449,16 +448,16 @@ public class Aether {
     }
 
     /**
-     * A built-in data pack to empty the Aether's curio slot tags and use the default curio slot tags instead, as well as register the default Curios slots.<br><br>
+     * A built-in data pack to empty the Aether's accessory slot tags and use the default accessory slot tags instead, as well as register the default accessories slots.<br><br>
      * The pack is loaded and automatically applied if the {@link AetherConfig.Common#use_default_accessories_menu} config is enabled.
      */
-    private void setupCuriosOverridePack(AddPackFindersEvent event) {
+    private void setupAccessoriesOverridePack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.SERVER_DATA && AetherConfig.COMMON.use_default_accessories_menu.get()) {
-            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/curios_override");
-            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.curios.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/accessories_override");
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.default_accessories.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
                     source.accept(new Pack(
-                            new PackLocationInfo("builtin/aether_curios_override", Component.translatable("pack.aether.curios.title"), PackSource.BUILT_IN, Optional.empty()),
+                            new PackLocationInfo("builtin/aether_accessories_override", Component.translatable("pack.aether.default_accessories.title"), PackSource.BUILT_IN, Optional.empty()),
                             new PathPackResources.PathResourcesSupplier(resourcePath),
                             new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true),
                             new PackSelectionConfig(true, Pack.Position.TOP, false)
@@ -523,6 +522,7 @@ public class Aether {
 
         bus.addListener(AetherCommands::registerCommands);
         bus.addListener(ReloadListeners::reloadListenerSetup);
+        bus.addListener(ZaniteSwordItem::onModifyAttributes);
         bus.addListener(FlamingSwordItem::onLivingDamage);
         bus.addListener(HolySwordItem::onLivingDamage);
         bus.addListener(PigSlayerItem::onLivingDamage);

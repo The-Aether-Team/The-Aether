@@ -9,10 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-/**
- * [CODE COPY] - {@link top.theillusivec4.curios.common.network.server.SPacketGrabbedItem}.<br><br> //todo new reference
- * Adapted to Nitrogen packet system.
- */
 public record ClientGrabItemPacket(ItemStack stack) implements CustomPacketPayload {
     public static final Type<ClientGrabItemPacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "grab_from_accessories_inventory"));
 

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ItemListener {
     /**
-     * @see Aether#eventSetup()
+     * @see Aether#eventSetup(IEventBus) 
      */
     public static void listen(IEventBus bus) {
         bus.addListener(EventPriority.LOWEST, ItemListener::onTooltipAdd);

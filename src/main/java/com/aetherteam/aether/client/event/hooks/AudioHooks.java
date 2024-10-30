@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 
 import java.util.Optional;
@@ -90,7 +91,7 @@ public class AudioHooks {
     /**
      * Ticks the Aether's music manager.
      *
-     * @see com.aetherteam.aether.client.event.listeners.AudioListener#onClientTick(TickEvent.ClientTickEvent)
+     * @see com.aetherteam.aether.client.event.listeners.AudioListener#onClientTick(ClientTickEvent.Post)
      */
     public static void tick() {
         if (!AetherConfig.CLIENT.disable_music_manager.get() && !Minecraft.getInstance().isPaused()) {

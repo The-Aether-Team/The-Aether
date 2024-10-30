@@ -45,6 +45,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
@@ -55,7 +56,7 @@ import java.util.Map;
 
 public class AetherRenderers {
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(AetherBlockEntityTypes.SKYROOT_BED.get(), SkyrootBedRenderer::new);
@@ -110,7 +111,7 @@ public class AetherRenderers {
     }
 
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(AetherModelLayers.SKYROOT_BED_FOOT, BedRenderer::createFootLayer);
@@ -181,7 +182,7 @@ public class AetherRenderers {
     /**
      * @see com.aetherteam.aether.client.AetherClient#clientSetup(FMLClientSetupEvent)
      */
-    public static void registerCuriosRenderers() {
+    public static void registerAccessoryRenderers() {
         AccessoriesRendererRegistry.registerNoRenderer(AetherItems.IRON_RING.get());
         AccessoriesRendererRegistry.registerNoRenderer(AetherItems.GOLDEN_RING.get());
         AccessoriesRendererRegistry.registerNoRenderer(AetherItems.ZANITE_RING.get());
@@ -221,7 +222,7 @@ public class AetherRenderers {
     }
 
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void addEntityLayers(EntityRenderersEvent.AddLayers event) {
         EntityRenderDispatcher renderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
@@ -243,7 +244,7 @@ public class AetherRenderers {
     }
 
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void bakeModels(ModelEvent.ModifyBakingResult event) {
         List<Map.Entry<ModelResourceLocation, BakedModel>> models = new ArrayList<>();

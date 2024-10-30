@@ -20,7 +20,7 @@ import java.util.UUID;
 
 public class GuiListener {
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus) 
      */
     public static void listen(IEventBus bus) {
         bus.addListener(GuiListener::onGuiInitialize);

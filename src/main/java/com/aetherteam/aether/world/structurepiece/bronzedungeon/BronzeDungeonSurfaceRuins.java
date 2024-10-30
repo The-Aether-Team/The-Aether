@@ -109,7 +109,7 @@ public class BronzeDungeonSurfaceRuins extends StructurePiece {
             return;
 
         // The list must be ordered with lowest Y values first. scanColumnForPlacement() already handles that, so no sorting is necessary
-        BlockPos lastPos = forPlacement.get(0).below();
+        BlockPos lastPos = forPlacement.getFirst().below();
 
         for (BlockPos posAt : forPlacement) {
             boolean hasSkippedGap = posAt.getY() - lastPos.getY() != 1; // If the delta spikes when iterating elements, then the scanning loop has likely skipped over a gap of air

@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class AetherColorResolvers {
     private static final int ENCHANTED_GRASS_COLOR = 0xFCEA64;
 
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void registerBlockColor(RegisterColorHandlersEvent.Block event) {
         Map<Block, BlockColor> map = new HashMap<>();
@@ -49,7 +50,7 @@ public class AetherColorResolvers {
     }
 
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus)
      */
     public static void registerItemColor(RegisterColorHandlersEvent.Item event) {
         event.register((color, itemProvider) -> itemProvider > 0 ? -1 : DyedItemColor.getOrDefault(color, -6265536), AetherItems.LEATHER_GLOVES.get());

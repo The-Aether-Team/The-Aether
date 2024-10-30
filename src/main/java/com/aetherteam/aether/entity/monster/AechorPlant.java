@@ -394,14 +394,16 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     }
 
     /**
-     * Makes Aechor Plants immune to Inebriation.
+     * Makes Aechor Plants immune to Inebriation.<br><br>
+     * Warning for "deprecation" is suppressed because the method is fine to override.
      *
      * @param effect The {@link MobEffectInstance} to check whether this mob is affected by.
      * @return Whether the mob is affected.
      */
+    @SuppressWarnings("deprecation")
     @Override
     public boolean canBeAffected(MobEffectInstance effect) {
-        return effect.getEffect() != AetherEffects.INEBRIATION.get() && super.canBeAffected(effect);
+        return effect.getEffect().value() != AetherEffects.INEBRIATION.get() && super.canBeAffected(effect);
     }
 
     @Override

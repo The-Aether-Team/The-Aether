@@ -157,16 +157,21 @@ public class FloatingBlockEntity extends Entity {
 
                                     serverLevel.getChunkSource().chunkMap.broadcast(this, new ClientboundBlockUpdatePacket(blockPos1, this.level().getBlockState(blockPos1)));
                                     this.discard();
-                                    if (block instanceof Floatable floatable) {
-                                        floatable.onCollide(this.level(), blockPos1, this.getBlockState(), blockState, this);
-                                    } else if (block instanceof ConcretePowderBlock concretePowderBlock) {
-                                        if (ConcretePowderBlockAccessor.callShouldSolidify(this.level(), blockPos1, blockState)) {
-                                            ConcretePowderBlockAccessor concretePowderBlockAccessor = (ConcretePowderBlockAccessor) concretePowderBlock;
-                                            this.level().setBlock(blockPos1, concretePowderBlockAccessor.aether$getConcrete().defaultBlockState(), 1 | 2);
+                                    switch (block) {
+                                        case Floatable floatable ->
+                                            floatable.onCollide(this.level(), blockPos1, this.getBlockState(), blockState, this);
+                                        case ConcretePowderBlock concretePowderBlock -> {
+                                            if (ConcretePowderBlockAccessor.callShouldSolidify(this.level(), blockPos1, blockState)) {
+                                                ConcretePowderBlockAccessor concretePowderBlockAccessor = (ConcretePowderBlockAccessor) concretePowderBlock;
+                                                this.level().setBlock(blockPos1, concretePowderBlockAccessor.aether$getConcrete().defaultBlockState(), 1 | 2);
+                                            }
                                         }
-                                    } else if (block instanceof AnvilBlock) {
-                                        if (!this.isSilent()) {
-                                            this.level().levelEvent(1029, blockPos1, 0);
+                                        case AnvilBlock anvilBlock -> {
+                                            if (!this.isSilent()) {
+                                                this.level().levelEvent(1029, blockPos1, 0);
+                                            }
+                                        }
+                                        default -> {
                                         }
                                     }
 

@@ -228,12 +228,12 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
     }
 
     private boolean canIncubate(@Nullable RecipeHolder<IncubationRecipe> recipe, NonNullList<ItemStack> stacks) {
-        return !stacks.get(0).isEmpty() && recipe != null;
+        return !stacks.getFirst().isEmpty() && recipe != null;
     }
 
     protected int getBurnDuration(ItemStack fuelStack) {
         if (!fuelStack.isEmpty()) {
-            var datamap = fuelStack.getItem().builtInRegistryHolder().getData(AetherDataMaps.INCUBATOR_FUEL);
+            var datamap = fuelStack.getItemHolder().getData(AetherDataMaps.INCUBATOR_FUEL);
             if (datamap != null) {
                 return datamap.burnTime();
             }

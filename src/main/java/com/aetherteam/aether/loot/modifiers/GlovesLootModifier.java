@@ -70,13 +70,13 @@ public class GlovesLootModifier extends LootModifier {
                         boolean isTreasure = false;
                         for (Object2IntMap.Entry<Holder<Enchantment>> enchantmentInfo : armorStack.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).entrySet()) {
                             Holder<Enchantment> enchantment = enchantmentInfo.getKey();
-                            int enchantmentValue = enchantmentInfo.getValue();
+                            int enchantmentValue = enchantmentInfo.getIntValue();
                             cost = Math.max(cost, enchantment.value().getMinCost(enchantmentValue));
                             if (!isTreasure) {
                                 isTreasure = enchantment.is(EnchantmentTags.TREASURE);
                             }
                             if (gloves.isPrimaryItemFor(enchantment)) {
-                                gloves.enchant(enchantment, enchantmentInfo.getValue());
+                                gloves.enchant(enchantment, enchantmentInfo.getIntValue());
                             }
                         }
                         if (!armorStack.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty() && gloves.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty()) {

@@ -646,7 +646,7 @@ public class Swet extends Slime implements MountableMob {
         @Override
         public boolean canUse() {
             return this.swet.hasPrey()
-                    && this.swet.getPassengers().get(0) instanceof LivingEntity passenger
+                    && this.swet.getPassengers().getFirst() instanceof LivingEntity passenger
                     && !this.swet.isFriendlyTowardEntity(passenger);
         }
 
@@ -665,7 +665,7 @@ public class Swet extends Slime implements MountableMob {
                     } else if (this.jumps == 2) {
                         this.swet.setDeltaMovement(this.swet.getDeltaMovement().add(0, 1.55, 0));
                     } else {
-                        this.swet.getPassengers().get(0).stopRiding();
+                        this.swet.getPassengers().getFirst().stopRiding();
                         this.swet.spawnDissolveParticles();
                         this.swet.discard();
                     }

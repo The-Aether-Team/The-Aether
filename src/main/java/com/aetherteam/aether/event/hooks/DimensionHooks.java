@@ -34,10 +34,13 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
+import net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.SleepFinishedTimeEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
@@ -182,7 +185,7 @@ public class DimensionHooks {
      * Ticks time in dimensions with the Aether effects location.
      *
      * @param level The {@link Level}
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(TickEvent.LevelTickEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(LevelTickEvent.Post)
      */
     public static void tickTime(Level level) {
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
@@ -200,7 +203,7 @@ public class DimensionHooks {
      * Checks whether eternal day is configured to be disabled, and disables it in the {@link AetherPlayerAttachment}.
      *
      * @param level The {@link Level}
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(TickEvent.LevelTickEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(LevelTickEvent.Post)
      */
     public static void checkEternalDayConfig(Level level) {
         if (!level.isClientSide() && level.hasData(AetherDataAttachments.AETHER_TIME)) {
@@ -248,7 +251,7 @@ public class DimensionHooks {
      * Checks if the player was falling out of the Aether, and prevents server fly-hack checks during this.
      *
      * @param player The {@link Player}.
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerTraveling(TickEvent.PlayerTickEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerTraveling(PlayerTickEvent.Post)
      */
     public static void travelling(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
@@ -269,7 +272,7 @@ public class DimensionHooks {
      * serverLevelData and levelData are access transformed.
      *
      * @param level The {@link LevelAccessor}.
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerTraveling(TickEvent.PlayerTickEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerTraveling(PlayerTickEvent.Post)
      */
     public static void initializeLevelData(LevelAccessor level) {
         if (level instanceof ServerLevel serverLevel && serverLevel.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
@@ -308,7 +311,7 @@ public class DimensionHooks {
      *
      * @param player The {@link Player}.
      * @return Whether it is eternal day, as a {@link Boolean}.
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onTriedToSleep(SleepingTimeCheckEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onTriedToSleep(CanPlayerSleepEvent)
      */
     public static boolean isEternalDay(Player player) {
         if (player.level().dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {

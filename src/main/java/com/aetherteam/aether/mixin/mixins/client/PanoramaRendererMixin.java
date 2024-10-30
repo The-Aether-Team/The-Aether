@@ -15,8 +15,11 @@ public class PanoramaRendererMixin {
      * Used by the world preview system.<br>
      * Prevents the {@link net.minecraft.client.gui.screens.TitleScreen} panorama from rendering when a world preview is active.
      *
-     * @param deltaTick The {@link Float} for the delta tick of the game.
-     * @param alpha     The {@link Float} for the alpha of the panorama renderer.
+     * @param guiGraphics The rendering {@link GuiGraphics}.
+     * @param width The {@link Integer} for the screen width.
+     * @param height The {@link Integer} for the screen height.
+     * @param fade The {@link Float} for the panorama fade-in.
+     * @param partialTick The {@link Float} for the partial tick of the game.
      * @param ci        The {@link CallbackInfo} for the void method return.
      * @see WorldDisplayHelper#isActive()
      */

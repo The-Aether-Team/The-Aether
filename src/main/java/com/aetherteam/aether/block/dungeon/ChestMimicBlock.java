@@ -54,10 +54,6 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
         builder.add(FACING, WATERLOGGED);
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -88,8 +84,7 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
     }
 
     /**
-     * Spawns a Mimic when the chest is broken.<br><br>
-     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * Spawns a Mimic when the chest is broken.
      *
      * @param state The {@link BlockState} of the block.
      * @param level The {@link Level} the block is in.
@@ -97,7 +92,6 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
      * @param stack The {@link ItemStack} used to break the block.
      * @param flag  A {@link Boolean} for if the breaking was performed by a player.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void spawnAfterBreak(BlockState state, ServerLevel level, BlockPos pos, ItemStack stack, boolean flag) {
         super.spawnAfterBreak(state, level, pos, stack, flag);
@@ -141,10 +135,6 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
@@ -160,10 +150,6 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
         return SHAPE;
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;

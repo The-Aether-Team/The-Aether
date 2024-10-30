@@ -13,7 +13,7 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
 
 public class MenuListener {
     /**
-     * @see AetherClient#eventSetup()
+     * @see AetherClient#eventSetup(IEventBus) 
      */
     public static void listen(IEventBus bus) {
         bus.addListener(EventPriority.HIGHEST, MenuListener::onGuiOpenHighest);

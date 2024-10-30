@@ -12,7 +12,7 @@ import com.aetherteam.aether.entity.projectile.dart.EnchantedDart;
 import com.aetherteam.aether.entity.projectile.dart.GoldenDart;
 import com.aetherteam.aether.entity.projectile.dart.PoisonDart;
 import com.aetherteam.aether.item.EquipmentUtil;
-import com.aetherteam.aether.item.combat.abilities.weapon.ZaniteWeapon;
+import com.aetherteam.aether.item.accessories.abilities.ZaniteAccessory;
 import com.aetherteam.aether.item.tools.abilities.HolystoneTool;
 import com.aetherteam.aether.item.tools.abilities.ZaniteTool;
 import com.aetherteam.aether.loot.AetherLoot;
@@ -35,8 +35,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TieredItem;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -116,6 +114,35 @@ public class AbilityHooks {
         }
 
         /**
+         * Handles ability for {@link ZaniteAccessory} for Zanite Rings (accounts for if multiple are equipped).
+         * @see ZaniteAccessory#handleMiningSpeed(float, ItemStack)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
+         */
+        public static float handleZaniteRingAbility(LivingEntity entity, float speed) {
+            float newSpeed = speed;
+            List<SlotEntryReference> slotResults = EquipmentUtil.getZaniteRings(entity);
+            for (SlotEntryReference slotResult : slotResults) {
+                if (slotResult != null) {
+                    newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, slotResult.stack());
+                }
+            }
+            return newSpeed;
+        }
+
+        /**
+         * Handles ability for {@link ZaniteAccessory} for the Zanite Pendant.
+         * @see ZaniteAccessory#handleMiningSpeed(float, ItemStack)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
+         */
+        public static float handleZanitePendantAbility(LivingEntity entity, float speed) {
+            SlotEntryReference slotResult = EquipmentUtil.getZanitePendant(entity);
+            if (slotResult != null) {
+                speed = ZaniteAccessory.handleMiningSpeed(speed, slotResult.stack());
+            }
+            return speed;
+        }
+
+        /**
          * Checks whether an entity can be targeted while wearing an Invisibility Cloak.
          *
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onTargetSet(LivingEvent.LivingVisibilityEvent)
@@ -155,7 +182,7 @@ public class AbilityHooks {
         /**
          * Sets that the player recently attacked.
          *
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.neoforged.neoforge.event.entity.living.LivingAttackEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent)
          */
         public static void setAttack(DamageSource source) {
             if (source.getEntity() instanceof Player player) {
@@ -166,7 +193,7 @@ public class AbilityHooks {
         /**
          * Prevents magma block damage when wearing ice accessories.
          *
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.neoforged.neoforge.event.entity.living.LivingAttackEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent)
          */
         public static boolean preventMagmaDamage(LivingEntity entity, DamageSource source) {
             return source == entity.level().damageSources().hotFloor() && EquipmentUtil.hasFreezingAccessory(entity);
@@ -262,18 +289,14 @@ public class AbilityHooks {
 
         /**
          * Handles ability for {@link com.aetherteam.aether.item.tools.abilities.ZaniteTool}.
-         *
          * @see ZaniteTool#increaseSpeed(ItemStack, float)
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
          */
-        public static ItemAttributeModifiers.Entry handleZaniteAbilityModifiers(ItemAttributeModifiers modifiers, ItemStack stack) {
-            return switch (stack.getItem()) {
-                case ZaniteWeapon zaniteWeapon ->
-                    zaniteWeapon.increaseDamage(modifiers, stack);
-                case ZaniteTool zaniteTool when stack.getItem() instanceof TieredItem tieredItem ->
-                    zaniteTool.increaseSpeed(modifiers, stack, tieredItem.getTier().getSpeed());
-                default -> null;
-            };
+        public static float handleZaniteToolAbility(ItemStack stack, float speed) {
+            if (stack.getItem() instanceof ZaniteTool zaniteTool) {
+                return zaniteTool.increaseSpeed(stack, speed);
+            }
+            return speed;
         }
 
         /**
@@ -297,8 +320,7 @@ public class AbilityHooks {
             if (debuffTools) {
                 if ((state.getBlock().getDescriptionId().startsWith("block.aether.") || state.is(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK)) && !state.is(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK)) {
                     if (!stack.isEmpty() && stack.isCorrectToolForDrops(state) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
-//                        speed = (float) Math.max(Math.pow(speed, speed > 1.0 ? -0.5 : 1.5), 1.0);
-                        speed = 1.0F;
+                        speed = (float) Math.max(Math.pow(speed, speed > 1.0 ? -0.5 : 1.5), 1.0);
                     }
                 }
             }
@@ -344,7 +366,7 @@ public class AbilityHooks {
          *
          * @param entity The hurt {@link LivingEntity}.
          * @param source The {@link DamageSource} that hurt the entity.
-         * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onDartHurt(LivingHurtEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onDartHurt(LivingDamageEvent.Pre)
          */
         public static void stickDart(LivingEntity entity, DamageSource source) {
             if (entity instanceof Player player && !player.level().isClientSide()) {
@@ -361,7 +383,7 @@ public class AbilityHooks {
         }
 
         /**
-         * Sets the hit entity on fire for the amount of seconds the Phoenix Arrow has stored, as determined by {@link com.aetherteam.aether.item.combat.loot.PhoenixBowItem#customArrow(AbstractArrow, ItemStack)}.
+         * Sets the hit entity on fire for the amount of seconds the Phoenix Arrow has stored, as determined by {@link com.aetherteam.aether.item.combat.loot.PhoenixBowItem#customArrow(AbstractArrow, ItemStack, ItemStack)}.
          *
          * @param result     The {@link HitResult} of the projectile.
          * @param projectile The {@link Projectile} that hit something.
@@ -410,7 +432,7 @@ public class AbilityHooks {
          * @param source The attacking {@link Entity}.
          * @param damage The original damage as a {@link Float}.
          * @return The modified damage as a {@link Float}.
-         * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onEntityDamage(LivingDamageEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onEntityDamage(LivingDamageEvent.Pre)
          */
         public static float reduceWeaponEffectiveness(LivingEntity target, Entity source, float damage) {
             if (AetherConfig.SERVER.tools_debuff.get() && !target.level().isClientSide()) { // Checks if tool debuffs are enabled and if the level is on the server side.
@@ -449,7 +471,7 @@ public class AbilityHooks {
          * @param source The attacking {@link Entity}.
          * @param damage The original damage as a {@link Float}.
          * @return The modified damage as a {@link Float}.
-         * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onEntityDamage(LivingDamageEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onEntityDamage(LivingDamageEvent.Pre)
          */
         public static float reduceArmorEffectiveness(LivingEntity target, @Nullable Entity source, float damage) {
             if (source != null) {

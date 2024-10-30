@@ -18,7 +18,7 @@ public class MobMixin {
      *
      * @param original Whether an item could have been taken before.
      * @param stack The {@link ItemStack}.
-     * @return Whether this {@link Mob} can take from a curios or aether slot, otherwise whether it could have before.
+     * @return Whether this {@link Mob} can take from an accessory otherwise whether it could have before.
      */
     @ModifyReturnValue(at = @At(value = "RETURN"), method = "canTakeItem(Lnet/minecraft/world/item/ItemStack;)Z")
     private boolean canTakeItem(boolean original, @Local(ordinal = 0, argsOnly = true) ItemStack stack) {
