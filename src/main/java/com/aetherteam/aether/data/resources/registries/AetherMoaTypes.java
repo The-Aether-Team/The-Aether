@@ -27,9 +27,9 @@ public class AetherMoaTypes {
     }
 
     public static void bootstrap(BootstrapContext<MoaType> context) {
-        context.register(BLUE, new MoaType(new ItemStack(AetherItems.BLUE_MOA_EGG.get()), 3, 0.155F, 100, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/blue_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png")));
-        context.register(WHITE, new MoaType(new ItemStack(AetherItems.WHITE_MOA_EGG.get()), 4, 0.155F, 50, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/white_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png")));
-        context.register(BLACK, new MoaType(new ItemStack(AetherItems.BLACK_MOA_EGG.get()), 8, 0.155F, 25, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/black_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/black_moa_saddle.png")));
+        context.register(BLUE, new MoaType(new ItemStack(AetherItems.BLUE_MOA_EGG.get()), 3, 0.155F, 100, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/blue_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"), Optional.empty()));
+        context.register(WHITE, new MoaType(new ItemStack(AetherItems.WHITE_MOA_EGG.get()), 4, 0.155F, 50, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/white_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"), Optional.empty()));
+        context.register(BLACK, new MoaType(new ItemStack(AetherItems.BLACK_MOA_EGG.get()), 8, 0.155F, 25, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/black_moa.png"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/black_moa_saddle.png"), Optional.empty()));
     }
 
     @Nullable
@@ -76,6 +76,7 @@ public class AetherMoaTypes {
         moaTypeRegistry.holders().forEach((moaType) -> weightedListBuilder.add(moaType.value(), moaType.value().spawnChance()));
         SimpleWeightedRandomList<MoaType> weightedList = weightedListBuilder.build();
         Optional<MoaType> moaType = weightedList.getRandomValue(random);
+        System.out.println(moaType);
         return moaType.orElse(moaTypeRegistry.get(AetherMoaTypes.BLUE));
     }
 }

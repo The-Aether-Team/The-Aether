@@ -5,7 +5,9 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public record MoaType(ItemStack egg, int maxJumps, float speed, int spawnChance, ResourceLocation moaTexture, ResourceLocation saddleTexture) {
+import java.util.Optional;
+
+public record MoaType(ItemStack egg, int maxJumps, float speed, int spawnChance, ResourceLocation moaTexture, ResourceLocation saddleTexture, Optional<ResourceLocation> jumpsTexture) {
     public static final Codec<MoaType> CODEC =
         RecordCodecBuilder.create(in -> in.group(
             ItemStack.SINGLE_ITEM_CODEC.fieldOf("egg").forGetter(MoaType::egg),
@@ -13,6 +15,7 @@ public record MoaType(ItemStack egg, int maxJumps, float speed, int spawnChance,
             Codec.FLOAT.fieldOf("speed").forGetter(MoaType::speed),
             Codec.INT.fieldOf("spawn_chance").forGetter(MoaType::spawnChance),
             ResourceLocation.CODEC.fieldOf("moa_texture").forGetter(MoaType::moaTexture),
-            ResourceLocation.CODEC.fieldOf("saddle_texture").forGetter(MoaType::saddleTexture)
+            ResourceLocation.CODEC.fieldOf("saddle_texture").forGetter(MoaType::saddleTexture),
+            ResourceLocation.CODEC.optionalFieldOf("jumps_texture").forGetter(MoaType::jumpsTexture)
         ).apply(in, MoaType::new));
 }

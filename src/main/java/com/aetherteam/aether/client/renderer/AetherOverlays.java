@@ -2,11 +2,13 @@ package com.aetherteam.aether.client.renderer;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.effect.AetherEffects;
+import com.aetherteam.aether.entity.ai.attribute.AetherAttributes;
 import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.mixin.mixins.client.accessor.GuiAccessor;
@@ -20,6 +22,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -27,6 +30,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -35,6 +39,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Set;
 
 public class AetherOverlays {
     private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/blur/inebriation_vignette.png");
@@ -44,8 +51,7 @@ public class AetherOverlays {
     private static final ResourceLocation TEXTURE_COOLDOWN_BAR = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/cooldown");
     private static final ResourceLocation TEXTURE_COOLDOWN_BAR_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/cooldown_background");
 
-    private static final ResourceLocation TEXTURE_JUMPS = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/jumps");
-    private static final ResourceLocation TEXTURE_JUMPS_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/jumps_background");
+    public static final ResourceLocation TEXTURE_DEFAULT_JUMPS = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/jumps");
 
     private static final ResourceLocation TEXTURE_LIFE_SHARD_FULL = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_full");
     private static final ResourceLocation TEXTURE_LIFE_SHARD_HALF = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "hud/heart/shard_half");
@@ -129,7 +135,7 @@ public class AetherOverlays {
 
     /**
      * [CODE COPY] - {@link Gui#renderPortalOverlay(GuiGraphics, float)}.<br><br>
-     * Warning for "deprecation" is suppressed because vanilla calls {@link net.minecraft.client.renderer.block.BlockModelShaper#getParticleIcon(BlockState)} just fine.
+     * Warning for "deprecation" is suppressed because vanilla calls {@link BlockModelShaper#getParticleIcon(BlockState)} just fine.
      */
     @SuppressWarnings("deprecation")
     private static void renderAetherPortalOverlay(GuiGraphics guiGraphics, Minecraft minecraft, AetherPlayerAttachment handler, DeltaTracker partialTicks) {
@@ -274,13 +280,50 @@ public class AetherOverlays {
             for (int jumpCount = 0; jumpCount < moa.getMaxJumps(); jumpCount++) {
                 int xPos = ((window.getGuiScaledWidth() / 2) + (jumpCount * 8)) - (moa.getMaxJumps() * 8) / 2;
                 int yPos = 18;
-                if (jumpCount < moa.getRemainingJumps()) {
-                    guiGraphics.blitSprite(TEXTURE_JUMPS, xPos, yPos, 9, 11);
-                } else {
-                    guiGraphics.blitSprite(TEXTURE_JUMPS_BACKGROUND, xPos, yPos, 9, 11);
+                guiGraphics.blitSprite(getMoaJumpTexture(moa, jumpCount, jumpCount >= moa.getRemainingJumps()), xPos, yPos, 9, 11);
+            }
+        }
+    }
+
+    private static ResourceLocation getMoaJumpTexture(Moa moa, int count, boolean background) {
+        AttributeInstance instance = moa.getAttribute(AetherAttributes.MOA_MAX_JUMPS);
+        if(instance != null) {
+            if (count < instance.getBaseValue()) {
+                return appendBackground(background, getDefaultJumpsTexture(moa.getMoaType()));
+            }
+            else {
+                Set<AttributeModifier> modifiers = instance.getModifiers();
+                double currentCount = 0;
+                int wantedCount = (count - (int) instance.getBaseValue());
+
+                for(AttributeModifier modifier : modifiers) {
+                    if(modifier.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_BASE) {
+                        currentCount += instance.getBaseValue() * modifier.amount();
+                    }
+                    else {
+                        currentCount += modifier.amount();
+                    }
+
+                    if(currentCount >= wantedCount) {
+                        return appendBackground(background, Moa.getOverlayTexture(modifier.id()));
+                    }
                 }
             }
         }
+        return appendBackground(background, TEXTURE_DEFAULT_JUMPS);
+    }
+
+    public static ResourceLocation getDefaultJumpsTexture(@Nullable MoaType type) {
+        if(type == null)
+            return TEXTURE_DEFAULT_JUMPS;
+        else return type.jumpsTexture().isPresent() ? type.jumpsTexture().get() : TEXTURE_DEFAULT_JUMPS;
+    }
+
+    private static ResourceLocation appendBackground(boolean background, ResourceLocation location) {
+        if(background) {
+            return location.withSuffix("_background");
+        }
+        else return location;
     }
 
     /**

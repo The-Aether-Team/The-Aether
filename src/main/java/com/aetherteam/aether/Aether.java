@@ -25,6 +25,7 @@ import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
 import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
+import com.aetherteam.aether.entity.ai.attribute.AetherAttributes;
 import com.aetherteam.aether.event.listeners.*;
 import com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener;
 import com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener;
@@ -134,6 +135,7 @@ public class Aether {
                 AetherBlocks.BLOCKS,
                 AetherItems.ITEMS,
                 AetherEntityTypes.ENTITY_TYPES,
+                AetherAttributes.ATTRIBUTES,
                 AetherBlockEntityTypes.BLOCK_ENTITY_TYPES,
                 AetherMenuTypes.MENU_TYPES,
                 AetherEffects.EFFECTS,
