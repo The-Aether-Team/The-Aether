@@ -285,7 +285,15 @@ public class AetherOverlays {
         }
     }
 
-    private static ResourceLocation getMoaJumpTexture(Moa moa, int count, boolean background) {
+    /**
+     * Gets the texture used to render the feather on top of the screen.
+     *
+     * @param moa        The {@link Moa} being ridden
+     * @param count      The current feather being rendered
+     * @param background The {@link Boolean} determines the state of the feather
+     * @return           The {@link ResourceLocation} of the feather that should be rendered
+     */
+    private static ResourceLocation getMoaJumpTexture(Moa moa, double count, boolean background) {
         AttributeInstance instance = moa.getAttribute(AetherAttributes.MOA_MAX_JUMPS);
         if(instance != null) {
             if (count < instance.getBaseValue()) {
@@ -293,20 +301,21 @@ public class AetherOverlays {
             }
             else {
                 Set<AttributeModifier> modifiers = instance.getModifiers();
-                double currentCount = 0;
-                int wantedCount = (count - (int) instance.getBaseValue());
+                double currentCount = instance.getBaseValue();
 
                 for(AttributeModifier modifier : modifiers) {
                     if(modifier.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_BASE) {
-                        currentCount += instance.getBaseValue() * modifier.amount();
+                        currentCount += (instance.getBaseValue() * modifier.amount());
                     }
                     else {
                         currentCount += modifier.amount();
                     }
 
-                    if(currentCount >= wantedCount) {
+                    if(currentCount >= count) {
+                        System.out.println(currentCount);
                         return appendBackground(background, Moa.getOverlayTexture(modifier.id()));
                     }
+                    System.out.println(instance.getBaseValue());
                 }
             }
         }
