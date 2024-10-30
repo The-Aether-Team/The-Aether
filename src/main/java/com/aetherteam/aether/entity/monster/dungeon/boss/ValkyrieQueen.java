@@ -68,6 +68,7 @@ import net.neoforged.neoforge.event.EventHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -76,14 +77,14 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     private static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
     private static final Music VALKYRIE_QUEEN_MUSIC = new Music(AetherSoundEvents.MUSIC_BOSS_VALKYRIE_QUEEN, 0, 0, true);
-    public static final Map<Block, Function<BlockState, BlockState>> DUNGEON_BLOCK_CONVERSIONS = Map.ofEntries(
+    public static final Map<Block, Function<BlockState, BlockState>> DUNGEON_BLOCK_CONVERSIONS = new HashMap<>(Map.ofEntries(
         Map.entry(AetherBlocks.LOCKED_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.ANGELIC_STONE.get().defaultBlockState()),
         Map.entry(AetherBlocks.TRAPPED_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.ANGELIC_STONE.get().defaultBlockState()),
         Map.entry(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState()),
         Map.entry(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState()),
         Map.entry(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get(), (blockState) -> Blocks.AIR.defaultBlockState()),
         Map.entry(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get(), (blockState) -> AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, blockState.getValue(HorizontalDirectionalBlock.FACING)))
-    );
+    ));
 
     /**
      * Boss health bar manager
