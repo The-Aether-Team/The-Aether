@@ -1391,5 +1391,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMenuTitle("minecraft_left", "Minecraft (Left)");
         this.addMenuTitle("the_aether", "The Aether");
         this.addMenuTitle("the_aether_left", "The Aether (Left)");
+
+        this.addAttribute("moa_max_jumps", "Moa Max Jumps");
     }
 }
