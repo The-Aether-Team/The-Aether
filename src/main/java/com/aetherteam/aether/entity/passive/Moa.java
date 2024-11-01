@@ -124,7 +124,7 @@ public class Moa extends MountableAnimal implements WingedBird {
                 .add(Attributes.MOVEMENT_SPEED, 1.0)
                 .add(Attributes.FOLLOW_RANGE, 16.0)
                 .add(Attributes.ATTACK_DAMAGE, 5.0)
-                .add(AetherAttributes.MOA_MAX_JUMPS, -1.0); //-1.0 placeholder until the real value initialized
+                .add(AetherAttributes.MOA_MAX_JUMPS, -1.0); //placeholder until the real value is initialized
     }
 
     @Override
@@ -693,7 +693,7 @@ public class Moa extends MountableAnimal implements WingedBird {
     }
 
     /**
-     * @param attributeId The id of the Mob Effect
+     * @param attributeId The id of the {@link AttributeModifier}
      * @param location The {@link ResourceLocation} of the jump texture overlay
      * Used to override the feather texture on top of the screen while ridding a moa, when a specific attribute modifier's extra feathers are being rendered.
      */
@@ -706,13 +706,13 @@ public class Moa extends MountableAnimal implements WingedBird {
     }
 
     /**
-     * @param attributeId The id of the Mob Effect
+     * @param attributeId The id of the {@link AttributeModifier}
      * @return The {@link ResourceLocation} of the jump texture overlay. Returns the default texture if no texture overlay textures has been registered.
      */
 
-    public static ResourceLocation getOverlayTexture(ResourceLocation attributeId) {
+    public ResourceLocation getOverlayTexture(ResourceLocation attributeId) {
         ResourceLocation location = ID_TEXTURE_MAP.get(attributeId);
-        return location == null ? AetherOverlays.TEXTURE_DEFAULT_JUMPS : location;
+        return location == null ? AetherOverlays.getDefaultJumpsTexture(this.getMoaType()) : location;
     }
 
     @Override

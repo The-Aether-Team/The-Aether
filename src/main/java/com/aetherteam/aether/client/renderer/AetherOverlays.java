@@ -310,7 +310,7 @@ public class AetherOverlays {
                     }
 
                     if(currentCount >= count) {
-                        return Moa.getOverlayTexture(modifier.id());
+                        return moa.getOverlayTexture(modifier.id());
                     }
                 }
             }
