@@ -22,7 +22,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -135,7 +134,7 @@ public class AetherOverlays {
 
     /**
      * [CODE COPY] - {@link Gui#renderPortalOverlay(GuiGraphics, float)}.<br><br>
-     * Warning for "deprecation" is suppressed because vanilla calls {@link BlockModelShaper#getParticleIcon(BlockState)} just fine.
+     * Warning for "deprecation" is suppressed because vanilla calls {@link net.minecraft.client.renderer.block.BlockModelShaper#getParticleIcon(BlockState)} just fine.
      */
     @SuppressWarnings("deprecation")
     private static void renderAetherPortalOverlay(GuiGraphics guiGraphics, Minecraft minecraft, AetherPlayerAttachment handler, DeltaTracker partialTicks) {
@@ -280,7 +279,7 @@ public class AetherOverlays {
             for (int jumpCount = 0; jumpCount < moa.getMaxJumps(); jumpCount++) {
                 int xPos = ((window.getGuiScaledWidth() / 2) + (jumpCount * 8)) - (moa.getMaxJumps() * 8) / 2;
                 int yPos = 18;
-                guiGraphics.blitSprite(getMoaJumpTexture(moa, jumpCount, jumpCount >= moa.getRemainingJumps()), xPos, yPos, 9, 11);
+                guiGraphics.blitSprite(appendBackground(jumpCount >= moa.getRemainingJumps(), getMoaJumpTexture(moa, jumpCount)) , xPos, yPos, 9, 11);
             }
         }
     }
@@ -290,14 +289,13 @@ public class AetherOverlays {
      *
      * @param moa        The {@link Moa} being ridden
      * @param count      The current feather being rendered
-     * @param background The {@link Boolean} determines the state of the feather
      * @return           The {@link ResourceLocation} of the feather that should be rendered
      */
-    private static ResourceLocation getMoaJumpTexture(Moa moa, double count, boolean background) {
+    private static ResourceLocation getMoaJumpTexture(Moa moa, double count) {
         AttributeInstance instance = moa.getAttribute(AetherAttributes.MOA_MAX_JUMPS);
         if(instance != null) {
             if (count < instance.getBaseValue()) {
-                return appendBackground(background, getDefaultJumpsTexture(moa.getMoaType()));
+                return getDefaultJumpsTexture(moa.getMoaType());
             }
             else {
                 Set<AttributeModifier> modifiers = instance.getModifiers();
@@ -312,22 +310,30 @@ public class AetherOverlays {
                     }
 
                     if(currentCount >= count) {
-                        System.out.println(currentCount);
-                        return appendBackground(background, Moa.getOverlayTexture(modifier.id()));
+                        return Moa.getOverlayTexture(modifier.id());
                     }
-                    System.out.println(instance.getBaseValue());
                 }
             }
         }
-        return appendBackground(background, TEXTURE_DEFAULT_JUMPS);
+        return TEXTURE_DEFAULT_JUMPS;
     }
 
+    /**
+     * @param type The {@link MoaType} being rendered.
+     * @return The {@link ResourceLocation} of the texture that should be rendered on top of the screen.
+     * Uses {@link AetherOverlays#TEXTURE_DEFAULT_JUMPS} as a fallback if no other texture has been specified inside the {@link MoaType}
+     */
     public static ResourceLocation getDefaultJumpsTexture(@Nullable MoaType type) {
         if(type == null)
             return TEXTURE_DEFAULT_JUMPS;
         else return type.jumpsTexture().isPresent() ? type.jumpsTexture().get() : TEXTURE_DEFAULT_JUMPS;
     }
 
+    /**
+     * @param background The {@link Boolean} determines the state of the feather being rendered
+     * @param location   The {@link ResourceLocation} of the jump texture being rendered
+     * @return           A {@link ResourceLocation} of the jump texture, with the correct suffix applied.
+     */
     private static ResourceLocation appendBackground(boolean background, ResourceLocation location) {
         if(background) {
             return location.withSuffix("_background");

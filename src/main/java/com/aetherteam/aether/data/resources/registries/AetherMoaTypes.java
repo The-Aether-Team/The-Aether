@@ -76,7 +76,6 @@ public class AetherMoaTypes {
         moaTypeRegistry.holders().forEach((moaType) -> weightedListBuilder.add(moaType.value(), moaType.value().spawnChance()));
         SimpleWeightedRandomList<MoaType> weightedList = weightedListBuilder.build();
         Optional<MoaType> moaType = weightedList.getRandomValue(random);
-        System.out.println(moaType);
         return moaType.orElse(moaTypeRegistry.get(AetherMoaTypes.BLUE));
     }
 }

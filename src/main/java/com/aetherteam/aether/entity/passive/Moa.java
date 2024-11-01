@@ -44,6 +44,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -694,9 +695,14 @@ public class Moa extends MountableAnimal implements WingedBird {
     /**
      * @param attributeId The id of the Mob Effect
      * @param location The {@link ResourceLocation} of the jump texture overlay
+     * Used to override the feather texture on top of the screen while ridding a moa, when a specific attribute modifier's extra feathers are being rendered.
      */
     public static void registerJumpOverlayTextureOverride(ResourceLocation attributeId, ResourceLocation location) {
         ID_TEXTURE_MAP.put(attributeId, location);
+    }
+
+    public static void registerJumpOverlayTextureOverride(AttributeModifier attribute, ResourceLocation location) {
+        registerJumpOverlayTextureOverride(attribute.id(), location);
     }
 
     /**
@@ -736,7 +742,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 
     /**
      * @return The {@link Integer} for the maximum amount of jumps the moa can make.
-     * Creates the {@link AetherAttributes#MOA_MAX_JUMPS} with the default value of {@link MoaType#maxJumps()} if the attribute isn't present.
+     * Changes the value of {@link AetherAttributes#MOA_MAX_JUMPS} with the default value of {@link MoaType#maxJumps()} if the attribute value isn't matching.
      */
     public int getMaxJumps() {
         AttributeInstance attribute = this.getAttribute(AetherAttributes.MOA_MAX_JUMPS);
