@@ -1278,6 +1278,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addCommonConfig("data_pack", "add_temporary_freezing_automatically", "Sets the Aether Temporary Freezing data pack to be added to new worlds automatically");
         this.addCommonConfig("data_pack", "add_ruined_portal_automatically", "Sets the Aether Ruined Portals data pack to be added to new worlds automatically");
 
+        this.addCommonConfig("modpack", "randomize_boss_names", "Determines whether bosses should display a randomized name above their boss bar");
+
 
         this.addClientConfig("rendering", "legacy_models", "Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod");
         this.addClientConfig("rendering", "disable_aether_skybox", "Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes");

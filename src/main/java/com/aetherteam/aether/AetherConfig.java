@@ -169,6 +169,8 @@ public class AetherConfig {
         public final ConfigValue<Boolean> add_temporary_freezing_automatically;
         public final ConfigValue<Boolean> add_ruined_portal_automatically;
 
+        public final ConfigValue<Boolean> randomize_boss_names;
+
         public Common(ModConfigSpec.Builder builder) {
             builder.push("Gameplay");
             use_curios_menu = builder
@@ -209,6 +211,13 @@ public class AetherConfig {
                     .comment("Sets the Aether Ruined Portals data pack to be added to new worlds automatically")
                     .translation("config.aether.common.data_pack.add_ruined_portal_automatically")
                     .define("Add Ruined Portals automatically", false);
+            builder.pop();
+
+            builder.push("Modpack");
+            randomize_boss_names = builder
+                .comment("Determines whether bosses should display a randomized name above their boss bar")
+                .translation("config.aether.common.modpack.randomize_boss_names")
+                .define("Randomize boss names", true);
             builder.pop();
         }
     }

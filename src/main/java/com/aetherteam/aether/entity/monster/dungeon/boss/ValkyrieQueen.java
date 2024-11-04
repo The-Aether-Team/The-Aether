@@ -1,6 +1,7 @@
 package com.aetherteam.aether.entity.monster.dungeon.boss;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
@@ -579,7 +580,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      */
     @Override
     public Component getBossName() {
-        return this.getEntityData().get(DATA_BOSS_NAME);
+        if (this.hasCustomName()) {
+            return this.getCustomName();
+        } else if (!AetherConfig.COMMON.randomize_boss_names.get()) {
+            return Component.translatable("gui.aether.queen.title");
+        } else {
+            return this.getEntityData().get(DATA_BOSS_NAME);
+        }
     }
 
     /**

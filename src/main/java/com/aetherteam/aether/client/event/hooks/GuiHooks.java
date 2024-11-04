@@ -311,7 +311,7 @@ public class GuiHooks {
         int entityID = BOSS_EVENTS.get(bossEvent.getId());
         if (Minecraft.getInstance().level != null && Minecraft.getInstance().level.getEntity(entityID) instanceof AetherBossMob<?> aetherBossMob) {
             drawBar(guiGraphics, x + 2, y + 2, bossEvent, aetherBossMob);
-            Component component = bossEvent.getName();
+            Component component = aetherBossMob.getBossName();
             int nameLength = Minecraft.getInstance().font.width(component);
             int nameX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - nameLength / 2;
             int nameY = y - 9;

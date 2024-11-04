@@ -496,7 +496,13 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      */
     @Override
     public Component getBossName() {
-        return this.getEntityData().get(DATA_BOSS_NAME_ID);
+        if (this.hasCustomName()) {
+            return this.getCustomName();
+        } else if (!AetherConfig.COMMON.randomize_boss_names.get()) {
+            return Component.translatable("gui.aether.slider.title");
+        } else {
+            return this.getEntityData().get(DATA_BOSS_NAME_ID);
+        }
     }
 
     /**
