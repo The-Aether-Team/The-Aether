@@ -47,6 +47,15 @@ public class BronzeDungeonBuilder {
     );
     private static Map<String, SimpleWeightedRandomList<RoomProvider<?>>> ROOM_OPTIONS;
 
+    static {
+        ROOM_OPTIONS_BUILDER.get("boss_room").add((manager, pos, rotation, processorList) -> new BronzeBossRoom(manager, "boss_room", pos, rotation, processorList), 1);
+        ROOM_OPTIONS_BUILDER.get("chest_room").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "chest_room", pos, rotation, processorList), 1);
+        ROOM_OPTIONS_BUILDER.get("end_corridor").add((manager, pos, rotation, processorList) -> new BronzeTunnel(manager, "end_corridor", pos, rotation, processorList), 1);
+        ROOM_OPTIONS_BUILDER.get("entrance").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "entrance", pos, rotation, processorList), 1);
+        ROOM_OPTIONS_BUILDER.get("lobby").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "lobby", pos, rotation, processorList), 1);
+        ROOM_OPTIONS_BUILDER.get("square_tunnel").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "square_tunnel", pos, rotation, processorList), 1);
+    }
+
     private final Structure.GenerationContext context;
     private final StructureTemplateManager manager;
     private final RandomSource random;
@@ -74,13 +83,6 @@ public class BronzeDungeonBuilder {
         this.edgeLength = edgeSize.getZ();
 
         this.maxSize = Math.max(3, maxSize);
-
-        ROOM_OPTIONS_BUILDER.get("boss_room").add((manager, pos, rotation, processorList) -> new BronzeBossRoom(manager, "boss_room", pos, rotation, processorList), 1);
-        ROOM_OPTIONS_BUILDER.get("chest_room").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "chest_room", pos, rotation, processorList), 1);
-        ROOM_OPTIONS_BUILDER.get("end_corridor").add((manager, pos, rotation, processorList) -> new BronzeTunnel(manager, "end_corridor", pos, rotation, processorList), 1);
-        ROOM_OPTIONS_BUILDER.get("entrance").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "entrance", pos, rotation, processorList), 1);
-        ROOM_OPTIONS_BUILDER.get("lobby").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "lobby", pos, rotation, processorList), 1);
-        ROOM_OPTIONS_BUILDER.get("square_tunnel").add((manager, pos, rotation, processorList) -> new BronzeDungeonRoom(manager, "square_tunnel", pos, rotation, processorList), 1);
     }
 
     public void initializeDungeon(BlockPos startPos, Structure.GenerationContext genContext, StructurePiecesBuilder builder) {
