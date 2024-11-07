@@ -1,4 +1,4 @@
-// 1.20.4	2024-09-03T16:46:32.5121628	Recipes
+// 1.20.4	2024-10-29T18:03:22.3673838	Recipes
 677229eff00099e5ef402be1ab8f30aed900069d data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 5df758ef8ac62e1c2c9f75056306fd9b4a95cfb0 data/aether/advancements/recipes/building_blocks/aerogel_slab_from_aerogel_stonecutting.json
 e093ed5a0f506d259f063268945b9afeb0e1e046 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -322,9 +322,9 @@ b86b7fb30456ff6f186ab7a8d9862275151218f1 data/aether/recipes/aerogel_stairs_from
 914d51c84b09cd2b196cab36193af7a299013b79 data/aether/recipes/aerogel_wall.json
 cc8707e81ffb76bebe922b86a0a8543f87ec08f4 data/aether/recipes/aerogel_wall_from_aerogel_stonecutting.json
 79c5ecce04ff5f2a747aaa9f6b88d1f652dfab54 data/aether/recipes/aether_gold_nugget_from_blasting.json
-be190a8f2aa3e7e1721abdb90201f9a325183b2b data/aether/recipes/aether_gold_nugget_from_smelting.json
+190eab0d1099a7088f350b5e4056971444c3d619 data/aether/recipes/aether_gold_nugget_from_smelting.json
 212bb3693bc2733772e10984b7a9a80775bfd6fc data/aether/recipes/aether_iron_nugget_from_blasting.json
-d6ea60e365df69ac31671107d7c4b87d96adcb24 data/aether/recipes/aether_iron_nugget_from_smelting.json
+b418e0d8cb8670f0fe837b3a9f8286d929faace5 data/aether/recipes/aether_iron_nugget_from_smelting.json
 7eee988b40a021b7ce5e36189bf0ab8e928f586f data/aether/recipes/aether_saddle.json
 0c21d2b654c566de841cac9311066f39f31e85bc data/aether/recipes/aether_tune_enchanting.json
 1184296e907fa4bc778c9ab0d6d3a8ff5813eafc data/aether/recipes/altar.json
