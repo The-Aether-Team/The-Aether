@@ -1170,6 +1170,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.MUSIC_DISC_CHINCHILLA, "A music disc that plays \"chinchilla\" by RENREN.");
         this.addLore(AetherItems.MUSIC_DISC_HIGH, "A music disc that plays \"high\" by RENREN.");
         this.addLore(AetherItems.MUSIC_DISC_KLEPTO, "A music disc that plays \"klepto\" by sunsette.");
+        this.addLore(AetherItems.MUSIC_DISC_SLIDERS_WRATH, "A music disc that plays \"Slider's Wrath\" by sunsette.");
         this.addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point, it vanished from existence. It's said this was actually Jeb's hammer at one point.");
         this.addLoreUnique("item.aether.swet_banner", "A decorative banner with the likeness of a Swet. By placing this down you can prevent them from appearing around your home.");
 

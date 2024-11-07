@@ -177,15 +177,14 @@ public class AetherPlayerAttachment implements INBTSynchable {
     }
 
     /**
-     * Handles functions when the player logs out of a world from {@link net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent}.
+     * Handles functions when the player logs out of a world from {@link net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent}.
      */
     public void onLogout(Player player) {
-        this.removeAerbunny();
         this.handleLogoutSavedHealth(player);
     }
 
     /**
-     * Handles functions when the player logs in to a world from {@link net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent}.
+     * Handles functions when the player logs in to a world from {@link net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent}.
      */
     public void onLogin(Player player) {
         this.handleGivePortal(player);
@@ -450,7 +449,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
     /**
      * Removes an Aerbunny from the world and stores it to NBT for the capability. This is used when a player logs out with an Aerbunny.
      */
-    private void removeAerbunny() {
+    public void removeAerbunny() {
         if (this.getMountedAerbunny() != null) {
             Aerbunny aerbunny = this.getMountedAerbunny();
             CompoundTag nbt = new CompoundTag();
@@ -464,7 +463,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
     /**
      * Remounts an Aerbunny to the player if there exists stored NBT when joining the world.
      */
-    private void remountAerbunny(Player player) {
+    public void remountAerbunny(Player player) {
         if (this.getMountedAerbunnyTag().isPresent()) {
             if (!player.level().isClientSide()) {
                 Aerbunny aerbunny = new Aerbunny(AetherEntityTypes.AERBUNNY.get(), player.level());

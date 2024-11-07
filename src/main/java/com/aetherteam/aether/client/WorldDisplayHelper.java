@@ -2,6 +2,7 @@ package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import com.aetherteam.aether.mixin.mixins.client.accessor.MinecraftAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.MinecraftServerAccessor;
 import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.CameraType;
@@ -115,6 +116,7 @@ public class WorldDisplayHelper {
                 server.halt(false);
             }
             minecraft.clearClientLevel(Objects.requireNonNullElseGet(screen, () -> new ProgressScreen(true)));
+            ((MinecraftAccessor) minecraft).aether$setIsLocalServer(false);
         }
     }
 

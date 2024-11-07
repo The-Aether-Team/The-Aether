@@ -2,8 +2,17 @@ package com.aetherteam.aether.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.EntityHooks;
+import io.wispforest.accessories.api.*;
 import io.wispforest.accessories.api.events.OnDeathCallback;
+import io.wispforest.accessories.api.slot.SlotReference;
+import it.unimi.dsi.fastutil.Pair;
 import net.fabricmc.fabric.api.util.TriState;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -14,7 +23,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.HitResult;
@@ -25,6 +36,7 @@ import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
@@ -49,6 +61,7 @@ public class EntityListener {
         bus.addListener(EntityListener::onDropExperience);
         bus.addListener(EntityListener::onEffectApply);
         bus.addListener(EntityListener::onEntitySplit);
+        bus.addListener(EntityListener::onLoadPlayerFile);
 
         OnDeathCallback.EVENT.register((currentState, entity, capability, damageSource, droppedStacks) -> {
             List<ItemStack> droppedStacksCopy = new ArrayList<>(droppedStacks);
@@ -173,6 +186,60 @@ public class EntityListener {
         Mob mob = event.getParent();
         if (EntityHooks.preventSplit(mob)) {
             event.setCanceled(true);
+        }
+    }
+
+    public static void onLoadPlayerFile(PlayerEvent.LoadFromFile event) {
+        Player player = event.getEntity();
+        if (player instanceof ServerPlayer serverPlayer) {
+            CompoundTag playerTag = serverPlayer.server.getWorldData().getLoadedPlayerTag();
+            if (playerTag != null) {
+                CompoundTag capsTag = null;
+                if (playerTag.contains("ForgeCaps")) {
+                    capsTag = playerTag.getCompound("ForgeCaps");
+                } else if (playerTag.contains("neoforge:attachments")) {
+                    capsTag = playerTag.getCompound("neoforge:attachments");
+                }
+                if (capsTag != null && capsTag.contains("curios:inventory")) {
+                    CompoundTag curiosInventoryTag = capsTag.getCompound("curios:inventory");
+                    if (curiosInventoryTag.contains("Curios")) {
+                        Tag curiosTag = curiosInventoryTag.get("Curios");
+                        if (curiosTag instanceof ListTag curiosListTag) {
+                            for (Tag tag : curiosListTag) {
+                                if (tag instanceof CompoundTag compoundTag && compoundTag.contains("StacksHandler") && compoundTag.contains("Identifier")) {
+                                    CompoundTag stacksHandlerTag = compoundTag.getCompound("StacksHandler");
+                                    if (stacksHandlerTag.contains("Stacks")) {
+                                        CompoundTag stacksTag = stacksHandlerTag.getCompound("Stacks");
+                                        if (stacksTag.contains("Items")) {
+                                            Tag itemsTag = stacksTag.get("Items");
+                                            if (itemsTag instanceof ListTag listTag) {
+                                                for (Tag itemTag : listTag) {
+                                                    if (itemTag instanceof CompoundTag itemCompoundTag) {
+                                                        if (itemCompoundTag.contains("id")) {
+                                                            Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemCompoundTag.getString("id")));
+                                                            if (item != Items.AIR) {
+                                                                ItemStack stack = new ItemStack(item);
+                                                                AccessoriesCapability accessories = AccessoriesCapability.get(player);
+                                                                if (accessories != null) {
+                                                                    Accessory accessory = AccessoriesAPI.getOrDefaultAccessory(stack);
+                                                                    Pair<SlotReference, EquipAction> equipReference = accessories.canEquipAccessory(stack, true);
+                                                                    if (accessory.canEquip(stack, equipReference.first())) {
+                                                                        equipReference.second().equipStack(stack.copy());
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

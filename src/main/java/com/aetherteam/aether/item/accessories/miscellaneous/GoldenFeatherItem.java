@@ -2,11 +2,12 @@ package com.aetherteam.aether.item.accessories.miscellaneous;
 
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.item.accessories.abilities.SlowFallAccessory;
+import io.wispforest.accessories.api.events.extra.AllowWalkingOnSnow;
 import io.wispforest.accessories.api.slot.SlotReference;
-import net.minecraft.world.entity.LivingEntity;
+import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.world.item.ItemStack;
 
-public class GoldenFeatherItem extends AccessoryItem implements SlowFallAccessory {
+public class GoldenFeatherItem extends AccessoryItem implements SlowFallAccessory, AllowWalkingOnSnow {
     public GoldenFeatherItem(Properties properties) {
         super(properties);
     }
@@ -17,7 +18,7 @@ public class GoldenFeatherItem extends AccessoryItem implements SlowFallAccessor
     }
 
     @Override
-    public boolean canWalkOnPowderedSnow(ItemStack stack, LivingEntity wearer) {
-        return true;
+    public TriState allowWalkingOnSnow(ItemStack stack, SlotReference reference) {
+        return TriState.TRUE;
     }
 }

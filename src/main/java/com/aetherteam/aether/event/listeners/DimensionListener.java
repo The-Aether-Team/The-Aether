@@ -40,6 +40,7 @@ public class DimensionListener {
         bus.addListener(DimensionListener::onWaterExistsInsidePortalFrame);
         bus.addListener(DimensionListener::onWorldTick);
         bus.addListener(DimensionListener::onEntityTravelToDimension);
+        bus.addListener(DimensionListener::onPlayerChangedDimension);
         bus.addListener(DimensionListener::onPlayerTraveling);
         bus.addListener(DimensionListener::onWorldLoad);
         bus.addListener(DimensionListener::onSleepFinish);
@@ -97,11 +98,21 @@ public class DimensionListener {
 
     /**
      * @see DimensionHooks#dimensionTravel(Entity, ResourceKey)
+     * @see DimensionHooks#removePlayerAerbunny(Entity)
      */
     public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
         Entity entity = event.getEntity();
         ResourceKey<Level> dimension = event.getDimension();
         DimensionHooks.dimensionTravel(entity, dimension);
+        DimensionHooks.removePlayerAerbunny(entity);
+    }
+
+    /**
+     * @see DimensionHooks#remountPlayerAerbunny(Player)
+     */
+    public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        Player player = event.getEntity();
+        DimensionHooks.remountPlayerAerbunny(player);
     }
 
     /**

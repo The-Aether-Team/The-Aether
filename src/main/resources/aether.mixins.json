@@ -6,6 +6,7 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "aether.refmap.json",
   "mixins": [
+    "client.accessor.MinecraftAccessor",
     "common.AbstractArrowMixin",
     "common.ArmorStandMixin",
     "common.DimensionTypeMixin",
@@ -16,6 +17,7 @@
     "common.MobMixin",
     "common.ModelBuilderMixin",
     "common.PlayerMixin",
+    "common.ServerPlayerMixin",
     "common.accessor.AbstractContainerMenuAccessor",
     "common.accessor.AbstractFurnaceBlockEntityAccessor",
     "common.accessor.BaseSpawnerAccessor",

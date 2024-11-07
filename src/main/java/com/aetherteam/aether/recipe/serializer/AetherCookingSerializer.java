@@ -13,6 +13,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 
+import java.util.Objects;
+
 /**
  * [CODE COPY] - {@link SimpleCookingSerializer}.<br><br>
  * Cleaned up.
@@ -57,7 +59,7 @@ public class AetherCookingSerializer<T extends AbstractAetherCookingRecipe> impl
 
     public void toNetwork(RegistryFriendlyByteBuf buffer, T recipe) {
         buffer.writeUtf(recipe.getGroup());
-        buffer.writeEnum(recipe.aetherCategory());
+        buffer.writeEnum(Objects.requireNonNullElse(recipe.aetherCategory(), AetherBookCategory.UNKNOWN));
         Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.getIngredients().getFirst());
         ItemStack.STREAM_CODEC.encode(buffer, recipe.getResult());
         buffer.writeFloat(recipe.getExperience());
