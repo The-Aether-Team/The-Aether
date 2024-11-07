@@ -1,5 +1,6 @@
 package com.aetherteam.aether.perk.data;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.network.packet.clientbound.ClientDeveloperGlowPacket;
 import com.aetherteam.aether.network.packet.clientbound.ClientHaloPacket;
 import com.aetherteam.aether.network.packet.clientbound.ClientMoaSkinPacket;
@@ -113,9 +114,13 @@ public class ServerPerkData<T> {
         Map<UUID, User> storedUsers = UserData.Server.getStoredUsers();
         if (storedUsers.containsKey(uuid)) { // Checks if User exists.
             User user = storedUsers.get(uuid);
-            if (user != null && this.getVerificationPredicate(perk).test(user)) { // Checks verification requirement to have the perk that is trying to be applied.
-                PacketRelay.sendToAll(this.getApplyPacket(uuid, perk)); // Send to clients.
-                this.modifySavedData(server, uuid, perk); // Save to world.
+            try {
+                if (user != null && this.getVerificationPredicate(perk).test(user)) { // Checks verification requirement to have the perk that is trying to be applied.
+                    PacketRelay.sendToAll(this.getApplyPacket(uuid, perk)); // Send to clients.
+                    this.modifySavedData(server, uuid, perk); // Save to world.
+                }
+            } catch (RuntimeException e) {
+                Aether.LOGGER.info(e.getMessage());
             }
         }
     }
