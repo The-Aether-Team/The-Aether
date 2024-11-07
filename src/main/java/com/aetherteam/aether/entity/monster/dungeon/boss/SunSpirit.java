@@ -521,7 +521,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         if (this.hasCustomName()) {
             return this.getCustomName();
         } else if (!AetherConfig.COMMON.randomize_boss_names.get()) {
-            return Component.translatable("gui.aether.sun_spirit.title");
+            return Component.translatable("entity.aether.sun_spirit");
         } else {
             return this.getEntityData().get(DATA_BOSS_NAME);
         }

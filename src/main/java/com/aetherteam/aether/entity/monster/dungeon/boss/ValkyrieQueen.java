@@ -583,7 +583,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         if (this.hasCustomName()) {
             return this.getCustomName();
         } else if (!AetherConfig.COMMON.randomize_boss_names.get()) {
-            return Component.translatable("gui.aether.queen.title");
+            return Component.translatable("entity.aether.valkyrie_queen");
         } else {
             return this.getEntityData().get(DATA_BOSS_NAME);
         }
