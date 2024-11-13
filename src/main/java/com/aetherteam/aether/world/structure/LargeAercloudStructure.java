@@ -83,6 +83,9 @@ public class LargeAercloudStructure extends Structure {
         int finalY = y;
         Direction orientation = Direction.Plane.HORIZONTAL.getRandomDirection(context.random());
         chunks.forEach((chunkPos, blockPosSet) -> {
+            if (blockPosSet.isEmpty()) { // Skip creating StructurePiece if there are no blocks to place
+                return;
+            }
             BoundingBox boundingBox = new BoundingBox(chunkPos.getMinBlockX(), Math.max(initialY - 16, 0), chunkPos.getMinBlockZ(), chunkPos.getMaxBlockX(), finalY + 16, chunkPos.getMaxBlockZ());
             builder.addPiece(new LargeAercloudChunk(blockPosSet, blocks, boundingBox, orientation));
         });
