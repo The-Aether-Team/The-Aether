@@ -311,12 +311,6 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
          */
         public static float reduceToolEffectiveness(Player player, BlockState state, ItemStack stack, float speed) {
-            if (AetherConfig.SERVER.tools_debuff.get()) {
-                if (!player.level().isClientSide() && player.level() instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
-                    debuffTools = true;
-                    PacketDistributor.sendToPlayersNear(serverLevel, serverPlayer, player.getX(), player.getY(), player.getZ(), 10, new ToolDebuffPacket(true));
-                }
-            }
             if (debuffTools) {
                 if ((state.getBlock().getDescriptionId().startsWith("block.aether.") || state.is(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK)) && !state.is(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK)) {
                     if (!stack.isEmpty() && stack.isCorrectToolForDrops(state) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
@@ -325,6 +319,30 @@ public class AbilityHooks {
                 }
             }
             return speed;
+        }
+
+        /**
+         * Sets up the debuff tool state based on the current server value and attempts to sync the state to the client if needed
+         *
+         * @param player Current player logging into the server
+         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#
+         */
+        public static void setDebuffToolsState(ServerPlayer player) {
+            if (debuffTools) {
+                PacketDistributor.sendToPlayer(player, new ToolDebuffPacket(true));
+            } else if (AetherConfig.SERVER.tools_debuff.get()) {
+                debuffTools = true;
+
+                PacketDistributor.sendToAllPlayers(new ToolDebuffPacket(true));
+            }
+        }
+
+        /**
+         * Method used to reset the debuffTools state to false on player logout
+         * @see com.aetherteam.aether.client.AetherClient#eventSetup(net.neoforged.bus.api.IEventBus)
+         */
+        public static void resetDebuffToolsState() {
+            debuffTools = false;
         }
 
         /**

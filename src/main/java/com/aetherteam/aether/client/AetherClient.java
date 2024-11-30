@@ -14,6 +14,7 @@ import com.aetherteam.aether.client.renderer.AetherRenderers;
 import com.aetherteam.aether.client.renderer.level.AetherRenderEffects;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.entity.AetherEntityTypes;
+import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.item.AetherItems;
@@ -32,6 +33,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.RegisterDimensionTransitionScreenEvent;
 import net.neoforged.neoforge.client.event.RegisterEntitySpectatorShadersEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -131,6 +133,8 @@ public class AetherClient {
         LevelClientListener.listen(bus);
         MenuListener.listen(bus);
         WorldPreviewListener.listen(bus);
+
+        bus.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> AbilityHooks.ToolHooks.resetDebuffToolsState());
 
         neoBus.addListener(AetherMenuTypes::registerMenuScreens);
         neoBus.addListener(AetherColorResolvers::registerBlockColor);

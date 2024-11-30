@@ -3,6 +3,7 @@ package com.aetherteam.aether.event.listeners.abilities;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -22,6 +24,7 @@ public class ToolAbilityListener {
         bus.addListener(ToolAbilityListener::setupToolModifications);
         bus.addListener(ToolAbilityListener::doHolystoneAbility);
         bus.addListener(ToolAbilityListener::modifyBreakSpeed);
+        bus.addListener(ToolAbilityListener::setupDebuffToolState);
         bus.addListener(ToolAbilityListener::doGoldenOakStripping);
     }
 
@@ -65,6 +68,10 @@ public class ToolAbilityListener {
             event.setNewSpeed(AbilityHooks.ToolHooks.handleZaniteToolAbility(itemStack, event.getNewSpeed()));
             event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(player, blockState, itemStack, event.getNewSpeed()));
         }
+    }
+
+    public static void setupDebuffToolState(PlayerEvent.PlayerLoggedInEvent event) {
+        AbilityHooks.ToolHooks.setDebuffToolsState((ServerPlayer) event.getEntity());
     }
 
     /**
