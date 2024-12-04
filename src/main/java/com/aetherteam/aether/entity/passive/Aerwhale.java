@@ -355,7 +355,7 @@ public class Aerwhale extends FlyingMob {
             double y = this.getWantedY() - this.mob.getY();
             double z = this.getWantedZ() - this.mob.getZ();
             double distance = Math.sqrt(x * x + z * z);
-            if (distance < 3 || this.isColliding(new Vec3(x, y, z).normalize())) {
+            if (this.isColliding(new Vec3(x, y, z).normalize())) {
                 this.operation = Operation.WAIT;
             }
 
