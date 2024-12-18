@@ -3,9 +3,9 @@ package com.aetherteam.aether.block.utility;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.attachment.AetherTimeAttachment;
 import com.aetherteam.aether.blockentity.SunAltarBlockEntity;
 import com.aetherteam.aether.command.SunAltarWhitelist;
-import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.network.packet.clientbound.OpenSunAltarPacket;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -58,12 +58,12 @@ public class SunAltarBlock extends BaseEntityBlock {
                 if (AetherConfig.SERVER.sun_altar_dimensions.get().contains(level.dimension().location().toString())) {
                     if (level.hasData(AetherDataAttachments.AETHER_TIME)) { // Checks if the level has the capability used for Aether time, which determines if the Sun Altar has control over the time of a dimension.
                         if (!level.getData(AetherDataAttachments.AETHER_TIME).isEternalDay()) { // Checks if the time is locked into eternal day or not.
-                            this.openScreen(level, pos, player, AetherDimensions.AETHER_TICKS_PER_DAY);
+                            this.openScreen(level, pos, player, AetherTimeAttachment.getTicksPerDay());
                         } else {
                             player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.in_control"), true); // Sun Spirit is still in control of the realm.
                         }
                     } else {
-                        this.openScreen(level, pos, player, 24000);
+                        this.openScreen(level, pos, player, AetherTimeAttachment.getTicksPerDay());
                     }
                 } else {
                     player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_power"), true); // Sun Altar has no power in the dimension.

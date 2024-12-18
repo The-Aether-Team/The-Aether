@@ -1,5 +1,6 @@
 package com.aetherteam.aether.command;
 
+import com.aetherteam.aether.attachment.AetherTimeAttachment;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.CommandSourceStack;
@@ -16,16 +17,16 @@ public class AetherTimeCommand {
         dispatcher.register(Commands.literal("aether")
                 .then(Commands.literal("time").requires((commandSourceStack) -> commandSourceStack.hasPermission(2))
                         .then(Commands.literal("set")
-                                .then(Commands.literal("day").executes((context) -> setTime(context.getSource(), 3000)))
-                                .then(Commands.literal("noon").executes((context) -> setTime(context.getSource(), 18000)))
-                                .then(Commands.literal("night").executes((context) -> setTime(context.getSource(), 39000)))
-                                .then(Commands.literal("midnight").executes((context) -> setTime(context.getSource(), 54000)))
+                                .then(Commands.literal("day").executes((context) -> setTime(context.getSource(), 1000 * AetherTimeAttachment.getTicksPerDayMultiplier())))
+                                .then(Commands.literal("noon").executes((context) -> setTime(context.getSource(), 6000 * AetherTimeAttachment.getTicksPerDayMultiplier())))
+                                .then(Commands.literal("night").executes((context) -> setTime(context.getSource(), 13000 * AetherTimeAttachment.getTicksPerDayMultiplier())))
+                                .then(Commands.literal("midnight").executes((context) -> setTime(context.getSource(), 18000 * AetherTimeAttachment.getTicksPerDayMultiplier())))
                                 .then(Commands.argument("time", TimeArgument.time()).executes((context) -> setTime(context.getSource(), IntegerArgumentType.getInteger(context, "time"))))
                         ).then(Commands.literal("add")
                                 .then(Commands.argument("time", TimeArgument.time()).executes((context) -> addTime(context.getSource(), IntegerArgumentType.getInteger(context, "time"))))
                         ).then(Commands.literal("query")
                                 .then(Commands.literal("daytime").executes((context) -> queryTime(context.getSource(), getDayTime(context.getSource().getLevel()))))
-                                .then(Commands.literal("day").executes((context) -> queryTime(context.getSource(), (int) (context.getSource().getLevel().getDayTime() / 72000L % (long) Integer.MAX_VALUE))))
+                                .then(Commands.literal("day").executes((context) -> queryTime(context.getSource(), (int) (context.getSource().getLevel().getDayTime() / (AetherTimeAttachment.getTicksPerDay()) % (long) Integer.MAX_VALUE))))
                         )
                 )
         );

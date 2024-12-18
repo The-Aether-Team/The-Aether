@@ -1,7 +1,7 @@
 package com.aetherteam.aether.client.renderer.level;
 
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import com.aetherteam.aether.attachment.AetherTimeAttachment;
 import com.aetherteam.aether.mixin.mixins.client.accessor.LevelRendererAccessor;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -377,15 +377,15 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
      */
     private void drawCelestialBodies(float partialTick, PoseStack poseStack, ClientLevel level, Tesselator tesselator) {
         // This code determines the current angle of the sun and moon and determines whether they should be visible or not.
-        long dayTime = level.getDayTime() % (long) AetherDimensions.AETHER_TICKS_PER_DAY;
+        long dayTime = level.getDayTime() % (long) AetherTimeAttachment.getTicksPerDay();
         float sunOpacity;
         float moonOpacity;
-        if (dayTime > 71400L) {
-            dayTime -= 71400L;
+        if (dayTime > 23800L * AetherTimeAttachment.getTicksPerDayMultiplier()) {
+            dayTime -= 23800L * AetherTimeAttachment.getTicksPerDayMultiplier();
             sunOpacity = Math.min(dayTime * 0.00167F, 1F);
             moonOpacity = Math.max(1.0F - dayTime * 0.00167F, 0F);
-        } else if (dayTime > 38400L) {
-            dayTime -= 38400L;
+        } else if (dayTime > 12800L * AetherTimeAttachment.getTicksPerDayMultiplier()) {
+            dayTime -= 12800L * AetherTimeAttachment.getTicksPerDayMultiplier();
             sunOpacity = Math.max(1.0F - dayTime * 0.00167F, 0F);
             moonOpacity = Math.min(dayTime * 0.00167F, 1F);
         } else {

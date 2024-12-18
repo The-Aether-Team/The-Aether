@@ -1,6 +1,7 @@
 package com.aetherteam.aether.attachment;
 
-import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.network.packet.AetherTimeSyncPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import com.aetherteam.nitrogen.network.packet.SyncPacket;
@@ -22,7 +23,7 @@ import java.util.function.Supplier;
  * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherTimeHooks
  */
 public class AetherTimeAttachment implements INBTSynchable {
-    private long dayTime = 18000L;
+    private long dayTime = -1;
     private boolean isEternalDay = true;
 
     /**
@@ -57,12 +58,15 @@ public class AetherTimeAttachment implements INBTSynchable {
     public long tickTime(Level level) {
         long dayTime = level.getDayTime();
         if (this.isEternalDay()) {
-            if (dayTime != 18000L) {
-                long tempTime = dayTime % (long) AetherDimensions.AETHER_TICKS_PER_DAY;
-                if (tempTime > 54000L) {
-                    tempTime -= AetherDimensions.AETHER_TICKS_PER_DAY;
+            if (this.getDayTime() == -1) {
+                this.setDayTime(getTicksPerDay() / 4);
+            }
+            if (dayTime != getTicksPerDay() / 4) {
+                long tempTime = dayTime % (long) getTicksPerDay();
+                if (tempTime > getTicksPerDay() * 0.75) {
+                    tempTime -= getTicksPerDay();
                 }
-                long target = Mth.clamp(18000L - tempTime, -10, 10);
+                long target = Mth.clamp((getTicksPerDay() / 4) - tempTime, -10, 10);
                 dayTime += target;
             }
         } else {
@@ -111,5 +115,13 @@ public class AetherTimeAttachment implements INBTSynchable {
     @Override
     public SyncPacket getSyncPacket(int entityID, String key, Type type, Object value) {
         return new AetherTimeSyncPacket(key, type, value);
+    }
+
+    public static int getTicksPerDayMultiplier() {
+        return AetherConfig.SERVER.normal_length_aether_time.get() ? 1 : 3;
+    }
+
+    public static int getTicksPerDay() {
+        return Level.TICKS_PER_DAY * getTicksPerDayMultiplier(); // Time in ticks of how long a day/night cycle lasts.
     }
 }
