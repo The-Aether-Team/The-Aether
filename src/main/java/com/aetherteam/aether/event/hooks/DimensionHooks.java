@@ -296,7 +296,7 @@ public class DimensionHooks {
      */
     public static void initializeLevelData(LevelAccessor level) {
         if (level instanceof ServerLevel serverLevel && serverLevel.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-            AetherLevelData levelData = new AetherLevelData(serverLevel.getServer().getWorldData(), serverLevel.getServer().getWorldData().overworldData(), serverLevel.getData(AetherDataAttachments.AETHER_TIME).getDayTime());
+            AetherLevelData levelData = new AetherLevelData(serverLevel, serverLevel.getServer().getWorldData(), serverLevel.getServer().getWorldData().overworldData(), serverLevel.getData(AetherDataAttachments.AETHER_TIME).getDayTime());
             ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
             com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor) level;
             serverLevelAccessor.aether$setServerLevelData(levelData);

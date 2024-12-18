@@ -1,6 +1,7 @@
 package com.aetherteam.aether.command;
 
 import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import net.minecraft.commands.CommandSourceStack;
@@ -28,6 +29,7 @@ public class EternalDayCommand {
             var data = level.getData(AetherDataAttachments.AETHER_TIME);
             data.setEternalDay(value);
             data.updateEternalDay(level); // Syncs to client.
+            data.setSynched(-1, INBTSynchable.Direction.DIMENSION, "setShouldWait", true, level);
             source.sendSuccess(() -> Component.translatable("commands.aether.capability.time.eternal_day.set", value), true);
         }
         return 1;

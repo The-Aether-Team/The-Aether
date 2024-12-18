@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.event.hooks;
 
 import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.attachment.AetherTimeAttachment;
 import com.aetherteam.aether.client.renderer.level.AetherSkyRenderEffects;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.item.EquipmentUtil;
@@ -144,9 +145,12 @@ public class DimensionClientHooks {
     public static void tickTime() {
         ClientLevel level = Minecraft.getInstance().level;
         if (level != null && !Minecraft.getInstance().isPaused() && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-            LevelAccessor levelAccessor = (LevelAccessor) level;
-            if (levelAccessor.aether$getLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-                level.setDayTime(level.getData(AetherDataAttachments.AETHER_TIME).tickTime(level) - 1); // The client always increments time by 1 every tick.
+            AetherTimeAttachment data = level.getData(AetherDataAttachments.AETHER_TIME);
+            if (!data.isTimeSynced()) {
+                LevelAccessor levelAccessor = (LevelAccessor) level;
+                if (levelAccessor.aether$getLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+                    level.setDayTime(data.tickTime(level) - 1); // The client always increments time by 1 every tick.
+                }
             }
         }
     }

@@ -1,6 +1,10 @@
 package com.aetherteam.aether.world;
 
+import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.attachment.AetherTimeAttachment;
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.storage.DerivedLevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
@@ -12,16 +16,25 @@ import net.minecraft.world.level.storage.WorldData;
  * A gamerule wrapper is used to prevent the overworld's weather cycle from being affected by the Aether.
  */
 public class AetherLevelData extends DerivedLevelData {
+    private final ServerLevel level;
     private final ServerLevelData wrapped;
     private final WrappedGameRules gameRules;
 
     private long dayTime;
 
-    public AetherLevelData(WorldData worldData, ServerLevelData overworldData, long dayTime) {
+    public AetherLevelData(ServerLevel level, WorldData worldData, ServerLevelData overworldData, long dayTime) {
         super(worldData, overworldData);
+        this.level = level;
         this.wrapped = overworldData;
         this.gameRules = new WrappedGameRules(worldData.getGameRules(), ImmutableSet.of(GameRules.RULE_WEATHER_CYCLE, GameRules.RULE_DOFIRETICK));
         this.dayTime = dayTime;
+    }
+
+    /**
+     * @return The overworld time in ticks.
+     */
+    public long getOverworldDayTime() {
+        return this.wrapped.getDayTime();
     }
 
     /**
@@ -29,7 +42,11 @@ public class AetherLevelData extends DerivedLevelData {
      */
     @Override
     public long getDayTime() {
-        return this.dayTime;
+        if (this.level.getData(AetherDataAttachments.AETHER_TIME).isTimeSynced()) {
+            return this.wrapped.getDayTime();
+        } else {
+            return this.dayTime;
+        }
     }
 
     /**
@@ -39,6 +56,9 @@ public class AetherLevelData extends DerivedLevelData {
      */
     @Override
     public void setDayTime(long time) {
+        if (this.level.getData(AetherDataAttachments.AETHER_TIME).isTimeSynced()) {
+            this.wrapped.setDayTime(time);
+        }
         this.dayTime = time;
     }
 

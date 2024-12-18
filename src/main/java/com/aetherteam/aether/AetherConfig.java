@@ -38,6 +38,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> disable_falling_to_overworld;
         public final ConfigValue<Boolean> disable_eternal_day;
         public final ConfigValue<Boolean> normal_length_aether_time;
+        public final ConfigValue<Boolean> sync_aether_time;
         public final ConfigValue<String> portal_destination_dimension_ID;
         public final ConfigValue<String> portal_return_dimension_ID;
 
@@ -151,6 +152,10 @@ public class AetherConfig {
                 .comment("Sets the Aether's time cycle to be the same length as the Overworld's")
                 .translation("config.aether.server.modpack.normal_length_aether_time")
                 .define("Overworld-length Aether time cycle", false);
+            sync_aether_time = builder
+                .comment("Syncs the Aether's time cycle to the Overworld's")
+                .translation("config.aether.server.modpack.sync_aether_time")
+                .define("Syncs time cycles", false);
             portal_destination_dimension_ID = builder
                     .comment("Sets the ID of the dimension that the Aether Portal will send the player to")
                     .translation("config.aether.server.modpack.portal_destination_dimension_ID")
