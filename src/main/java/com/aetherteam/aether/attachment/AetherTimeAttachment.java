@@ -1,6 +1,5 @@
 package com.aetherteam.aether.attachment;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.network.packet.AetherTimeSyncPacket;
 import com.aetherteam.aether.world.AetherLevelData;
@@ -62,11 +61,11 @@ public class AetherTimeAttachment implements INBTSynchable {
      */
     public long tickTime(Level level) {
         long dayTime = level.getDayTime();
+        if (this.getDayTime() == -1) {
+            dayTime = getTicksPerDay() / 4;
+        }
         if (!this.isTimeSynced()) {
             if (this.isEternalDay() || this.getShouldWait()) {
-                if (this.getDayTime() == -1) {
-                    this.setDayTime(getTicksPerDay() / 4);
-                }
                 if (dayTime != getTicksPerDay() / 4) {
                     long tempTime = dayTime % (long) getTicksPerDay();
                     if (tempTime > getTicksPerDay() * 0.75) {
@@ -76,7 +75,11 @@ public class AetherTimeAttachment implements INBTSynchable {
                     dayTime += target;
                 }
                 if (!level.isClientSide() && level.getLevelData() instanceof AetherLevelData aetherLevelData) {
-                    if (aetherLevelData.getOverworldDayTime() == aetherLevelData.getDayTime()) {
+                    if (AetherConfig.SERVER.sync_aether_time.get()) {
+                        if (aetherLevelData.getOverworldDayTime() == aetherLevelData.getDayTime()) {
+                            this.setSynched(-1, Direction.DIMENSION, "setShouldWait", false, level);
+                        }
+                    } else if (this.getShouldWait()) {
                         this.setSynched(-1, Direction.DIMENSION, "setShouldWait", false, level);
                     }
                 }
