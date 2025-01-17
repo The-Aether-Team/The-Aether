@@ -51,15 +51,10 @@ public class DimensionHooks {
     public static int teleportationTimer;
 
     public static void teleportToDimension(Entity entity, ServerLevel destinationLevel, Vec3 position, Vec3 velocity) {
-        /*Level serverLevel = entity.level();
-        MinecraftServer minecraftserver = serverLevel.getServer();
-        if (minecraftserver!=null) {
-            ServerLevel destinationLevel = minecraftserver.getLevel(destinationLevelKey);*/
         if (destinationLevel!=null) {
-            entity.teleportTo(destinationLevel, position.x(), position.x(), position.z(), EnumSet.noneOf(RelativeMovement.class), entity.getYRot(), entity.getXRot());
+            entity.teleportTo(destinationLevel, position.x(), position.y(), position.z(), EnumSet.noneOf(RelativeMovement.class), entity.getYRot(), entity.getXRot());
             entity.setDeltaMovement(velocity);
             entity.hurtMarked = true;
-            //}
         }
     }
 

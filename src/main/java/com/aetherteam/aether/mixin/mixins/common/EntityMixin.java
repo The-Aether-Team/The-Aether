@@ -85,11 +85,11 @@ public class EntityMixin {
                 position = new Vec3(position.x(), destination.getMaxBuildHeight() + 160, position.z()); // change entity position to biuld height
                 teleportToDimension(entity, destination, position, entity.getDeltaMovement()); // Running this Properly Teleports the player, though I don't think it syncs capabilities properly
                 entity.setPortalCooldown();
-                //Entity target = entity; // passenger isn't being sent correctly still. replace the portal code with the teleport code.
+                Entity target = entity; // passenger isn't being sent correctly still. replace the portal code with the teleport code.
                 serverLevel.getProfiler().pop();
                 // Check for passengers.
 
-                /* // Something in here is setting player position to y=16
+
                 if (target != null) {
                     for (Entity passenger : passengers) {
                         passenger.stopRiding();
@@ -106,7 +106,7 @@ public class EntityMixin {
                     }
                 }
 
-                 */
+
                 return entity;
             }
         }
