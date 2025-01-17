@@ -71,7 +71,7 @@ public class DimensionHooks {
                     if (aetherPlayer.getPlayer() instanceof ServerPlayer serverPlayer) {
                         MinecraftServer server = serverPlayer.level().getServer();
                         ServerLevel aetherLevel = server.getLevel(AetherDimensions.AETHER_LEVEL);
-                        if (aetherLevel != null && serverPlayer.level().dimension() != AetherDimensions.AETHER_LEVEL) {
+                        if (aetherLevel != null && serverPlayer.level().dimension() == Level.OVERWORLD) {
                             if (aetherPlayer.getPlayer().changeDimension(aetherLevel, new AetherPortalForcer(aetherLevel, false, true)) != null) {
                                 serverPlayer.setRespawnPosition(AetherDimensions.AETHER_LEVEL, serverPlayer.blockPosition(), serverPlayer.getYRot(), true, false);
                                 aetherPlayer.setCanSpawnInAether(false); // Sets that the player has already spawned in the Aether.

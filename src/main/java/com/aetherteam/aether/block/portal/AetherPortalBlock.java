@@ -97,9 +97,9 @@ public class AetherPortalBlock extends Block {
 			ServerLevel destinationLevel = server.getLevel(destinationKey);
 			if (destinationLevel != null && !entity.isPassenger()) {
 				entity.level().getProfiler().push("aether_portal");
+				entity.changeDimension(destinationLevel, new AetherPortalForcer(destinationLevel, true)); // running this still updates the player's position to the correct one
 				teleportToDimension(entity, destinationLevel, entity.position(), entity.getDeltaMovement());
 				entity.setPortalCooldown();
-				entity.changeDimension(destinationLevel, new AetherPortalForcer(destinationLevel, true)); // running this still updates the player's position to the correct one
 				entity.level().getProfiler().pop();
 			}
 		}

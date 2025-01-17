@@ -88,8 +88,6 @@ public class EntityMixin {
                 Entity target = entity; // passenger isn't being sent correctly still. replace the portal code with the teleport code.
                 serverLevel.getProfiler().pop();
                 // Check for passengers.
-
-
                 if (target != null) {
                     for (Entity passenger : passengers) {
                         passenger.stopRiding();
@@ -105,8 +103,6 @@ public class EntityMixin {
                         DimensionHooks.teleportationTimer = 500; // Sets a timer marking that the player teleported from falling out of the Aether.
                     }
                 }
-
-
                 return entity;
             }
         }
