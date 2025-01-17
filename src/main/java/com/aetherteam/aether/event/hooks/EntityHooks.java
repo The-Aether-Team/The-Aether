@@ -149,19 +149,21 @@ public class EntityHooks {
         AccessoriesCapability handler = mob.accessoriesCapability();
         if (handler != null) {
             SlotType slotType = SlotTypeLoader.getSlotType(mob, identifier);
-            AccessoriesContainer container = handler.getContainer(slotType);
-            boolean empty = true;
-            if (container != null) {
-                ExpandedSimpleContainer stackHandler = container.getAccessories();
-                for (ItemStack slotResult : stackHandler.items) {
-                    if (!slotResult.isEmpty()) {
-                        empty = false;
+            if (slotType != null) {
+                AccessoriesContainer container = handler.getContainer(slotType);
+                boolean empty = true;
+                if (container != null) {
+                    ExpandedSimpleContainer stackHandler = container.getAccessories();
+                    for (ItemStack slotResult : stackHandler.items) {
+                        if (!slotResult.isEmpty()) {
+                            empty = false;
+                        }
                     }
-                }
-                if (empty) {
-                    Item item = getEquipmentForSlot(identifier, armorMaterials);
-                    if (item != null) {
-                        stackHandler.setItem(0, new ItemStack(item));
+                    if (empty) {
+                        Item item = getEquipmentForSlot(identifier, armorMaterials);
+                        if (item != null) {
+                            stackHandler.setItem(0, new ItemStack(item));
+                        }
                     }
                 }
             }
