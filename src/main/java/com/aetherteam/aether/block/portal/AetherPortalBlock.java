@@ -36,6 +36,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Optional;
 
+import static com.aetherteam.aether.event.hooks.DimensionHooks.teleportToDimension;
+
 public class AetherPortalBlock extends Block {
 	public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 	protected static final VoxelShape X_AXIS_AABB = Block.box(0.0, 0.0, 6.0, 16.0, 16.0, 10.0);
@@ -95,8 +97,9 @@ public class AetherPortalBlock extends Block {
 			ServerLevel destinationLevel = server.getLevel(destinationKey);
 			if (destinationLevel != null && !entity.isPassenger()) {
 				entity.level().getProfiler().push("aether_portal");
+				teleportToDimension(entity, destinationLevel, entity.position(), entity.getDeltaMovement());
 				entity.setPortalCooldown();
-				entity.changeDimension(destinationLevel, new AetherPortalForcer(destinationLevel, true));
+				entity.changeDimension(destinationLevel, new AetherPortalForcer(destinationLevel, true)); // running this still updates the player's position to the correct one
 				entity.level().getProfiler().pop();
 			}
 		}

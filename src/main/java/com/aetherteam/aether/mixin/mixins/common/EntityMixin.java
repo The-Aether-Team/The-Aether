@@ -21,6 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,6 +30,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.aetherteam.aether.event.hooks.DimensionHooks.teleportToDimension;
 
 @Mixin(Entity.class)
 public class EntityMixin {
@@ -78,10 +81,15 @@ public class EntityMixin {
             if (destination != null && LevelUtil.returnDimension() != LevelUtil.destinationDimension()) {
                 List<Entity> passengers = entity.getPassengers();
                 serverLevel.getProfiler().push("aether_fall");
+                Vec3 position = entity.position();
+                position = new Vec3(position.x(), destination.getMaxBuildHeight() + 160, position.z()); // change entity position to biuld height
+                teleportToDimension(entity, destination, position, entity.getDeltaMovement()); // Running this Properly Teleports the player, though I don't think it syncs capabilities properly
                 entity.setPortalCooldown();
-                Entity target = entity.changeDimension(destination, new AetherPortalForcer(destination, false));
+                //Entity target = entity; // passenger isn't being sent correctly still. replace the portal code with the teleport code.
                 serverLevel.getProfiler().pop();
                 // Check for passengers.
+
+                /* // Something in here is setting player position to y=16
                 if (target != null) {
                     for (Entity passenger : passengers) {
                         passenger.stopRiding();
@@ -97,7 +105,9 @@ public class EntityMixin {
                         DimensionHooks.teleportationTimer = 500; // Sets a timer marking that the player teleported from falling out of the Aether.
                     }
                 }
-                return target;
+
+                 */
+                return entity;
             }
         }
         return null;

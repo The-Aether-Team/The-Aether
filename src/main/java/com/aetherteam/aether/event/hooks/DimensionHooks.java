@@ -34,6 +34,13 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.RelativeMovement;
+import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.level.portal.PortalShape;
+import java.util.EnumSet;
+import java.util.function.Function;
+import java.util.Objects;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
@@ -42,6 +49,19 @@ public class DimensionHooks {
     public static boolean playerLeavingAether;
     public static boolean displayAetherTravel;
     public static int teleportationTimer;
+
+    public static void teleportToDimension(Entity entity, ServerLevel destinationLevel, Vec3 position, Vec3 velocity) {
+        /*Level serverLevel = entity.level();
+        MinecraftServer minecraftserver = serverLevel.getServer();
+        if (minecraftserver!=null) {
+            ServerLevel destinationLevel = minecraftserver.getLevel(destinationLevelKey);*/
+        if (destinationLevel!=null) {
+            entity.teleportTo(destinationLevel, position.x(), position.x(), position.z(), EnumSet.noneOf(RelativeMovement.class), entity.getYRot(), entity.getXRot());
+            entity.setDeltaMovement(velocity);
+            entity.hurtMarked = true;
+            //}
+        }
+    }
 
     /**
      * Spawns the player in the Aether dimension if the {@link AetherConfig.Server#spawn_in_aether} config is enabled.
@@ -52,6 +72,7 @@ public class DimensionHooks {
         AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
             if (AetherConfig.SERVER.spawn_in_aether.get()) {
                 if (aetherPlayer.canSpawnInAether()) { // Checks if the player has been set to spawn in the Aether.
+                    //TODO: replace this with teleportToDimension
                     if (aetherPlayer.getPlayer() instanceof ServerPlayer serverPlayer) {
                         MinecraftServer server = serverPlayer.level().getServer();
                         ServerLevel aetherLevel = server.getLevel(AetherDimensions.AETHER_LEVEL);
