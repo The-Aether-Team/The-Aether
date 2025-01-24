@@ -233,6 +233,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> enable_trivia;
         public final ConfigValue<Boolean> enable_silver_hearts;
         public final ConfigValue<Boolean> disable_accessory_button;
+        public final ConfigValue<Boolean> disable_skins_button;
         public final ConfigValue<Integer> portal_text_y;
         public final ConfigValue<Integer> button_inventory_x;
         public final ConfigValue<Integer> button_inventory_y;
@@ -292,6 +293,10 @@ public class AetherConfig {
                     .comment("Disables the Aether's accessories button from appearing in GUIs")
                     .translation("config.aether.client.gui.disable_accessory_button")
                     .define("Disables the accessories button", false);
+            disable_skins_button = builder
+                .comment("Disables the Aether's Moa Skins button from appearing in GUIs")
+                .translation("config.aether.client.gui.disable_skins_button")
+                .define("Disables the Moa Skins button", false);
             portal_text_y = builder
                     .comment("The y-coordinate of the Ascending to the Aether and Descending from the Aether text in loading screens")
                     .translation("config.aether.client.gui.portal_text_y")
@@ -321,13 +326,13 @@ public class AetherConfig {
                     .translation("config.aether.client.gui.button_accessories_y")
                     .define("Button y-coordinate in accessories menu", 68);
             layout_perks_x = builder
-                    .comment("The x-coordinate of the perks button layout when in the pause menu")
+                    .comment("The x-coordinate of the layout of perks buttons when in the pause menu")
                     .translation("config.aether.client.gui.layout_perks_x")
-                    .define("Layout x-coordinate in pause menu", -116);
+                    .define("Perks layout x-coordinate in pause menu", -116);
             layout_perks_y = builder
-                    .comment("The y-coordinate of the perks button layout when in the pause menu")
+                    .comment("The y-coordinate of the layout of perks buttons when in the pause menu")
                     .translation("config.aether.client.gui.layout_perks_y")
-                    .define("Layout y-coordinate in pause menu", 0);
+                    .define("Perks layout y-coordinate in pause menu", 0);
             enable_hammer_cooldown_overlay = builder
                     .comment("Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown")
                     .translation("config.aether.client.gui.enable_hammer_cooldown_overlay")

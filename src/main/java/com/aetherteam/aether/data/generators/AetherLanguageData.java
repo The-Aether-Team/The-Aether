@@ -1335,6 +1335,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");
         this.addClientConfig("gui", "enable_silver_hearts", "Makes the extra hearts given by life shards display as silver colored");
         this.addClientConfig("gui", "disable_accessory_button", "Disables the Aether's accessories button from appearing in GUIs");
+        this.addClientConfig("gui", "disable_skins_button", "Disables the Aether's Moa Skins button from appearing in GUIs");
         this.addClientConfig("gui", "portal_text_y", "The y-coordinate of the Ascending to the Aether and Descending from the Aether text in loading screens");
         this.addClientConfig("gui", "button_inventory_x", "The x-coordinate of the accessories button in the inventory and accessories menus");
         this.addClientConfig("gui", "button_inventory_y", "The y-coordinate of the accessories button in the inventory and accessories menus");
@@ -1342,8 +1343,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addClientConfig("gui", "button_creative_y", "The y-coordinate of the accessories button in the creative menu");
         this.addClientConfig("gui", "button_accessories_x", "The x-coordinate of the accessories button in the accessories menu");
         this.addClientConfig("gui", "button_accessories_y", "The y-coordinate of the accessories button in the accessories menu");
-        this.addClientConfig("gui", "layout_perks_x", "The x-coordinate of the perks button layout when in the pause menu");
-        this.addClientConfig("gui", "layout_perks_y", "The y-coordinate of the perks button layout when in the pause menu");
+        this.addClientConfig("gui", "layout_perks_x", "The x-coordinate of the layout of perks buttons when in the pause menu");
+        this.addClientConfig("gui", "layout_perks_y", "The y-coordinate of the layout of perks buttons when in the pause menu");
         this.addClientConfig("gui", "enable_hammer_cooldown_overlay", "Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown");
 
         this.addClientConfig("audio", "blue_aercloud_bounce_sfx", "Makes Blue Aerclouds have their wobbly sounds that play when bouncing on them");

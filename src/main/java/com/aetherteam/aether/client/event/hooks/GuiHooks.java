@@ -109,21 +109,28 @@ public class GuiHooks {
     @Nullable
     public static GridLayout setupPerksButtons(Screen screen) {
         if (screen instanceof PauseScreen) {
+            User user = UserData.Client.getClientUser();
             int x = AetherConfig.CLIENT.layout_perks_x.get();
             int y = AetherConfig.CLIENT.layout_perks_y.get();
 
             // Sets up the GridLayout.
             GridLayout gridLayout = new GridLayout();
-            gridLayout.defaultCellSetting().padding(4, 4, 4, 0);
+            gridLayout.defaultCellSetting().padding(58, 4, 4, 0);
             GridLayout.RowHelper rowHelper = gridLayout.createRowHelper(1);
 
-            createSkinsButton(screen, gridLayout, rowHelper); // Skins button.
-
-            User user = UserData.Client.getClientUser();
-            if (user != null && (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user))) { // Only add the customizations button if the User has perks.
-                createCustomizationsButton(screen, rowHelper); // Customizations button.
+            if (user != null) {
+                if (AetherConfig.CLIENT.disable_skins_button.get() || PerkUtil.hasAnyMoaSkins().test(user)) { // Add the skins button if the config is enabled. If not, only display for players with access.
+                    createSkinsButton(screen, rowHelper); // Skins button.
+                } else {
+                    y -= 6;
+                }
+                if (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user)) { // Only add the customizations button if the User has perks.
+                    createCustomizationsButton(screen, rowHelper); // Customizations button.
+                } else {
+                    y -= 6;
+                }
             } else {
-                y -= 6;
+                y -= 12;
             }
 
             // Arranges and aligns the GridLayout.
@@ -139,15 +146,14 @@ public class GuiHooks {
      * Creates the button for the {@link MoaSkinsScreen}.
      *
      * @param screen     The parent {@link Screen}.
-     * @param gridLayout The {@link GridLayout} for the button.
      * @param rowHelper  The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
      */
-    private static void createSkinsButton(Screen screen, GridLayout gridLayout, GridLayout.RowHelper rowHelper) {
+    private static void createSkinsButton(Screen screen, GridLayout.RowHelper rowHelper) {
         ImageButton skinsButton = new ImageButton(0, 0, 20, 20, AetherAccessoriesScreen.SKINS_BUTTON,
                 (pressed) -> Minecraft.getInstance().setScreen(new MoaSkinsScreen(screen)),
                 Component.translatable("gui.aether.accessories.skins_button"));
         skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
-        rowHelper.addChild(skinsButton, gridLayout.newCellSettings().paddingTop(58));
+        rowHelper.addChild(skinsButton);
     }
 
     /**
