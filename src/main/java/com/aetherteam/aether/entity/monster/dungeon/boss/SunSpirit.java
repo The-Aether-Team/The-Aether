@@ -81,6 +81,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     private static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> DATA_FROZEN_DURATION = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
+    private static final EntityDataAccessor<Boolean> DATA_DISPLAY_WEAK_MESSAGE = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     private static final Music SUN_SPIRIT_MUSIC = new Music(AetherSoundEvents.MUSIC_BOSS_SUN_SPIRIT, 0, 0, true);
     public static final Map<Block, Function<BlockState, BlockState>> DUNGEON_BLOCK_CONVERSIONS = new HashMap<>(Map.ofEntries(
         Map.entry(AetherBlocks.LOCKED_HELLFIRE_STONE.get(), (blockState) -> AetherBlocks.HELLFIRE_STONE.get().defaultBlockState()),
@@ -155,6 +156,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         builder.define(DATA_IS_FROZEN, false);
         builder.define(DATA_FROZEN_DURATION, 0);
         builder.define(DATA_BOSS_NAME, Component.literal("Sun Spirit"));
+        builder.define(DATA_DISPLAY_WEAK_MESSAGE, true);
     }
 
     /**
@@ -323,6 +325,10 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     public boolean hurt(DamageSource source, float amount) {
         boolean flag = super.hurt(source, amount);
         if (!this.level().isClientSide() && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity && source.getDirectEntity() instanceof IceCrystal) {
+            if (this.getDisplayWeakMessage()) {
+                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.message.attack.weakened"));
+                this.setDisplayWeakMessage(false);
+            }
             this.setFrozen(true);
             this.setFrozenDuration(SUN_SPIRIT_FROZEN_DURATION);
             FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level());
@@ -530,6 +536,22 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     public void setBossName(Component component) {
         this.getEntityData().set(DATA_BOSS_NAME, component);
         this.bossFight.setName(component);
+    }
+
+    /**
+     * @return Whether the message notifying the player to damage the Sun Spirit when frozen should be displayed, as a {@link Boolean}.
+     */
+    public boolean getDisplayWeakMessage() {
+        return this.getEntityData().get(DATA_DISPLAY_WEAK_MESSAGE);
+    }
+
+    /**
+     * Determines whether a message should be displayed notifying the player to damage the Sun Spirit when frozen.
+     *
+     * @param display Whether the message can be displayed, as a {@link Boolean}.
+     */
+    public void setDisplayWeakMessage(boolean display) {
+        this.getEntityData().set(DATA_DISPLAY_WEAK_MESSAGE, display);
     }
 
     /**

@@ -736,6 +736,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
         this.addGuiText("slider.title", "the Slider");
         this.addGuiText("slider.message.attack.invalid", "Hmm. Perhaps I need to attack it with a Pickaxe?");
+        this.addGuiText("sun_spirit.message.attack.weakened", "I should try attacking the Sun Spirit while it's frozen!");
 
         // Valkyrie Dialogue
         this.addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");
