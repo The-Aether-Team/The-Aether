@@ -23,6 +23,7 @@ import java.util.function.Supplier;
  * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherTimeHooks
  */
 public class AetherTimeAttachment implements INBTSynchable {
+    private static int ticksPerDayMultiplier = -1;
     private long dayTime = -1;
     private boolean isEternalDay = true;
     private boolean shouldWait = false;
@@ -148,7 +149,10 @@ public class AetherTimeAttachment implements INBTSynchable {
     }
 
     public static int getTicksPerDayMultiplier() {
-        return AetherConfig.SERVER.normal_length_aether_time.get() || AetherConfig.SERVER.sync_aether_time.get() ? 1 : 3;
+        if (ticksPerDayMultiplier < 0) {
+            ticksPerDayMultiplier = AetherConfig.SERVER.normal_length_aether_time.get() || AetherConfig.SERVER.sync_aether_time.get() ? 1 : 3;
+        }
+        return ticksPerDayMultiplier;
     }
 
     public static int getTicksPerDay() {
