@@ -131,7 +131,7 @@ public class DimensionHooks {
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onInteractWithPortalFrame(PlayerInteractEvent.RightClickBlock)
      */
     public static boolean createPortal(Player player, Level level, BlockPos pos, @Nullable Direction direction, ItemStack stack, InteractionHand hand) {
-        if (!ModList.get().isLoaded("immersive_portals")) {
+        if (!ModList.get().isLoaded("immersive_portals_core")) {
             if (direction != null) {
                 BlockPos relativePos = pos.relative(direction);
                 if (stack.is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS)) { // Checks if the item can activate the portal.
@@ -172,7 +172,7 @@ public class DimensionHooks {
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onWaterExistsInsidePortalFrame(BlockEvent.NeighborNotifyEvent)
      */
     public static boolean detectWaterInFrame(LevelAccessor levelAccessor, BlockPos pos, BlockState blockState, FluidState fluidState) {
-        if (!ModList.get().isLoaded("immersive_portals")) {
+        if (!ModList.get().isLoaded("immersive_portals_core")) {
             if (levelAccessor instanceof Level level) {
                 if (fluidState.is(Fluids.WATER) && fluidState.createLegacyBlock().getBlock() == blockState.getBlock()) {
                     if ((level.dimension() == LevelUtil.returnDimension() || level.dimension() == LevelUtil.destinationDimension()) && !AetherConfig.SERVER.disable_aether_portal.get()) {
