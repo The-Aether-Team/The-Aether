@@ -8,6 +8,13 @@ import java.util.function.Predicate;
 
 public final class PerkUtil {
     /**
+     * @return A {@link Predicate} to check if a {@link User} has access to any Moa skins.
+     */
+    public static Predicate<User> hasAnyMoaSkins() {
+        return (user) -> hasHumanMoaSkins().test(user) || hasAscentanMoaSkins().test(user) || hasValkyrieMoaSkins().test(user) || hasLifetimeAscentanMoaSkins().test(user) || hasLifetimeValkyrieMoaSkins().test(user);
+    }
+
+    /**
      * @return A {@link Predicate} to check if a {@link User} has access to Valkyrie-tier Moa skins for a lifetime period.
      */
     public static Predicate<User> hasLifetimeValkyrieMoaSkins() {

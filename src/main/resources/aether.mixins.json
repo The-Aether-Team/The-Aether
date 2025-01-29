@@ -6,7 +6,6 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "aether.refmap.json",
   "mixins": [
-    "client.accessor.MinecraftAccessor",
     "common.AbstractArrowMixin",
     "common.ArmorStandMixin",
     "common.DimensionTypeMixin",
@@ -58,6 +57,7 @@
     "client.accessor.HeartTypeAccessor",
     "client.accessor.I18nAccessor",
     "client.accessor.LevelRendererAccessor",
+    "client.accessor.MinecraftAccessor",
     "client.accessor.PlayerModelAccessor",
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.ScreenAccessor",
