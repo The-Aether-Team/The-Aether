@@ -1,0 +1,18 @@
+{
+	"conditions": [
+		{
+			"modid": "jeed",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "jeed:effect_provider",
+	"effect": "aether:remedy",
+	"providers": [
+    {
+      "item": "aether:white_apple"
+    },
+    {
+      "item": "aether:skyroot_remedy_bucket"
+    }
+	]
+}
