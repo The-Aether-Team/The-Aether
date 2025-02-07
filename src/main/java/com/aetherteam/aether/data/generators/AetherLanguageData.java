@@ -825,6 +825,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.red_moa", "Red Moa");
         this.addMoaSkinsText("skin.green_moa", "Green Moa");
         this.addMoaSkinsText("skin.purple_moa", "Purple Moa");
+        this.addMoaSkinsText("skin.pink_moa", "Pink Moa");
         this.addMoaSkinsText("skin.bronze_moa", "Bronze Moa");
         this.addMoaSkinsText("skin.silver_moa", "Silver Moa");
         this.addMoaSkinsText("skin.gold_moa", "Gold Moa");

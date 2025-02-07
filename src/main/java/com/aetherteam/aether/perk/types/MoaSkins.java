@@ -105,6 +105,14 @@ public class MoaSkins {
             .saddleLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
             .info(new MoaSkin.Info(User.Tier.HUMAN, false))
         ));
+        register("pink_moa", new MoaSkin("pink_moa", new MoaSkin.Properties()
+            .displayName(Component.translatable("gui.aether.moa_skins.skin.pink_moa"))
+            .userPredicate((user) -> PerkUtil.hasHumanMoaSkins().test(user))
+            .iconLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/icons/pink_moa_icon"))
+            .skinLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/skins/pink_moa/pink_moa.png"))
+            .saddleLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
+            .info(new MoaSkin.Info(User.Tier.HUMAN, false))
+        ));
         register("bronze_moa", new MoaSkin("bronze_moa", new MoaSkin.Properties()
             .displayName(Component.translatable("gui.aether.moa_skins.skin.bronze_moa"))
             .userPredicate((user) -> PerkUtil.hasHumanMoaSkins().test(user))
