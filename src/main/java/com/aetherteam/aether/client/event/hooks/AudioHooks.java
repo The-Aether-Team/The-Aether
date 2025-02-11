@@ -27,7 +27,7 @@ public class AudioHooks {
      * @see com.aetherteam.aether.client.event.listeners.AudioListener#onPlaySound(PlaySoundEvent)
      */
     public static boolean shouldCancelMusic(SoundInstance sound) {
-        if (!AetherConfig.CLIENT.disable_music_manager.get()) {
+        if (Minecraft.getInstance().level != null && !AetherConfig.CLIENT.disable_music_manager.get()) {
             Holder<SoundEvent> soundEvent = getSoundEvent(sound);
             if (sound.getSource() == SoundSource.MUSIC && soundEvent != null && !soundEvent.is(AetherTags.SoundEvents.ACHIEVEMENT_SOUNDS)) {
                 // Check whether there is Aether music and the sound that attempts to play does not match it.
