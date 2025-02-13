@@ -44,6 +44,7 @@ import com.aetherteam.aether.item.combat.loot.FlamingSwordItem;
 import com.aetherteam.aether.item.combat.loot.HolySwordItem;
 import com.aetherteam.aether.item.combat.loot.PigSlayerItem;
 import com.aetherteam.aether.item.components.AetherDataComponents;
+import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
 import com.aetherteam.aether.loot.modifiers.AetherLootModifiers;
@@ -70,6 +71,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackSelectionConfig;
@@ -81,6 +83,7 @@ import net.minecraft.server.packs.repository.PackCompatibility;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -98,6 +101,7 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
+import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -260,6 +264,7 @@ public class Aether {
     }
 
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
+        // Blocks
         event.registerBlock(Capabilities.ItemHandler.BLOCK, (level, pos, state, blockEntity, side) -> {
             TreasureChestBlockEntity entity = (TreasureChestBlockEntity) blockEntity;
             if (!(state.getBlock() instanceof ChestBlock)) {
@@ -279,6 +284,13 @@ public class Aether {
 
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, AetherBlockEntityTypes.INCUBATOR.get(), (incubator, side) ->
                 side == null ? new InvWrapper(incubator) : new SidedInvWrapper(incubator, side));
+
+        // Items
+        for (Item item : BuiltInRegistries.ITEM) {
+            if (item.getClass() == SkyrootBucketItem.class) {
+                event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new FluidBucketWrapper(stack), item);
+            }
+        }
     }
 
     public void registerDataMaps(RegisterDataMapTypesEvent event) {
