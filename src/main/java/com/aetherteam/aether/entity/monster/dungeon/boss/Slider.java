@@ -38,7 +38,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -141,7 +140,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
         this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
         this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, false));
+        this.targetSelector.addGoal(2, new SliderNearestAttackableTargetGoal<>(this, Player.class, false));
     }
 
     @Override
