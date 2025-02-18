@@ -205,7 +205,7 @@ public class EntityListener {
                 }
                 if (capsTag != null && capsTag.contains("curios:inventory")) {
                     CompoundTag curiosInventoryTag = capsTag.getCompound("curios:inventory");
-                    if (curiosInventoryTag.contains("Curios")) {
+                    if (curiosInventoryTag.contains("Curios") && !curiosInventoryTag.getBoolean("AccessoriesEncoded")) {
                         Tag curiosTag = curiosInventoryTag.get("Curios");
                         if (curiosTag instanceof ListTag curiosListTag) {
                             for (Tag tag : curiosListTag) {
