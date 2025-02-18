@@ -13,13 +13,16 @@ public class SkyrootBucketWrapper extends FluidBucketWrapper {
     }
 
     @Override
+    public boolean canFillFluidType(FluidStack fluid) {
+        return fluid.is(AetherTags.Fluids.ALLOWED_BUCKET_PICKUP);
+    }
+
+    @Override
     protected void setFluid(FluidStack fluidStack) {
         if (fluidStack.isEmpty()) {
             this.container = new ItemStack(AetherItems.SKYROOT_BUCKET.get());
         } else {
-            if (fluidStack.is(AetherTags.Fluids.ALLOWED_BUCKET_PICKUP))  {
-                this.container = SkyrootBucketItem.swapBucketType(FluidUtil.getFilledBucket(fluidStack));
-            }
+            this.container = SkyrootBucketItem.swapBucketType(FluidUtil.getFilledBucket(fluidStack));
         }
     }
 }
