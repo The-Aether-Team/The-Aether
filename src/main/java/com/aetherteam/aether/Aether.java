@@ -45,6 +45,7 @@ import com.aetherteam.aether.item.combat.loot.HolySwordItem;
 import com.aetherteam.aether.item.combat.loot.PigSlayerItem;
 import com.aetherteam.aether.item.components.AetherDataComponents;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
+import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketWrapper;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
 import com.aetherteam.aether.loot.modifiers.AetherLootModifiers;
@@ -290,12 +291,12 @@ public class Aether {
         // Items
         for (Item item : BuiltInRegistries.ITEM) {
             if (item.getClass() == SkyrootBucketItem.class) {
-                event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new FluidBucketWrapper(stack), item);
+                event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new SkyrootBucketWrapper(stack), item);
             }
         }
         
         if (NeoForgeMod.MILK.isBound()) {
-            event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new FluidBucketWrapper(stack), AetherItems.SKYROOT_MILK_BUCKET);
+            event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new SkyrootBucketWrapper(stack), AetherItems.SKYROOT_MILK_BUCKET);
         }
     }
 
