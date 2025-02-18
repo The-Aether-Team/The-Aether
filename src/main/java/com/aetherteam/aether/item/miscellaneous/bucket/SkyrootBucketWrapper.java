@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.miscellaneous.bucket;
 
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -16,7 +17,9 @@ public class SkyrootBucketWrapper extends FluidBucketWrapper {
         if (fluidStack.isEmpty()) {
             this.container = new ItemStack(AetherItems.SKYROOT_BUCKET.get());
         } else {
-            this.container = FluidUtil.getFilledBucket(fluidStack);
+            if (fluidStack.is(AetherTags.Fluids.ALLOWED_BUCKET_PICKUP))  {
+                this.container = SkyrootBucketItem.swapBucketType(FluidUtil.getFilledBucket(fluidStack));
+            }
         }
     }
 }
