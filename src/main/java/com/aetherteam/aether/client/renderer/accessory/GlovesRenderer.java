@@ -11,6 +11,7 @@ import io.wispforest.accessories.api.client.AccessoryRenderer;
 import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -109,8 +110,8 @@ public class GlovesRenderer implements AccessoryRenderer {
     @Override
     public <M extends LivingEntity> void renderOnFirstPerson(HumanoidArm arm, ItemStack stack, SlotReference reference, PoseStack matrices, EntityModel<M> model, MultiBufferSource multiBufferSource, int light) {
         LivingEntity livingEntity = reference.entity();
-        if (livingEntity instanceof AbstractClientPlayer player) {
-            this.renderFirstPerson(stack, matrices, multiBufferSource, light, player, arm);
+        if (livingEntity instanceof AbstractClientPlayer player && model instanceof HumanoidModel<M> humanoidModel) {
+            this.renderFirstPerson(stack, matrices, multiBufferSource, light, player, humanoidModel, arm);
         }
     }
 
@@ -124,9 +125,10 @@ public class GlovesRenderer implements AccessoryRenderer {
      * @param player      The {@link AbstractClientPlayer} to render for.
      * @param arm         The {@link HumanoidArm} to render on.
      */
-    public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm) {
+    public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidModel<?> humanoidModel, HumanoidArm arm) {
         GlovesModel model = this.glovesFirstPerson;
         GlovesModel trimModel = this.glovesTrimFirstPerson;
+        ModelPart playerArm = arm == HumanoidArm.RIGHT ? humanoidModel.rightArm : humanoidModel.leftArm;
 
         GlovesItem glovesItem = (GlovesItem) stack.getItem();
         VertexConsumer consumer = buffer.getBuffer(RenderType.armorCutoutNoCull(glovesItem.getGlovesTexture()));
@@ -140,8 +142,8 @@ public class GlovesRenderer implements AccessoryRenderer {
         model.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 
         ModelPart gloveArm = arm == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
+        gloveArm.copyFrom(playerArm);
         gloveArm.visible = true;
-        gloveArm.xRot = 0.0F;
 
         boolean isSlim = player.getSkin().model() == PlayerSkin.Model.SLIM;
         boolean flag = arm != HumanoidArm.LEFT;
@@ -160,8 +162,8 @@ public class GlovesRenderer implements AccessoryRenderer {
             trimModel.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 
             ModelPart gloveTrimArm = arm == HumanoidArm.RIGHT ? trimModel.rightArm : trimModel.leftArm;
+            gloveTrimArm.copyFrom(playerArm);
             gloveTrimArm.visible = true;
-            gloveTrimArm.xRot = 0.0F;
 
             TextureAtlasSprite textureAtlasSprite = this.armorTrimAtlas.getSprite(trim.outerTexture(glovesItem.getMaterial()));
             VertexConsumer trimConsumer = textureAtlasSprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet(trim.pattern().value().decal())));
