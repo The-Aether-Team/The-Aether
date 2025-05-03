@@ -36,13 +36,12 @@ public class SentryRenderer extends MobRenderer<Sentry, SentryRenderState, Slime
      *
      * @param sentry       The {@link Sentry} entity.
      * @param poseStack    The rendering {@link PoseStack}.
-     * @param partialTicks The {@link Float} for the game's partial ticks.
      */
     @Override
-    protected void scale(SentryRenderState sentry, PoseStack poseStack, float partialTicks) {
+    protected void scale(SentryRenderState sentry, PoseStack poseStack) {
         float f = 0.879F;
         poseStack.scale(f, f, f);
-        float f1 = sentry.getSize() + 1.0F;
+        float f1 = sentry.scale + 1.0F;
         float f2 = 0.0F;
         float f3 = 1.0F / (f2 + 1.0F);
         poseStack.scale(f3 * f1, 1.0F / f3 * f1, f3 * f1);

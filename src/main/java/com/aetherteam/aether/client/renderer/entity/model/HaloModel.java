@@ -1,12 +1,12 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.aetherteam.aether.client.renderer.entity.state.PhygRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 
-public class HaloModel<T extends PhygRenderState> extends EntityModel<T> {
+public class HaloModel<T extends EntityRenderState> extends EntityModel<T> {
     public final ModelPart halo;
 
     public HaloModel(ModelPart root) {

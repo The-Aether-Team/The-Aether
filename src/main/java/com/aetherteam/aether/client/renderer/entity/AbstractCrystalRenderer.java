@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.renderer.entity;
 
 import com.aetherteam.aether.client.renderer.entity.model.CrystalModel;
+import com.aetherteam.aether.client.renderer.entity.state.CrystalRenderState;
 import com.aetherteam.aether.entity.projectile.crystal.AbstractCrystal;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -13,12 +14,19 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
-public abstract class AbstractCrystalRenderer<T extends AbstractCrystal> extends EntityRenderer<T, EntityRenderState> {
-    private final CrystalModel<AbstractCrystal> crystal;
+public abstract class AbstractCrystalRenderer<T extends AbstractCrystal, R extends CrystalRenderState> extends EntityRenderer<T, R> {
+    private final CrystalModel<CrystalRenderState> crystal;
 
-    public AbstractCrystalRenderer(EntityRendererProvider.Context context, CrystalModel<AbstractCrystal> crystalModel) {
+    public AbstractCrystalRenderer(EntityRendererProvider.Context context, CrystalModel<CrystalRenderState> crystalModel) {
         super(context);
         this.crystal = crystalModel;
+    }
+
+    @Override
+    public void extractRenderState(T p_entity, R reusedState, float partialTick) {
+        super.extractRenderState(p_entity, reusedState, partialTick);
+        reusedState.xRot = p_entity.getXRot(partialTick);
+        reusedState.yRot = p_entity.getYRot(partialTick);
     }
 
     /**
@@ -30,7 +38,7 @@ public abstract class AbstractCrystalRenderer<T extends AbstractCrystal> extends
      * @param packedLight  The {@link Integer} for the packed lighting for rendering.
      */
     @Override
-    public void render(EntityRenderState renderState, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(R renderState, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.translate(0.0, 0.4, 0.0);
         VertexConsumer iVertexBuilder = buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(renderState)));
@@ -45,5 +53,5 @@ public abstract class AbstractCrystalRenderer<T extends AbstractCrystal> extends
         super.render(renderState, poseStack, buffer, packedLight);
     }
 
-    protected abstract ResourceLocation getTextureLocation(EntityRenderState crystal);
+    protected abstract ResourceLocation getTextureLocation(R crystal);
 }

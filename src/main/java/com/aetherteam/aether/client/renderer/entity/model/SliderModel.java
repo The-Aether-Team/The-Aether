@@ -1,17 +1,16 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.aetherteam.aether.client.renderer.entity.state.SliderRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-public class SliderModel extends EntityModel<Slider> {
+public class SliderModel extends EntityModel<SliderRenderState> {
     public final ModelPart slider;
 
     public SliderModel(ModelPart root) {
+        super(root);
         this.slider = root.getChild("slider");
     }
 
@@ -23,11 +22,6 @@ public class SliderModel extends EntityModel<Slider> {
     }
 
     @Override
-    public void setupAnim(Slider slider, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
-        this.slider.render(poseStack, consumer, packedLight, packedOverlay, color);
+    public void setupAnim(SliderRenderState slider, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
     }
 }

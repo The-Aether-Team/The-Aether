@@ -6,6 +6,7 @@ import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.layers.*;
 import com.aetherteam.aether.client.renderer.entity.model.MoaModel;
+import com.aetherteam.aether.client.renderer.entity.state.MoaRenderState;
 import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
@@ -20,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.UUID;
 
-public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
+public class MoaRenderer extends MobRenderer<Moa, MoaRenderState, MoaModel> {
     private static final ResourceLocation DEFAULT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/white_moa.png");
     private static final ResourceLocation MOS_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/mos.png");
     private static final ResourceLocation RAPTOR_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/raptor.png");
@@ -34,18 +35,36 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
         this.addLayer(new MoaSaddleEmissiveLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
     }
 
+    @Override
+    public MoaRenderState createRenderState() {
+        return new MoaRenderState();
+    }
+
+    @Override
+    public void extractRenderState(Moa entity, MoaRenderState reusedState, float partialTick) {
+        super.extractRenderState(entity, reusedState, partialTick);
+        reusedState.isEntityOnGround = entity.isEntityOnGround();
+        reusedState.renderLegs = !entity.isSitting() || (!entity.isEntityOnGround() && entity.isSitting());
+        reusedState.sitting = entity.isSitting();
+        reusedState.ageInTicks = getBob(reusedState, entity, partialTick);
+        reusedState.rider = entity.getRider();
+        reusedState.lastRider = entity.getLastRider();
+        reusedState.moaUUID = entity.getMoaUUID();
+        reusedState.location = entity.getMoaTypeTexture();
+        reusedState.saddleLocation = entity.getMoaTypeSaddleTexture();
+    }
+
     /**
      * Scales the Moa and also repositions it if it is sitting.
      *
-     * @param moa          The {@link Moa} entity.
+     * @param moa          The {@link MoaRenderState} entity.
      * @param poseStack    The rendering {@link PoseStack}.
-     * @param partialTicks The {@link Float} for the game's partial ticks.
      */
     @Override
-    protected void scale(Moa moa, PoseStack poseStack, float partialTicks) {
-        float moaScale = moa.isBaby() ? 1.0F : 1.8F;
+    protected void scale(MoaRenderState moa, PoseStack poseStack) {
+        float moaScale = moa.isBaby ? 1.0F : 1.8F;
         poseStack.scale(moaScale, moaScale, moaScale);
-        if (moa.isSitting()) {
+        if (moa.sitting) {
             poseStack.translate(0.0, 0.5, 0.0);
         }
     }
@@ -57,36 +76,35 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
      * @param partialTicks The {@link Float} for the game's partial ticks.
      * @return The {@link Float} for the petal rotation.
      */
-    @Override
-    protected float getBob(Moa moa, float partialTicks) {
-        return this.model.setupWingsAnimation(moa, partialTicks);
+    protected float getBob(MoaRenderState state, Moa moa, float partialTicks) {
+        return state.setupWingsAnimation(moa, partialTicks);
     }
 
     /**
      * Retrieves the texture for the Moa, whether it be from the {@link MoaType}, a player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, or an Easter Egg skin.
      *
-     * @param moa The {@link Moa} to retrieve the skin from.
+     * @param moa The {@link MoaRenderState} to retrieve the skin from.
      * @return The {@link ResourceLocation} for the emissive texture.
      */
     @Override
-    public ResourceLocation getTextureLocation(Moa moa) {
+    public ResourceLocation getTextureLocation(MoaRenderState moa) {
         return getTexture(moa);
     }
 
-    public static ResourceLocation getTexture(Moa moa) {
+    public static ResourceLocation getTexture(MoaRenderState moa) {
         ResourceLocation moaSkin = getMoaSkinLocation(moa);
         if (moaSkin != null) {
             return moaSkin;
         }
-        if (moa.hasCustomName() && moa.getName().getString().equals("Mos")) {
+        if (moa.customName != null && moa.customName.getString().equals("Mos")) {
             return MOS_TEXTURE;
         }
-        if ((moa.hasCustomName() && moa.getName().getString().equals("Raptor__") && moa.getMoaTypeKey() == AetherMoaTypes.BLUE)
-            || (moa.getRider() != null && moa.getRider().equals(UUID.fromString("c3e6871e-8e60-490a-8a8d-2bbe35ad1604")))) { // Raptor__
+        if ((moa.customName != null && moa.customName.getString().equals("Raptor__") && moa.type == AetherMoaTypes.BLUE)
+            || (moa.rider != null && moa.rider.equals(UUID.fromString("c3e6871e-8e60-490a-8a8d-2bbe35ad1604")))) { // Raptor__
             return RAPTOR_TEXTURE;
         }
-        MoaType moaType = moa.getMoaType();
-        return moaType == null ? DEFAULT_TEXTURE : moaType.moaTexture();
+        ResourceLocation moaType = moa.location;
+        return moaType == null ? DEFAULT_TEXTURE : moaType;
     }
 
     /**
@@ -96,9 +114,9 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
      * @return The {@link ResourceLocation} for the emissive texture.
      */
     @Nullable
-    private static ResourceLocation getMoaSkinLocation(Moa moa) {
-        UUID lastRiderUUID = moa.getLastRider();
-        UUID moaUUID = moa.getMoaUUID();
+    private static ResourceLocation getMoaSkinLocation(MoaRenderState moa) {
+        UUID lastRiderUUID = moa.lastRider;
+        UUID moaUUID = moa.moaUUID;
         Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
         if (Minecraft.getInstance().screen instanceof MoaSkinsScreen moaSkinsScreen && moaSkinsScreen.getSelectedSkin() != null && moaSkinsScreen.getPreviewMoa() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID().equals(moaUUID)) {
             return moaSkinsScreen.getSelectedSkin().getSkinLocation();

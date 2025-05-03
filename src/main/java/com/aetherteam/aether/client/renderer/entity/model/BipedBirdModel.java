@@ -1,17 +1,13 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.aetherteam.aether.entity.NotGrounded;
-import com.aetherteam.aether.entity.WingedBird;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.aetherteam.aether.client.renderer.entity.state.BirdRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 
-public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded> extends EntityModel<T> {
+public abstract class BipedBirdModel<T extends BirdRenderState> extends EntityModel<T> {
     public final ModelPart head;
     public final ModelPart jaw;
     public final ModelPart neck;
@@ -25,6 +21,7 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
     public final ModelPart leftTailFeather;
 
     public BipedBirdModel(ModelPart root) {
+        super(root);
         this.head = root.getChild("head");
         this.jaw = this.head.getChild("jaw");
         this.neck = this.head.getChild("neck");
@@ -56,44 +53,30 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
     }
 
     @Override
-    public void setupAnim(T bipedBird, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.xRot = headPitch * Mth.DEG_TO_RAD;
-        this.head.yRot = netHeadYaw * Mth.DEG_TO_RAD;
+    public void setupAnim(T bipedBird) {
+        this.head.xRot = bipedBird.xRot * Mth.DEG_TO_RAD;
+        this.head.yRot = bipedBird.yRot * Mth.DEG_TO_RAD;
         this.neck.xRot = -this.head.xRot;
 
-        if (!bipedBird.isEntityOnGround()) {
+        if (!bipedBird.isEntityOnGround) {
             this.rightWing.setPos(-3.001F, 0.0F, 4.0F);
             this.leftWing.setPos(3.001F, 0.0F, 4.0F);
             this.rightWing.xRot = -Mth.HALF_PI;
             this.leftWing.xRot = this.rightWing.xRot;
             this.rightLeg.xRot = 0.6F;
             this.leftLeg.xRot = this.rightLeg.xRot;
-            this.rightWing.yRot = ageInTicks;
+            this.rightWing.yRot = bipedBird.ageInTicks;
         } else {
             this.rightWing.setPos(-3.001F, -3.0F, 3.0F);
             this.leftWing.setPos(3.001F, -3.0F, 3.0F);
             this.rightWing.xRot = 0.0F;
             this.leftWing.xRot = 0.0F;
-            this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-            this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + Mth.PI) * 1.4F * limbSwingAmount;
+            this.rightLeg.xRot = Mth.cos(bipedBird.walkAnimationSpeed * 0.6662F) * 1.4F * bipedBird.walkAnimationPos;
+            this.leftLeg.xRot = Mth.cos(bipedBird.walkAnimationSpeed * 0.6662F + Mth.PI) * 1.4F * bipedBird.walkAnimationPos;
             this.rightWing.yRot = 0.0F;
         }
 
         this.leftWing.yRot = -this.rightWing.yRot;
     }
 
-    public float setupWingsAnimation(T bipedBird, float partialTicks) {
-        float rotVal = Mth.lerp(partialTicks, bipedBird.getPrevWingRotation(), bipedBird.getWingRotation());
-        float destVal = Mth.lerp(partialTicks, bipedBird.getPrevWingDestPos(), bipedBird.getWingDestPos());
-        return (Mth.sin(rotVal * 0.225F) + 1.0F) * destVal;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
-        this.head.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.body.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.rightTailFeather.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.middleTailFeather.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.leftTailFeather.render(poseStack, consumer, packedLight, packedOverlay, color);
-    }
 }

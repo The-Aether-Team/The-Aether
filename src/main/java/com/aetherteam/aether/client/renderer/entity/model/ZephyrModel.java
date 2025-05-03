@@ -1,8 +1,6 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.aetherteam.aether.entity.monster.Zephyr;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.aetherteam.aether.client.renderer.entity.state.ZephyrRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -12,7 +10,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class ZephyrModel extends EntityModel<Zephyr> {
+public class ZephyrModel extends EntityModel<ZephyrRenderState> {
     public final ModelPart rightFace;
     public final ModelPart leftFace;
     public final ModelPart mouth;
@@ -27,6 +25,7 @@ public class ZephyrModel extends EntityModel<Zephyr> {
     public final ModelPart tailEnd;
 
     public ZephyrModel(ModelPart model) {
+        super(model);
         this.rightFace = model.getChild("right_face");
         this.leftFace = model.getChild("left_face");
         this.mouth = model.getChild("mouth");
@@ -60,8 +59,8 @@ public class ZephyrModel extends EntityModel<Zephyr> {
     }
 
     @Override
-    public void setupAnim(Zephyr zephyr, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        float motion = Mth.sin((limbSwing * 20.0F) / Mth.RAD_TO_DEG) * limbSwingAmount * 0.5F;
+    public void setupAnim(ZephyrRenderState zephyr) {
+        float motion = Mth.sin((zephyr.walkAnimationSpeed * 20.0F) / Mth.RAD_TO_DEG) * zephyr.walkAnimationPos * 0.5F;
 
         this.rightFace.y = 8 - motion;
         this.rightFace.x = -motion * 0.5F;
@@ -75,30 +74,16 @@ public class ZephyrModel extends EntityModel<Zephyr> {
         this.bodyLeftSideFront.y = this.bodyRightSideFront.y;
         this.bodyLeftSideBack.y = this.bodyRightSideBack.y;
 
-        this.tailBase.x = Mth.sin((limbSwing * 20.0F) / Mth.RAD_TO_DEG) * limbSwingAmount * 0.75F;
+        this.tailBase.x = Mth.sin((zephyr.walkAnimationSpeed * 20.0F) / Mth.RAD_TO_DEG) * zephyr.walkAnimationPos * 0.75F;
         this.tailBase.y = 8 - motion;
-        this.tailBase.yRot = Mth.sin(ageInTicks * 0.5F) * limbSwingAmount * 0.75F;
+        this.tailBase.yRot = Mth.sin(zephyr.ageInTicks * 0.5F) * zephyr.walkAnimationPos * 0.75F;
 
-        this.tailMiddle.x = Mth.sin((limbSwing * 15.0F) / Mth.RAD_TO_DEG) * limbSwingAmount * 0.85F;
+        this.tailMiddle.x = Mth.sin((zephyr.walkAnimationSpeed * 15.0F) / Mth.RAD_TO_DEG) * zephyr.walkAnimationPos * 0.85F;
         this.tailMiddle.y = motion * 1.25F;
         this.tailMiddle.yRot = this.tailBase.yRot + 0.25F;
 
-        this.tailEnd.x = Mth.sin((limbSwing * 10.0F) / Mth.RAD_TO_DEG) * limbSwingAmount * 0.95F;
+        this.tailEnd.x = Mth.sin((zephyr.walkAnimationSpeed * 10.0F) / Mth.RAD_TO_DEG) * zephyr.walkAnimationPos * 0.95F;
         this.tailEnd.y = -motion;
         this.tailEnd.yRot = this.tailMiddle.yRot + 0.35F;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
-        this.rightFace.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.leftFace.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.mouth.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.body.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.bodyRightSideFront.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.bodyRightSideBack.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.bodyLeftSideFront.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.bodyLeftSideBack.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.cloudButt.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.tailBase.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

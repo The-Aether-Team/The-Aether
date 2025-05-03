@@ -448,6 +448,16 @@ public class Moa extends MountableAnimal implements WingedBird {
         return AetherMoaTypes.getResourceKey(this.level().registryAccess(), this.getEntityData().get(DATA_MOA_TYPE_ID));
     }
 
+    @Nullable
+    public ResourceLocation getMoaTypeTexture() {
+        return this.getMoaType().moaTexture();
+    }
+
+    @Nullable
+    public ResourceLocation getMoaTypeSaddleTexture() {
+        return this.getMoaType().saddleTexture();
+    }
+
     /**
      * Sets this Moa's {@link MoaType}.
      *

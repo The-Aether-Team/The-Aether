@@ -1,7 +1,7 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.google.common.collect.ImmutableList;
-import net.minecraft.client.model.ListModel;
+import com.aetherteam.aether.client.renderer.entity.state.CrystalRenderState;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -9,14 +9,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 
-public class CrystalModel<T extends Entity> extends ListModel<T> {
+public class CrystalModel<T extends CrystalRenderState> extends EntityModel<T> {
     public final ModelPart crystal1;
     public final ModelPart crystal2;
     public final ModelPart crystal3;
 
     public CrystalModel(ModelPart root) {
+        super(root);
         this.crystal1 = root.getChild("crystal_1");
         this.crystal2 = root.getChild("crystal_2");
         this.crystal3 = root.getChild("crystal_3");
@@ -32,15 +32,10 @@ public class CrystalModel<T extends Entity> extends ListModel<T> {
     }
 
     @Override
-    public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.crystal1, this.crystal2, this.crystal3);
-    }
-
-    @Override
-    public void setupAnim(T crystal, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        for (ModelPart modelPart : this.parts()) {
-            modelPart.xRot = headPitch * Mth.DEG_TO_RAD;
-            modelPart.yRot = netHeadYaw * Mth.DEG_TO_RAD;
+    public void setupAnim(T crystal) {
+        for (ModelPart modelPart : this.root.getAllParts().toList()) {
+            modelPart.xRot = crystal.xRot * Mth.DEG_TO_RAD;
+            modelPart.yRot = crystal.yRot * Mth.DEG_TO_RAD;
         }
     }
 }

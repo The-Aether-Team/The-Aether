@@ -1,8 +1,6 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.aetherteam.aether.entity.monster.Zephyr;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.aetherteam.aether.client.renderer.entity.state.ZephyrRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -11,10 +9,11 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class ClassicZephyrModel extends EntityModel<Zephyr> {
+public class ClassicZephyrModel extends EntityModel<ZephyrRenderState> {
     public final ModelPart body;
 
     public ClassicZephyrModel(ModelPart root) {
+        super(root);
         this.body = root.getChild("body");
     }
 
@@ -25,12 +24,4 @@ public class ClassicZephyrModel extends EntityModel<Zephyr> {
         return LayerDefinition.create(meshDefinition, 128, 64);
     }
 
-    @Override
-    public void setupAnim(Zephyr zephyr, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
-        this.body.render(poseStack, consumer, packedLight, packedOverlay, color);
-    }
 }

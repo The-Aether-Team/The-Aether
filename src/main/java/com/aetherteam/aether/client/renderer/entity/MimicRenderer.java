@@ -6,13 +6,13 @@ import com.aetherteam.aether.client.renderer.entity.model.MimicModel;
 import com.aetherteam.aether.entity.monster.dungeon.Mimic;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.ModList;
-import noobanidus.mods.lootr.neoforge.config.ConfigManager;
 
 import java.util.Calendar;
 
-public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
+public class MimicRenderer extends MobRenderer<Mimic, LivingEntityRenderState, MimicModel> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/mimic/normal.png");
     private static final ResourceLocation XMAS_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/mimic/christmas.png");
     private static final ResourceLocation LOOTR_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/mimic/lootr.png");
@@ -28,6 +28,11 @@ public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
         }
     }
 
+    @Override
+    public LivingEntityRenderState createRenderState() {
+        return new LivingEntityRenderState();
+    }
+
     /**
      * If the Lootr mod is installed or if it is Christmas, Mimics will have a custom texture.
      *
@@ -35,7 +40,7 @@ public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
      * @return The texture {@link ResourceLocation}.
      */
     @Override
-    public ResourceLocation getTextureLocation(Mimic Mimic) {
+    public ResourceLocation getTextureLocation(LivingEntityRenderState Mimic) {
         if (ModList.get().isLoaded("lootr")) {
             if (!ConfigManager.isVanillaTextures()) {
                 if (ConfigManager.isNewTextures()) {

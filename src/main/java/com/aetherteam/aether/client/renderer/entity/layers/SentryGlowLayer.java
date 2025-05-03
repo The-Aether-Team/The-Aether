@@ -5,7 +5,7 @@ import com.aetherteam.aether.client.renderer.entity.state.SentryRenderState;
 import com.aetherteam.aether.entity.monster.dungeon.Sentry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.SlimeModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -14,10 +14,10 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
-public class SentryGlowLayer extends EyesLayer<EntityRenderState, SlimeModel> {
+public class SentryGlowLayer<T extends EntityRenderState> extends EyesLayer<T, EntityModel<T>> {
     private static final RenderType SENTRY_EYE = RenderType.eyes(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/sentry/eye.png"));
 
-    public SentryGlowLayer(RenderLayerParent<EntityRenderState, SlimeModel> entityRenderer) {
+    public SentryGlowLayer(RenderLayerParent<T, EntityModel<T>> entityRenderer) {
         super(entityRenderer);
     }
 
@@ -32,7 +32,7 @@ public class SentryGlowLayer extends EyesLayer<EntityRenderState, SlimeModel> {
      * @param headPitch       The {@link Float} for the head pitch rotation.
      */
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, EntityRenderState sentry, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T sentry, float netHeadYaw, float headPitch) {
         VertexConsumer consumer = buffer.getBuffer(this.renderType());
         if (sentry instanceof SentryRenderState state && state.awake) {
             this.getParentModel().renderToBuffer(poseStack, consumer, 15728640, OverlayTexture.NO_OVERLAY);
