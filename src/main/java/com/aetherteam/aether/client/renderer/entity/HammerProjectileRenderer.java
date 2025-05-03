@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.renderer.entity;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.client.renderer.entity.state.HammerRenderState;
 import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -11,7 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
-public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
+public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile, HammerRenderState> {
     public static final ResourceLocation KINGBDOGZ_WAVE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/projectile/kingbdogz_wave.png");
     public static final ResourceLocation JEB_WAVE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/projectile/jeb_wave.png");
 
@@ -20,11 +21,22 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
         this.shadowRadius = 0.0F;
     }
 
+    @Override
+    public HammerRenderState createRenderState() {
+        return new HammerRenderState();
+    }
+
+    @Override
+    public void extractRenderState(HammerProjectile p_entity, HammerRenderState reusedState, float partialTick) {
+        super.extractRenderState(p_entity, reusedState, partialTick);
+        reusedState.jeb = p_entity.getIsJeb();
+    }
+
     /**
      * [VANILLA COPY] - {@link net.minecraft.client.renderer.entity.DragonFireballRenderer}.
      */
     @Override
-    public void render(HammerProjectile hammer, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(HammerRenderState hammer, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         PoseStack.Pose pose = poseStack.last();
@@ -34,7 +46,7 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
         vertex(consumer, pose, packedLight, 1.0F, 1.0F, 1.0F, 0.0F);
         vertex(consumer, pose, packedLight, 0.0F, 1.0F, 0.0F, 0.0F);
         poseStack.popPose();
-        super.render(hammer, entityYaw, partialTicks, poseStack, buffer, packedLight);
+        super.render(hammer, poseStack, buffer, packedLight);
     }
 
     private static void vertex(VertexConsumer consumer, PoseStack.Pose pose, int packedLight, float offsetX, float offsetY, float textureX, float textureY) {
@@ -49,11 +61,10 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
     /**
      * Checks whether the projectile should use the Kingbdogz or Jeb hammer texture.
      *
-     * @param hammer The {@link HammerProjectile} entity.
+     * @param hammer The {@link HammerRenderState} entity.
      * @return The texture {@link ResourceLocation}.
      */
-    @Override
-    public ResourceLocation getTextureLocation(HammerProjectile hammer) {
-        return !hammer.getIsJeb() ? KINGBDOGZ_WAVE_TEXTURE : JEB_WAVE_TEXTURE;
+    public ResourceLocation getTextureLocation(HammerRenderState hammer) {
+        return !hammer.jeb ? KINGBDOGZ_WAVE_TEXTURE : JEB_WAVE_TEXTURE;
     }
 }

@@ -6,9 +6,10 @@ import com.aetherteam.aether.client.renderer.entity.model.CloudMinionModel;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 
-public class CloudMinionRenderer extends MobRenderer<CloudMinion, CloudMinionModel> {
+public class CloudMinionRenderer extends MobRenderer<CloudMinion, LivingEntityRenderState, CloudMinionModel> {
     private static final ResourceLocation CLOUD_MINION_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/miscellaneous/cloud_minion/cloud_minion.png");
 
     public CloudMinionRenderer(EntityRendererProvider.Context context) {
@@ -16,7 +17,12 @@ public class CloudMinionRenderer extends MobRenderer<CloudMinion, CloudMinionMod
     }
 
     @Override
-    public ResourceLocation getTextureLocation(CloudMinion cloudMinion) {
+    public LivingEntityRenderState createRenderState() {
+        return new LivingEntityRenderState();
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(LivingEntityRenderState cloudMinion) {
         return CLOUD_MINION_TEXTURE;
     }
 }

@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.renderer.entity;
 
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.client.renderer.entity.state.TntPresentRenderState;
 import com.aetherteam.aether.entity.block.TntPresent;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,7 +16,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 /**
  * [CODE COPY] - {@link net.minecraft.client.renderer.entity.TntRenderer}.
  */
-public class TntPresentRenderer extends EntityRenderer<TntPresent> {
+public class TntPresentRenderer extends EntityRenderer<TntPresent, TntPresentRenderState> {
     private final BlockRenderDispatcher blockRenderer;
 
     public TntPresentRenderer(EntityRendererProvider.Context context) {
@@ -25,11 +26,11 @@ public class TntPresentRenderer extends EntityRenderer<TntPresent> {
     }
 
     @Override
-    public void render(TntPresent present, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(TntPresentRenderState present, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.translate(0.0, 0.5, 0.0);
-        if ((float) present.getFuse() - partialTicks + 1.0F < 10.0F) {
-            float f = 1.0F - ((float) present.getFuse() - partialTicks + 1.0F) / 10.0F;
+        if ((float) present.fuse - present.partialTick + 1.0F < 10.0F) {
+            float f = 1.0F - ((float) present.fuse - present.partialTick + 1.0F) / 10.0F;
             f = Mth.clamp(f, 0.0F, 1.0F);
             f = Mth.square(f);
             f = Mth.square(f);
@@ -37,13 +38,23 @@ public class TntPresentRenderer extends EntityRenderer<TntPresent> {
             poseStack.scale(f1, f1, f1);
         }
         poseStack.translate(-0.5, -0.5, -0.5);
-        TntMinecartRenderer.renderWhiteSolidBlock(this.blockRenderer, AetherBlocks.PRESENT.get().defaultBlockState(), poseStack, buffer, packedLight, present.getFuse() / 5 % 2 == 0);
+        TntMinecartRenderer.renderWhiteSolidBlock(this.blockRenderer, AetherBlocks.PRESENT.get().defaultBlockState(), poseStack, buffer, packedLight, present.fuse / 5 % 2 == 0);
         poseStack.popPose();
-        super.render(present, entityYaw, partialTicks, poseStack, buffer, packedLight);
+        super.render(present, poseStack, buffer, packedLight);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(TntPresent present) {
+    public TntPresentRenderState createRenderState() {
+        return new TntPresentRenderState();
+    }
+
+    @Override
+    public void extractRenderState(TntPresent p_entity, TntPresentRenderState reusedState, float partialTick) {
+        super.extractRenderState(p_entity, reusedState, partialTick);
+        reusedState.fuse = p_entity.getFuse();
+    }
+
+    public ResourceLocation getTextureLocation(TntPresentRenderState present) {
         return InventoryMenu.BLOCK_ATLAS;
     }
 }

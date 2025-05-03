@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
+import com.aetherteam.aether.client.renderer.entity.state.SheepuffRenderState;
 import com.aetherteam.aether.entity.passive.Sheepuff;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -7,7 +8,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class SheepuffModel extends QuadrupedModel<Sheepuff> {
+public class SheepuffModel extends QuadrupedModel<SheepuffRenderState> {
     public float headXRot;
 
     public SheepuffModel(ModelPart root) {

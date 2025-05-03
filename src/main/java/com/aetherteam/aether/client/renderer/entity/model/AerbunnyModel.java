@@ -1,8 +1,6 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.aetherteam.aether.entity.passive.Aerbunny;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.aetherteam.aether.client.renderer.entity.state.AerbunnyRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -11,8 +9,9 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
+import org.joml.Vector3f;
 
-public class AerbunnyModel extends EntityModel<Aerbunny> {
+public class AerbunnyModel extends EntityModel<AerbunnyRenderState> {
     public final ModelPart head;
     public final ModelPart rightEar;
     public final ModelPart leftEar;
@@ -25,9 +24,9 @@ public class AerbunnyModel extends EntityModel<Aerbunny> {
     public final ModelPart leftFrontLeg;
     public final ModelPart rightBackLeg;
     public final ModelPart leftBackLeg;
-    public float puffiness;
 
     public AerbunnyModel(ModelPart root) {
+        super(root);
         this.head = root.getChild("head");
         this.rightEar = this.head.getChild("right_ear");
         this.leftEar = this.head.getChild("left_ear");
@@ -60,31 +59,17 @@ public class AerbunnyModel extends EntityModel<Aerbunny> {
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
-    @Override
-    public void prepareMobModel(Aerbunny aerbunny, float limbSwing, float limbSwingAmount, float partialTicks) {
-        super.prepareMobModel(aerbunny, limbSwing, limbSwingAmount, partialTicks);
-        this.puffiness = Mth.lerp(partialTicks, aerbunny.getPuffiness(), aerbunny.getPuffiness() - aerbunny.getPuffSubtract()) / 20.0F;
-    }
 
     @Override
-    public void setupAnim(Aerbunny aerbunny, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.xRot = headPitch * Mth.DEG_TO_RAD;
-        this.head.yRot = netHeadYaw * Mth.DEG_TO_RAD;
-        this.rightFrontLeg.xRot = (Mth.cos(limbSwing * 0.6662F) * 1.0F * limbSwingAmount) - this.body.xRot;
-        this.leftFrontLeg.xRot = (Mth.cos(limbSwing * 0.6662F) * 1.0F * limbSwingAmount) - this.body.xRot;
-        this.rightBackLeg.xRot = (Mth.cos(limbSwing * 0.6662F + Mth.PI) * 1.2F * limbSwingAmount) - this.body.xRot;
-        this.leftBackLeg.xRot = (Mth.cos(limbSwing * 0.6662F + Mth.PI) * 1.2F * limbSwingAmount) - this.body.xRot;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
-        this.head.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.body.render(poseStack, consumer, packedLight, packedOverlay, color);
-        poseStack.pushPose();
-        float a = 1.0F + this.puffiness * 0.5F;
-        poseStack.translate(0.0F, 1.0F, 0.0F);
-        poseStack.scale(a, a, a);
-        this.puff.render(poseStack, consumer, packedLight, packedOverlay, color);
-        poseStack.popPose();
+    public void setupAnim(AerbunnyRenderState aerbunny) {
+        super.setupAnim(aerbunny);
+        this.head.xRot = aerbunny.xRot * Mth.DEG_TO_RAD;
+        this.head.yRot = aerbunny.yRot * Mth.DEG_TO_RAD;
+        this.rightFrontLeg.xRot = (Mth.cos(aerbunny.walkAnimationPos * 0.6662F) * 1.0F * aerbunny.walkAnimationSpeed) - this.body.xRot;
+        this.leftFrontLeg.xRot = (Mth.cos(aerbunny.walkAnimationPos * 0.6662F) * 1.0F * aerbunny.walkAnimationSpeed) - this.body.xRot;
+        this.rightBackLeg.xRot = (Mth.cos(aerbunny.walkAnimationPos * 0.6662F + Mth.PI) * 1.2F * aerbunny.walkAnimationSpeed) - this.body.xRot;
+        this.leftBackLeg.xRot = (Mth.cos(aerbunny.walkAnimationPos * 0.6662F + Mth.PI) * 1.2F * aerbunny.walkAnimationSpeed) - this.body.xRot;
+        float a = 1.0F + aerbunny.puffiness * 0.5F;
+        this.puff.offsetScale(new Vector3f(a, a, a));
     }
 }

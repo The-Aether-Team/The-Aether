@@ -1,15 +1,13 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 
-public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
+public class SunSpiritModel<T extends LivingEntityRenderState> extends EntityModel<T> {
     public final ModelPart base;
     public final ModelPart torso;
     public final ModelPart head;
@@ -17,6 +15,7 @@ public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
     public final ModelPart leftArm;
 
     public SunSpiritModel(ModelPart root) {
+        super(root);
         this.base = root.getChild("base");
         this.torso = this.base.getChild("torso");
         this.head = this.torso.getChild("head");
@@ -36,20 +35,16 @@ public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.xRot = headPitch * 0.017453292F;
-        this.head.yRot = netHeadYaw * 0.017453292F;
+    public void setupAnim(T entity) {
+        this.head.xRot = entity.xRot * 0.017453292F;
+        this.head.yRot = entity.yRot * 0.017453292F;
 
-        this.rightArm.xRot = -(Mth.sin(ageInTicks * 0.067F) * 0.05F);
+        this.rightArm.xRot = -(Mth.sin(entity.ageInTicks * 0.067F) * 0.05F);
         this.rightArm.yRot = 0.0F;
-        this.rightArm.zRot = -(Mth.cos(ageInTicks * 0.09F) * 0.05F - 0.05F);
+        this.rightArm.zRot = -(Mth.cos(entity.ageInTicks * 0.09F) * 0.05F - 0.05F);
         this.leftArm.xRot = -(this.rightArm.xRot);
         this.leftArm.yRot = this.rightArm.yRot;
         this.leftArm.zRot = -(this.rightArm.zRot);
     }
 
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
-        this.base.render(poseStack, consumer, packedLight, packedOverlay, color);
-    }
 }

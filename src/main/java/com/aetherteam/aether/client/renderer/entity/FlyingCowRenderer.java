@@ -4,24 +4,39 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.layers.QuadrupedWingsLayer;
 import com.aetherteam.aether.client.renderer.entity.model.QuadrupedWingsModel;
+import com.aetherteam.aether.client.renderer.entity.state.FlyingCowRenderState;
 import com.aetherteam.aether.entity.passive.FlyingCow;
 import net.minecraft.client.model.CowModel;
+import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.SaddleLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
-public class FlyingCowRenderer extends MobRenderer<FlyingCow, CowModel<FlyingCow>> {
+public class FlyingCowRenderer extends AgeableMobRenderer<FlyingCow, FlyingCowRenderState, CowModel> {
     private static final ResourceLocation FLYING_COW_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow.png");
 
     public FlyingCowRenderer(EntityRendererProvider.Context context) {
-        super(context, new CowModel<>(context.bakeLayer(AetherModelLayers.FLYING_COW)), 0.7F);
-        this.addLayer(new QuadrupedWingsLayer<>(this, new QuadrupedWingsModel<>(context.bakeLayer(AetherModelLayers.FLYING_COW_WINGS)), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow_wings.png")));
-        this.addLayer(new SaddleLayer<>(this, new CowModel<>(context.bakeLayer(AetherModelLayers.FLYING_COW_SADDLE)), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow_saddle.png")));
+        super(context, new CowModel(context.bakeLayer(AetherModelLayers.FLYING_COW)), new CowModel(context.bakeLayer(AetherModelLayers.FLYING_COW_BABY)), 0.7F);
+        this.addLayer(new QuadrupedWingsLayer(this, new QuadrupedWingsModel<>(context.bakeLayer(AetherModelLayers.FLYING_COW_WINGS)), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow_wings.png")));
+        this.addLayer(new SaddleLayer(this, new CowModel(context.bakeLayer(AetherModelLayers.FLYING_COW_SADDLE)), new CowModel(context.bakeLayer(AetherModelLayers.FLYING_COW_BABY_SADDLE)), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow_saddle.png")));
     }
 
     @Override
-    public ResourceLocation getTextureLocation(FlyingCow flyingCow) {
+    public FlyingCowRenderState createRenderState() {
+        return new FlyingCowRenderState();
+    }
+
+    @Override
+    public void extractRenderState(FlyingCow phyg, FlyingCowRenderState wingEntityRenderState, float p_361157_) {
+        super.extractRenderState(phyg, wingEntityRenderState, p_361157_);
+        wingEntityRenderState.wingAngle = (phyg.getWingFold() * Mth.sin(wingEntityRenderState.ageInTicks / 15.9F));
+        wingEntityRenderState.wingHold = phyg.getWingFold();
+        wingEntityRenderState.saddle = phyg.isSaddled();
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(FlyingCowRenderState flyingCow) {
         return FLYING_COW_TEXTURE;
     }
 }

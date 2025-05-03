@@ -1,16 +1,16 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
-import com.google.common.collect.ImmutableList;
-import net.minecraft.client.model.ListModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
-public class CloudMinionModel extends ListModel<CloudMinion> {
+public class CloudMinionModel extends EntityModel<LivingEntityRenderState> {
     public final ModelPart cloudMinion;
 
     public CloudMinionModel(ModelPart root) {
+        super(root);
         this.cloudMinion = root.getChild("cloudMinion");
     }
 
@@ -24,14 +24,5 @@ public class CloudMinionModel extends ListModel<CloudMinion> {
                 .addBox("4", -5.5F, 15.0F, -3.5F, 1, 7, 7, CubeDeformation.NONE, 36, 8)
                 .addBox("5", 4.5F, 15.0F, -3.5F, 1, 7, 7, CubeDeformation.NONE, 36, 8), PartPose.ZERO);
         return LayerDefinition.create(meshDefinition, 64, 32);
-    }
-
-    @Override
-    public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.cloudMinion);
-    }
-
-    @Override
-    public void setupAnim(CloudMinion cloudMinion, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
     }
 }

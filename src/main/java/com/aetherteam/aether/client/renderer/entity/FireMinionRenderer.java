@@ -3,6 +3,7 @@ package com.aetherteam.aether.client.renderer.entity;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.model.FireMinionModel;
+import com.aetherteam.aether.client.renderer.entity.state.FireMinionRenderState;
 import com.aetherteam.aether.entity.monster.dungeon.FireMinion;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -10,7 +11,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 
-public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionModel<FireMinion>> {
+public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionRenderState, FireMinionModel<FireMinionRenderState>> {
     private static final ResourceLocation SUN_SPIRIT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/sun_spirit/sun_spirit.png");
     private static final ResourceLocation FROZEN_SPIRIT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/sun_spirit/frozen_sun_spirit.png");
 
@@ -19,7 +20,7 @@ public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionModel<
     }
 
     @Override
-    protected void scale(FireMinion fireMinion, PoseStack poseStack, float partialTickTime) {
+    protected void scale(FireMinionRenderState fireMinion, PoseStack poseStack) {
         poseStack.translate(0.0, 0.35, 0.0);
     }
 
@@ -27,13 +28,13 @@ public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionModel<
      * If the Fire Minion has specific custom names, it will use the frozen texture as an Easter Egg.
      * Otherwise it uses the normal texture.
      *
-     * @param fireMinion The {@link FireMinion} entity.
+     * @param fireMinion The {@link FireMinionRenderState} entity.
      * @return The texture {@link ResourceLocation}.
      */
     @Override
-    public ResourceLocation getTextureLocation(FireMinion fireMinion) {
-        if (fireMinion.hasCustomName()) {
-            String name = fireMinion.getName().getString();
+    public ResourceLocation getTextureLocation(FireMinionRenderState fireMinion) {
+        if (fireMinion.customName != null) {
+            String name = fireMinion.customName.getString();
             if (name.equals("JorgeQ") || name.equals("Jorge_SunSpirit")) {
                 return FROZEN_SPIRIT_TEXTURE;
             }
@@ -46,6 +47,10 @@ public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionModel<
         return 15;
     }
 
+    @Override
+    public FireMinionRenderState createRenderState() {
+        return new FireMinionRenderState();
+    }
     @Override
     protected int getSkyLightLevel(FireMinion fireMinion, BlockPos pos) {
         return 15;

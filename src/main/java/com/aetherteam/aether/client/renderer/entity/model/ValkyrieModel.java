@@ -1,15 +1,13 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.aetherteam.aether.entity.monster.dungeon.AbstractValkyrie;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.aetherteam.aether.client.renderer.entity.state.ValkyrieRenderState;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class ValkyrieModel<T extends AbstractValkyrie> extends HumanoidModel<T> {
+public class ValkyrieModel<T extends ValkyrieRenderState> extends HumanoidModel<T> {
     public final ModelPart upperBody;
     public final ModelPart rightShoulder;
     public final ModelPart leftShoulder;
@@ -137,37 +135,26 @@ public class ValkyrieModel<T extends AbstractValkyrie> extends HumanoidModel<T> 
     }
 
     @Override
-    public void setupAnim(T valkyrie, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.yRot = netHeadYaw * Mth.DEG_TO_RAD;
-        this.head.xRot = headPitch * Mth.DEG_TO_RAD;
+    public void setupAnim(T valkyrie) {
+        this.head.yRot = valkyrie.yRot * Mth.DEG_TO_RAD;
+        this.head.xRot = valkyrie.xRot * Mth.DEG_TO_RAD;
 
         this.rightArm.x = -4.0F;
         this.rightArm.z = 0.0F;
         this.leftArm.x = 5.0F;
         this.leftArm.z = 0.0F;
 
-        this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + Mth.PI) * 2.0F * limbSwingAmount * 0.5F;
-        this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
+        this.rightArm.xRot = Mth.cos(valkyrie.walkAnimationPos * 0.6662F + Mth.PI) * 2.0F * valkyrie.walkAnimationSpeed * 0.5F;
+        this.leftArm.xRot = Mth.cos(valkyrie.walkAnimationPos * 0.6662F) * 2.0F * valkyrie.walkAnimationSpeed * 0.5F;
         this.rightArm.zRot = 0.0F;
         this.leftArm.zRot = 0.0F;
 
-        this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + Mth.PI) * 1.4F * limbSwingAmount;
+        this.rightLeg.xRot = Mth.cos(valkyrie.walkAnimationPos * 0.6662F) * 1.4F * valkyrie.walkAnimationSpeed;
+        this.leftLeg.xRot = Mth.cos(valkyrie.walkAnimationPos * 0.6662F + Mth.PI) * 1.4F * valkyrie.walkAnimationSpeed;
 
         this.rightArm.yRot = 0.0F;
         this.leftArm.yRot = 0.0F;
 
-        this.setupAttackAnimation(valkyrie, ageInTicks);
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
-        super.renderToBuffer(poseStack, consumer, packedLight, packedOverlay, color);
-        this.rightFrontSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.leftFrontSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.rightBackSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.leftBackSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.rightSideSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.leftSideSkirt.render(poseStack, consumer, packedLight, packedOverlay, color);
+        this.setupAttackAnimation(valkyrie, valkyrie.ageInTicks);
     }
 }

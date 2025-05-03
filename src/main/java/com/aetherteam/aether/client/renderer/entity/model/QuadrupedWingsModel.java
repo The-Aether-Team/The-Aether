@@ -1,8 +1,6 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.aetherteam.aether.entity.passive.WingedAnimal;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.aetherteam.aether.client.renderer.entity.state.WingEntityRenderState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -13,13 +11,14 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T> {
+public class QuadrupedWingsModel<T extends WingEntityRenderState> extends EntityModel<T> {
     public final ModelPart leftWingInner;
     public final ModelPart leftWingOuter;
     public final ModelPart rightWingInner;
     public final ModelPart rightWingOuter;
 
     public QuadrupedWingsModel(ModelPart root) {
+        super(root);
         this.leftWingInner = root.getChild("left_wing_inner");
         this.leftWingOuter = this.leftWingInner.getChild("left_wing_outer");
         this.rightWingInner = root.getChild("right_wing_inner");
@@ -37,27 +36,14 @@ public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T> 
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(T entity) {
         if (!Minecraft.getInstance().isPaused()) {
-            float aimingForFold;
-            if (entity.isEntityOnGround()) {
-                aimingForFold = 0.1F;
-            } else {
-                aimingForFold = 1.0F;
-            }
-            entity.setWingAngle(entity.getWingFold() * Mth.sin(ageInTicks / 15.9F));
-            entity.setWingFold(entity.getWingFold() + ((aimingForFold - entity.getWingFold()) / 37.5F));
-            float wingBend = -((float) Math.acos(entity.getWingFold()));
-            this.leftWingInner.zRot = -(entity.getWingAngle() + wingBend + Mth.HALF_PI);
-            this.leftWingOuter.zRot = -(entity.getWingAngle() - wingBend + Mth.HALF_PI) - this.leftWingInner.zRot;
+            float wingBend = -((float) Math.acos(entity.wingHold));
+            this.leftWingInner.zRot = -(entity.wingAngle + wingBend + Mth.HALF_PI);
+            this.leftWingOuter.zRot = -(entity.wingAngle - wingBend + Mth.HALF_PI) - this.leftWingInner.zRot;
             this.rightWingInner.zRot = -this.leftWingInner.zRot;
             this.rightWingOuter.zRot = -this.leftWingOuter.zRot;
         }
     }
 
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        this.leftWingInner.render(poseStack, buffer, packedLight, packedOverlay, color);
-        this.rightWingInner.render(poseStack, buffer, packedLight, packedOverlay, color);
-    }
 }

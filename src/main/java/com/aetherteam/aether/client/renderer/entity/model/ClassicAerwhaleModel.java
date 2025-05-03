@@ -1,8 +1,6 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.aetherteam.aether.entity.passive.Aerwhale;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.aetherteam.aether.client.renderer.entity.state.AerwhaleRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -11,7 +9,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class ClassicAerwhaleModel extends EntityModel<Aerwhale> {
+public class ClassicAerwhaleModel extends EntityModel<AerwhaleRenderState> {
     public final ModelPart middleBody;
     public final ModelPart leftFin;
     public final ModelPart head;
@@ -21,6 +19,7 @@ public class ClassicAerwhaleModel extends EntityModel<Aerwhale> {
     public final ModelPart rightFin;
 
     public ClassicAerwhaleModel(ModelPart root) {
+        super(root);
         this.middleBody = root.getChild("middle_body");
         this.head = root.getChild("head");
         this.backBody = root.getChild("back_body");
@@ -41,20 +40,5 @@ public class ClassicAerwhaleModel extends EntityModel<Aerwhale> {
         partDefinition.addOrReplaceChild("fin_right", CubeListBuilder.create().texOffs(0, 66).addBox(-12.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(-10.0F, 4.0F, 10.0F, 0.0F, 0.17453292519943295F, 0.0F));
         partDefinition.addOrReplaceChild("fin_left", CubeListBuilder.create().texOffs(0, 66).addBox(0.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(7.0F, 4.0F, 10.0F, 0.0F, -0.17453292519943295F, 0.0F));
         return LayerDefinition.create(meshDefinition, 192, 96);
-    }
-
-    @Override
-    public void setupAnim(Aerwhale aerwhale, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
-        this.middleBody.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.head.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.backBody.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.backFinRight.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.backFinLeft.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.rightFin.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.leftFin.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }

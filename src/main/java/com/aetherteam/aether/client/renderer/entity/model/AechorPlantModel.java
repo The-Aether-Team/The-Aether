@@ -1,16 +1,14 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
-import com.aetherteam.aether.entity.monster.AechorPlant;
+import com.aetherteam.aether.client.renderer.entity.state.AechorPlantRenderState;
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class AechorPlantModel extends EntityModel<AechorPlant> {
+public class AechorPlantModel extends EntityModel<AechorPlantRenderState> {
     public final ModelPart stem;
     public final ModelPart head;
     public final ModelPart thorn1;
@@ -45,6 +43,7 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
     public final ModelPart lowerPetal5;
 
     public AechorPlantModel(ModelPart root) {
+        super(root);
         this.stem = root.getChild("stem");
         this.head = root.getChild("head");
         this.thorn1 = this.stem.getChild("thorn_1");
@@ -122,23 +121,23 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
     }
 
     @Override
-    public void setupAnim(AechorPlant aechorPlant, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        float sinage1 = Mth.sin(ageInTicks);
+    public void setupAnim(AechorPlantRenderState aechorPlant) {
+        float sinage1 = Mth.sin(aechorPlant.ageInTicks);
         float sinage2;
 
-        if (aechorPlant.hurtTime > 0) {
+        if (aechorPlant.isHurt) {
             sinage1 *= 0.45F;
             sinage1 -= 0.125F;
-            sinage2 = 1.75F + Mth.sin(ageInTicks + 2.0F) * 1.5F;
-        } else if (aechorPlant.getTargetingEntity()) {
+            sinage2 = 1.75F + Mth.sin(aechorPlant.ageInTicks + 2.0F) * 1.5F;
+        } else if (aechorPlant.isTargeting) {
             sinage1 *= 0.25F;
-            sinage2 = 1.75F + Mth.sin(ageInTicks + 2.0F) * 1.5F;
+            sinage2 = 1.75F + Mth.sin(aechorPlant.ageInTicks + 2.0F) * 1.5F;
         } else {
             sinage1 *= 0.125F;
             sinage2 = 1.75F;
         }
 
-        this.head.yRot = headPitch / 57.29578F;
+        this.head.yRot = aechorPlant.yRot / 57.29578F;
         this.stem.yRot = this.head.yRot;
         this.stem.y = sinage2 * 0.5F;
 
@@ -173,11 +172,5 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
         }
 
         this.head.y = sinage2 + (sinage1 * 2.0F);
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, int color) {
-        this.stem.render(poseStack, consumer, packedLight, packedOverlay, color);
-        this.head.render(poseStack, consumer, packedLight, packedOverlay, color);
     }
 }
