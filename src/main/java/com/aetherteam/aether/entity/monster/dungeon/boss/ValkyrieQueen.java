@@ -33,6 +33,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
@@ -126,8 +127,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         // Set the bounds for the whole dungeon.
         if (reason == EntitySpawnReason.STRUCTURE) {
             StructureManager manager = level.getLevel().structureManager();
-            manager.registryAccess().registry(Registries.STRUCTURE).ifPresent(registry -> {
-                    Structure temple = registry.get(AetherStructures.SILVER_DUNGEON);
+            manager.registryAccess().lookup(Registries.STRUCTURE).ifPresent(registry -> {
+                Structure temple = registry.getValueOrThrow(AetherStructures.SILVER_DUNGEON);
                     if (temple != null) {
                         StructureStart start = manager.getStructureAt(this.blockPosition(), temple);
                         if (start != StructureStart.INVALID_START) {
@@ -149,7 +150,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         this.goalSelector.addGoal(1, new GetUnstuckGoal(this));
         this.goalSelector.addGoal(2, new ThunderCrystalAttackGoal(this, 450, 28.0F));
         this.goalSelector.addGoal(3, new LungeGoal(this, 0.65, 0));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, livingEntity -> this.isBossFight()));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, (livingEntity, serverLevel) -> this.isBossFight()));
     }
 
     public static AttributeSupplier.Builder createMobAttributes() {
@@ -185,11 +186,11 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      */
     private void breakBlocks() {
         LivingEntity target = this.getTarget();
-        if (!this.level().isClientSide()) {
+        if (this.level() instanceof ServerLevel serverLevel) {
             if (target != null) {
-                if (EventHooks.canEntityGrief(this.level(), this)) {
+                if (EventHooks.canEntityGrief(serverLevel, this)) {
                     for (int i = 0; i < 2; i++) {
-                        Vec3i vector = i == 0 ? this.getMotionDirection().getNormal() : Vec3i.ZERO;
+                        Vec3i vector = i == 0 ? this.getMotionDirection().getUnitVec3i() : Vec3i.ZERO;
                         BlockPos upperPosition = BlockPos.containing(this.getEyePosition()).offset(vector);
                         BlockPos lowerPosition = this.blockPosition().offset(vector);
                         BlockState upperState = this.level().getBlockState(upperPosition);
@@ -229,8 +230,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * Handles boss fight and health tracking, and dungeon tracking.
      */
     @Override
-    public void customServerAiStep() {
-        super.customServerAiStep();
+    public void customServerAiStep(ServerLevel serverLevel) {
+        super.customServerAiStep(serverLevel);
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.trackDungeon();
     }
@@ -315,7 +316,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * @see NpcPlayerInteractPacket
      */
     @Override
-    public void handleNpcInteraction(Player player, byte interactionID) {
+    public void handleNpcInteraction(ServerPlayer player, byte interactionID) {
         switch (interactionID) {
             case 0: // Responds to the player's question of where they are.
                 this.chat(player, Component.translatable("gui.aether.queen.dialog.answer"), true);
@@ -371,7 +372,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      */
     protected void chatWithNearby(Component message, boolean sound) {
         AABB room = this.dungeon == null ? this.getBoundingBox().inflate(16) : this.dungeon.roomBounds();
-        this.level().getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> this.chat(player, message, sound));
+        this.level().getEntities(this, room, entity -> {
+            return entity instanceof ServerPlayer && this.dungeon.isPlayerWithinRoom(entity) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entity);
+        }).forEach(player -> {
+            if (player instanceof ServerPlayer serverPlayer) {
+                this.chat(serverPlayer, message, sound);
+            }
+        });
     }
 
     /**
@@ -381,7 +388,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * @param message The message {@link Component}.
      */
     @Override
-    protected void chat(Player player, Component message, boolean sound) {
+    protected void chat(ServerPlayer player, Component message, boolean sound) {
         player.sendSystemMessage(Component.literal("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message));
         this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
     }
@@ -394,14 +401,14 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
-            return super.hurt(source, amount);
+            return super.hurtServer(serverLevel, source, amount);
         }
         if (this.isReady()) {
             if (source.getEntity() instanceof LivingEntity attacker && this.level().getDifficulty() != Difficulty.PEACEFUL) {
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) {
-                    if (super.hurt(source, amount) && this.getHealth() > 0) {
+                    if (super.hurtServer(serverLevel, source, amount) && this.getHealth() > 0) {
                         if (!this.level().isClientSide() && !this.isBossFight()) {
                             this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"), false);
                             this.setHealth(this.getMaxHealth());
@@ -414,7 +421,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                         return true;
                     }
                 } else {
-                    if (!this.level().isClientSide() && attacker instanceof Player player) {
+                    if (!this.level().isClientSide() && attacker instanceof ServerPlayer player) {
                         this.displayTooFarMessage(player);
                         return false;
                     }
@@ -430,8 +437,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * @param entity The hurt {@link Entity}.
      */
     @Override
-    public boolean doHurtTarget(Entity entity) {
-        boolean result = super.doHurtTarget(entity);
+    public boolean doHurtTarget(ServerLevel serverLevel, Entity entity) {
+        boolean result = super.doHurtTarget(serverLevel, entity);
         if (entity instanceof ServerPlayer player && player.getHealth() <= 0) {
             this.chat(player, Component.translatable("gui.aether.queen.dialog.playerdeath"), true);
         }

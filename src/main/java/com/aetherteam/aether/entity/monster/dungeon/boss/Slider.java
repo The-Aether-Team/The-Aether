@@ -183,8 +183,8 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * Warning for "unchecked" is suppressed because the brain is always a Slider brain.
      */
     @Override
-    public void customServerAiStep() {
-        super.customServerAiStep();
+    public void customServerAiStep(ServerLevel serverLevel) {
+        super.customServerAiStep(serverLevel);
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.trackDungeon();
         if (this.moveDelay > 0) {
@@ -203,7 +203,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
         Optional<LivingEntity> damageResult = this.canDamageSlider(source);
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             super.hurt(source, amount);
@@ -212,7 +212,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
             }
         } else if (damageResult.isPresent()) {
             LivingEntity attacker = damageResult.get();
-            if (super.hurt(source, amount) && this.getHealth() > 0) {
+            if (super.hurtServer(serverLevel, source, amount) && this.getHealth() > 0) {
                 if (!this.isBossFight()) {
                     this.start();
                 }
@@ -290,7 +290,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * @return An empty {@link Optional}.
      */
     private Optional<LivingEntity> sendInvalidToolMessage(LivingEntity attacker) {
-        if (!this.level().isClientSide() && attacker instanceof Player player) {
+        if (!this.level().isClientSide() && attacker instanceof ServerPlayer player) {
             if (this.getChatCooldown() <= 0) {
                 if (AetherConfig.COMMON.reposition_slider_message.get()) {
                     player.displayClientMessage(Component.translatable("gui.aether.slider.message.attack.invalid"), true); // Invalid tool.
@@ -310,7 +310,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * @return An empty {@link Optional}.
      */
     private Optional<LivingEntity> sendTooFarMessage(LivingEntity attacker) {
-        if (!this.level().isClientSide() && attacker instanceof Player player) {
+        if (!this.level().isClientSide() && attacker instanceof ServerPlayer player) {
             if (this.getChatCooldown() <= 0) {
                 this.displayTooFarMessage(player); // Too far from Slider
                 this.setChatCooldown(15);

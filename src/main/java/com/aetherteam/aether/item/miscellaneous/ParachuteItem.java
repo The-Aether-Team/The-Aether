@@ -5,6 +5,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -37,7 +38,7 @@ public class ParachuteItem extends Item {
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
         if (!player.onGround() && !player.isInFluidType() && !player.isShiftKeyDown()) { // Player has to be on ground and can't be in liquid, and also can't be holding shift.
-            Entity entity = this.getParachuteEntity().get().create(level);
+            Entity entity = this.getParachuteEntity().get().create(level, EntitySpawnReason.MOB_SUMMONED);
             if (entity instanceof Parachute parachute) {
                 parachute.setPos(player.getX(), player.getY() - 1.0, player.getZ()); // Spawn Parachute below player.
                 parachute.setDeltaMovement(player.getDeltaMovement());

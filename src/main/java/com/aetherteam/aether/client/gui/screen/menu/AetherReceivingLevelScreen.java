@@ -5,6 +5,7 @@ import com.aetherteam.aether.block.AetherBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
+import net.minecraft.client.renderer.RenderType;
 
 import java.util.function.BooleanSupplier;
 
@@ -26,7 +27,7 @@ public class AetherReceivingLevelScreen extends ReceivingLevelScreen {
     @Override
     public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         if (this.isInAetherPortal) {
-            guiGraphics.blit(0, 0, -90, guiGraphics.guiWidth(), guiGraphics.guiHeight(), Minecraft.getInstance().getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState()));
+            guiGraphics.blitSprite(RenderType::guiOpaqueTexturedBackground, Minecraft.getInstance().getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState()), 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight());
         }
     }
 

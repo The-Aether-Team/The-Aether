@@ -1,13 +1,12 @@
 package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.attachment.AetherDataAttachments;
-import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
@@ -29,7 +28,7 @@ public class LightningSwordItem extends SwordItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (EquipmentUtil.isFullStrength(attacker)) {
-            LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(attacker.level());
+            LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(attacker.level(), EntitySpawnReason.MOB_SUMMONED);
             if (lightningBolt != null) {
                 lightningBolt.getData(AetherDataAttachments.LIGHTNING_TRACKER).setOwner(attacker);
                 lightningBolt.setPos(target.getX(), target.getY(), target.getZ());

@@ -1,5 +1,6 @@
 package com.aetherteam.aether.entity;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -23,7 +24,7 @@ public interface NpcDialogue {
      * @param player        The interacting {@link Player}.
      * @param interactionID The {@link Byte} ID corresponding to the option the player chose.
      */
-    void handleNpcInteraction(Player player, byte interactionID);
+    void handleNpcInteraction(ServerPlayer player, byte interactionID);
 
     void setConversingPlayer(@Nullable Player player);
 

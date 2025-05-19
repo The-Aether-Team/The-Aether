@@ -14,8 +14,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -135,11 +135,6 @@ public class DartShooterItem extends ProjectileWeaponItem { //implements Vanisha
     @Override
     public int getDefaultProjectileRange() {
         return 15;
-    }
-
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return true;
     }
 
     @Override

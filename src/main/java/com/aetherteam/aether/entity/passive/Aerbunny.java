@@ -31,7 +31,6 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -65,7 +64,7 @@ public class Aerbunny extends AetherAnimal {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new RunWhenAfraid(this, 1.3));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.2, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.2, itemstack -> itemstack.is(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new FallingRandomStrollGoal(this, 1.0, 80));
     }
@@ -272,8 +271,8 @@ public class Aerbunny extends AetherAnimal {
      * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        boolean flag = super.hurt(source, amount);
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
+        boolean flag = super.hurtServer(serverLevel, source, amount);
         if (flag && source.getEntity() instanceof Player) {
             this.setAfraidTime(100 + this.getRandom().nextInt(50));
         }
@@ -417,8 +416,8 @@ public class Aerbunny extends AetherAnimal {
      * @return Whether the Aerbunny is invulnerable to the damage, as a {@link Boolean}.
      */
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
-        return (this.getVehicle() != null && this.getVehicle() == damageSource.getEntity()) || super.isInvulnerableTo(damageSource);
+    public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
+        return (this.getVehicle() != null && this.getVehicle() == damageSource.getEntity()) || super.isInvulnerableTo(serverLevel, damageSource);
     }
 
     /**
@@ -432,7 +431,7 @@ public class Aerbunny extends AetherAnimal {
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob entity) {
-        return AetherEntityTypes.AERBUNNY.get().create(level);
+        return AetherEntityTypes.AERBUNNY.get().create(level, EntitySpawnReason.BREEDING);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.aetherteam.aether.client.gui.screen.inventory;
 import com.aetherteam.aether.inventory.menu.AbstractAetherFurnaceMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.recipebook.AbstractFurnaceRecipeBookComponent;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,12 +32,12 @@ public abstract class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnac
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         int left = this.getGuiLeft();
         int top = this.getGuiTop();
-        guiGraphics.blit(this.texture, left, top, 0, 0, this.getXSize(), this.getYSize());
+        guiGraphics.blit(RenderType::guiTextured, this.texture, left, top, 0, 0, this.getXSize(), this.getYSize(), 256, 256);
         if (this.getMenu().isLit()) {
             int litProgress = this.getMenu().getLitProgress() + 1;
-            guiGraphics.blitSprite(this.litProgressSprite, 14, 14, 0, 14 - litProgress, left + 57, top + 36 + 13 - litProgress, 14, litProgress);
+            guiGraphics.blitSprite(RenderType::guiTextured, this.litProgressSprite, 14, 14, 0, 14 - litProgress, left + 57, top + 36 + 13 - litProgress, 14, litProgress);
         }
         int burnProgress = this.getMenu().getBurnProgress();
-        guiGraphics.blitSprite(this.burnProgressSprite, 24, 16, 0, 0, left + 79, top + 34, burnProgress + 1, 16);
+        guiGraphics.blitSprite(RenderType::guiTextured, this.burnProgressSprite, 24, 16, 0, 0, left + 79, top + 34, burnProgress + 1, 16);
     }
 }

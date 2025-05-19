@@ -12,6 +12,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -115,8 +117,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        boolean result = super.hurt(source, amount);
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
+        boolean result = super.hurtServer(serverLevel, source, amount);
         if (!this.level().isClientSide() && result && source.getEntity() instanceof LivingEntity living) {
             this.mostDamageTargetGoal.addAggro(living, amount);
         }
@@ -176,10 +178,10 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     /**
      * Sends a message to the player who interacted with the Valkyrie.
      *
-     * @param player  The interacting {@link Player}.
+     * @param player  The interacting {@link ServerPlayer}.
      * @param message The message {@link Component}.
      */
-    protected void chat(Player player, Component message, boolean sound) {
+    protected void chat(ServerPlayer player, Component message, boolean sound) {
         player.sendSystemMessage(message);
     }
 

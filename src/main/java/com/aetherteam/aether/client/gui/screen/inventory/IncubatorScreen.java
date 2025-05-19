@@ -5,6 +5,7 @@ import com.aetherteam.aether.client.gui.screen.inventory.recipebook.IncubatorRec
 import com.aetherteam.aether.inventory.menu.IncubatorMenu;
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,12 +30,12 @@ public class IncubatorScreen extends AbstractRecipeBookScreen<SingleRecipeInput,
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         int left = this.getGuiLeft();
         int top = this.getGuiTop();
-        guiGraphics.blit(INCUBATOR_GUI_TEXTURES, left, top, 0, 0, this.getXSize(), this.getYSize());
+        guiGraphics.blit(RenderType::guiTextured, INCUBATOR_GUI_TEXTURES, left, top, 0, 0, this.getXSize(), this.getYSize(), 256, 256);
         if (this.getMenu().isIncubating()) {
             int incubationTimeRemaining = this.getMenu().getIncubationTimeRemaining() + 1;
-            guiGraphics.blitSprite(LIT_PROGRESS_TEXTURE, 14, 14, 0, 14 - incubationTimeRemaining, left + 74, top + 36 + 13 - incubationTimeRemaining, 14, incubationTimeRemaining);
+            guiGraphics.blitSprite(RenderType::guiTextured, LIT_PROGRESS_TEXTURE, 14, 14, 0, 14 - incubationTimeRemaining, left + 74, top + 36 + 13 - incubationTimeRemaining, 14, incubationTimeRemaining);
         }
         int incubationProgressScaled = this.getMenu().getIncubationProgressScaled();
-        guiGraphics.blitSprite(INCUBATION_PROGRESS_TEXTURE, 10, 54, 0, 54 - incubationProgressScaled, left + 103, top + 15 + 55 - incubationProgressScaled, 10, incubationProgressScaled);
+        guiGraphics.blitSprite(RenderType::guiTextured, INCUBATION_PROGRESS_TEXTURE, 10, 54, 0, 54 - incubationProgressScaled, left + 103, top + 15 + 55 - incubationProgressScaled, 10, incubationProgressScaled);
     }
 }

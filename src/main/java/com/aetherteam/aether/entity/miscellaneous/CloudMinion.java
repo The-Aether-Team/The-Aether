@@ -7,6 +7,7 @@ import com.aetherteam.aether.entity.projectile.crystal.CloudCrystal;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -188,7 +189,7 @@ public class CloudMinion extends FlyingMob {
      * Cloud Minions cannot be damaged.
      */
     @Override
-    public boolean hurt(DamageSource source, float damage) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float damage) {
         return false;
     }
 

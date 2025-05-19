@@ -55,7 +55,6 @@ import com.aetherteam.aether.item.tools.zanite.ZaniteAxeItem;
 import com.aetherteam.aether.item.tools.zanite.ZaniteHoeItem;
 import com.aetherteam.aether.item.tools.zanite.ZanitePickaxeItem;
 import com.aetherteam.aether.item.tools.zanite.ZaniteShovelItem;
-import io.wispforest.accessories.api.AccessoriesAPI;
 import io.wispforest.accessories.api.Accessory;
 import io.wispforest.accessories.api.AccessoryRegistry;
 import net.minecraft.ChatFormatting;
@@ -72,7 +71,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.equipment.ArmorMaterials;
 import net.minecraft.world.level.block.Blocks;
@@ -80,7 +78,6 @@ import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import net.minecraft.world.level.block.entity.BannerPatterns;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.common.SpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -142,9 +139,9 @@ public class AetherItems {
     public static final DeferredItem<Item> POISON_DART = ITEMS.register("poison_dart", () -> new PoisonDartItem(new Item.Properties()));
     public static final DeferredItem<Item> ENCHANTED_DART = ITEMS.register("enchanted_dart", () -> new EnchantedDartItem(new Item.Properties().rarity(Rarity.RARE)));
 
-    public static final DeferredItem<Item> GOLDEN_DART_SHOOTER = ITEMS.register("golden_dart_shooter", () -> new DartShooterItem(GOLDEN_DART, new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<Item> POISON_DART_SHOOTER = ITEMS.register("poison_dart_shooter", () -> new DartShooterItem(POISON_DART, new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<Item> ENCHANTED_DART_SHOOTER = ITEMS.register("enchanted_dart_shooter", () -> new DartShooterItem(ENCHANTED_DART, new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
+    public static final DeferredItem<Item> GOLDEN_DART_SHOOTER = ITEMS.register("golden_dart_shooter", () -> new DartShooterItem(GOLDEN_DART, new Item.Properties().stacksTo(1).enchantable(1)));
+    public static final DeferredItem<Item> POISON_DART_SHOOTER = ITEMS.register("poison_dart_shooter", () -> new DartShooterItem(POISON_DART, new Item.Properties().stacksTo(1).enchantable(1)));
+    public static final DeferredItem<Item> ENCHANTED_DART_SHOOTER = ITEMS.register("enchanted_dart_shooter", () -> new DartShooterItem(ENCHANTED_DART, new Item.Properties().stacksTo(1).enchantable(1).rarity(Rarity.RARE)));
 
     public static final DeferredItem<BowItem> PHOENIX_BOW = ITEMS.register("phoenix_bow", PhoenixBowItem::new);
 

@@ -78,11 +78,11 @@ public class AudioHooks {
     }
 
     private static Holder<SoundEvent> getSoundEvent(SoundInstance sound) {
-        SoundEvent soundEvent = BuiltInRegistries.SOUND_EVENT.get(sound.getLocation());
+        SoundEvent soundEvent = BuiltInRegistries.SOUND_EVENT.getValue(sound.getLocation());
         if (soundEvent != null) {
             Optional<ResourceKey<SoundEvent>> optionalResourceKey = BuiltInRegistries.SOUND_EVENT.getResourceKey(soundEvent);
             if (optionalResourceKey.isPresent()) {
-                return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(optionalResourceKey.get());
+                return BuiltInRegistries.SOUND_EVENT.getOrThrow(optionalResourceKey.get());
             }
         }
         return null;

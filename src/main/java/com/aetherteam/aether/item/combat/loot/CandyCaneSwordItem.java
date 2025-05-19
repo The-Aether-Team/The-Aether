@@ -4,8 +4,8 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
@@ -25,8 +25,8 @@ public class CandyCaneSwordItem extends SwordItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (EquipmentUtil.isFullStrength(attacker)) {
-            if (!target.getType().is(AetherTags.Entities.NO_CANDY_CANE_DROPS) && target.level().getRandom().nextBoolean()) {
-                target.spawnAtLocation(AetherItems.CANDY_CANE.get());
+            if (!target.getType().is(AetherTags.Entities.NO_CANDY_CANE_DROPS) && target.level().getRandom().nextBoolean() && target.level() instanceof ServerLevel serverLevel) {
+                target.spawnAtLocation(serverLevel, AetherItems.CANDY_CANE.get());
             }
         }
         return super.hurtEnemy(stack, target, attacker);

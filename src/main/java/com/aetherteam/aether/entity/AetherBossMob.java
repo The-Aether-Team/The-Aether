@@ -5,6 +5,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.nitrogen.entity.BossMob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Mob;
@@ -60,14 +61,16 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
      * @param check  An additional check using a {@link BlockState} {@link Predicate}.
      */
     default void evaporate(T entity, BlockPos min, BlockPos max, Predicate<BlockState> check) {
-        if (EventHooks.canEntityGrief(entity.level(), entity)) {
-            for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
-                if (entity.level().getBlockState(pos).getBlock() instanceof LiquidBlock && check.test(entity.level().getBlockState(pos))) {
-                    entity.level().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                    this.evaporateEffects(entity, pos);
-                } else if (!entity.level().getFluidState(pos).isEmpty() && entity.level().getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED) && check.test(entity.level().getFluidState(pos).createLegacyBlock())) {
-                    entity.level().setBlockAndUpdate(pos, entity.level().getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
-                    this.evaporateEffects(entity, pos);
+        if (entity.level() instanceof ServerLevel serverLevel) {
+            if (EventHooks.canEntityGrief(serverLevel, entity)) {
+                for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
+                    if (entity.level().getBlockState(pos).getBlock() instanceof LiquidBlock && check.test(entity.level().getBlockState(pos))) {
+                        entity.level().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                        this.evaporateEffects(entity, pos);
+                    } else if (!entity.level().getFluidState(pos).isEmpty() && entity.level().getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED) && check.test(entity.level().getFluidState(pos).createLegacyBlock())) {
+                        entity.level().setBlockAndUpdate(pos, entity.level().getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
+                        this.evaporateEffects(entity, pos);
+                    }
                 }
             }
         }

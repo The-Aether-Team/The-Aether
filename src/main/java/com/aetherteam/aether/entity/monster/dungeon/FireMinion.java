@@ -6,6 +6,7 @@ import com.aetherteam.aether.entity.ai.goal.ContinuousMeleeAttackGoal;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -78,11 +79,11 @@ public class FireMinion extends Monster {
      * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
         if (source.getDirectEntity() instanceof Snowball) {
             amount += 3;
         }
-        return super.hurt(source, amount);
+        return super.hurtServer(serverLevel, source, amount);
     }
 
     /**
@@ -92,8 +93,8 @@ public class FireMinion extends Monster {
      * @return Whether the Fire Minion is invulnerable to the damage, as a {@link Boolean}.
      */
     @Override
-    public boolean isInvulnerableTo(DamageSource source) {
-        return super.isInvulnerableTo(source) || source.getEntity() != null && source.getEntity().getType() == AetherEntityTypes.SUN_SPIRIT.get();
+    public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource source) {
+        return super.isInvulnerableTo(serverLevel, source) || source.getEntity() != null && source.getEntity().getType() == AetherEntityTypes.SUN_SPIRIT.get();
     }
 
     @Override

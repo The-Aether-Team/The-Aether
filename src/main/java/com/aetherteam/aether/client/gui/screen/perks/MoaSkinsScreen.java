@@ -26,6 +26,7 @@ import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
@@ -33,6 +34,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -192,7 +194,7 @@ public class MoaSkinsScreen extends Screen {
     private void renderWindow(GuiGraphics guiGraphics) {
         User user = UserData.Client.getClientUser();
         Font font = this.getMinecraft().font;
-        guiGraphics.blit(MOA_SKINS_GUI, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderType::guiTextured, MOA_SKINS_GUI, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
 
         Component component = user == null ? Component.translatable("gui.aether.moa_skins.text.donate") : Component.translatable("gui.aether.moa_skins.text.reward");
         int y = (this.topPos + this.imageHeight - 69) + font.wordWrapHeight(component, this.imageWidth - 20);
@@ -230,15 +232,15 @@ public class MoaSkinsScreen extends Screen {
                 if (user == null || !skin.getUserPredicate().test(user) || skin == this.getSelectedSkin() || this.getSlotIndex(mouseX, mouseY) == slotIndex) {
                     // Highlighted slot vs. Darkened slot.
                     ResourceLocation location = SLOT_WIDGET.get(user != null && skin.getUserPredicate().test(user), skin == this.getSelectedSkin() || this.getSlotIndex(mouseX, mouseY) == slotIndex);
-                    guiGraphics.blitSprite(location, x, y, 18, 18); // Render slot.
+                    guiGraphics.blitSprite(RenderType::guiTextured, location, x, y, 18, 18); // Render slot.
                 }
 
                 // Renders an outline for the player's currently active Moa Skin.
                 if (userSkinsData.containsKey(uuid) && userSkinsData.get(uuid).moaSkin() == skin) {
-                    guiGraphics.blitSprite(SLOT_SELECTED_SPRITE, x, y, 18, 18); // Render golden slot outline.
+                    guiGraphics.blitSprite(RenderType::guiTextured, SLOT_SELECTED_SPRITE, x, y, 18, 18); // Render golden slot outline.
                 }
 
-                guiGraphics.blitSprite(skin.getIconLocation(), x + 1, y + 1, 16, 16); // Render Moa skin icon.
+                guiGraphics.blitSprite(RenderType::guiTextured, skin.getIconLocation(), x + 1, y + 1, 16, 16); // Render Moa skin icon.
 
                 slotIndex++;
             }
@@ -257,7 +259,7 @@ public class MoaSkinsScreen extends Screen {
         int scrollbarLeft = this.leftPos + 8;
 
         ResourceLocation location = SCROLL_WIDGET.get(this.moaSkins.size() > this.maxSlots(), true);
-        guiGraphics.blitSprite(location, (int) (scrollbarLeft + this.scrollX), scrollbarTop, 13, 6); // Render scrollbar.
+        guiGraphics.blitSprite(RenderType::guiTextured, location, (int) (scrollbarLeft + this.scrollX), scrollbarTop, 13, 6); // Render scrollbar.
     }
 
     /**
@@ -309,7 +311,7 @@ public class MoaSkinsScreen extends Screen {
             this.applyButton.active = false;
             this.removeButton.active = false;
 
-            guiGraphics.blitSprite(LOCK_SPRITE, this.leftPos + 13, this.topPos + 13, 10, 14); // Lock Icon
+            guiGraphics.blitSprite(RenderType::guiTextured, LOCK_SPRITE, this.leftPos + 13, this.topPos + 13, 10, 14); // Lock Icon
 
             if (this.getSelectedSkin().getInfo().lifetime()) {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 8);
@@ -340,7 +342,7 @@ public class MoaSkinsScreen extends Screen {
      */
     private void renderLifetimeIcon(GuiGraphics guiGraphics, boolean mouseOver) {
         ResourceLocation location = PERMANENT_WIDGET.get(true, mouseOver);
-        guiGraphics.blitSprite(location, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, 8, 7); // Lifetime Icon
+        guiGraphics.blitSprite(RenderType::guiTextured, location, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, 8, 7); // Lifetime Icon
     }
 
     /**
@@ -351,7 +353,7 @@ public class MoaSkinsScreen extends Screen {
      */
     private void renderPledgingIcon(GuiGraphics guiGraphics, boolean mouseOver) {
         ResourceLocation location = TEMPORARY_WIDGET.get(true, mouseOver);
-        guiGraphics.blitSprite(location, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, 7, 7);
+        guiGraphics.blitSprite(RenderType::guiTextured, location, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, 7, 7);
     }
 
     private boolean isMouseOverIcon(int mouseX, int mouseY, int width) {
@@ -386,7 +388,7 @@ public class MoaSkinsScreen extends Screen {
     private void renderMoa(GuiGraphics guiGraphics, float partialTicks) {
         if (this.getMinecraft().level != null) {
             if (this.getPreviewMoa() == null) { // Set up preview Moa if it doesn't exist.
-                Moa moa = AetherEntityTypes.MOA.get().create(this.getMinecraft().level);
+                Moa moa = AetherEntityTypes.MOA.get().create(this.getMinecraft().level, EntitySpawnReason.EVENT);
                 if (moa != null) {
                     moa.generateMoaUUID();
                     moa.setMoaTypeByKey(AetherMoaTypes.BLUE);

@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -153,8 +154,8 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         int xPos = (this.width - this.getXSize()) / 2;
         int yPos = (this.height - (this.getYSize())) / 2;
-        guiGraphics.blit(TEXTURE_LORE_BACKING, xPos, yPos - 4, 0, 0, this.getXSize(), this.getYSize() + 56, 256, 256); // Draws the grey GUI backing.
-        guiGraphics.blit(TEXTURE_LORE_BOOK, xPos + 12, yPos + 2, 0, 0, this.getXSize(), this.getYSize() + 56, 256, 256); // Draws the book GUI on top of backing.
+        guiGraphics.blit(RenderType::guiTextured, TEXTURE_LORE_BACKING, xPos, yPos - 4, 0, 0, this.getXSize(), this.getYSize() + 56, 256, 256); // Draws the grey GUI backing.
+        guiGraphics.blit(RenderType::guiTextured, TEXTURE_LORE_BOOK, xPos + 12, yPos + 2, 0, 0, this.getXSize(), this.getYSize() + 56, 256, 256); // Draws the book GUI on top of backing.
     }
 
     private void drawNormalBookText(GuiGraphics guiGraphics, Font fontRenderer, Component component, int x, int y) {

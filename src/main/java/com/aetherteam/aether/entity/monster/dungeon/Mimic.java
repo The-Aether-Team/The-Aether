@@ -54,19 +54,18 @@ public class Mimic extends Monster {
      * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
         if (!(source.getDirectEntity() instanceof Mimic)) {
             if (source.getDirectEntity() instanceof LivingEntity livingEntity && this.hurtTime == 0) {
-                if (this.level() instanceof ServerLevel serverLevel) {
-                    for (int i = 0; i < 20; i++) {
-                        serverLevel.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 1, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05F);
-                    }
+
+                for (int i = 0; i < 20; i++) {
+                    serverLevel.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 1, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05F);
                 }
                 if (!(livingEntity instanceof Player player) || !player.isCreative()) {
                     this.setTarget(livingEntity);
                 }
             }
-            return super.hurt(source, amount);
+            return super.hurtServer(serverLevel, source, amount);
         } else {
             return false;
         }
@@ -79,8 +78,8 @@ public class Mimic extends Monster {
      * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
-    public boolean doHurtTarget(Entity entity) {
-        boolean result = super.doHurtTarget(entity);
+    public boolean doHurtTarget(ServerLevel serverLevel, Entity entity) {
+        boolean result = super.doHurtTarget(serverLevel, entity);
         if (entity instanceof LivingEntity livingEntity) { // Choose between attack or kill sound depending on remaining target health.
             SoundEvent sound = livingEntity.getHealth() <= 0.0 ? AetherSoundEvents.ENTITY_MIMIC_KILL.get() : AetherSoundEvents.ENTITY_MIMIC_ATTACK.get();
             this.playSound(sound, 1.0F, this.getVoicePitch());

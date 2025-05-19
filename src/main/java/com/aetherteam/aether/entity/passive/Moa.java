@@ -231,8 +231,8 @@ public class Moa extends MountableAnimal implements WingedBird {
                         if (eggLayEvent.getSound() != null) {
                             this.playSound(eggLayEvent.getSound(), eggLayEvent.getVolume(), eggLayEvent.getPitch());
                         }
-                        if (eggLayEvent.getItem() != null) {
-                            this.spawnAtLocation(eggLayEvent.getItem());
+                        if (eggLayEvent.getItem() != null && this.level() instanceof ServerLevel serverLevel) {
+                            this.spawnAtLocation(serverLevel, eggLayEvent.getItem());
                         }
                     }
                 }

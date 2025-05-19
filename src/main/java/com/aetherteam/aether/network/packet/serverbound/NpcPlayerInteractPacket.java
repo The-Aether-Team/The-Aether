@@ -7,6 +7,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -30,8 +31,8 @@ public record NpcPlayerInteractPacket(int entityID, byte interactionID) implemen
 
     public static void execute(NpcPlayerInteractPacket payload, IPayloadContext context) {
         Player playerEntity = context.player();
-        if (playerEntity.getServer() != null && playerEntity.level().getEntity(payload.entityID()) instanceof NpcDialogue npc) {
-            npc.handleNpcInteraction(playerEntity, payload.interactionID());
+        if (playerEntity.getServer() != null && playerEntity.level().getEntity(payload.entityID()) instanceof NpcDialogue npc && playerEntity instanceof ServerPlayer serverPlayer) {
+            npc.handleNpcInteraction(serverPlayer, payload.interactionID());
         }
     }
 }

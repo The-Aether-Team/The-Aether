@@ -79,8 +79,8 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
      * Increments the chat timer.
      */
     @Override
-    public void customServerAiStep() {
-        super.customServerAiStep();
+    public void customServerAiStep(ServerLevel serverLevel) {
+        super.customServerAiStep(serverLevel);
         if (this.chatTimer > 0) {
             this.chatTimer--;
         }
@@ -100,7 +100,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
         if (hand == InteractionHand.MAIN_HAND) {
             if (this.getTarget() == null) {
                 this.lookAt(player, 180.0F, 180.0F); // Look at player.
-                if (!this.level().isClientSide() && this.chatTimer <= 0) {
+                if (player instanceof ServerPlayer serverPlayer && this.chatTimer <= 0) {
                     String translationId;
                     if (item.getItem() == AetherItems.VICTORY_MEDAL.get()) { // Change what message is displayed depending on how many medals a player shows a Valkyrie.
                         if (item.getCount() >= 10) {
@@ -113,7 +113,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
                     } else {
                         translationId = "gui.aether.valkyrie.dialog." + (char) (this.getRandom().nextInt(3) + '1');
                     }
-                    this.chat(player, Component.translatable(translationId), false);
+                    this.chat(serverPlayer, Component.translatable(translationId), false);
                     this.playSound(this.getInteractSound(), 1.0F, this.getVoicePitch());
                     this.chatTimer = 60;
                 }
@@ -130,9 +130,9 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
      * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        boolean result = super.hurt(source, amount);
-        if (!this.level().isClientSide() && source.getEntity() instanceof Player player) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
+        boolean result = super.hurtServer(serverLevel, source, amount);
+        if (!this.level().isClientSide() && source.getEntity() instanceof ServerPlayer player) {
             if (this.getTarget() == null && this.level().getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
                 this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.attack." + (char) (this.getRandom().nextInt(3) + '1')), false);
             }
@@ -146,8 +146,8 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
      * @param entity The hurt {@link Entity}.
      */
     @Override
-    public boolean doHurtTarget(Entity entity) {
-        boolean result = super.doHurtTarget(entity);
+    public boolean doHurtTarget(ServerLevel serverLevel, Entity entity) {
+        boolean result = super.doHurtTarget(serverLevel, entity);
         if (entity instanceof ServerPlayer player && player.getHealth() <= 0) {
             this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.playerdeath." + (char) (this.getRandom().nextInt(3) + '1'), player.getDisplayName()), false);
         }
@@ -161,7 +161,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
      */
     @Override
     public void die(DamageSource source) {
-        if (source.getEntity() instanceof Player player) {
+        if (source.getEntity() instanceof ServerPlayer player) {
             this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.defeated." + (char) (this.getRandom().nextInt(3) + '1')), false);
         }
         this.spawnExplosionParticles();
