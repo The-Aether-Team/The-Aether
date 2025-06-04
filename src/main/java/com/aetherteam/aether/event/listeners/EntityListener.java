@@ -215,25 +215,24 @@ public class EntityListener {
                         if (itemsTag instanceof ListTag listTag) {
                             for (Tag itemTag : listTag) {
                                 if (itemTag instanceof CompoundTag itemCompoundTag) {
-                                    if (itemCompoundTag.contains("id")) {
-                                        var location = ResourceLocation.parse(itemCompoundTag.getString("id"));
+                                    if (!itemCompoundTag.contains("id")) continue;
 
-                                        if (!location.getNamespace().equals(Aether.MODID)) continue;
+                                    var location = ResourceLocation.parse(itemCompoundTag.getString("id"));
+                                    if (!location.getNamespace().equals(Aether.MODID)) continue;
 
-                                        Item item = BuiltInRegistries.ITEM.get(location);
-                                        if (item == Items.AIR) continue;
+                                    Item item = BuiltInRegistries.ITEM.get(location);
+                                    if (item == Items.AIR) continue;
 
-                                        ItemStack stack = new ItemStack(item);
-                                        AccessoriesCapability accessories = AccessoriesCapability.get(player);
-                                        if (accessories == null) continue;
+                                    ItemStack stack = new ItemStack(item);
+                                    AccessoriesCapability accessories = AccessoriesCapability.get(player);
+                                    if (accessories == null) continue;
 
-                                        Accessory accessory = AccessoriesAPI.getOrDefaultAccessory(stack);
-                                        var equipReference = accessories.canEquipAccessory(stack, true);
-                                        if (equipReference == null) continue;
-                                        
-                                        if (accessory.canEquip(stack, equipReference.first())) {
-                                            equipReference.second().equipStack(stack.copy());
-                                        }
+                                    Accessory accessory = AccessoriesAPI.getOrDefaultAccessory(stack);
+                                    var equipReference = accessories.canEquipAccessory(stack, true);
+                                    if (equipReference == null) continue;
+                                    
+                                    if (accessory.canEquip(stack, equipReference.first())) {
+                                        equipReference.second().equipStack(stack.copy());
                                     }
                                 }
                             }
