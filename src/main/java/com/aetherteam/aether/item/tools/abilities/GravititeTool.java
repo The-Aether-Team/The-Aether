@@ -4,12 +4,13 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.miscellaneous.FloatingBlock;
 import com.aetherteam.aether.entity.block.FloatingBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -32,9 +33,10 @@ public interface GravititeTool {
         BlockState blockState = level.getBlockState(blockPos);
         Player player = context.getPlayer();
         InteractionHand hand = context.getHand();
-        if (itemStack.getItem() instanceof TieredItem tieredItem) {
+        if (itemStack.has(DataComponents.TOOL)) {
+            Tool tool = itemStack.get(DataComponents.TOOL);
             if (player != null && !player.isShiftKeyDown()) {
-                if ((itemStack.getDestroySpeed(blockState) == tieredItem.getTier().getSpeed() || itemStack.isCorrectToolForDrops(blockState)) && FloatingBlock.isFree(level.getBlockState(blockPos.above()))) {
+                if ((itemStack.getDestroySpeed(blockState) == tool.getMiningSpeed(blockState) || itemStack.isCorrectToolForDrops(blockState)) && FloatingBlock.isFree(level.getBlockState(blockPos.above()))) {
                     if (level.getBlockEntity(blockPos) == null && blockState.getDestroySpeed(level, blockPos) >= 0.0F && !blockState.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) && !blockState.is(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST)) {
                         if (!level.isClientSide()) {
                             FloatingBlockEntity entity = new FloatingBlockEntity(level, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, blockState);

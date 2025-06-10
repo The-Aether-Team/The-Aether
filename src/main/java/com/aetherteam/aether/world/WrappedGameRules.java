@@ -1,5 +1,6 @@
 package com.aetherteam.aether.world;
 
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.level.GameRules;
 
 import java.util.Set;
@@ -13,6 +14,8 @@ public class WrappedGameRules extends GameRules {
     private final Set<Key<BooleanValue>> blacklist;
 
     public WrappedGameRules(GameRules gameRules, Set<GameRules.Key<GameRules.BooleanValue>> keys) {
+        //TODO is need set feature flag?
+        super(FeatureFlagSet.of());
         this.gameRules = gameRules;
         this.blacklist = keys;
     }

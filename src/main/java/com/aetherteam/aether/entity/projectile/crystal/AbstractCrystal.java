@@ -50,7 +50,7 @@ public abstract class AbstractCrystal extends Projectile {
         if (result.getType() != HitResult.Type.MISS && !flag && !EventHooks.onProjectileImpact(this, result)) {
             this.onHit(result);
         }
-        this.checkInsideBlocks();
+        this.applyEffectsFromBlocks();
         this.tickMovement();
     }
 

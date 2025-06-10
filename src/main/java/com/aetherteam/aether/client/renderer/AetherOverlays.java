@@ -22,9 +22,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -148,16 +150,16 @@ public class AetherOverlays {
                 timeInPortal = timeInPortal * 0.8F + 0.2F;
             }
 
+            int i = ARGB.white(timeInPortal);
+
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
-            guiGraphics.setColor(1.0F, 1.0F, 1.0F, timeInPortal);
             TextureAtlasSprite textureatlassprite = minecraft.getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState());
-            guiGraphics.blit(0, 0, -90, guiGraphics.guiWidth(), guiGraphics.guiHeight(), textureatlassprite);
+            guiGraphics.blitSprite(RenderType::guiTexturedOverlay, textureatlassprite, 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), i);
             RenderSystem.disableBlend();
             RenderSystem.depthMask(true);
             RenderSystem.enableDepthTest();
-            guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
 
@@ -223,12 +225,12 @@ public class AetherOverlays {
         PoseStack poseStack = guiGraphics.pose();
         poseStack.pushPose();
         alpha *= (float) Math.sqrt(effectScale);
+        int i = ARGB.white(alpha);
+
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
         RenderSystem.enableBlend();
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, alpha);
-        guiGraphics.blit(resource, 0, 0, -90, 0.0F, 0.0F, window.getGuiScaledWidth(), window.getGuiScaledHeight(), window.getGuiScaledWidth(), window.getGuiScaledHeight());
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        guiGraphics.blit(RenderType::guiTexturedOverlay, resource, 0, 0, 0.0F, 0.0F, window.getGuiScaledWidth(), window.getGuiScaledHeight(), window.getGuiScaledWidth(), window.getGuiScaledHeight(), i);
         RenderSystem.disableBlend();
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
@@ -252,7 +254,7 @@ public class AetherOverlays {
                 for (ItemStack itemStack : items) {
                     Item item = itemStack.getItem();
                     if (item == AetherItems.HAMMER_OF_KINGBDOGZ.get()) {
-                        float cooldownPercent = player.getCooldowns().getCooldownPercent(item, 0.0F);
+                        float cooldownPercent = player.getCooldowns().getCooldownPercent(itemStack, 0.0F);
                         if (cooldownPercent > 0.0F) {
                             if (player.getMainHandItem().getItem() == item) {
                                 itemStack = player.getMainHandItem();
@@ -261,8 +263,8 @@ public class AetherOverlays {
                             }
                             String text = itemStack.getHoverName().getString().concat(" ").concat(Component.translatable("aether.hammer_of_kingbdogz_cooldown").getString());
                             guiGraphics.drawString(minecraft.font, text, (int) ((window.getGuiScaledWidth() / 2.0F) - (minecraft.font.width(text) / 2.0F)), 32, 16777215);
-                            guiGraphics.blitSprite(TEXTURE_COOLDOWN_BAR_BACKGROUND, 128, 8, 0, 0, window.getGuiScaledWidth() / 2 - 64, 42, 128, 8);
-                            guiGraphics.blitSprite(TEXTURE_COOLDOWN_BAR, 128, 8, 0, 0, window.getGuiScaledWidth() / 2 - 64, 42, (int) (cooldownPercent * 128), 8);
+                            guiGraphics.blitSprite(RenderType::guiTexturedOverlay, TEXTURE_COOLDOWN_BAR_BACKGROUND, 128, 8, 0, 0, window.getGuiScaledWidth() / 2 - 64, 42, 128, 8);
+                            guiGraphics.blitSprite(RenderType::guiTexturedOverlay, TEXTURE_COOLDOWN_BAR, 128, 8, 0, 0, window.getGuiScaledWidth() / 2 - 64, 42, (int) (cooldownPercent * 128), 8);
                             break;
                         }
                     }
@@ -283,7 +285,7 @@ public class AetherOverlays {
             for (int jumpCount = 0; jumpCount < moa.getMaxJumps(); jumpCount++) {
                 int xPos = ((window.getGuiScaledWidth() / 2) + (jumpCount * 8)) - (moa.getMaxJumps() * 8) / 2;
                 int yPos = 18;
-                guiGraphics.blitSprite(appendBackground(jumpCount >= moa.getRemainingJumps(), getMoaJumpTexture(moa, jumpCount)) , xPos, yPos, 9, 11);
+                guiGraphics.blitSprite(RenderType::guiTexturedOverlay, appendBackground(jumpCount >= moa.getRemainingJumps(), getMoaJumpTexture(moa, jumpCount)), xPos, yPos, 9, 11);
             }
         }
     }
@@ -434,11 +436,11 @@ public class AetherOverlays {
             int selectedContainer = currentHeart * 2;
             if (highlight && selectedContainer < displayLifeShardHealth) {
                 boolean halfHeart = selectedContainer + 1 == displayLifeShardHealth;
-                guiGraphics.blitSprite(AetherOverlays.getSprite(heartType, halfHeart, true), x, y, 9, 9);
+                guiGraphics.blitSprite(RenderType::guiTexturedOverlay, AetherOverlays.getSprite(heartType, halfHeart, true), x, y, 9, 9);
             }
             if (selectedContainer < lifeShardHealth) {
                 boolean halfHeart = selectedContainer + 1 == lifeShardHealth;
-                guiGraphics.blitSprite(AetherOverlays.getSprite(heartType, halfHeart, false), x, y, 9, 9);
+                guiGraphics.blitSprite(RenderType::guiTexturedOverlay, AetherOverlays.getSprite(heartType, halfHeart, false), x, y, 9, 9);
             }
         }
     }

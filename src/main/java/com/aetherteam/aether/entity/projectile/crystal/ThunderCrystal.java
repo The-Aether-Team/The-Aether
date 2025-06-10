@@ -80,7 +80,7 @@ public class ThunderCrystal extends AbstractCrystal {
                 }
             }
         }
-        this.checkInsideBlocks();
+        this.applyEffectsFromBlocks();
         Vec3 motion = this.getDeltaMovement();
         this.setPos(this.getX() + motion.x(), this.getY() + motion.y(), this.getZ() + motion.z());
     }

@@ -132,7 +132,7 @@ public class FloatingBlockEntity extends Entity {
 
                 if ((!this.verticalCollision || this.onGround()) && !canConvert) {
                     if (!this.level().isClientSide() && (this.time > 100 && (blockPos1.getY() <= this.level().getMinY() || blockPos1.getY() > this.level().getMaxY()) || this.time > 600)) { // Checks max y-level.
-                        if ((!this.natural || !this.getBlockState().requiresCorrectToolForDrops()) && this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                        if ((!this.natural || !this.getBlockState().requiresCorrectToolForDrops()) && this.dropItem && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                             this.dropBlock(this.getBlockState());
                         }
                         this.discard();
@@ -192,14 +192,14 @@ public class FloatingBlockEntity extends Entity {
                                             blockEntity.setChanged();
                                         }
                                     }
-                                } else if ((!this.natural || !this.getBlockState().requiresCorrectToolForDrops()) && this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                } else if ((!this.natural || !this.getBlockState().requiresCorrectToolForDrops()) && this.dropItem && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                                     this.discard();
                                     this.callOnBrokenAfterFall(block, blockPos1);
                                     this.dropBlock(this.getBlockState());
                                 }
                             } else {
                                 this.discard();
-                                if ((!this.natural || !this.getBlockState().requiresCorrectToolForDrops() || blockState.getBlock().defaultDestroyTime() < 0) && this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                if ((!this.natural || !this.getBlockState().requiresCorrectToolForDrops() || blockState.getBlock().defaultDestroyTime() < 0) && this.dropItem && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                                     this.callOnBrokenAfterFall(block, blockPos1);
                                     this.dropBlock(this.getBlockState());
                                 }
@@ -224,7 +224,7 @@ public class FloatingBlockEntity extends Entity {
     private void dropBlock(BlockState state) {
         if (this.level() instanceof ServerLevel serverLevel) {
             for (ItemStack stack : Block.getDrops(state, serverLevel, this.blockPosition(), null)) {
-                this.spawnAtLocation(stack);
+                this.spawnAtLocation(serverLevel, stack);
             }
         }
     }

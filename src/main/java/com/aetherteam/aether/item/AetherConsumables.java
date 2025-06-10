@@ -11,4 +11,5 @@ public class AetherConsumables {
     public static final Consumable HEALING_STONE = Consumables.defaultDrink().onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(MobEffects.REGENERATION, 610, 0))).build();
     public static final Consumable POISON_BUCKET = Consumables.defaultDrink().onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(AetherEffects.INEBRIATION, 500, 0, false, false, true))).build();
     public static final Consumable REMEDY_BUCKET = Consumables.defaultDrink().onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(AetherEffects.REMEDY, 200, 0, false, false, true))).build();
+    public static final Consumable FAST_FOOD = Consumables.defaultFood().consumeSeconds(0.8F).build();
 }

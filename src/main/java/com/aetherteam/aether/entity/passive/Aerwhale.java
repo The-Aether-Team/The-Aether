@@ -9,6 +9,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -140,7 +141,7 @@ public class Aerwhale extends FlyingMob {
                     if (f4 > 1.0F) {
                         f4 = 1.0F;
                     }
-                    this.walkAnimation.update(f4, 0.4F);
+                    this.walkAnimation.update(f4, 0.4F, 1.0F);
                 }
             } else {
                 super.travel(vector);
@@ -247,9 +248,10 @@ public class Aerwhale extends FlyingMob {
      * [CODE COPY] - {@link Animal#getBaseExperienceReward()}.
      */
     @Override
-    public int getBaseExperienceReward() {
-        return 1 + this.level().getRandom().nextInt(3);
+    public int getBaseExperienceReward(ServerLevel serverLevel) {
+        return 1 + serverLevel.getRandom().nextInt(3);
     }
+
 
     /**
      * @return An expanded {@link AABB} for render culling, so that Aerwhales don't de-render

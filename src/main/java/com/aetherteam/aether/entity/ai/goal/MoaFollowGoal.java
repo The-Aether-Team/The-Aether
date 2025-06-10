@@ -1,6 +1,7 @@
 package com.aetherteam.aether.entity.ai.goal;
 
 import com.aetherteam.aether.entity.passive.Moa;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
@@ -35,7 +36,12 @@ public class MoaFollowGoal extends TemptGoal {
             --this.calmDown;
             return false;
         } else {
-            this.player = this.moa.level().getNearestPlayer(this.targetingConditions, this.moa);
+            this.player = this.moa.level().getNearestPlayer(this.moa.getX(), this.moa.getY(), this.moa.getZ(), 16, entity -> {
+                if (entity instanceof LivingEntity living) {
+                    return this.targetingConditions.test(getServerLevel(this.moa), this.moa, living);
+                }
+                return false;
+            });
             if (this.player != null) {
                 if (this.moa.distanceToSqr(this.player) >= 6.25) {
                     this.mob.getMoveControl().setWantedPosition(this.player.getX(), this.player.getY(), this.player.getZ(), this.speedModifier);

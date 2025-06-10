@@ -34,7 +34,9 @@ import com.aetherteam.aether.item.food.WhiteAppleItem;
 import com.aetherteam.aether.item.materials.AmbrosiumShardItem;
 import com.aetherteam.aether.item.materials.SwetBallItem;
 import com.aetherteam.aether.item.miscellaneous.*;
-import com.aetherteam.aether.item.miscellaneous.bucket.*;
+import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
+import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootMobBucketItem;
+import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootSolidBucketItem;
 import com.aetherteam.aether.item.tools.gravitite.GravititeAxeItem;
 import com.aetherteam.aether.item.tools.gravitite.GravititeHoeItem;
 import com.aetherteam.aether.item.tools.gravitite.GravititePickaxeItem;
@@ -181,14 +183,14 @@ public class AetherItems {
     public static final DeferredItem<Item> SENTRY_BOOTS = ITEMS.register("sentry_boots", () -> new ArmorItem(AetherArmorMaterials.SENTRY, ArmorType.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
 
     // Food
-    public static final DeferredItem<Item> BLUE_BERRY = ITEMS.register("blue_berry", () -> new Item(new Item.Properties().food(AetherFoods.BLUE_BERRY)));
-    public static final DeferredItem<Item> ENCHANTED_BERRY = ITEMS.register("enchanted_berry", () -> new Item(new Item.Properties().rarity(Rarity.RARE).food(AetherFoods.ENCHANTED_BERRY)));
+    public static final DeferredItem<Item> BLUE_BERRY = ITEMS.register("blue_berry", () -> new Item(new Item.Properties().food(AetherFoods.BLUE_BERRY, AetherConsumables.FAST_FOOD)));
+    public static final DeferredItem<Item> ENCHANTED_BERRY = ITEMS.register("enchanted_berry", () -> new Item(new Item.Properties().rarity(Rarity.RARE).food(AetherFoods.ENCHANTED_BERRY, AetherConsumables.FAST_FOOD)));
     public static final DeferredItem<Item> WHITE_APPLE = ITEMS.register("white_apple", WhiteAppleItem::new);
     public static final DeferredItem<Item> BLUE_GUMMY_SWET = ITEMS.register("blue_gummy_swet", GummySwetItem::new);
     public static final DeferredItem<Item> GOLDEN_GUMMY_SWET = ITEMS.register("golden_gummy_swet", GummySwetItem::new);
     public static final DeferredItem<Item> HEALING_STONE = ITEMS.register("healing_stone", HealingStoneItem::new);
-    public static final DeferredItem<Item> CANDY_CANE = ITEMS.register("candy_cane", () -> new Item(new Item.Properties().food(AetherFoods.CANDY_CANE)));
-    public static final DeferredItem<Item> GINGERBREAD_MAN = ITEMS.register("gingerbread_man", () -> new Item(new Item.Properties().food(AetherFoods.GINGERBREAD_MAN)));
+    public static final DeferredItem<Item> CANDY_CANE = ITEMS.register("candy_cane", () -> new Item(new Item.Properties().food(AetherFoods.CANDY_CANE, AetherConsumables.FAST_FOOD)));
+    public static final DeferredItem<Item> GINGERBREAD_MAN = ITEMS.register("gingerbread_man", () -> new Item(new Item.Properties().food(AetherFoods.GINGERBREAD_MAN, AetherConsumables.FAST_FOOD)));
 
     // Accessories
     public static final DeferredItem<Item> IRON_RING = ITEMS.register("iron_ring", () -> new RingItem(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_IRON_RING, new Item.Properties().stacksTo(1)));

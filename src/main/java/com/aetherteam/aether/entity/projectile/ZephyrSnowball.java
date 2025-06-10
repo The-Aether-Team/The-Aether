@@ -62,7 +62,7 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
                 this.onHit(hitResult);
             }
 
-            this.checkInsideBlocks();
+            this.applyEffectsFromBlocks();
             Vec3 vec3 = this.getDeltaMovement();
             double d0 = this.getX() + vec3.x();
             double d1 = this.getY() + vec3.y();
