@@ -130,6 +130,9 @@ TunefulTurnip
 - Fixes to a crash from the Gold Dungeon in modded biomes.
 - Fixes to the Slider ignoring players not in line of sight.
 
+Ultrasquid9
+- Cleanup of Curios data converter.
+
 YvanCywan
 - Made Skyroot Buckets work as fuel.
 
