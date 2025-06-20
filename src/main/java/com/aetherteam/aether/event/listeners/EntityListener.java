@@ -5,10 +5,7 @@ import com.aetherteam.aether.event.hooks.EntityHooks;
 import io.wispforest.accessories.api.AccessoriesAPI;
 import io.wispforest.accessories.api.AccessoriesCapability;
 import io.wispforest.accessories.api.Accessory;
-import io.wispforest.accessories.api.EquipAction;
 import io.wispforest.accessories.api.events.OnDeathCallback;
-import io.wispforest.accessories.api.slot.SlotReference;
-import it.unimi.dsi.fastutil.Pair;
 import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -196,52 +193,46 @@ public class EntityListener {
         Player player = event.getEntity();
         if (player instanceof ServerPlayer serverPlayer) {
             CompoundTag playerTag = serverPlayer.server.getWorldData().getLoadedPlayerTag();
-            if (playerTag != null) {
-                CompoundTag capsTag = null;
-                if (playerTag.contains("ForgeCaps")) {
-                    capsTag = playerTag.getCompound("ForgeCaps");
-                } else if (playerTag.contains("neoforge:attachments")) {
-                    capsTag = playerTag.getCompound("neoforge:attachments");
-                }
-                if (capsTag != null && capsTag.contains("curios:inventory")) {
-                    CompoundTag curiosInventoryTag = capsTag.getCompound("curios:inventory");
-                    if (curiosInventoryTag.contains("Curios") && !curiosInventoryTag.getBoolean("AccessoriesEncoded")) {
-                        Tag curiosTag = curiosInventoryTag.get("Curios");
-                        if (curiosTag instanceof ListTag curiosListTag) {
-                            for (Tag tag : curiosListTag) {
-                                if (tag instanceof CompoundTag compoundTag && compoundTag.contains("StacksHandler") && compoundTag.contains("Identifier")) {
-                                    CompoundTag stacksHandlerTag = compoundTag.getCompound("StacksHandler");
-                                    if (stacksHandlerTag.contains("Stacks")) {
-                                        CompoundTag stacksTag = stacksHandlerTag.getCompound("Stacks");
-                                        if (stacksTag.contains("Items")) {
-                                            Tag itemsTag = stacksTag.get("Items");
-                                            if (itemsTag instanceof ListTag listTag) {
-                                                for (Tag itemTag : listTag) {
-                                                    if (itemTag instanceof CompoundTag itemCompoundTag) {
-                                                        if (itemCompoundTag.contains("id")) {
-                                                            var location = ResourceLocation.parse(itemCompoundTag.getString("id"));
+            if (playerTag == null) return;
 
-                                                            if (!location.getNamespace().equals("aether")) continue;
+            var capsTag = tryGetCapsTag(playerTag);
+            if (capsTag.isEmpty()) return;
 
-                                                            Item item = BuiltInRegistries.ITEM.get(location);
-                                                            if (item != Items.AIR) {
-                                                                ItemStack stack = new ItemStack(item);
-                                                                AccessoriesCapability accessories = AccessoriesCapability.get(player);
-                                                                if (accessories != null) {
-                                                                    Accessory accessory = AccessoriesAPI.getOrDefaultAccessory(stack);
-                                                                    Pair<SlotReference, EquipAction> equipReference = accessories.canEquipAccessory(stack, true);
-                                                                    if (equipReference != null) {
-                                                                        if (accessory.canEquip(stack, equipReference.first())) {
-                                                                            equipReference.second().equipStack(stack.copy());
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+            CompoundTag curiosInventoryTag = capsTag.get().getCompound("curios:inventory");
+            if (curiosInventoryTag.getBoolean("AccessoriesEncoded") || !curiosInventoryTag.contains("Curios")) return;
+
+            Tag curiosTag = curiosInventoryTag.get("Curios");
+            if (curiosTag instanceof ListTag curiosListTag) {
+                for (Tag tag : curiosListTag) {
+                    if (tag instanceof CompoundTag compoundTag && compoundTag.contains("StacksHandler") && compoundTag.contains("Identifier")) {
+                        CompoundTag stacksHandlerTag = compoundTag.getCompound("StacksHandler");
+                        if (!stacksHandlerTag.contains("Stacks")) continue;
+
+                        CompoundTag stacksTag = stacksHandlerTag.getCompound("Stacks");
+                        if (!stacksTag.contains("Items")) continue;
+
+                        Tag itemsTag = stacksTag.get("Items");
+                        if (itemsTag instanceof ListTag listTag) {
+                            for (Tag itemTag : listTag) {
+                                if (itemTag instanceof CompoundTag itemCompoundTag) {
+                                    if (!itemCompoundTag.contains("id")) continue;
+
+                                    var location = ResourceLocation.parse(itemCompoundTag.getString("id"));
+                                    if (!location.getNamespace().equals(Aether.MODID)) continue;
+
+                                    Item item = BuiltInRegistries.ITEM.get(location);
+                                    if (item == Items.AIR) continue;
+
+                                    ItemStack stack = new ItemStack(item);
+                                    AccessoriesCapability accessories = AccessoriesCapability.get(player);
+                                    if (accessories == null) continue;
+
+                                    Accessory accessory = AccessoriesAPI.getOrDefaultAccessory(stack);
+                                    var equipReference = accessories.canEquipAccessory(stack, true);
+                                    if (equipReference == null) continue;
+                                    
+                                    if (accessory.canEquip(stack, equipReference.first())) {
+                                        equipReference.second().equipStack(stack.copy());
                                     }
                                 }
                             }
@@ -250,5 +241,22 @@ public class EntityListener {
                 }
             }
         }
+    }
+
+    private static Optional<CompoundTag> tryGetCapsTag(CompoundTag playerTag) {
+        if (playerTag == null) return Optional.empty();
+        
+        CompoundTag capsTag = null;
+        if (playerTag.contains("ForgeCaps")) {
+            capsTag = playerTag.getCompound("ForgeCaps");
+        } else if (playerTag.contains("neoforge:attachments")) {
+            capsTag = playerTag.getCompound("neoforge:attachments");
+        } else {
+            return Optional.empty();
+        }
+
+        return capsTag.contains("curios:inventory")
+            ? Optional.of(capsTag)
+            : Optional.empty();
     }
 }
