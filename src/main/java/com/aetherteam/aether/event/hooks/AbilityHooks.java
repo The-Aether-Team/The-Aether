@@ -465,7 +465,7 @@ public class AbilityHooks {
                                     value.set(value.get() + modifier.amount());
                                 }
                             });
-                            if (value.get() > livingEntity.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) { // Checks if the attacking item is non-Aether.
+                            if (livingEntity.getAttribute(Attributes.ATTACK_DAMAGE) != null && value.get() > livingEntity.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) { // Checks if the attacking item is non-Aether.
                                 damage = (float) pow;
                             }
                         }
