@@ -85,7 +85,7 @@ public class GummySwetItem extends Item implements ConsumableItem {
      */
     @Override
     public @Nullable FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
-        if (AetherConfig.SERVER.healing_gummy_swets.get()) {
+        if (AetherConfig.SERVER_SPEC.isLoaded() && AetherConfig.SERVER.healing_gummy_swets.get()) {
             return null;
         }
         return super.getFoodProperties(stack, entity);
