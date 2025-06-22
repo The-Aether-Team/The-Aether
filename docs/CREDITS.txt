@@ -82,6 +82,9 @@ Jonathing
 KaiAF
 - Fixes to Optifine incompatibility.
 
+KaiserOfNone
+- Fix client player syncing sending too many packets over the network.
+
 Kelvin285
 - Implementation of the world preview feature for the Aether's main menu.
 

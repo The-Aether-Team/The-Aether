@@ -75,7 +75,7 @@ configurations {
 dependencies {
     implementation "com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}"
     implementation "com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}"
-    implementation "io.wispforest:accessories-neoforge:${project.accessories_version}+${project.minecraft_version}"
+    implementation "io.wispforest:accessories-neoforge:${project.accessories_dev_version}+${project.minecraft_version}"
 
     jarJar("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}") {
         version {
@@ -91,10 +91,10 @@ dependencies {
         }
     }
 
-    jarJar("io.wispforest:accessories-neoforge:${project.accessories_version}+${project.minecraft_version}") {
+    jarJar("io.wispforest:accessories-neoforge:${project.accessories_prod_version}+${project.minecraft_version}") {
         version {
-            strictly "[${project.accessories_version}+${project.minecraft_version},)"
-            prefer "${project.accessories_version}+${project.minecraft_version}"
+            strictly "[${project.accessories_prod_version}+${project.minecraft_version},)"
+            prefer "${project.accessories_prod_version}+${project.minecraft_version}"
         }
     }
 
@@ -226,7 +226,7 @@ modrinth {
     loaders = ["neoforge"]
     dependencies {
         required.project "owo-lib"
-        embedded.version "accessories", "${project.accessories_version}+${project.minecraft_version}"
+        embedded.version "accessories", "${project.accessories_dev_version}+${project.minecraft_version}"
         embedded.version "cumulus", "${project.cumulus_version}"
     }
 }

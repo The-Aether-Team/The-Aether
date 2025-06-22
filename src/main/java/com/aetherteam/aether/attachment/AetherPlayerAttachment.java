@@ -200,7 +200,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
      * Handles functions when the player joins a world from {@link net.neoforged.neoforge.event.entity.EntityJoinLevelEvent}.
      */
     public void onJoinLevel(Player player) {
-        if (player.level().isClientSide()) {
+        if (player.level().isClientSide() && player.isLocalPlayer()) {
             CustomizationsOptions.INSTANCE.load();
             this.setSynched(player.getId(), Direction.SERVER, "setShouldSyncBetweenClients", true);
         }
