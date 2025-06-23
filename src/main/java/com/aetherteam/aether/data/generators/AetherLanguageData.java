@@ -943,7 +943,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.AETHER_PORTAL_FRAME, "A portable frame containing the power to travel to the Aether or back to the Overworld. Not something you're likely to find naturally.");
         this.addLore(AetherBlocks.AETHER_FARMLAND, "Farmland tilled from Aether Dirt; one of the few uses for Hoes in the Aether.");
         this.addLore(AetherBlocks.AETHER_GRASS_BLOCK, "Grass found in the Aether dimension. It can be used to grow trees native to the Aether. It is much more pale than normal grass.");
-        this.addLore(AetherItems.AGILITY_CAPE, "A slightly rare Cape found in Bronze and Silver Dungeons. It makes the wearer's legs stronger, therefore they can walk up blocks instantly.");
+        this.addLore(AetherItems.AGILITY_CAPE, "An uncommon Cape found in Bronze and Silver Dungeons. It makes the wearer's legs stronger, therefore they can walk up blocks instantly.");
         this.addLore(AetherBlocks.ALTAR, "Used to enchant items and repair armor. They are powered by Ambrosium Shards.");
         this.addLore(AetherBlocks.AMBROSIUM_ORE, "The most common ore in the Aether. The ore's drops can be doubled with skyroot tools.");
         this.addLore(AetherItems.AMBROSIUM_SHARD, "The Aether's Coal equivalent. These have the healing property of restoring a small amount of health when eaten.");
@@ -975,7 +975,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherBlocks.COLD_AERCLOUD, "A cold cloud found in the skies of the Aether. It can be used to make Cold Parachutes, and break drops that would otherwise be very dangerous.");
         this.addLore(AetherItems.COLD_PARACHUTE, "A quickly made Parachute. It's fluffy to the touch and is made from Cold Aerclouds. It has one use.");
         this.addLore(AetherBlocks.CRYSTAL_FRUIT_LEAVES, "Crystal Leaves that are home to White Apples.");
-        this.addLore(AetherBlocks.CRYSTAL_LEAVES, "Leaves that come from Crystal Trees, which generate on floating islands. Sometimes they have fruit on them that can cure Inebriation.");
+        this.addLore(AetherBlocks.CRYSTAL_LEAVES, "Leaves that come from Crystal Trees, which generate on floating islands. Sometimes they bear fruit on them that can cure Inebriation.");
         this.addLore(AetherBlocks.DECORATED_HOLIDAY_LEAVES, "Holiday Leaves that have been decorated with lovely little baubles for extra holiday cheer!");
         this.addLore(AetherItems.DIAMOND_GLOVES, "A pair of Gloves, needed to complete the diamond armor set.");
         this.addLore(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK, "An Aether Grass Block that has been enchanted to allow for increasing harvest rates of Blue Berries.");
@@ -1161,7 +1161,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.ZANITE_HOE, "One of the Aether's mid-tier tools, It can be used to harvest many plant based or organic blocks. It will get even faster at harvesting as the tool is worn down.");
         this.addLore(AetherItems.ZANITE_HELMET, "Part of the zanite armor set, equivalent in protection to iron.");
         this.addLore(AetherItems.ZANITE_LEGGINGS, "Part of the zanite armor set, equivalent in protection to iron.");
-        this.addLore(AetherBlocks.ZANITE_ORE, "A slightly rare ore that drops Zanite Gemstones when broken with stone tools.");
+        this.addLore(AetherBlocks.ZANITE_ORE, "An uncommon ore that drops Zanite Gemstones when broken with stone tools.");
         this.addLore(AetherItems.ZANITE_PENDANT, "A Pendant that allows you to mine faster. It doesn't last for long, so use it wisely!");
         this.addLore(AetherItems.ZANITE_PICKAXE, "One of the Aether's mid-tier tools, it mines what iron can, except as its durability decreases, it gets faster. Be careful though, as when it's repaired it will be as slow as before!");
         this.addLore(AetherItems.ZANITE_RING, "A Ring which allows you to mine faster. It doesn't last for long, so use it wisely!");
