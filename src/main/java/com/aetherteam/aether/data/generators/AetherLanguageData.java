@@ -959,7 +959,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherBlocks.BLUE_AERCLOUD, "A pale blue cloud found close to the ground. It has very bouncy properties and can help you reach high places.");
         this.addLore(AetherItems.BLUE_BERRY, "Harvested from Berry Bushes, this is the most common food source in the Aether. It has very weak hunger restoration. You can enchant these in an Altar for much better hunger restoration.");
         this.addLore(AetherItems.BLUE_CAPE, "A Blue Cape that has a silky feeling to it. It's crafted using Blue Wool.");
-        this.addLore(AetherItems.BLUE_GUMMY_SWET, "A sweet-smelling gummy, it can be found in random chests in Bronze and Silver dungeons. It fully restores the Player's hunger when eaten. Very useful for boss fights.");
+        this.addLore(AetherItems.BLUE_GUMMY_SWET, "A sweet-smelling gummy that can be found in chests in Bronze and Silver dungeons. It fully restores the Player's hunger when eaten. Very useful for boss fights.");
         this.addLore(AetherItems.BLUE_MOA_EGG, "An egg laid by a Blue Moa. Hatching this provides a Blue Moa with 3 mid-air jumps. The most common Moa.");
         this.addLore(AetherItems.BOOK_OF_LORE, "A large book containing many lore entries. It describes every object in detail.");
         this.addLore(AetherItems.BRONZE_DUNGEON_KEY, "A dull key that is dropped from the Slider after being defeated. You can use it to claim the treasure you earned!");
@@ -989,7 +989,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.GOLD_DUNGEON_KEY, "A key that has a shiny finish. It is dropped by the Sun Spirit after you defeat him. You can use it to claim the legendary treasure in the back room!");
         this.addLore(AetherBlocks.GOLDEN_AERCLOUD, "A golden cloud found in small quantities, higher in the air than normal. The properties are similar to Cold Aerclouds, but the Golden Parachutes they produce have much more durability.");
         this.addLore(AetherItems.GOLDEN_AMBER, "These round golden orbs can be obtained by mining Golden Oak Logs with a Zanite or Gravitite Axe. Their main purpose is to craft Golden Darts and Dart Shooters.");
-        this.addLore(AetherItems.GOLDEN_GUMMY_SWET, "A sour-tasting gummy, it can be found in random chests in Bronze and Silver Dungeons. It fully restores the Player's hunger when eaten. Very useful for boss fights.");
+        this.addLore(AetherItems.GOLDEN_GUMMY_SWET, "A sour-tasting gummy that can be found in chests in Bronze and Silver Dungeons. It fully restores the Player's hunger when eaten. Very useful for boss fights.");
         this.addLore(AetherItems.GOLDEN_DART, "The ammo for Golden Dart Shooters. Crafted with Skyroot Sticks and Golden Amber, enchanting these converts them to Enchanted Darts.");
         this.addLore(AetherItems.GOLDEN_DART_SHOOTER, "A Dart Shooter that shoots Golden Darts; enchanting it on an Altar improves its attack power!");
         this.addLore(AetherItems.GOLDEN_FEATHER, "A fluffy feather found in Silver Dungeons. When worn, the wearer becomes lighter than air and can descend slowly.");
@@ -1132,7 +1132,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherBlocks.STRIPPED_SKYROOT_WOOD, "Stripped Skyroot Logs crafted to be smooth on all sides. When put in a Crafting Table, they will provide 4 Skyroot Planks.");
         this.addLore(AetherBlocks.SUN_ALTAR, "An altar containing the power to control the sun itself! It is dropped by the Sun Spirit after you defeat him. Use it to control the time of day.");
         this.addLore(AetherItems.SWET_CAPE, "A common Cape that is found in Bronze Dungeons. It allows for the wearer to ride Swets, as they become friendly when they see someone wearing it.");
-        this.addLore(AetherItems.SWET_BALL, "A gooey orb that is dropped from Blue Swets. It can be used to fertilize soil. Another use is to put it alongside string to make a lead.");
+        this.addLore(AetherItems.SWET_BALL, "A gooey orb that is dropped from Blue Swets. It can be used to fertilize soil. Another use is to put it alongside String to make a Lead.");
         this.addLore(AetherBlocks.TREASURE_CHEST, "A Treasure Chest, these are found after defeating a Bronze, Silver, or Gold dungeon. They can be opened with the key from the dungeon boss.");
         this.addLore(AetherItems.VALKYRIE_AXE, "A tool unique to the Silver Dungeon. This Axe has a very far reach and very high attack power. You can use this to your advantage, but be warned, the attack cooldown is very high.");
         this.addLore(AetherItems.VALKYRIE_BOOTS, "An armor unique to the Silver Dungeon. When fully worn, you are granted temporary flight. Quite useful for getting to high places.");
