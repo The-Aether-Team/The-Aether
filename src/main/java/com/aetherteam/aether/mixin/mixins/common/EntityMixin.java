@@ -4,7 +4,6 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import com.aetherteam.aether.item.combat.abilities.armor.PhoenixArmor;
-import com.aetherteam.aether.network.packet.clientbound.SetVehiclePacket;
 import com.aetherteam.aether.world.LevelUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -18,7 +17,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,7 +24,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 @Mixin(Entity.class)
 public class EntityMixin {
@@ -74,7 +71,6 @@ public class EntityMixin {
         if (minecraftserver != null) {
             ServerLevel destination = minecraftserver.getLevel(LevelUtil.returnDimension());
             if (destination != null && LevelUtil.returnDimension() != LevelUtil.destinationDimension()) {
-                List<Entity> passengers = entity.getPassengers();
                 serverLevel.getProfiler().push("aether_fall");
                 entity.setPortalCooldown();
                 double vehicleOffset = 0.0;
@@ -84,18 +80,7 @@ public class EntityMixin {
                 DimensionTransition transition = new DimensionTransition(destination, new Vec3(entity.getX(), destination.getMaxBuildHeight() - entity.getBbHeight() - vehicleOffset, entity.getZ()), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot(), false, DimensionTransition.DO_NOTHING);
                 Entity target = entity.changeDimension(transition);
                 serverLevel.getProfiler().pop();
-                // Check for passengers.
                 if (target != null) {
-                    for (Entity passenger : passengers) {
-                        passenger.stopRiding();
-                        Entity nextPassenger = entityFell(passenger);
-                        if (nextPassenger != null) {
-                            nextPassenger.startRiding(target);
-                            if (target instanceof ServerPlayer serverPlayer) { // Fixes a desync between the server and client.
-                                PacketDistributor.sendToPlayer(serverPlayer, new SetVehiclePacket(nextPassenger.getId(), target.getId()));
-                            }
-                        }
-                    }
                     if (target instanceof ServerPlayer) {
                         DimensionHooks.teleportationTimer = 500; // Sets a timer marking that the player teleported from falling out of the Aether.
                     }
