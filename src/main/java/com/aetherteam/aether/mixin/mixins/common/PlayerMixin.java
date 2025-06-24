@@ -3,19 +3,25 @@ package com.aetherteam.aether.mixin.mixins.common;
 import com.aetherteam.aether.entity.passive.MountableAnimal;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Player.class)
-public class PlayerMixin {
+public abstract class PlayerMixin {
+    @Shadow
+    protected abstract boolean wantsToStopRiding();
+
     /**
      * Damages gloves only once during a sweeping attack, instead of once for every damaged entity in the attack.
      *
@@ -37,11 +43,22 @@ public class PlayerMixin {
      * @param ci The {@link CallbackInfo} for the void method return.
      */
     @Inject(at = @At(value = "HEAD"), method = "rideTick()V")
-    private void rideTick(CallbackInfo ci) {
+    private void rideTickHead(CallbackInfo ci, @Share("wantsToStopRiding") LocalBooleanRef wantsToStopRiding) {
         Player player = (Player) (Object) this;
+        wantsToStopRiding.set(this.wantsToStopRiding());
         if (!player.level().isClientSide()) {
             if (player.isPassenger() && player.getVehicle() instanceof MountableAnimal mountableAnimal) {
                 mountableAnimal.setPlayerTriedToCrouch(player.isShiftKeyDown());
+            }
+        }
+    }
+
+    @Inject(at = @At(value = "TAIL"), method = "rideTick()V")
+    private void rideTickTail(CallbackInfo ci, @Share("wantsToStopRiding") LocalBooleanRef wantsToStopRiding) {
+        Player player = (Player) (Object) this;
+        if (!player.level().isClientSide() && !player.isShiftKeyDown() && wantsToStopRiding.get()) {
+            if (player.isPassenger() && player.getVehicle() instanceof MountableAnimal) {
+                player.setShiftKeyDown(true);
             }
         }
     }
