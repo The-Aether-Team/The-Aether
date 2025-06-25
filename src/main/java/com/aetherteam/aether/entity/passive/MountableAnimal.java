@@ -35,6 +35,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
     private static final EntityDataAccessor<Boolean> DATA_MOUNT_JUMPING_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_PLAYER_CROUCHED_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_HAS_PASSENGER_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 
     protected MountableAnimal(EntityType<? extends Animal> type, Level level) {
         super(type, level);
@@ -47,7 +48,8 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
         builder.define(DATA_PLAYER_JUMPED_ID, false);
         builder.define(DATA_MOUNT_JUMPING_ID, false);
         builder.define(DATA_PLAYER_CROUCHED_ID, false);
-        builder.define(DATA_ENTITY_ON_GROUND_ID, true);
+        builder.define(DATA_ENTITY_ON_GROUND_ID, true);;
+        builder.define(DATA_HAS_PASSENGER_ID, false);
     }
 
     /**
@@ -65,6 +67,9 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
         }
         if (this.getPlayerJumped()) {
             this.setEntityOnGround(false);
+        }
+        if (!this.hasPassenger() && this.getControllingPassenger() != null) {
+            this.ejectPassengers();
         }
     }
 
@@ -254,6 +259,22 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
     @Override
     public void setEntityOnGround(boolean onGround) {
         this.getEntityData().set(DATA_ENTITY_ON_GROUND_ID, onGround);
+    }
+
+    /**
+     * @return Whether this entity has a passenger, as a {@link Boolean} value.
+     */
+    public boolean hasPassenger() {
+        return this.getEntityData().get(DATA_HAS_PASSENGER_ID);
+    }
+
+    /**
+     * Sets whether this entity has a passenger.
+     *
+     * @param hasPassenger The {@link Boolean} value.
+     */
+    public void setHasPassenger(boolean hasPassenger) {
+        this.getEntityData().set(DATA_HAS_PASSENGER_ID, hasPassenger);
     }
 
     /**

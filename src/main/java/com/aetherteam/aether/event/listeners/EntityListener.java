@@ -89,7 +89,11 @@ public class EntityListener {
         Entity riderEntity = event.getEntityMounting();
         Entity mountEntity = event.getEntityBeingMounted();
         boolean isDismounting = event.isDismounting();
-        event.setCanceled(EntityHooks.dismountPrevention(riderEntity, mountEntity, isDismounting));
+        if (EntityHooks.dismountPrevention(riderEntity, mountEntity, isDismounting)) {
+            event.setCanceled(true);
+        } else {
+            EntityHooks.trackMount(mountEntity, isDismounting);
+        }
     }
 
     /**
@@ -230,7 +234,7 @@ public class EntityListener {
                                     Accessory accessory = AccessoriesAPI.getOrDefaultAccessory(stack);
                                     var equipReference = accessories.canEquipAccessory(stack, true);
                                     if (equipReference == null) continue;
-                                    
+
                                     if (accessory.canEquip(stack, equipReference.first())) {
                                         equipReference.second().equipStack(stack.copy());
                                     }
@@ -245,7 +249,7 @@ public class EntityListener {
 
     private static Optional<CompoundTag> tryGetCapsTag(CompoundTag playerTag) {
         if (playerTag == null) return Optional.empty();
-        
+
         CompoundTag capsTag = null;
         if (playerTag.contains("ForgeCaps")) {
             capsTag = playerTag.getCompound("ForgeCaps");
