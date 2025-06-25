@@ -20,6 +20,7 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -90,8 +91,10 @@ public class EntityListener {
         Vec3 position;
 
         if (hitResult == null) {
-            AABB aABB = player.getBoundingBox().expandTowards(targetEntity.position()).inflate(1.0);
-            hitResult = ProjectileUtil.getEntityHitResult(player, player.getEyePosition(), targetEntity.position(), aABB, entity -> entity == targetEntity, player.position().distanceTo(targetEntity.position()) + 1);
+            WorldBorder border = player.level().getWorldBorder();
+            AABB bounds = player.getBoundingBox().expandTowards(targetEntity.position()).inflate(1.0);
+            AABB clampedBounds = AABB.encapsulatingFullBlocks(border.clampToBounds(bounds.getMinPosition()), border.clampToBounds(bounds.getMaxPosition()));
+            hitResult = ProjectileUtil.getEntityHitResult(player, player.getEyePosition(), targetEntity.position(), clampedBounds, entity -> entity == targetEntity, player.position().distanceTo(targetEntity.position()) + 1);
         }
 
         if (hitResult != null) {
