@@ -964,7 +964,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.BOOK_OF_LORE, "A large book containing many lore entries. It describes every object in detail.");
         this.addLore(AetherItems.BRONZE_DUNGEON_KEY, "A dull key that is dropped from the Slider after being defeated. You can use it to claim the treasure you earned!");
         this.addLore(AetherItems.CANDY_CANE, "Dropped by mobs killed with a Candy Cane Sword! They can be used to repair this weapon, and they're a very tasty treat.");
-        this.addLore(AetherItems.CANDY_CANE_SWORD, "A s made from decorative candy. Randomly drops Candy Canes when used. These are dropped from presents that are under Holiday Trees.");
+        this.addLore(AetherItems.CANDY_CANE_SWORD, "A sword made from decorative candy. Randomly drops Candy Canes when used. These are dropped from presents that are under Holiday Trees.");
         this.addLore(AetherBlocks.CARVED_SLAB, "Crafted from Carved Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         this.addLore(AetherBlocks.CARVED_STAIRS, "Crafted from Carved Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         this.addLore(AetherBlocks.CARVED_STONE, "The stone found in Bronze Dungeons. This stone has a gray color to it and can be mined as a decorative block.");
