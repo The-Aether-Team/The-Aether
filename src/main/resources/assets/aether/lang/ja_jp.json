@@ -991,6 +991,8 @@
   "pack.aether.mod.description": "Aetherリソース",
   "pack.aether.ruined_portal.title": "エーテルの荒廃したポータル",
   "pack.aether.tips.title": "エーテルのヒント",
+  "pack.aether.tooltips.description": "アイテム能力のツールチップを追加",
+  "pack.aether.tooltips.title": "エーテルのアイテムのツールチップ",
   "structure.aether.bronze_dungeon": "ブロンズダンジョン",
   "structure.aether.gold_dungeon": "ゴールドダンジョン",
   "structure.aether.silver_dungeon": "シルバーダンジョン",
