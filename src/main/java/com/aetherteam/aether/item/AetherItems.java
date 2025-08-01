@@ -301,6 +301,8 @@ public class AetherItems {
     public static final DeferredItem<SpawnEggItem> SUN_SPIRIT_SPAWN_EGG = ITEMS.register("sun_spirit_spawn_egg", () -> new DeferredSpawnEggItem(AetherEntityTypes.SUN_SPIRIT, 0xFEF500, 0xFF6D01, new Item.Properties()));
     public static final DeferredItem<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new DeferredSpawnEggItem(AetherEntityTypes.ZEPHYR, 0xDFDFDF, 0x99CFE8, new Item.Properties()));
 
+    public static ItemStack SWET_BANNER = null;
+
     public static void registerAccessories() {
         AccessoriesAPI.registerAccessory(AetherItems.IRON_RING.get(), (Accessory) AetherItems.IRON_RING.get());
         AccessoriesAPI.registerAccessory(AetherItems.GOLDEN_RING.get(), (Accessory) AetherItems.GOLDEN_RING.get());
@@ -357,20 +359,23 @@ public class AetherItems {
     }
 
     public static ItemStack createSwetBannerItemStack(HolderGetter<BannerPattern> patternRegistry) {
-        ItemStack bannerStack = new ItemStack(Items.BLACK_BANNER);
-        BannerPatternLayers layers = new BannerPatternLayers.Builder()
-            .add(patternRegistry.getOrThrow(BannerPatterns.STRIPE_DOWNLEFT), DyeColor.CYAN)
-            .add(patternRegistry.getOrThrow(BannerPatterns.STRIPE_BOTTOM), DyeColor.CYAN)
-            .add(patternRegistry.getOrThrow(BannerPatterns.STRIPE_LEFT), DyeColor.CYAN)
-            .add(patternRegistry.getOrThrow(BannerPatterns.HALF_HORIZONTAL), DyeColor.BLACK)
-            .add(patternRegistry.getOrThrow(BannerPatterns.STRAIGHT_CROSS), DyeColor.CYAN)
-            .add(patternRegistry.getOrThrow(BannerPatterns.BORDER), DyeColor.WHITE)
-            .add(patternRegistry.getOrThrow(BannerPatterns.GRADIENT_UP), DyeColor.LIGHT_BLUE)
-            .add(patternRegistry.getOrThrow(BannerPatterns.GRADIENT), DyeColor.LIGHT_BLUE)
-            .build();
-        bannerStack.set(DataComponents.BANNER_PATTERNS, layers);
-        bannerStack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
-        bannerStack.set(DataComponents.ITEM_NAME, Component.translatable("aether.block.aether.swet_banner").withStyle(ChatFormatting.GOLD));
-        return bannerStack;
+        if (SWET_BANNER == null) {
+            ItemStack bannerStack = new ItemStack(Items.BLACK_BANNER);
+            BannerPatternLayers layers = new BannerPatternLayers.Builder()
+                .add(patternRegistry.getOrThrow(BannerPatterns.STRIPE_DOWNLEFT), DyeColor.CYAN)
+                .add(patternRegistry.getOrThrow(BannerPatterns.STRIPE_BOTTOM), DyeColor.CYAN)
+                .add(patternRegistry.getOrThrow(BannerPatterns.STRIPE_LEFT), DyeColor.CYAN)
+                .add(patternRegistry.getOrThrow(BannerPatterns.HALF_HORIZONTAL), DyeColor.BLACK)
+                .add(patternRegistry.getOrThrow(BannerPatterns.STRAIGHT_CROSS), DyeColor.CYAN)
+                .add(patternRegistry.getOrThrow(BannerPatterns.BORDER), DyeColor.WHITE)
+                .add(patternRegistry.getOrThrow(BannerPatterns.GRADIENT_UP), DyeColor.LIGHT_BLUE)
+                .add(patternRegistry.getOrThrow(BannerPatterns.GRADIENT), DyeColor.LIGHT_BLUE)
+                .build();
+            bannerStack.set(DataComponents.BANNER_PATTERNS, layers);
+            bannerStack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+            bannerStack.set(DataComponents.ITEM_NAME, Component.translatable("aether.block.aether.swet_banner").withStyle(ChatFormatting.GOLD));
+            SWET_BANNER = bannerStack;
+        }
+        return SWET_BANNER;
     }
 }
