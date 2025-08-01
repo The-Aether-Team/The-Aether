@@ -126,19 +126,19 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
         return level.getBlockState(pos.below()).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON)
             && level.getRawBrightness(pos, 0) > 8
             && level.getDifficulty() != Difficulty.PEACEFUL
-            && (reason != MobSpawnType.NATURAL || (random.nextInt(10) == 0 && !inRadiusOfFlowers(level, pos, 10) && !inRadiusOfEnchantedFlowers(level, pos, 40)));
+            && (reason != MobSpawnType.NATURAL || (random.nextInt(10) == 0 && !inRadiusOfFlowers(level, pos, 10, 40)));
     }
 
     /**
-     * Checks whether an Aechor Plant has a flower within its radius.
+     * Checks whether an Aechor Plant has a flower or a flower on an Enchanted Grass block within its radius.
      *
      * @param level The {@link LevelAccessor} to check in.
      * @param pos The starting {@link BlockPos}.
      * @param radius The {@link Integer} radius around the position.
      * @return Whether the blocks were found in the radius, as a {@link Boolean}.
      */
-    public static boolean inRadiusOfFlowers(LevelAccessor level, BlockPos pos, int radius) {
-        for (ChunkPos chunk : ChunkPos.rangeClosed(new ChunkPos(pos), radius).toList()) {
+    public static boolean inRadiusOfFlowers(LevelAccessor level, BlockPos pos, int radius, int radiusEnchanted) {
+        for (ChunkPos chunk : ChunkPos.rangeClosed(new ChunkPos(pos), radiusEnchanted).toList()) {
             ChunkAccess chunkAccess = level.getChunk(chunk.x, chunk.z, ChunkStatus.FULL, false);
             if (chunkAccess != null) {
                 for (BlockPos blockEntityPos : chunkAccess.getBlockEntitiesPos()) {
@@ -149,27 +149,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
                                 return true;
                             }
                         }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks whether an Aechor Plant has a flower on an Enchanted Grass block within its radius.
-     *
-     * @param level The {@link LevelAccessor} to check in.
-     * @param pos The starting {@link BlockPos}.
-     * @param radius The {@link Integer} radius around the position.
-     * @return Whether the blocks were found in the radius, as a {@link Boolean}.
-     */
-    public static boolean inRadiusOfEnchantedFlowers(LevelAccessor level, BlockPos pos, int radius) {
-        for (ChunkPos chunk : ChunkPos.rangeClosed(new ChunkPos(pos), radius).toList()) {
-            ChunkAccess chunkAccess = level.getChunk(chunk.x, chunk.z, ChunkStatus.FULL, false);
-            if (chunkAccess != null) {
-                for (BlockPos blockEntityPos : chunkAccess.getBlockEntitiesPos()) {
-                    if (blockEntityPos.distSqr(pos) <= radius * radius) {
+                    } else if (blockEntityPos.distSqr(pos) <= radiusEnchanted * radiusEnchanted) {
                         BlockEntity blockEntity = level.getBlockEntity(blockEntityPos);
                         if (blockEntity != null) {
                             if (blockEntity.getBlockState().is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT) && level.getBlockState(blockEntityPos.below()).is(AetherTags.Blocks.ENCHANTED_GRASS)) {
