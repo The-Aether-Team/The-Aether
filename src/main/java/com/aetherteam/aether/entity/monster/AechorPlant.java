@@ -142,7 +142,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
             ChunkAccess chunkAccess = level.getChunk(chunk.x, chunk.z, ChunkStatus.FULL, false);
             if (chunkAccess != null) {
                 for (BlockPos blockEntityPos : chunkAccess.getBlockEntitiesPos()) {
-                    if (blockEntityPos.distSqr(pos) <= radius * radius) { //todo figure out if this is right
+                    if (blockEntityPos.distSqr(pos) <= radius * radius) {
                         BlockEntity blockEntity = level.getBlockEntity(blockEntityPos);
                         if (blockEntity != null) {
                             if (blockEntity.getBlockState().is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT)) {
@@ -169,7 +169,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
             ChunkAccess chunkAccess = level.getChunk(chunk.x, chunk.z, ChunkStatus.FULL, false);
             if (chunkAccess != null) {
                 for (BlockPos blockEntityPos : chunkAccess.getBlockEntitiesPos()) {
-                    if (blockEntityPos.distSqr(pos) <= radius * radius) { //todo figure out if this is right
+                    if (blockEntityPos.distSqr(pos) <= radius * radius) {
                         BlockEntity blockEntity = level.getBlockEntity(blockEntityPos);
                         if (blockEntity != null) {
                             if (blockEntity.getBlockState().is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT) && level.getBlockState(blockEntityPos.below()).is(AetherTags.Blocks.ENCHANTED_GRASS)) {
