@@ -242,6 +242,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.LOCKED_ANGELIC_STONE.get(),
                 AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get());
         this.tag(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK);
+        this.tag(AetherTags.Blocks.DOUBLE_DROPS_OVERRIDE);
         this.tag(AetherTags.Blocks.HOLYSTONE_ORE_REPLACEABLES).add(AetherBlocks.HOLYSTONE.get());
         this.tag(AetherTags.Blocks.ORES_IN_GROUND_HOLYSTONE).add(
             AetherBlocks.AMBROSIUM_ORE.get(),
