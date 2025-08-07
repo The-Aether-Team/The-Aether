@@ -356,6 +356,7 @@ public class AetherItems {
         SkyrootBucketItem.REPLACEMENTS.put(() -> Items.TROPICAL_FISH_BUCKET, AetherItems.SKYROOT_TROPICAL_FISH_BUCKET);
         SkyrootBucketItem.REPLACEMENTS.put(() -> Items.AXOLOTL_BUCKET, AetherItems.SKYROOT_AXOLOTL_BUCKET);
         SkyrootBucketItem.REPLACEMENTS.put(() -> Items.TADPOLE_BUCKET, AetherItems.SKYROOT_TADPOLE_BUCKET);
+        SkyrootBucketItem.REPLACEMENTS.put(() -> Items.MILK_BUCKET, AetherItems.SKYROOT_MILK_BUCKET);
     }
 
     public static ItemStack createSwetBannerItemStack(HolderGetter<BannerPattern> patternRegistry) {
