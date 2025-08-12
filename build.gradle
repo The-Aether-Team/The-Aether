@@ -155,8 +155,8 @@ repositories {
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://www.cursemaven.com" }
     maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
-    maven githubPackage.invoke("The-Aether-Team/Nitrogen")
-    maven githubPackage.invoke("The-Aether-Team/Cumulus")
+    maven { url = "https://packages.aether-mod.net/Nitrogen" }
+    maven { url = "https://packages.aether-mod.net/Cumulus" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.architectury.dev/" }
     //mavenLocal()
