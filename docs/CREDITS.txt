@@ -37,6 +37,9 @@ cassiancc
 CDAGaming:
 - Fixes to the Aether main menu.
 
+Cicopath
+- Further integration with Just Enough Effect Descriptions.
+
 darksonic300
 - Implementation of the is_cold damage type tag.
 - Changing aetherSurfaceRules() method to be public.
