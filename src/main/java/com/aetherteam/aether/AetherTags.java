@@ -51,6 +51,7 @@ public class AetherTags {
         public static final TagKey<Block> ALLOWED_FLAMMABLES = tag("allowed_flammables");
         public static final TagKey<Block> VALKYRIE_TELEPORTABLE_ON = tag("valkyrie_teleportable_on");
         public static final TagKey<Block> TREATED_AS_AETHER_BLOCK = tag("treated_as_aether_block");
+        public static final TagKey<Block> DOUBLE_DROPS_OVERRIDE = tag("double_drops_override");
         public static final TagKey<Block> HOLYSTONE_ORE_REPLACEABLES = tag("holystone_ore_replaceables");
         public static final TagKey<Block> ORES_IN_GROUND_HOLYSTONE = tag("ores_in_ground/holystone");
         public static final TagKey<Block> ORE_BEARING_GROUND_HOLYSTONE = tag("ore_bearing_ground/holystone");

@@ -1,4 +1,4 @@
-// 1.21.1	2025-03-29T16:08:30.97704	Tags for minecraft:block mod id aether
+// 1.21.1	2025-08-01T20:07:07.7929712	Tags for minecraft:block mod id aether
 04c3617fbc472d94c5befb6664262911a296e0de data/aether/tags/block/aechor_plant_spawnable_deterrent.json
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/block/aechor_plant_spawnable_on.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/block/aerclouds.json
@@ -12,6 +12,7 @@ bc8701774f57ab000a8f0f1d390702175a6cdbb8 data/aether/tags/block/allowed_bucket_p
 befda0e6594eed38bd37a692d75b8fcb44d812c5 data/aether/tags/block/allowed_flammables.json
 f9a76a30f0eda4e77d73593fb077e89632e058ac data/aether/tags/block/angelic_blocks.json
 d9dcb253fe96193998f03751892165ee5f5c1924 data/aether/tags/block/boss_doorway_dungeon_blocks.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/block/double_drops_override.json
 b7b37d30e23e65ee6925f4068e6d142f874fadd6 data/aether/tags/block/dungeon_blocks.json
 f88e31ba010e8b41d4256635de26d1cf8a0aa221 data/aether/tags/block/enchanted_grass.json
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/block/golden_oak_logs.json

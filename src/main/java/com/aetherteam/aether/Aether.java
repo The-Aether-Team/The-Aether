@@ -214,7 +214,7 @@ public class Aether {
     }
 
     public void registerPackets(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
+        PayloadRegistrar registrar = event.registrar("1.0.0").optional();
 
         // CLIENTBOUND
         registrar.playToClient(AetherTravelPacket.TYPE, AetherTravelPacket.STREAM_CODEC, AetherTravelPacket::execute);

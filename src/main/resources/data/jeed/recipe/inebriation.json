@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+		{
+      "type": "neoforge:mod_loaded",
+			"modid": "jeed"
+		}
+	],
+	"type": "jeed:effect_provider",
+	"effect": "aether:inebriation",
+	"providers": [
+    {
+      "item": "aether:poison_dart"
+    },
+    {
+      "item": "aether:poison_dart_shooter"
+    },
+    {
+      "item": "aether:skyroot_poison_bucket"
+    }
+	]
+}

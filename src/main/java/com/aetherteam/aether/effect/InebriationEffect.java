@@ -51,7 +51,7 @@ public class InebriationEffect extends MobEffect {
         livingEntity.setXRot((float) (livingEntity.getXRot() + this.rotationDirection));
 
         if (livingEntity.level() instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, Items.RED_DYE.getDefaultInstance()),
+            serverLevel.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, Items.PURPLE_DYE.getDefaultInstance()),
                     livingEntity.getX(), livingEntity.getY() + livingEntity.getBbHeight() * 0.8, livingEntity.getZ(),
                     1, 0.0, 0.0, 0.0, 0.0);
         }
