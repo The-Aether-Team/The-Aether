@@ -52,6 +52,7 @@
     "client.SplashRendererMixin",
     "client.TippableArrowRendererMixin",
     "client.TitleScreenMixin",
+    "client.accessor.AbstractWidgetAccessor",
     "client.accessor.BlockColorsAccessor",
     "client.accessor.BossHealthOverlayAccessor",
     "client.accessor.ButtonAccessor",
