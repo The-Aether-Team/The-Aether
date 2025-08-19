@@ -1,10 +1,16 @@
 package com.aetherteam.aether.client.gui.screen.menu;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.mixin.mixins.client.accessor.AbstractWidgetAccessor;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.network.chat.Component;
+import org.joml.Vector2i;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public interface TitleScreenBehavior {
     /**
@@ -27,6 +33,58 @@ public interface TitleScreenBehavior {
                 }
                 if (TitleScreenBehavior.isImageButton(buttonText) && ((AbstractWidgetAccessor) button).aether$getAlpha() > 0.01) { // Alpha check fixes button offset bug when menu first opens.
                     button.visible = true;
+                }
+            }
+        }
+    }
+
+    /**
+     * Handles the positioning offset of widgets belonging to Essential.
+     *
+     * @param titleScreen The parent {@link TitleScreen}.
+     */
+    default void handleEssentialButtonsForLeftMenu(TitleScreen titleScreen) {
+        for (GuiEventListener child : titleScreen.children()) {
+            if (child instanceof AbstractWidget widget) {
+                Component message = widget.getMessage();
+                Vector2i originalPos = this.getInitialPositions().get(message);
+                if (originalPos != null) {
+                    if (message.getString().contains("<essential_")) {
+                        AbstractWidget languageButton = this.getWidgetsByName().get(Component.translatable("options.language"));
+                        if (languageButton != null) {
+                            widget.visible = ((AbstractWidgetAccessor) languageButton).aether$getAlpha() > 0.01; // Alpha check fixes button offset bug when menu first opens.
+                        }
+                        if (message.equals(Component.literal("<essential_player>"))) {
+                            AbstractWidget wardrobeButton = this.getWidgetsByName().get(Component.literal("<essential_wardrobe_2>"));
+                            if (wardrobeButton != null) {
+                                widget.setX(wardrobeButton.getX() - (widget.getWidth() / 2) + 10);
+                                widget.setY(wardrobeButton.getY() - widget.getHeight() - 5);
+                            }
+                        } else if (message.equals(Component.literal("<essential_wardrobe_2>"))) {
+                            AbstractWidget accountButton = this.getWidgetsByName().get(Component.literal("<essential_account>"));
+                            if (accountButton != null) {
+                                widget.setX(accountButton.getX() - widget.getWidth() - 55);
+                                widget.setY(accountButton.getY() + 8);
+                            }
+                        } else if (message.equals(Component.literal("<essential_reserved_0>"))
+                            || message.equals(Component.literal("<essential_invite_host>"))
+                            || message.equals(Component.literal("<essential_world_host>"))
+                            || message.equals(Component.literal("<essential_social>"))
+                            || message.equals(Component.literal("<essential_pictures>"))
+                            || message.equals(Component.literal("<essential_settings>"))
+                            || message.equals(Component.literal("<essential_account>"))
+                            || message.equals(Component.literal("<essential_reserved_10>"))
+                            || message.equals(Component.literal("<essential_beta>"))
+                            || message.equals(Component.literal("<essential_update>"))
+                            || message.equals(Component.literal("<essential_message>"))
+                            || message.equals(Component.literal("<essential_wardrobe>"))) {
+                            AbstractWidget singleplayerButton = this.getWidgetsByName().get(Component.translatable("menu.singleplayer"));
+                            if (singleplayerButton != null) {
+                                widget.setX(titleScreen.width - widget.getWidth() - 4);
+                                widget.setY(originalPos.y() - (titleScreen.height / 4) - widget.getHeight() - (singleplayerButton.getHeight() / 2) + singleplayerButton.getY());
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -57,5 +115,13 @@ public interface TitleScreenBehavior {
                 || buttonText.equals(Component.translatable("fml.menu.mods"))
                 || buttonText.equals(Component.translatable("menu.options"))
                 || buttonText.equals(Component.translatable("menu.quit"));
+    }
+
+    default Map<Component, Vector2i> getInitialPositions() {
+        return new HashMap<>();
+    }
+
+    default Map<Component, AbstractWidget> getWidgetsByName() {
+        return new HashMap<>();
     }
 }

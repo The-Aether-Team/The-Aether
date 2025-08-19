@@ -5,7 +5,6 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.gui.component.menu.AetherMenuButton;
 import com.aetherteam.aether.client.gui.screen.menu.logo.AetherLogoRenderer;
 import com.aetherteam.aether.client.gui.screen.menu.splash.AetherSplashRenderer;
-import com.aetherteam.aether.client.gui.screen.menu.splash.LeftSplashRenderer;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.aetherteam.cumulus.client.gui.screen.DynamicMenuButton;
@@ -25,14 +24,20 @@ import net.minecraft.client.multiplayer.resolver.ServerAddress;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.Music;
 import net.neoforged.neoforge.internal.BrandingControl;
+import org.joml.Vector2i;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavior, CustomBranding {
     public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU, 20, 600, true);
     private final boolean alignedLeft;
     private int rows;
+    private Map<Component, Vector2i> initialPositions = new HashMap<>();
+    private Map<Component, AbstractWidget> widgetsByName = new HashMap<>();
 
     public AetherTitleScreen() {
         this(false);
@@ -61,6 +66,10 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
             }
         }
         this.setupButtons();
+        this.initialPositions = this.children().stream().filter(e -> e instanceof AbstractWidget).map(e -> (AbstractWidget) e)
+            .collect(Collectors.toMap(AbstractWidget::getMessage, e -> new Vector2i(e.getX(), e.getY())));
+        this.widgetsByName = this.children().stream().filter(e -> e instanceof AbstractWidget).map(e -> (AbstractWidget) e)
+            .collect(Collectors.toMap(AbstractWidget::getMessage, e -> e));
     }
 
     public void setupButtons() {
@@ -127,11 +136,14 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
             }
             if (child instanceof DynamicMenuButton dynamicMenuButton) {  // Increases the x-offset to the left for image buttons if there are menu buttons on the screen.
                 if (dynamicMenuButton.enabled) {
-                    xOffset -= 24; //todo figure out oddness
+                    xOffset -= 24;
                 }
             }
         }
         TitleScreenBehavior.super.handleImageButtons(this, xOffset);
+        if (this.alignedLeft) {
+            TitleScreenBehavior.super.handleEssentialButtonsForLeftMenu(this);
+        }
     }
 
     @Override
@@ -212,5 +224,15 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 
     public boolean isAlignedLeft() {
         return this.alignedLeft;
+    }
+
+    @Override
+    public Map<Component, AbstractWidget> getWidgetsByName() {
+        return this.widgetsByName;
+    }
+
+    @Override
+    public Map<Component, Vector2i> getInitialPositions() {
+        return this.initialPositions;
     }
 }

@@ -1,8 +1,6 @@
 package com.aetherteam.aether.client.gui.screen.menu;
 
-import com.aetherteam.aether.client.gui.screen.menu.logo.AetherLogoRenderer;
 import com.aetherteam.aether.client.gui.screen.menu.logo.LeftLogoRenderer;
-import com.aetherteam.aether.client.gui.screen.menu.splash.AetherSplashRenderer;
 import com.aetherteam.aether.client.gui.screen.menu.splash.LeftSplashRenderer;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.CumulusConfig;
@@ -16,13 +14,20 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.internal.BrandingControl;
+import org.joml.Vector2i;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 /**
  * A left-aligned variant of Minecraft's title screen.
  */
 public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBehavior, CustomBranding {
+    private Map<Component, Vector2i> initialPositions = new HashMap<>();
+    private Map<Component, AbstractWidget> widgetsByName = new HashMap<>();
+
     public VanillaLeftTitleScreen() {
         super();
         TitleScreenAccessor accessor = ((TitleScreenAccessor) this);
@@ -41,6 +46,10 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
             accessor.aether$setSplash(new LeftSplashRenderer(((SplashRendererAccessor) ((TitleScreenAccessor) this).aether$getSplash()).cumulus$getSplash()));
         }
         this.setupButtons();
+        this.initialPositions = this.children().stream().filter(e -> e instanceof AbstractWidget).map(e -> (AbstractWidget) e)
+            .collect(Collectors.toMap(AbstractWidget::getMessage, e -> new Vector2i(e.getX(), e.getY())));
+        this.widgetsByName = this.children().stream().filter(e -> e instanceof AbstractWidget).map(e -> (AbstractWidget) e)
+            .collect(Collectors.toMap(AbstractWidget::getMessage, e -> e));
     }
 
     /**
@@ -77,11 +86,12 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
         for (GuiEventListener child : this.children()) { // Increases the x-offset to the left for image buttons if there are menu buttons on the screen.
             if (child instanceof DynamicMenuButton dynamicMenuButton) {
                 if (dynamicMenuButton.enabled) {
-                    xOffset -= 24;  //todo figure out oddness
+                    xOffset -= 24;
                 }
             }
         }
         TitleScreenBehavior.super.handleImageButtons(this, xOffset);
+        TitleScreenBehavior.super.handleEssentialButtonsForLeftMenu(this);
     }
 
     @Override
@@ -98,5 +108,15 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
             guiGraphics.drawString(font, branding, 1, this.height - (brandingLine + 1) * (font.lineHeight + 1), 16777215 | i)
         );
         return true;
+    }
+
+    @Override
+    public Map<Component, AbstractWidget> getWidgetsByName() {
+        return this.widgetsByName;
+    }
+
+    @Override
+    public Map<Component, Vector2i> getInitialPositions() {
+        return this.initialPositions;
     }
 }
