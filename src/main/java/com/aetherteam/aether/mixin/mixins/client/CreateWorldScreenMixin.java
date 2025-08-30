@@ -25,7 +25,8 @@ public class CreateWorldScreenMixin {
     @Inject(at = @At(value = "HEAD"), method = "openFresh(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/Screen;)V")
     private static void openFresh(Minecraft minecraft, Screen screen, CallbackInfo ci) {
         if (WorldDisplayHelper.isActive()) {
-            WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.literal("")));
+            WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.translatable("menu.savingLevel")));
+            WorldDisplayHelper.resetSummary();
         }
     }
 }

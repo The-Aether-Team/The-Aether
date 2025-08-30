@@ -66,6 +66,7 @@ public class AetherPacketHandler {
         register(ServerHaloPacket.Remove.class, ServerHaloPacket.Remove::decode);
 		register(ServerMoaSkinPacket.Apply.class, ServerMoaSkinPacket.Apply::decode);
 		register(ServerMoaSkinPacket.Remove.class, ServerMoaSkinPacket.Remove::decode);
+		register(SetupLevelDisplayPacket.class, SetupLevelDisplayPacket::decode);
 		register(StepHeightPacket.class, StepHeightPacket::decode);
 		register(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
 

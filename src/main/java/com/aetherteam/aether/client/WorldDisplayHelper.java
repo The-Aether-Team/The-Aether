@@ -2,7 +2,12 @@ package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import com.aetherteam.aether.mixin.mixins.common.accessor.MinecraftServerAccessor;
+import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.network.packet.serverbound.LoreExistsPacket;
+import com.aetherteam.aether.network.packet.serverbound.SetupLevelDisplayPacket;
 import com.aetherteam.cumulus.client.CumulusClient;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
@@ -18,6 +23,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class WorldDisplayHelper {
@@ -89,7 +95,7 @@ public class WorldDisplayHelper {
     public static void disableWorldPreview() {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level != null) {
-            stopLevel(new GenericDirtMessageScreen(Component.literal("")));
+            stopLevel(new GenericDirtMessageScreen(Component.translatable("menu.savingLevel")));
             setMenu();
         }
     }
@@ -98,7 +104,7 @@ public class WorldDisplayHelper {
      * Stops a level if one exists, after resetting the player and helper states to default with {@link WorldDisplayHelper#resetStates()}.
      * @param screen The current {@link Screen}.
      */
-    public static void stopLevel(@Nullable Screen screen) {
+    public static void stopLevel(Screen screen) {
         resetStates();
         Minecraft minecraft = Minecraft.getInstance();
         IntegratedServer server = minecraft.getSingleplayerServer();
@@ -106,11 +112,7 @@ public class WorldDisplayHelper {
             if (server != null) {
                 server.halt(false);
             }
-            if (screen != null) {
-                minecraft.clearLevel(screen);
-            } else {
-                minecraft.clearLevel();
-            }
+            minecraft.clearLevel(Objects.requireNonNullElse(screen, new GenericDirtMessageScreen(Component.translatable("menu.savingLevel"))));
         }
     }
 
@@ -131,6 +133,11 @@ public class WorldDisplayHelper {
     @Nullable
     public static LevelSummary getLevelSummary() {
         if (loadedSummary == null) {
+            if (Minecraft.getInstance().getSingleplayerServer() != null) {
+                LevelStorageSource.LevelStorageAccess source = ((MinecraftServerAccessor) Minecraft.getInstance().getSingleplayerServer()).aether$getStorageSource();
+                loadedSummary = source.getSummary();
+                return loadedSummary;
+            }
             findLevelSummary(); // This sets loadedSummary if it is null.
         }
         return loadedSummary;
@@ -176,7 +183,19 @@ public class WorldDisplayHelper {
      * @return Whether they match, as a {@link Boolean}.
      */
     public static boolean sameSummaries(LevelSummary summary) {
-        return getLevelSummary().getLevelId().equals(summary.getLevelId());
+        LevelSummary currentSummary = getLevelSummary();
+        if (currentSummary != null) {
+            return currentSummary.getLevelId().equals(summary.getLevelId());
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Resets the last stored world summary for the preview system.
+     */
+    public static void resetSummary() {
+        loadedSummary = null;
     }
 
     /**
@@ -233,9 +252,7 @@ public class WorldDisplayHelper {
         Minecraft minecraft = Minecraft.getInstance();
         IntegratedServer server = minecraft.getSingleplayerServer();
         if (server != null) {
-            Minecraft.getInstance().options.hideGui = true;
-            Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
-            WorldDisplayHelper.setMenu();
+            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new SetupLevelDisplayPacket());
         }
     }
 }

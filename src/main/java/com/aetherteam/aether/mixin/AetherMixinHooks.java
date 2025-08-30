@@ -77,7 +77,7 @@ public class AetherMixinHooks {
      * @see com.aetherteam.aether.mixin.mixins.common.DirectoryLockMixin
      */
     public static boolean canUnlockLevel(Path basePath) {
-        if (Minecraft.getInstance().screen != null && Minecraft.getInstance().screen instanceof SelectWorldScreen) {
+        if (Minecraft.getInstance().getSingleplayerServer() != null) {
             return basePath.getFileName().toString().equals(WorldDisplayHelper.getLevelSummary().getLevelId());
         }
         return false;

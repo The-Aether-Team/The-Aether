@@ -9,11 +9,11 @@
     "common.AbstractArrowMixin",
     "common.ArmorStandMixin",
     "common.DimensionTypeMixin",
-    "common.DirectoryLockMixin",
     "common.EntityMixin",
     "common.FeatureMixin",
     "common.ForgeEventFactoryMixin",
     "common.ItemMixin",
+    "common.LevelStorageSourceMixin",
     "common.LivingEntityMixin",
     "common.MobMixin",
     "common.ModelBuilderMixin",
@@ -34,6 +34,7 @@
     "common.accessor.LivingEntityAccessor",
     "common.accessor.LookAtPlayerGoalAccessor",
     "common.accessor.LootContextParamSetsAccessor",
+    "common.accessor.MinecraftServerAccessor",
     "common.accessor.PlayerAccessor",
     "common.accessor.ServerGamePacketListenerImplAccessor",
     "common.accessor.ServerLevelAccessor",
@@ -50,6 +51,7 @@
     "client.ConnectScreenMixin",
     "client.CreateWorldScreenMixin",
     "client.ElytraLayerMixin",
+    "client.FaviconTextureMixin",
     "client.PanoramaRendererMixin",
     "client.PauseScreenMixin",
     "client.SmithingScreenMixin",
@@ -72,7 +74,8 @@
     "client.accessor.SoundEngineAccessor",
     "client.accessor.TitleScreenAccessor",
     "client.jei.GuiEventHandlerMixin",
-    "client.optifine.BossHealthOverlayMixin"
+    "client.optifine.BossHealthOverlayMixin",
+    "common.accessor.IntegratedServerAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
