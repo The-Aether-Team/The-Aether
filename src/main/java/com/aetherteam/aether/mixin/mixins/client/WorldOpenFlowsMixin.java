@@ -38,7 +38,7 @@ public class WorldOpenFlowsMixin {
      * @return The new {@link Boolean} value.
      * @see WorldDisplayHelper#isActive()
      */
-    @ModifyVariable(method = "doLoadLevel(Lnet/minecraft/client/gui/screens/Screen;Ljava/lang/String;ZZZ)V", at = @At("HEAD"), ordinal = 2, argsOnly = true)
+    @ModifyVariable(method = "doLoadLevel(Lnet/minecraft/client/gui/screens/Screen;Ljava/lang/String;ZZZ)V", at = @At("HEAD"), ordinal = 2, argsOnly = true, remap = false)
     private boolean confirmExperimentalWarning(boolean confirmExperimentalWarning) {
         if (WorldDisplayHelper.isActive()) {
             return true;
@@ -47,7 +47,7 @@ public class WorldOpenFlowsMixin {
         }
     }
 
-    @Inject(method = "doLoadLevel(Lnet/minecraft/client/gui/screens/Screen;Ljava/lang/String;ZZZ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/packs/repository/ServerPacksSource;createPackRepository(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;)Lnet/minecraft/server/packs/repository/PackRepository;", shift = At.Shift.BEFORE))
+    @Inject(method = "doLoadLevel(Lnet/minecraft/client/gui/screens/Screen;Ljava/lang/String;ZZZ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/packs/repository/ServerPacksSource;createPackRepository(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;)Lnet/minecraft/server/packs/repository/PackRepository;", shift = At.Shift.BEFORE, remap = true), remap = false)
     private void doLoadLevel(Screen lastScreen, String levelName, boolean safeMode, boolean checkAskForBackup, boolean confirmExperimentalWarning, CallbackInfo ci, @Local LevelStorageSource.LevelStorageAccess levelStorage) {
         if (WorldDisplayHelper.isActive() && !WorldDisplayHelper.sameSummaries(levelStorage.getSummary())) {
             WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.translatable("menu.savingLevel")));
