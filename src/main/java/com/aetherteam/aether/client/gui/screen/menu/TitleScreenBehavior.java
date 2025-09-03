@@ -1,6 +1,5 @@
 package com.aetherteam.aether.client.gui.screen.menu;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.mixin.mixins.client.accessor.AbstractWidgetAccessor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;

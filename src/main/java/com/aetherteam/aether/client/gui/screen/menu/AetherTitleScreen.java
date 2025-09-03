@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
 public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavior, CustomBranding {
     public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU, 20, 600, true);
     private final boolean alignedLeft;
-    private int rows;
     private Map<Component, Vector2i> initialPositions = new HashMap<>();
     private Map<Component, AbstractWidget> widgetsByName = new HashMap<>();
 
@@ -54,16 +53,9 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
     @Override
     protected void init() {
         TitleScreenAccessor accessor = (TitleScreenAccessor) this;
-        float scale = getScale(this, this.getMinecraft());
-        if (accessor.aether$getLogoRenderer() instanceof AetherLogoRenderer aetherLogoRenderer) {
-            aetherLogoRenderer.scale = scale;
-        }
         super.init();
         if (this.minecraft != null) {
             accessor.aether$setSplash(new AetherSplashRenderer(this.alignedLeft, ((SplashRendererAccessor) ((TitleScreenAccessor) this).aether$getSplash()).cumulus$getSplash()));
-            if (accessor.aether$getSplash() instanceof AetherSplashRenderer aetherSplashRenderer) {
-                aetherSplashRenderer.scale = scale;
-            }
         }
         this.setupButtons();
         this.initialPositions = this.children().stream().filter(e -> e instanceof AbstractWidget).map(e -> (AbstractWidget) e)
@@ -115,7 +107,6 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
                 }
             }
         }
-        this.rows = this.alignedLeft ? buttonRows : buttonRows - 1;
     }
 
     @Override
@@ -126,11 +117,11 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
             if (child instanceof AetherMenuButton aetherButton) { // Smoothly shifts the Aether-styled buttons to the right slightly when hovered over.
                 if (aetherButton.isMouseOver(mouseX, mouseY)) {
                     if (aetherButton.hoverOffset < 15) {
-                        aetherButton.hoverOffset += 4;
+                        aetherButton.hoverOffset += 2;
                     }
                 } else {
                     if (aetherButton.hoverOffset > 0) {
-                        aetherButton.hoverOffset -= 4;
+                        aetherButton.hoverOffset -= 2;
                     }
                 }
             }
@@ -167,39 +158,6 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
             return true;
         } else {
             return false;
-        }
-    }
-
-    /**
-     * Determines the proper scaling for menu elements relative to the true screen scale.
-     *
-     * @param screen    The parent {@link AetherTitleScreen}.
-     * @param minecraft The {@link Minecraft} instance.
-     * @return The {@link Float} scale for menu elements.
-     */
-    public static float getScale(AetherTitleScreen screen, Minecraft minecraft) {
-        int guiScale = minecraft.getWindow().calculateScale(minecraft.options.guiScale().get(), minecraft.isEnforceUnicode());  // The true screen GUI scale.
-        return calculateScale(screen, guiScale, guiScale - 1);
-    }
-
-    /**
-     * Determines the proper scaling for menu elements relative to the given scale factors.
-     *
-     * @param screen     The parent {@link AetherTitleScreen}.
-     * @param guiScale   The base GUI scale {@link Float}.
-     * @param lowerScale A GUI scale {@link Float} value that is one less than the base.
-     * @return The {@link Float} scale for menu elements.
-     */
-    public static float calculateScale(AetherTitleScreen screen, float guiScale, float lowerScale) {
-        float scale = 1.0F;
-        if (guiScale > 1) {
-            scale = guiScale / lowerScale; // A scale factor to counteract the GUI scale option's changing of menu element's pixel scale (pixels-per-pixel).
-        }
-        int range = AetherMenuButton.totalHeightRange(screen.rows, scale);
-        if (range > screen.height && scale != 1.0F) { // Recursive check to see if the menu elements can actually fit on the screen, otherwise it'll try to shrink to a lower GUI scale.
-            return calculateScale(screen, guiScale, lowerScale - 1);
-        } else {
-            return scale;
         }
     }
 

@@ -10,11 +10,11 @@ public class LeftSplashRenderer extends SplashRenderer implements CustomPosition
 
     @Override
     public float getXOffset(float x) {
-        return 250.0F;
+        return 267.0F;
     }
 
     @Override
     public float getYOffset(float y) {
-        return 50.0F;
+        return 58.0F;
     }
 }

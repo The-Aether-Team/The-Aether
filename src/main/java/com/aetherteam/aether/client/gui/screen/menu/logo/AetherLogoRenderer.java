@@ -10,7 +10,6 @@ public class AetherLogoRenderer extends LogoRenderer {
     private static final ResourceLocation AETHER_LOGO = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/gui/title/aether.png");
     private final boolean keepLogoThroughFade;
     private final boolean alignedLeft;
-    public float scale = 1.0F;
 
     public AetherLogoRenderer(boolean keepLogoThroughFade, boolean alignedLeft) {
         super(keepLogoThroughFade);
@@ -25,11 +24,9 @@ public class AetherLogoRenderer extends LogoRenderer {
     public void renderLogo(GuiGraphics guiGraphics, int screenWidth, float transparency, int height) {
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.keepLogoThroughFade ? 1.0F : transparency);
         RenderSystem.enableBlend();
-        int logoWidth = (int) (350 / this.scale);
-        int logoHeight = (int) (76 / this.scale);
-        int logoX = this.alignedLeft ? (int) (10 + (18 / scale)) : (int) ((screenWidth / 2.0F - 175 / scale));
-        int logoY = this.alignedLeft ? (int) (15 + (10 / scale)) : (int) (25 + (10 / scale));
-        guiGraphics.blit(AETHER_LOGO, logoX, logoY, 0, 0, logoWidth, logoHeight, logoWidth, logoHeight);
+        int logoX = this.alignedLeft ? 28 : (int) ((screenWidth / 2.0F - (190.0F / 2.0F)));
+        int logoY = this.alignedLeft ? 25 : 36;
+        guiGraphics.blit(AETHER_LOGO, logoX, logoY, 0, 0, 190, 38, 190, 38);
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.disableBlend();
     }
