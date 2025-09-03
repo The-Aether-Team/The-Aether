@@ -4,6 +4,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.ai.goal.ContinuousMeleeAttackGoal;
 import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -59,7 +60,7 @@ public class Mimic extends Monster {
             if (source.getDirectEntity() instanceof LivingEntity livingEntity && this.hurtTime == 0) {
                 if (this.level() instanceof ServerLevel serverLevel) {
                     for (int i = 0; i < 20; i++) {
-                        serverLevel.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 1, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05F);
+                        serverLevel.sendParticles(this.getHurtParticle(), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 1, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05F);
                     }
                 }
                 if (!(livingEntity instanceof Player player) || !player.isCreative()) {
@@ -70,6 +71,13 @@ public class Mimic extends Monster {
         } else {
             return false;
         }
+    }
+
+    /**
+     * @return The type of {@link ParticleOptions} to render when a Mimic is hurt.
+     */
+    public ParticleOptions getHurtParticle() {
+        return new BlockParticleOption(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState());
     }
 
     /**
