@@ -20,7 +20,7 @@ public class AetherSplashRenderer extends SplashRenderer {
     public void render(GuiGraphics guiGraphics, int screenWidth, Font font, int color) {
         guiGraphics.pose().pushPose();
         float splashX = this.alignedLeft ? 205.0F : (screenWidth / 2.0F) + (165.0F / 2.0F);
-        float splashY = this.alignedLeft ? 60.0F : 71.0F;
+        float splashY = this.alignedLeft ? 57.0F : 68.0F;
         guiGraphics.pose().translate(splashX, splashY, 0.0F);
         guiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(-20.0F));
         float textSize = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * Mth.TWO_PI) * 0.1F);
