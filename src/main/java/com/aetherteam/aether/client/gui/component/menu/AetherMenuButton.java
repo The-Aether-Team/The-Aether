@@ -42,16 +42,6 @@ public class AetherMenuButton extends Button {
         Minecraft minecraft = Minecraft.getInstance();
         Font font = minecraft.font;
 
-        if (this.screen.isAlignedLeft()) { // Changes button positioning dependent on whether the parent title screen is aligned left or not.
-            this.setX(16);
-            this.setY(50 + this.buttonCountOffset * 25);
-        } else {
-            this.setX(this.originalX);
-            this.setY(this.height / 4 + 45 + 25 * (this.buttonCountOffset + 1));
-        }
-
-        // this.height / 4 + 32 + 24 * 1
-
         ResourceLocation location = AETHER_WIDGETS.get(this.isActive(), this.isHoveredOrFocused());
 
         RenderSystem.enableBlend();

@@ -9,7 +9,6 @@ import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.aetherteam.cumulus.client.gui.screen.DynamicMenuButton;
 import com.aetherteam.cumulus.mixin.mixins.client.accessor.SplashRendererAccessor;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -35,8 +34,10 @@ import java.util.stream.Collectors;
 public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavior, CustomBranding {
     public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU, 20, 600, true);
     private final boolean alignedLeft;
-    private Map<Component, Vector2i> initialPositions = new HashMap<>();
     private Map<Component, AbstractWidget> widgetsByName = new HashMap<>();
+
+    public int buttonRows = 0;
+    public int lastY = 0;
 
     public AetherTitleScreen() {
         this(false);
@@ -53,20 +54,18 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
     @Override
     protected void init() {
         TitleScreenAccessor accessor = (TitleScreenAccessor) this;
+        this.buttonRows = 0;
+        this.lastY = 0;
         super.init();
         if (this.minecraft != null) {
             accessor.aether$setSplash(new AetherSplashRenderer(this.alignedLeft, ((SplashRendererAccessor) ((TitleScreenAccessor) this).aether$getSplash()).cumulus$getSplash()));
         }
         this.setupButtons();
-        this.initialPositions = this.children().stream().filter(e -> e instanceof AbstractWidget).map(e -> (AbstractWidget) e)
-            .collect(Collectors.toMap(AbstractWidget::getMessage, e -> new Vector2i(e.getX(), e.getY())));
         this.widgetsByName = this.children().stream().filter(e -> e instanceof AbstractWidget).map(e -> (AbstractWidget) e)
             .collect(Collectors.toMap(AbstractWidget::getMessage, e -> e));
     }
 
     public void setupButtons() {
-        int buttonRows = 0;
-        int lastY = 0;
         if (AetherConfig.CLIENT.enable_server_button.get()) {
             Component component = ((TitleScreenAccessor) this).callGetMultiplayerDisabledReason();
             boolean flag = component == null;
@@ -85,25 +84,6 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
                 Component buttonText = abstractWidget.getMessage();
                 if (TitleScreenBehavior.isImageButton(buttonText)) {
                     abstractWidget.visible = false; // The visibility handling is necessary here to avoid a bug where the buttons will render in the center of the screen before they have a specified offset.
-                }
-                if (abstractWidget instanceof AetherMenuButton aetherMenuButton) { // Sets button values that determine their positioning on the screen.
-                    if (this.isAlignedLeft()) {
-                        buttonRows++;
-                    } else {
-                        if (lastY < aetherMenuButton.originalY) {
-                            lastY = aetherMenuButton.originalY;
-                            buttonRows++;
-                        }
-                    }
-                    if (buttonText.equals(Component.translatable("gui.aether.menu.server"))) {
-                        aetherMenuButton.serverButton = true;
-                        aetherMenuButton.buttonCountOffset = 2;
-                    } else {
-                        aetherMenuButton.buttonCountOffset = buttonRows;
-                    }
-                    if (AetherConfig.CLIENT.enable_server_button.get() && buttonText.equals(Component.translatable("menu.singleplayer"))) {
-                        buttonRows++;
-                    }
                 }
             }
         }
@@ -174,6 +154,35 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
         if (renderable instanceof Button button) {
             if (TitleScreenBehavior.isMainButton(button.getMessage())) {
                 AetherMenuButton aetherButton = new AetherMenuButton(this, button);
+                Component buttonText = aetherButton.getMessage();
+
+                // Sets button values that determine their positioning on the screen.
+                if (this.isAlignedLeft()) {
+                    this.buttonRows++;
+                } else {
+                    if (this.lastY < aetherButton.originalY) {
+                        this.lastY = aetherButton.originalY;
+                        this.buttonRows++;
+                    }
+                }
+                if (buttonText.equals(Component.translatable("gui.aether.menu.server"))) {
+                    aetherButton.serverButton = true;
+                    aetherButton.buttonCountOffset = 2;
+                } else {
+                    aetherButton.buttonCountOffset = this.buttonRows;
+                }
+                if (AetherConfig.CLIENT.enable_server_button.get() && buttonText.equals(Component.translatable("menu.singleplayer"))) {
+                    this.buttonRows++;
+                }
+
+                if (this.isAlignedLeft()) { // Changes button positioning dependent on whether the parent title screen is aligned left or not.
+                    aetherButton.setX(16);
+                    aetherButton.setY(50 + aetherButton.buttonCountOffset * 25);
+                } else {
+                    aetherButton.setX(aetherButton.originalX);
+                    aetherButton.setY(this.height / 4 + 31 + 25 * (aetherButton.buttonCountOffset - 1));
+                }
+
                 return (T) super.addRenderableWidget(aetherButton);
             }
         }
@@ -187,10 +196,5 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
     @Override
     public Map<Component, AbstractWidget> getWidgetsByName() {
         return this.widgetsByName;
-    }
-
-    @Override
-    public Map<Component, Vector2i> getInitialPositions() {
-        return this.initialPositions;
     }
 }

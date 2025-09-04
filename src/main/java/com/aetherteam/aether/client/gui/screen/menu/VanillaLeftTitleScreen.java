@@ -114,9 +114,4 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
     public Map<Component, AbstractWidget> getWidgetsByName() {
         return this.widgetsByName;
     }
-
-    @Override
-    public Map<Component, Vector2i> getInitialPositions() {
-        return this.initialPositions;
-    }
 }
