@@ -174,15 +174,12 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
                 if (AetherConfig.CLIENT.enable_server_button.get() && buttonText.equals(Component.translatable("menu.singleplayer"))) {
                     this.buttonRows++;
                 }
-
                 if (this.isAlignedLeft()) { // Changes button positioning dependent on whether the parent title screen is aligned left or not.
                     aetherButton.setX(16);
                     aetherButton.setY(50 + aetherButton.buttonCountOffset * 25);
                 } else {
-                    aetherButton.setX(aetherButton.originalX);
                     aetherButton.setY(this.height / 4 + 31 + 25 * (aetherButton.buttonCountOffset - 1));
                 }
-
                 return (T) super.addRenderableWidget(aetherButton);
             }
         }

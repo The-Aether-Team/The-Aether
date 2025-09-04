@@ -72,10 +72,7 @@ public interface TitleScreenBehavior {
                         || message.equals(Component.literal("<essential_update>"))
                         || message.equals(Component.literal("<essential_message>"))
                         || message.equals(Component.literal("<essential_wardrobe>"))) {
-                        AbstractWidget singleplayerButton = this.getWidgetsByName().get(Component.translatable("menu.singleplayer"));
-                        if (singleplayerButton != null) {
-                            widget.setX(titleScreen.width - widget.getWidth() - 4);
-                        }
+                        widget.setX(titleScreen.width - widget.getWidth() - 4);
                     }
                 }
             }
