@@ -15,7 +15,7 @@ import net.minecraft.util.Mth;
 
 public class AetherMenuButton extends Button {
     private static final WidgetSprites AETHER_WIDGETS = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "title/button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "title/button_highlighted"));
-    private final AetherTitleScreen screen;
+    private static final WidgetSprites AETHER_WIDGETS_SMALL = new WidgetSprites(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "title/button"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "title/button_highlighted_small"));
     public final int originalX;
     public final int originalY;
     public int hoverOffset;
@@ -24,7 +24,6 @@ public class AetherMenuButton extends Button {
 
     public AetherMenuButton(AetherTitleScreen screen, Builder builder) {
         super(builder);
-        this.screen = screen;
         this.originalX = this.getX();
         this.originalY = this.getY();
         this.hoverOffset = 0;
@@ -42,7 +41,7 @@ public class AetherMenuButton extends Button {
         Minecraft minecraft = Minecraft.getInstance();
         Font font = minecraft.font;
 
-        ResourceLocation location = AETHER_WIDGETS.get(this.isActive(), this.isHoveredOrFocused());
+        ResourceLocation location = this.getWidth() < 100 ? AETHER_WIDGETS_SMALL.get(this.isActive(), this.isHoveredOrFocused()) : AETHER_WIDGETS.get(this.isActive(), this.isHoveredOrFocused());
 
         RenderSystem.enableBlend();
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);

@@ -14,7 +14,6 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.internal.BrandingControl;
-import org.joml.Vector2i;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +24,6 @@ import java.util.stream.Collectors;
  * A left-aligned variant of Minecraft's title screen.
  */
 public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBehavior, CustomBranding {
-    private Map<Component, Vector2i> initialPositions = new HashMap<>();
     private Map<Component, AbstractWidget> widgetsByName = new HashMap<>();
 
     public VanillaLeftTitleScreen() {
@@ -46,8 +44,6 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
             accessor.aether$setSplash(new LeftSplashRenderer(((SplashRendererAccessor) ((TitleScreenAccessor) this).aether$getSplash()).cumulus$getSplash()));
         }
         this.setupButtons();
-        this.initialPositions = this.children().stream().filter(e -> e instanceof AbstractWidget).map(e -> (AbstractWidget) e)
-            .collect(Collectors.toMap(AbstractWidget::getMessage, e -> new Vector2i(e.getX(), e.getY())));
         this.widgetsByName = this.children().stream().filter(e -> e instanceof AbstractWidget).map(e -> (AbstractWidget) e)
             .collect(Collectors.toMap(AbstractWidget::getMessage, e -> e));
     }

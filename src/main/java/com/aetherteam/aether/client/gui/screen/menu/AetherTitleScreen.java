@@ -23,7 +23,6 @@ import net.minecraft.client.multiplayer.resolver.ServerAddress;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.Music;
 import net.neoforged.neoforge.internal.BrandingControl;
-import org.joml.Vector2i;
 
 import java.util.HashMap;
 import java.util.Map;
