@@ -1,5 +1,6 @@
 package com.aetherteam.aether.mixin.mixins.client.accessor;
 
+import net.minecraft.client.gui.components.LogoRenderer;
 import net.minecraft.client.gui.components.SplashRenderer;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.network.chat.Component;
@@ -16,18 +17,16 @@ public interface TitleScreenAccessor {
     @Accessor("splash")
     void aether$setSplash(SplashRenderer splash);
 
-    @Accessor("fading")
-    boolean aether$isFading();
-
     @Mutable
     @Accessor("fading")
     void aether$setFading(boolean fading);
 
-    @Accessor("fadeInStart")
-    long aether$getFadeInStart();
+    @Accessor("logoRenderer")
+    LogoRenderer aether$getLogoRenderer();
 
-    @Accessor("fadeInStart")
-    void aether$setFadeInStart(long fadeInStart);
+    @Mutable
+    @Accessor("logoRenderer")
+    void aether$setLogoRenderer(LogoRenderer splash);
 
     @Invoker
     Component callGetMultiplayerDisabledReason();
