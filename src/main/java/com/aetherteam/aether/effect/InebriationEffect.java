@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 
 public class InebriationEffect extends MobEffect {
@@ -36,6 +37,8 @@ public class InebriationEffect extends MobEffect {
      * @param livingEntity The affected {@link LivingEntity}.
      */
     private void distractEntity(LivingEntity livingEntity) {
+        if(livingEntity instanceof Player player && checkNonSurvivalFlight(player)) return;
+
         double gaussian = livingEntity.level().getRandom().nextGaussian();
         double newMotionDirection = 0.1 * gaussian;
         double newRotationDirection = (Math.PI / 4.0) * gaussian;
@@ -52,6 +55,10 @@ public class InebriationEffect extends MobEffect {
                     livingEntity.getX(), livingEntity.getY() + livingEntity.getBbHeight() * 0.8, livingEntity.getZ(),
                     1, 0.0, 0.0, 0.0, 0.0);
         }
+    }
+
+    private boolean checkNonSurvivalFlight(Player player) {
+        return (player.isCreative() || player.isSpectator()) && player.getAbilities().flying;
     }
 
     @Override
