@@ -37,6 +37,9 @@ cassiancc
 CDAGaming:
 - Fixes to the Aether main menu.
 
+Cicopath
+- Further integration with Just Enough Effect Descriptions.
+
 darksonic300
 - Implementation of the is_cold damage type tag.
 - Changing aetherSurfaceRules() method to be public.
@@ -58,7 +61,8 @@ GizmoTheMoonPig
 - Fixes to Netherite Gloves being uncraftable with 1.20 datapack.
 - Fixes to the Life Shard silver heart overlay rendering.
 - Fixes to aether1 and aether2 music naming.
-- FIxes to Moa Skins GUI issues.
+- Fixes to Moa Skins GUI issues.
+- Fixes to glove rendering using a hardcoded leather color.
 
 indrada
 - Fixes to menu theme switching failing in edge cases.
@@ -135,6 +139,9 @@ TunefulTurnip
 
 Ultrasquid9
 - Cleanup of Curios data converter.
+
+VoidLeech
+- Fixes to Skyroot Milk Bucket not working properly with milk fluid.
 
 YvanCywan
 - Made Skyroot Buckets work as fuel.

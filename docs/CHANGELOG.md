@@ -1,3 +1,46 @@
+# The Aether - NeoForge - 1.21.1-1.5.9
+
+Additions
+
+- Added a new tag `pacifies_swets` for accessories that can be worn to pacify Swets, e.g. Swet Cape.
+- Added a new tag `double_drops_override` for modpack makers to give blocks doubled loot drops, independent of whether the block was placed by the player.
+- Update en_ud translation.
+- Update es_es translation.
+- Update es_mx translation.
+- Update fr_fr translation.
+- Update it_it translation.
+- Update ja_jp translation.
+- Update ms_my translation.
+- Update ru_ru translation.
+- Update sk_sk translation.
+- Update sv_se translation.
+- Update uk_ua translation.
+- Update zh_cn translation.
+
+Changes
+
+- The player can now swim in water while riding mounted mobs from the Aether.
+- Inebriation particles now pull from the Purple Dye item texture instead of Red Dye.
+- Improved wording of various entries in the Book of Lore.
+- The `enchanted_grass` block tag is now used instead of the Enchanted Aether Grass Block for grass coloring and the interaction behavior between Foxes and Berry Bushes.
+- Improved compatibility with Just Enough Effect Descriptions (JEED). Items that apply effects are now displayed with descriptions.
+- Updated Cumulus to 2.0.7. This includes various bug fixes and improved compatibility with mods like Essential.
+- Updated Accessories to 1.1.0-beta.49. This includes various bug fixes and solves crashes with using newer versions of owo-lib.
+
+Fixes
+
+- Fix an optimization issue on large servers with too many packets sent between clients.
+- Fix an optimization issue caused by Aechor Plant and Swet spawn condition tests.
+- Fix the `FluidBucketWrapper` capability not properly supporting Milk.
+- Fix some overlays not being hidden by F1.
+- Fix issues with Aerbunnies not properly saving on the player's head and causing desyncs.
+- Fix a rare issue where trying to mount and dismount from any mountable mobs in the mod too quickly would cause a desync.
+- Fix Skyroot Door items not using `DoubleHighBlockItem`.
+- Fix Leather Gloves not using the `IClientItemExtensions` NeoForge hook for determining default color.
+- Fix a compatibility crash with the `"Gummy Swets restore health"` config option from being loaded too early.
+- Fix a compatibility crash with the `"Disables Aether music manager"` config option from being loaded too early.
+- Fix a compatibility crash with the tool debuff system crashing for modded entities that didn't have the `attack_damage` attribute.
+
 # The Aether - NeoForge - 1.21.1-1.5.8
 
 Changes

@@ -226,7 +226,7 @@ modrinth {
     loaders = ["neoforge"]
     dependencies {
         required.project "owo-lib"
-        embedded.version "accessories", "${project.accessories_dev_version}+${project.minecraft_version}"
+        embedded.version "accessories", "${project.accessories_prod_version}+${project.minecraft_version}"
         embedded.version "cumulus", "${project.cumulus_version}"
     }
 }
