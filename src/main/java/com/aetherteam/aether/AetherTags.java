@@ -58,6 +58,8 @@ public class AetherTags {
         public static final TagKey<Block> ORES_AMBROSIUM = tag("ores/ambrosium");
         public static final TagKey<Block> ORES_ZANITE = tag("ores/zanite");
         public static final TagKey<Block> ORES_GRAVITITE = tag("ores/gravitite");
+        public static final TagKey<Block> STORAGE_BLOCKS_AMBROSIUM = tag("storage_blocks/ambrosium");
+        public static final TagKey<Block> STORAGE_BLOCKS_ZANITE = tag("storage_blocks/zanite");
 
         private static TagKey<Block> tag(String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
@@ -85,6 +87,8 @@ public class AetherTags {
         public static final TagKey<Item> ORES_ZANITE = tag("ores/zanite");
         public static final TagKey<Item> ORES_GRAVITITE = tag("ores/gravitite");
         public static final TagKey<Item> ORES_IN_GROUND_HOLYSTONE = tag("ores_in_ground/holystone");
+        public static final TagKey<Item> STORAGE_BLOCKS_AMBROSIUM = tag("storage_blocks/ambrosium");
+        public static final TagKey<Item> STORAGE_BLOCKS_ZANITE = tag("storage_blocks/zanite");
 
         public static final TagKey<Item> CRAFTS_SKYROOT_PLANKS = tag("crafts_skyroot_planks");
         public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");

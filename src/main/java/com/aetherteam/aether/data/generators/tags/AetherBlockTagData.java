@@ -252,6 +252,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
             AetherBlocks.AMBROSIUM_ORE.get(),
             AetherBlocks.ZANITE_ORE.get(),
             AetherBlocks.GRAVITITE_ORE.get());
+        this.tag(AetherTags.Blocks.STORAGE_BLOCKS_AMBROSIUM).add(AetherBlocks.AMBROSIUM_BLOCK.get());
+        this.tag(AetherTags.Blocks.STORAGE_BLOCKS_ZANITE).add(AetherBlocks.ZANITE_BLOCK.get());
 
         // Vanilla
         this.tag(BlockTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get());
@@ -518,9 +520,15 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.AMBROSIUM_ORE.get(),
                 AetherBlocks.ZANITE_ORE.get(),
                 AetherBlocks.GRAVITITE_ORE.get());
+        this.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).addTags(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
+            AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
+            AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
+            AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
         this.tag(Tags.Blocks.STONES).addTag(AetherTags.Blocks.HOLYSTONE);
         this.tag(Tags.Blocks.STORAGE_BLOCKS).add(
                 AetherBlocks.AMBROSIUM_BLOCK.get(),
                 AetherBlocks.ZANITE_BLOCK.get());
+        this.tag(Tags.Blocks.STRIPPED_LOGS).add(AetherBlocks.STRIPPED_SKYROOT_LOG.get());
+        this.tag(Tags.Blocks.STRIPPED_WOODS).add(AetherBlocks.STRIPPED_SKYROOT_WOOD.get());
     }
 }
