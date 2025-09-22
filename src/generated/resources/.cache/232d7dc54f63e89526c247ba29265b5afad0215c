@@ -1,4 +1,4 @@
-// 1.21.1	2025-09-22T11:09:20.7360687	Tags for minecraft:item mod id aether
+// 1.21.1	2025-09-22T11:28:54.2295459	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/item/accepted_music_discs.json
 b4d12513c8c0ef5b1fa6237ca7a1f25799c219a2 data/aether/tags/item/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/item/accessories_capes.json
@@ -49,6 +49,9 @@ d0f09b8dfc6381aa826e9b27dfc398b8b7c02625 data/aether/tags/item/moa_temptation_it
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/item/neptune_repairing.json
 1eecfc37581b2c99fe3316dd778068abcba0fa2c data/aether/tags/item/no_skyroot_double_drops.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/item/obsidian_repairing.json
+b8af6b0dc29b1d908d706f469049a268ce5ceffc data/aether/tags/item/ores/ambrosium.json
+9065ebf7fc44a6127cb60d0a3e6cabf0039c7b27 data/aether/tags/item/ores/gravitite.json
+732e6fd3a41ab373f9c1edb1580eaadf529b7d57 data/aether/tags/item/ores/zanite.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/aether/tags/item/ores_in_ground/holystone.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/aether/tags/item/ore_bearing_ground/holystone.json
 c48ebdf05f4edd90cd7a46cb05f501d227b86ab4 data/aether/tags/item/pacifies_swets.json
@@ -95,7 +98,7 @@ bc9de2bdb11aba0025a16f480e48e231376296ee data/c/tags/item/fences/wooden.json
 82cba6caba4d9bce0d8fd31c257b93276279f0e6 data/c/tags/item/foods/candy.json
 0427db3fd74b496da5fe89654b3b996c78774f39 data/c/tags/item/foods/cookie.json
 e016c33e93baa610f56a93bc2b4dc88b813dcc59 data/c/tags/item/foods/fruit.json
-794ba2e4990dd4fa1823ea008d8b78437527dacd data/c/tags/item/gems.json
+23a966f68cc616cfaf49187e5cf5eddd17c9189c data/c/tags/item/gems.json
 3549a6c0791821524c9419a608b6af0de62b3530 data/c/tags/item/glass_blocks/cheap.json
 3549a6c0791821524c9419a608b6af0de62b3530 data/c/tags/item/glass_blocks/colorless.json
 3e52c5c101f4f3e27d0a4c0ceb478864450a6a40 data/c/tags/item/glass_panes/colorless.json

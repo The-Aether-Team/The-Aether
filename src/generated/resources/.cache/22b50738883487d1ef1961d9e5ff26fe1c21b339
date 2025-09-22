@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-01T20:07:07.7929712	Tags for minecraft:block mod id aether
+// 1.21.1	2025-09-22T11:28:54.226547	Tags for minecraft:block mod id aether
 04c3617fbc472d94c5befb6664262911a296e0de data/aether/tags/block/aechor_plant_spawnable_deterrent.json
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/block/aechor_plant_spawnable_on.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/block/aerclouds.json
@@ -25,6 +25,9 @@ b39b9a730fa6d6ce0d57bcbb88a249b6617d6822 data/aether/tags/block/infiniburn.json
 cf3608bd187922aeb48c566c19e8482b0dca34c7 data/aether/tags/block/non_bronze_dungeon_spawnable.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/block/non_ruined_portal_spawnable.json
 f044320c552d2490be4d416f191e85aff1a934e6 data/aether/tags/block/non_tunnel_replaceable.json
+b8af6b0dc29b1d908d706f469049a268ce5ceffc data/aether/tags/block/ores/ambrosium.json
+9065ebf7fc44a6127cb60d0a3e6cabf0039c7b27 data/aether/tags/block/ores/gravitite.json
+732e6fd3a41ab373f9c1edb1580eaadf529b7d57 data/aether/tags/block/ores/zanite.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/aether/tags/block/ores_in_ground/holystone.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/aether/tags/block/ore_bearing_ground/holystone.json
 866fa462d31ceebc7a01a7520e22c673b2391a30 data/aether/tags/block/ruined_portal_ground_replaceable.json
