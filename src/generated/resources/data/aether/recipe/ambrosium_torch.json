@@ -6,7 +6,7 @@
       "tag": "aether:skyroot_stick"
     },
     "A": {
-      "item": "aether:ambrosium_shard"
+      "tag": "aether:gems/ambrosium"
     }
   },
   "pattern": [

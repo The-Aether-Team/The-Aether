@@ -135,6 +135,7 @@ public class AetherTags {
         public static final TagKey<Item> SENTRY_REPAIRING = tag("sentry_repairing");
         public static final TagKey<Item> ICE_REPAIRING = tag("ice_repairing");
 
+        public static final TagKey<Item> GEMS_AMBROSIUM = tag("gems/ambrosium");
         public static final TagKey<Item> GEMS_ZANITE = tag("gems/zanite");
         public static final TagKey<Item> PROCESSED_GRAVITITE = tag("processed/gravitite");
 

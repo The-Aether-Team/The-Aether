@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-27T10:17:41.6731889	Tags for minecraft:item mod id aether
+// 1.21.1	2025-09-22T11:09:20.7360687	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/item/accepted_music_discs.json
 b4d12513c8c0ef5b1fa6237ca7a1f25799c219a2 data/aether/tags/item/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/item/accessories_capes.json
@@ -28,6 +28,7 @@ b7b37d30e23e65ee6925f4068e6d142f874fadd6 data/aether/tags/item/dungeon_blocks.js
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/item/flying_cow_temptation_items.json
 cf02540e648766882006eb0eb293476a9c3d33c5 data/aether/tags/item/freezable_pendants.json
 bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/item/freezable_rings.json
+6cfba7d2e971d158ca80b5187945d09c184598b6 data/aether/tags/item/gems/ambrosium.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/item/gems/zanite.json
 1fa02ed3118a751ff7ef2022d14fa9d0ba8b31e6 data/aether/tags/item/golden_amber_harvesters.json
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/item/golden_oak_logs.json
