@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-27T10:17:41.6731889	Tags for minecraft:item mod id aether
+// 1.21.1	2025-09-22T08:17:51.7906534	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/item/accepted_music_discs.json
 b4d12513c8c0ef5b1fa6237ca7a1f25799c219a2 data/aether/tags/item/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/item/accessories_capes.json
@@ -12,7 +12,7 @@ cd70d1f5f10c0f6f5aaa22bcd218352b3a14cb69 data/aether/tags/item/accessories_rings
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/item/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/item/aerogel.json
 d520be56403df209dca245912dc672e8c5c3bf0e data/aether/tags/item/aether_dirt.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/item/aether_portal_activation_items.json
+1ad920aa65e2706dabb6265f3b12546ab33e8936 data/aether/tags/item/aether_portal_activation_items.json
 f9a76a30f0eda4e77d73593fb077e89632e058ac data/aether/tags/item/angelic_blocks.json
 18251d0afdcea839b05c4fda1e9e16ce69410152 data/aether/tags/item/book_of_lore_materials.json
 d9dcb253fe96193998f03751892165ee5f5c1924 data/aether/tags/item/boss_doorway_dungeon_blocks.json

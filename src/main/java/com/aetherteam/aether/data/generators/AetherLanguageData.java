@@ -1327,6 +1327,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addCommonConfig("data_pack", "add_temporary_freezing_automatically", "Sets the Aether Temporary Freezing data pack to be added to new worlds automatically");
         this.addCommonConfig("data_pack", "add_ruined_portal_automatically", "Sets the Aether Ruined Portals data pack to be added to new worlds automatically");
 
+        this.addCommonConfig("modpack", "enable_immersive_portals_compatibility", "Enables code and data pack features used for modifying Aether Portals when Immersive Portals is installed");
+
 
         this.addClientConfig("rendering", "legacy_models", "Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod");
         this.addClientConfig("rendering", "disable_aether_skybox", "Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes");
@@ -1369,6 +1371,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackTitle("ctm", "Aether CTM Fix");
         this.addPackTitle("tips", "Aether Tips");
         this.addPackTitle("colorblind", "Aether Colorblind Textures");
+        this.addPackTitle("imm_ptl_compat", "Immersive Portals Compatibility");
         this.addPackTitle("aether_accessories", "Unique Aether Accessories");
         this.addPackTitle("default_accessories", "Default Accessories Override");
         this.addPackTitle("freezing", "Aether Temporary Freezing");
@@ -1381,6 +1384,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackDescription("ctm", "Fixes Quicksoil Glass Panes when using CTM");
         this.addPackDescription("tips", "Moves Pro Tips to Tips' UI");
         this.addPackDescription("colorblind", "Changes textures for color blindness accessibility");
+        this.addPackDescription("imm_ptl_compat", "Compatibility data for Immersive Portals");
         this.addPackDescription("aether_accessories", "Register default accessories");
         this.addPackDescription("default_accessories", "Replace Aether's accessory menu");
         this.addPackDescription("freezing", "Ice Accessories create temporary blocks");
