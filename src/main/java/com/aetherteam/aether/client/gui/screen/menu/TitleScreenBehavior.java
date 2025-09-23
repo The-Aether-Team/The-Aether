@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.gui.screen.menu;
 
 import com.aetherteam.aether.mixin.mixins.client.accessor.AbstractWidgetAccessor;
+import gg.essential.partnermod.AdButton;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -27,6 +28,9 @@ public interface TitleScreenBehavior {
                     button.setY(4);
                 } else if (buttonText.equals(Component.translatable("options.language"))) {
                     button.setX(titleScreen.width - 24 + xOffset);
+                    button.setY(4);
+                } else if (button instanceof AdButton) {
+                    button.setX(titleScreen.width - 72 + xOffset);
                     button.setY(4);
                 }
                 if (TitleScreenBehavior.isImageButton(buttonText) && ((AbstractWidgetAccessor) button).aether$getAlpha() > 0.01) { // Alpha check fixes button offset bug when menu first opens.
