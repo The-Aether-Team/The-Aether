@@ -62,9 +62,10 @@ public class AetherTimeAttachment implements INBTSynchable {
      */
     public long tickTime(Level level) {
         long dayTime = level.getDayTime();
-        if (this.getDayTime() == -1) {
+        if (this.getDayTime() == -1 && !AetherConfig.SERVER.disable_eternal_day.get()) {
             dayTime = getTicksPerDay() / 4;
         }
+        dayTime = this.configsChanged(dayTime);
         if (!this.isTimeSynced()) {
             if (this.isEternalDay() || this.getShouldWait()) {
                 if (dayTime != getTicksPerDay() / 4) {
@@ -90,6 +91,14 @@ public class AetherTimeAttachment implements INBTSynchable {
         }
         this.setDayTime(dayTime);
         return dayTime;
+    }
+
+    private long configsChanged(long time) {
+        int multiplier = configMultiplier();
+        if (ticksPerDayMultiplier != multiplier) {
+            ticksPerDayMultiplier = multiplier;
+        }
+        return time;
     }
 
     /**
@@ -157,5 +166,9 @@ public class AetherTimeAttachment implements INBTSynchable {
 
     public static int getTicksPerDay() {
         return Level.TICKS_PER_DAY * getTicksPerDayMultiplier(); // Time in ticks of how long a day/night cycle lasts.
+    }
+
+    public static int configMultiplier() {
+        return AetherConfig.SERVER.normal_length_aether_time.get() || AetherConfig.SERVER.sync_aether_time.get() ? 1 : 3;
     }
 }
