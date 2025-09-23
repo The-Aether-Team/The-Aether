@@ -9,6 +9,7 @@ import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.aetherteam.cumulus.client.gui.screen.DynamicMenuButton;
 import com.aetherteam.cumulus.mixin.mixins.client.accessor.SplashRendererAccessor;
+import gg.essential.partnermod.modal.ModalManager;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -90,6 +91,11 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        ModalManager.MousePosition pos = ModalManager.INSTANCE.getMousePosition();
+        if (pos != null) {
+            mouseX = (int) pos.mouseX;
+            mouseY = (int) pos.mouseY;
+        }
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         int xOffset = CumulusConfig.CLIENT.enable_menu_api.get() && CumulusConfig.CLIENT.enable_menu_list_button.get() ? -62 : 0;
         for (GuiEventListener child : this.children()) {
