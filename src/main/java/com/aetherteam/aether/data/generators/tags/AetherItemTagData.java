@@ -553,7 +553,8 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.SHIELD_OF_REPULSION.get(),
                 AetherItems.COLD_PARACHUTE.get(),
                 AetherItems.GOLDEN_PARACHUTE.get(),
-                AetherItems.NATURE_STAFF.get()
+                AetherItems.NATURE_STAFF.get(),
+                AetherItems.CLOUD_STAFF.get()
         );
         this.tag(ItemTags.BOW_ENCHANTABLE).addTag(AetherTags.Items.DART_SHOOTERS).add(AetherItems.PHOENIX_BOW.get());
         this.tag(ItemTags.VANISHING_ENCHANTABLE).addTag(AetherTags.Items.ACCESSORIES);
