@@ -55,6 +55,11 @@ public class AetherTags {
         public static final TagKey<Block> HOLYSTONE_ORE_REPLACEABLES = tag("holystone_ore_replaceables");
         public static final TagKey<Block> ORES_IN_GROUND_HOLYSTONE = tag("ores_in_ground/holystone");
         public static final TagKey<Block> ORE_BEARING_GROUND_HOLYSTONE = tag("ore_bearing_ground/holystone");
+        public static final TagKey<Block> ORES_AMBROSIUM = tag("ores/ambrosium");
+        public static final TagKey<Block> ORES_ZANITE = tag("ores/zanite");
+        public static final TagKey<Block> ORES_GRAVITITE = tag("ores/gravitite");
+        public static final TagKey<Block> STORAGE_BLOCKS_AMBROSIUM = tag("storage_blocks/ambrosium");
+        public static final TagKey<Block> STORAGE_BLOCKS_ZANITE = tag("storage_blocks/zanite");
 
         private static TagKey<Block> tag(String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Aether.MODID, name));
@@ -77,8 +82,13 @@ public class AetherTags {
         public static final TagKey<Item> ANGELIC_BLOCKS = tag("angelic_blocks");
         public static final TagKey<Item> HELLFIRE_BLOCKS = tag("hellfire_blocks");
         public static final TagKey<Item> AECHOR_PLANT_SPAWNABLE_DETERRENT = tag("aechor_plant_spawnable_deterrent");
-        public static final TagKey<Item> ORES_IN_GROUND_HOLYSTONE = tag("ores_in_ground/holystone");
         public static final TagKey<Item> ORE_BEARING_GROUND_HOLYSTONE = tag("ore_bearing_ground/holystone");
+        public static final TagKey<Item> ORES_AMBROSIUM = tag("ores/ambrosium");
+        public static final TagKey<Item> ORES_ZANITE = tag("ores/zanite");
+        public static final TagKey<Item> ORES_GRAVITITE = tag("ores/gravitite");
+        public static final TagKey<Item> ORES_IN_GROUND_HOLYSTONE = tag("ores_in_ground/holystone");
+        public static final TagKey<Item> STORAGE_BLOCKS_AMBROSIUM = tag("storage_blocks/ambrosium");
+        public static final TagKey<Item> STORAGE_BLOCKS_ZANITE = tag("storage_blocks/zanite");
 
         public static final TagKey<Item> CRAFTS_SKYROOT_PLANKS = tag("crafts_skyroot_planks");
         public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");
@@ -135,6 +145,7 @@ public class AetherTags {
         public static final TagKey<Item> SENTRY_REPAIRING = tag("sentry_repairing");
         public static final TagKey<Item> ICE_REPAIRING = tag("ice_repairing");
 
+        public static final TagKey<Item> GEMS_AMBROSIUM = tag("gems/ambrosium");
         public static final TagKey<Item> GEMS_ZANITE = tag("gems/zanite");
         public static final TagKey<Item> PROCESSED_GRAVITITE = tag("processed/gravitite");
 

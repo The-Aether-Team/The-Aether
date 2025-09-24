@@ -66,6 +66,6 @@ public class BlueAercloudBlock extends AercloudBlock {
 
     @Override
     public VoxelShape getDefaultCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return COLLISION_SHAPE;
+        return context == CollisionContext.empty() ? super.getDefaultCollisionShape(state, level, pos, context) : COLLISION_SHAPE;
     }
 }

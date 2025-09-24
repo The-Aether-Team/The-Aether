@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "/": "#aether:skyroot_stick",
-    "A": "aether:ambrosium_shard"
+    "A": "#aether:gems/ambrosium"
   },
   "pattern": [
     "A",
