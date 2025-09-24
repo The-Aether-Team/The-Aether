@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-01T20:07:07.7929712	Tags for minecraft:block mod id aether
+// 1.21.1	2025-09-22T12:03:11.3138248	Tags for minecraft:block mod id aether
 04c3617fbc472d94c5befb6664262911a296e0de data/aether/tags/block/aechor_plant_spawnable_deterrent.json
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/block/aechor_plant_spawnable_on.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/block/aerclouds.json
@@ -25,12 +25,17 @@ b39b9a730fa6d6ce0d57bcbb88a249b6617d6822 data/aether/tags/block/infiniburn.json
 cf3608bd187922aeb48c566c19e8482b0dca34c7 data/aether/tags/block/non_bronze_dungeon_spawnable.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/block/non_ruined_portal_spawnable.json
 f044320c552d2490be4d416f191e85aff1a934e6 data/aether/tags/block/non_tunnel_replaceable.json
+b8af6b0dc29b1d908d706f469049a268ce5ceffc data/aether/tags/block/ores/ambrosium.json
+9065ebf7fc44a6127cb60d0a3e6cabf0039c7b27 data/aether/tags/block/ores/gravitite.json
+732e6fd3a41ab373f9c1edb1580eaadf529b7d57 data/aether/tags/block/ores/zanite.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/aether/tags/block/ores_in_ground/holystone.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/aether/tags/block/ore_bearing_ground/holystone.json
 866fa462d31ceebc7a01a7520e22c673b2391a30 data/aether/tags/block/ruined_portal_ground_replaceable.json
 66891bf965b86e92235cc816a4a0c898ada827e6 data/aether/tags/block/sentry_blocks.json
 df16ed8f5964fbb722ae2040903fb88c95ad2b99 data/aether/tags/block/skyroot_logs.json
 31c6217cf1ecdd680f867d440f3dca420bbf9b99 data/aether/tags/block/slider_unbreakable.json
+c907836fd82065c1742a5ff7b2a724f4e02fcb5f data/aether/tags/block/storage_blocks/ambrosium.json
+d24f40d39ac69d0ffd58ac28499955162c924292 data/aether/tags/block/storage_blocks/zanite.json
 af61d0b4368cde926f896d6a9bda3fed75061d35 data/aether/tags/block/sun_spirit_unbreakable.json
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/block/swet_spawnable_on.json
 35939e5beaa968e84aa88a102d8a79663d47ab1d data/aether/tags/block/trapped_dungeon_blocks.json
@@ -47,8 +52,11 @@ bc9de2bdb11aba0025a16f480e48e231376296ee data/c/tags/block/fences/wooden.json
 3e52c5c101f4f3e27d0a4c0ceb478864450a6a40 data/c/tags/block/glass_panes/colorless.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/c/tags/block/ores.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/c/tags/block/ore_rates/singular.json
+c1b886c908ec33133a7768864380b7d3e1c5f4a4 data/c/tags/block/relocation_not_supported.json
 fd01915c57cee8effe17fe38cbedcefa19a98fb3 data/c/tags/block/stones.json
 01be455b4f57023ac9af8857eb885afcfb917025 data/c/tags/block/storage_blocks.json
+d2fba49a4ea5cc4f11e213ac2f6b1a8348c4d030 data/c/tags/block/stripped_logs.json
+e7629abe27052c6c57b91ea5218201035d25a161 data/c/tags/block/stripped_woods.json
 2d0b4f3c1574160c79cacf5e6b7cb64b056908b8 data/minecraft/tags/block/bamboo_plantable_on.json
 002742d3811f5f8f0847cd196ded873afdb4d6aa data/minecraft/tags/block/beacon_base_blocks.json
 a838c2bd53ede04f2a9ee61012c93d721871dce4 data/minecraft/tags/block/beds.json
