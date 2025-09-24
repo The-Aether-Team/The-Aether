@@ -99,7 +99,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .save(this.output);
 
         ShapedRecipeBuilder.shaped(getter, RecipeCategory.DECORATIONS, AetherBlocks.AMBROSIUM_TORCH.get(), 4)
-                .define('A', AetherItems.AMBROSIUM_SHARD.get())
+                .define('A', AetherTags.Items.GEMS_AMBROSIUM)
                 .define('/', AetherTags.Items.SKYROOT_STICKS)
                 .pattern("A")
                 .pattern("/")
