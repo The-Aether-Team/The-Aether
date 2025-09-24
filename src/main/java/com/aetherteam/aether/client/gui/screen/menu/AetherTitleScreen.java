@@ -176,6 +176,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
                 if (this.isAlignedLeft()) { // Changes button positioning dependent on whether the parent title screen is aligned left or not.
                     aetherButton.setX(16);
                     aetherButton.setY(50 + aetherButton.buttonCountOffset * 25);
+                    aetherButton.setWidth(200);
                 } else {
                     aetherButton.setY(this.height / 4 + 31 + 25 * (aetherButton.buttonCountOffset - 1));
                 }
