@@ -42,7 +42,7 @@ public class AetherModUpdateIndicator extends TitleScreenModUpdateIndicator {
 	 */
 	@Override
 	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-		if (this.showNotification != null && this.showNotification.shouldDraw() && !FMLConfig.getBoolConfigValue(FMLConfig.ConfigValue.VERSION_CHECK) && Minecraft.getInstance().screen != null) {
+		if (this.showNotification != null && this.showNotification.shouldDraw() && FMLConfig.getBoolConfigValue(FMLConfig.ConfigValue.VERSION_CHECK) && Minecraft.getInstance().screen != null) {
 			this.width = Minecraft.getInstance().screen.width;
 			this.height = Minecraft.getInstance().screen.height;
 			this.font = Minecraft.getInstance().font;

@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.gui.screen.menu;
 
+import com.aetherteam.aether.mixin.mixins.client.accessor.AbstractWidgetAccessor;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -8,7 +9,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.PanoramaRenderer;
@@ -17,11 +17,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.internal.BrandingControl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public interface TitleScreenBehavior {
     /**
      * [CODE COPY] - {@link TitleScreen#render(GuiGraphics, int, int, float)}.<br><br>
      * Copied fading behavior segment from render code, with use of {@link TitleScreenAccessor}.
      */
+    @Deprecated
     default float handleFading(GuiGraphics guiGraphics, TitleScreen titleScreen, TitleScreenAccessor titleScreenAccessor, PanoramaRenderer panorama, ResourceLocation panoramaOverlay, float partialTicks) {
         if (titleScreenAccessor.aether$getFadeInStart() == 0L && titleScreenAccessor.aether$isFading()) {
             titleScreenAccessor.aether$setFadeInStart(Util.getMillis());
@@ -38,6 +42,7 @@ public interface TitleScreenBehavior {
      * [CODE COPY] - {@link TitleScreen#render(GuiGraphics, int, int, float)}.<br><br>
      * Copied branding render segment from render code, but aligned it right.
      */
+    @Deprecated
     default void renderRightBranding(GuiGraphics guiGraphics, TitleScreen titleScreen, Font font, int roundedFadeAmount) {
         BrandingControl.forEachLine(true, true, (brandingLine, branding) ->
                 guiGraphics.drawString(font, branding, titleScreen.width - font.width(branding) - 1, titleScreen.height - (10 + (brandingLine + 1) * (font.lineHeight + 1)), 16777215 | roundedFadeAmount)
@@ -52,6 +57,7 @@ public interface TitleScreenBehavior {
      * Copied render segment for determining button transparency from screen fade-in.
      * Also modified the code to change the button visibility, and also set a button offset at the end from configs.
      */
+    @Deprecated
     default int handleButtonVisibility(TitleScreen titleScreen, float fadeAmount) {
         for (GuiEventListener guiEventListener : titleScreen.children()) {
             if (guiEventListener instanceof AbstractWidget abstractWidget) {
@@ -75,18 +81,61 @@ public interface TitleScreenBehavior {
      * @param xOffset The {@link Integer} x-offset for the buttons.
      */
     default void handleImageButtons(TitleScreen titleScreen, int xOffset) {
-        for (Renderable renderable : titleScreen.renderables) {
+        for (GuiEventListener renderable : titleScreen.children()) {
             if (renderable instanceof Button button) {
                 Component buttonText = button.getMessage();
-                if (TitleScreenBehavior.isImageButton(buttonText)) {
-                    button.visible = true;
-                }
                 if (buttonText.equals(Component.translatable("narrator.button.accessibility"))) {
                     button.setX(titleScreen.width - 48 + xOffset);
                     button.setY(4);
                 } else if (buttonText.equals(Component.translatable("narrator.button.language"))) {
                     button.setX(titleScreen.width - 24 + xOffset);
                     button.setY(4);
+                }
+                if (TitleScreenBehavior.isImageButton(buttonText) && ((AbstractWidgetAccessor) button).aether$getAlpha() > 0.01) { // Alpha check fixes button offset bug when menu first opens.
+                    button.visible = true;
+                }
+            }
+        }
+    }
+
+    /**
+     * Handles the positioning offset of widgets belonging to Essential.
+     *
+     * @param titleScreen The parent {@link TitleScreen}.
+     */
+    default void handleEssentialButtonsForLeftMenu(TitleScreen titleScreen) {
+        for (GuiEventListener child : titleScreen.children()) {
+            if (child instanceof AbstractWidget widget) {
+                Component message = widget.getMessage();
+                if (message.getString().contains("<essential_")) {
+                    AbstractWidget languageButton = this.getWidgetsByName().get(Component.translatable("options.language"));
+                    if (languageButton != null) {
+                        widget.visible = ((AbstractWidgetAccessor) languageButton).aether$getAlpha() > 0.01; // Alpha check fixes button offset bug when menu first opens.
+                    }
+                    if (message.equals(Component.literal("<essential_player>"))) {
+                        AbstractWidget wardrobeButton = this.getWidgetsByName().get(Component.literal("<essential_wardrobe_2>"));
+                        if (wardrobeButton != null) {
+                            widget.setX(wardrobeButton.getX() - (widget.getWidth() / 2) + 10);
+                        }
+                    } else if (message.equals(Component.literal("<essential_wardrobe_2>"))) {
+                        AbstractWidget accountButton = this.getWidgetsByName().get(Component.literal("<essential_account>"));
+                        if (accountButton != null) {
+                            widget.setX(accountButton.getX() - widget.getWidth() - 55);
+                        }
+                    } else if (message.equals(Component.literal("<essential_reserved_0>"))
+                            || message.equals(Component.literal("<essential_invite_host>"))
+                            || message.equals(Component.literal("<essential_world_host>"))
+                            || message.equals(Component.literal("<essential_social>"))
+                            || message.equals(Component.literal("<essential_pictures>"))
+                            || message.equals(Component.literal("<essential_settings>"))
+                            || message.equals(Component.literal("<essential_account>"))
+                            || message.equals(Component.literal("<essential_reserved_10>"))
+                            || message.equals(Component.literal("<essential_beta>"))
+                            || message.equals(Component.literal("<essential_update>"))
+                            || message.equals(Component.literal("<essential_message>"))
+                            || message.equals(Component.literal("<essential_wardrobe>"))) {
+                        widget.setX(titleScreen.width - widget.getWidth() - 4);
+                    }
                 }
             }
         }
@@ -115,5 +164,9 @@ public interface TitleScreenBehavior {
                 || buttonText.equals(Component.translatable("fml.menu.mods"))
                 || buttonText.equals(Component.translatable("menu.options"))
                 || buttonText.equals(Component.translatable("menu.quit"));
+    }
+
+    default Map<Component, AbstractWidget> getWidgetsByName() {
+        return new HashMap<>();
     }
 }

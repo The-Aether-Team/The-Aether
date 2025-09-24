@@ -14,13 +14,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class AetherMenuButton extends Button {
-	private static final ResourceLocation AETHER_WIDGETS = new ResourceLocation(Aether.MODID, "textures/gui/title/buttons.png");
+	private static final ResourceLocation AETHER_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/title/button.png");
+	private static final ResourceLocation AETHER_BUTTON_HIGHLIGHTED = new ResourceLocation(Aether.MODID, "textures/gui/title/button_highlighted.png");
+	private static final ResourceLocation AETHER_BUTTON_HIGHLIGHTED_SMALL = new ResourceLocation(Aether.MODID, "textures/gui/title/button_highlighted_small.png");
 	private static final int BUTTON_WIDTH = 400;
 	private static final int BUTTON_HEIGHT = 40;
 	private static final int BUTTON_SEPARATION = 50;
 	private static final int INITIAL_X_OFFSET = 16;
 	private static final int INITIAL_Y_OFFSET = 100;
-	private static final int TEXTURE_SIZE = 512;
 	private final AetherTitleScreen screen;
 	public final int originalX;
 	public final int originalY;
@@ -51,31 +52,18 @@ public class AetherMenuButton extends Button {
 		PoseStack poseStack = guiGraphics.pose();
 		Minecraft minecraft = Minecraft.getInstance();
 		Font font = minecraft.font;
-		int i = this.getTextureY();
 
-		float scale = AetherTitleScreen.getScale(this.screen, minecraft); // The scaling for elements relative to the true screen scale.
-		if (this.screen.isAlignedLeft()) { // Changes button positioning dependent on whether the parent title screen is aligned left or not.
-			this.setX(INITIAL_X_OFFSET);
-			this.setY((int) ((INITIAL_Y_OFFSET / scale) + this.buttonCountOffset * (BUTTON_SEPARATION / scale)));
-			this.setWidth((int) (BUTTON_WIDTH / scale));
-		} else {
-			this.setX(this.originalX);
-			this.setY((int) (10 + (this.height / 2 + (96 / scale)) + (BUTTON_SEPARATION / scale) * this.buttonCountOffset));
-			this.setWidth(this.originalWidth);
-		}
-		this.setHeight((int) (BUTTON_HEIGHT / scale));
+		ResourceLocation location = this.isHoveredOrFocused() ? this.getWidth() < 100 ? AETHER_BUTTON_HIGHLIGHTED_SMALL : AETHER_BUTTON_HIGHLIGHTED : AETHER_BUTTON;
 
 		RenderSystem.enableBlend();
 		guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
-		guiGraphics.blit(AETHER_WIDGETS, this.getX() + this.hoverOffset, this.getY(), 0, Mth.ceil(i / scale), this.getWidth(), this.getHeight(), (int) (TEXTURE_SIZE / scale), (int) (TEXTURE_SIZE / scale));
+		guiGraphics.blit(location, this.getX() + this.hoverOffset, this.getY(), 0, 0, 200, 20, 200, 20);
 		RenderSystem.disableBlend();
 
 		poseStack.pushPose();
-		float textScale = getTextScale(this.screen, minecraft);  // The scaling for text relative to the true screen scale.
-		float textX = this.getX() + (35 * textScale) + this.hoverOffset;
-		float textY = this.getY() + (this.height - (8 * textScale)) / 2.0F;
+		float textX = this.getX() + 35 + this.hoverOffset;
+		float textY = this.getY() + (this.height - 8) / 2.0F;
 		poseStack.translate(textX, textY, 0.0F);
-		poseStack.scale(textScale, textScale, textScale);
 		guiGraphics.drawString(font, this.getMessage(), 0, 0, this.getTextColor(mouseX, mouseY) | Mth.ceil(this.alpha * 255.0F) << 24);
 		poseStack.popPose();
 	}
@@ -86,6 +74,7 @@ public class AetherMenuButton extends Button {
 	 * @param minecraft The {@link Minecraft} instance.
 	 * @return The {@link Float} scale for the text.
 	 */
+	@Deprecated
 	public static float getTextScale(AetherTitleScreen screen, Minecraft minecraft) {
 		int guiScale = minecraft.getWindow().calculateScale(minecraft.options.guiScale().get(), minecraft.isEnforceUnicode()); // The true screen GUI scale.
 		float elementScale = AetherTitleScreen.getScale(screen, minecraft); // The scaling for elements relative to the true screen scale.
@@ -95,20 +84,6 @@ public class AetherMenuButton extends Button {
 			textPixelWidth = 2.0F;
 		}
 		return textPixelWidth / guiScale; // Get the scaling for text relative to the amount of pixels-per-pixel that this text should have when rendering.
-	}
-
-	/**
-	 * [CODE COPY] - {@link AbstractButton#getTextureY()}.<br><br>
-	 * Modified the final offset multipliers.
-	 */
-	private int getTextureY() {
-		int i = 1;
-		if (!this.isActive()) {
-			i = 0;
-		} else if (this.isHoveredOrFocused()) {
-			i = 2;
-		}
-		return i * 40;
 	}
 
 	/**
@@ -125,6 +100,7 @@ public class AetherMenuButton extends Button {
 		}
 	}
 
+	@Deprecated
 	public static int totalHeightRange(int buttonCount, float scale) {
 		return (int) ((INITIAL_Y_OFFSET / scale) + ((buttonCount) * ((BUTTON_SEPARATION + 10) / scale)));
 	}
