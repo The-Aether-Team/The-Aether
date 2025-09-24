@@ -1,12 +1,13 @@
 package com.aetherteam.aether.inventory.menu;
 
-import com.aetherteam.aether.inventory.AetherAccessorySlots;
+import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.inventory.container.AccessoryContainer;
+import com.aetherteam.aether.inventory.menu.slot.AccessorySlot;
 import com.aetherteam.aether.mixin.mixins.common.accessor.AbstractContainerMenuAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.CraftingMenuAccessor;
 import com.mojang.datafixers.util.Pair;
-import io.wispforest.accessories.api.menu.AccessoriesSlotGenerator;
-import io.wispforest.accessories.api.slot.SlotPredicateRegistry;
-import io.wispforest.accessories.api.slot.SlotType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
@@ -16,12 +17,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class AetherAccessoriesMenu extends InventoryMenu {
+    public static final ResourceLocation GLOVES_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "slot/gloves");
+    public static final ResourceLocation RING_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "slot/ring");
+    public static final ResourceLocation PENDANT_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "slot/pendant");
+    public static final ResourceLocation CAPE_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "slot/cape");
+    public static final ResourceLocation SHIELD_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "slot/shield");
+    public static final ResourceLocation ACCESSORY_SLOT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "slot/accessory");
     private static final Map<EquipmentSlot, ResourceLocation> TEXTURE_EMPTY_SLOTS = Map.of(
         EquipmentSlot.FEET,
         InventoryMenu.EMPTY_ARMOR_SLOT_BOOTS,
@@ -65,9 +69,16 @@ public class AetherAccessoriesMenu extends InventoryMenu {
 
         int x = 77, y = 8; // Adjust these values
 
-        AccessoriesSlotGenerator.of(this::addSlot, x, y, this.owner, AetherAccessorySlots.getPendantSlotType(), AetherAccessorySlots.getCapeSlotType(), AetherAccessorySlots.getShieldSlotType()).column();
-        AccessoriesSlotGenerator.of(this::addSlot, x + 18, y, this.owner, AetherAccessorySlots.getRingSlotType(), AetherAccessorySlots.getGlovesSlotType()).column();
-        AccessoriesSlotGenerator.of(this::addSlot, x, y + (3 * 18), this.owner, AetherAccessorySlots.getAccessorySlotType()).row();
+        AccessoryContainer accessories = this.owner.getData(AetherDataAttachments.ACCESSORIES);
+
+        this.addSlot(new AccessorySlot(accessories, AetherTags.Items.ACCESSORIES_PENDANTS, 0, x, y, PENDANT_SLOT_LOCATION));
+        this.addSlot(new AccessorySlot(accessories, AetherTags.Items.ACCESSORIES_RINGS, 1, x, y + 18, RING_SLOT_LOCATION));
+        this.addSlot(new AccessorySlot(accessories, AetherTags.Items.ACCESSORIES_CAPES, 2, x + 18, y, CAPE_SLOT_LOCATION));
+        this.addSlot(new AccessorySlot(accessories, AetherTags.Items.ACCESSORIES_RINGS, 3, x + 18, y + 18, RING_SLOT_LOCATION));
+        this.addSlot(new AccessorySlot(accessories, AetherTags.Items.ACCESSORIES_SHIELDS, 4, x + 36, y + 18, SHIELD_SLOT_LOCATION));
+        this.addSlot(new AccessorySlot(accessories, AetherTags.Items.ACCESSORIES_GLOVES, 5, x + 36, y + 36, GLOVES_SLOT_LOCATION));
+        this.addSlot(new AccessorySlot(accessories, AetherTags.Items.ACCESSORIES_MISCELLANEOUS, 5, x + 54, y + 36, ACCESSORY_SLOT_LOCATION));
+        this.addSlot(new AccessorySlot(accessories, AetherTags.Items.ACCESSORIES_MISCELLANEOUS, 6, x + 54, y + 54, ACCESSORY_SLOT_LOCATION));
 
         this.hasButton = hasButton;
 
@@ -142,7 +153,6 @@ public class AetherAccessoriesMenu extends InventoryMenu {
             ItemStack itemStack1 = slot.getItem();
             itemStack = itemStack1.copy();
             EquipmentSlot equipmentSlot = player.getEquipmentSlotForItem(itemStack);
-            Collection<SlotType> accessorySlots = SlotPredicateRegistry.getValidSlotTypes(player, itemStack);
             if (index == 0) {
                 if (!this.moveItemStackTo(itemStack1, 17, 53, true)) {
                     return ItemStack.EMPTY;
@@ -161,13 +171,15 @@ public class AetherAccessoriesMenu extends InventoryMenu {
                 if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index < 53 && !accessorySlots.isEmpty() && !this.getEmptyAccessorySlots(accessorySlots).isEmpty()) {
-                for (int i : this.getEmptyAccessorySlots(accessorySlots)) {
-                    if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                }
-            } else if (equipmentSlot == EquipmentSlot.OFFHAND && !(this.slots.get(53)).hasItem()) {
+            }
+//            else if (index < 53 && !accessorySlots.isEmpty() && !this.getEmptyAccessorySlots(accessorySlots).isEmpty()) { //TODO
+//                for (int i : this.getEmptyAccessorySlots(accessorySlots)) {
+//                    if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
+//                        return ItemStack.EMPTY;
+//                    }
+//                }
+//            }
+            else if (equipmentSlot == EquipmentSlot.OFFHAND && !(this.slots.get(53)).hasItem()) {
                 if (!this.moveItemStackTo(itemStack1, 53, 54, false)) {
                     return ItemStack.EMPTY;
                 }
@@ -196,22 +208,6 @@ public class AetherAccessoriesMenu extends InventoryMenu {
             }
         }
         return itemStack;
-    }
-
-    private Set<Integer> getEmptyAccessorySlots(Collection<SlotType> slotData) {
-        Set<Integer> slots = new HashSet<>();
-        for (SlotType identifier : slotData) {
-            switch (identifier.name()) {
-                case "aether:pendant_slot" -> slots.add(5);
-                case "aether:cape_slot" -> slots.add(6);
-                case "aether:shield_slot" -> slots.add(7);
-                case "aether:ring_slot" -> slots.addAll(Set.of(8, 9));
-                case "aether:gloves_slot" -> slots.add(10);
-                case "aether:accessory_slot" -> slots.addAll(Set.of(11, 12));
-            }
-        }
-        slots.removeIf(index -> this.slots.get(index).hasItem());
-        return slots;
     }
 
     /**

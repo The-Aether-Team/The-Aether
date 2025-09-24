@@ -1,11 +1,10 @@
 package com.aetherteam.aether.item.combat.abilities.armor;
 
 import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.integration.AccessoryUtil;
+import com.aetherteam.aether.inventory.container.AccessoryContainer;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
-import io.wispforest.accessories.api.AccessoriesCapability;
-import io.wispforest.accessories.api.AccessoriesContainer;
-import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -142,9 +141,9 @@ public interface PhoenixArmor {
                         }
                     }
                 }
-                SlotEntryReference slotResult = EquipmentUtil.getAccessory(entity, AetherItems.PHOENIX_GLOVES.get());
-                if (slotResult != null) {
-                    breakPhoenixGloves(entity, slotResult, new ItemStack(AetherItems.OBSIDIAN_GLOVES.get()));
+                ItemStack itemStack = AccessoryUtil.getFirstItem(entity, (stack) -> stack.is(AetherItems.PHOENIX_GLOVES));
+                if (!itemStack.isEmpty()) {
+                    breakPhoenixGloves(entity, itemStack, new ItemStack(AetherItems.OBSIDIAN_GLOVES.get()));
                 }
             }
         }
@@ -170,18 +169,12 @@ public interface PhoenixArmor {
      * Replaces the gloves stack and copies over its tags and enchantments.
      *
      * @param entity       The {@link LivingEntity} wearing the armor.
-     * @param slotResult   The {@link SlotEntryReference} of the accessory item.
+     * @param stack   The {@link ItemStack} of the accessory item.
      * @param outcomeStack The replacement {@link ItemStack}.
      */
-    private static void breakPhoenixGloves(LivingEntity entity, SlotEntryReference slotResult, ItemStack outcomeStack) {
-        outcomeStack = new ItemStack(outcomeStack.getItemHolder(), 1, slotResult.stack().getComponentsPatch());
-        AccessoriesCapability accessories = AccessoriesCapability.get(entity);
-        if (accessories != null) {
-            AccessoriesContainer accessoriesContainer = accessories.getContainer(slotResult.reference().type());
-            if (accessoriesContainer != null) {
-                accessoriesContainer.getAccessories().setItem(slotResult.reference().slot(), outcomeStack);
-            }
-        }
+    private static void breakPhoenixGloves(LivingEntity entity, ItemStack stack, ItemStack outcomeStack) {
+        outcomeStack = new ItemStack(outcomeStack.getItemHolder(), 1, stack.getComponentsPatch());
+        AccessoryUtil.setItemBySlot(entity, stack, AccessoryContainer.SlotType.GLOVES);
         if (entity instanceof ServerPlayer serverPlayer) {
             CriteriaTriggers.INVENTORY_CHANGED.trigger(serverPlayer, serverPlayer.getInventory(), outcomeStack);
         }

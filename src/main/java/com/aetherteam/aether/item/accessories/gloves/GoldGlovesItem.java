@@ -1,19 +1,18 @@
 package com.aetherteam.aether.item.accessories.gloves;
 
-import io.wispforest.accessories.api.events.extra.PiglinNeutralInducer;
-import io.wispforest.accessories.api.slot.SlotReference;
 import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.ArmorMaterials;
 
-public class GoldGlovesItem extends GlovesItem implements PiglinNeutralInducer {
+public class GoldGlovesItem extends GlovesItem {
     public GoldGlovesItem(double punchDamage, Properties properties) {
         super(ArmorMaterials.GOLD, punchDamage, "gold_gloves", SoundEvents.ARMOR_EQUIP_GOLD, properties);
     }
 
     @Override
-    public TriState makePiglinsNeutral(ItemStack stack, SlotReference reference) {
-        return TriState.TRUE;
+    public boolean makesPiglinsNeutral(ItemStack stack, LivingEntity wearer) {
+        return super.makesPiglinsNeutral(stack, wearer);
     }
 }

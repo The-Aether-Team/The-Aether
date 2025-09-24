@@ -7,8 +7,6 @@ import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import io.wispforest.accessories.api.client.AccessoryRenderer;
-import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -88,7 +86,7 @@ public class GlovesRenderer implements AccessoryRenderer {
         int color = IClientItemExtensions.of(stack).getDefaultDyeColor(stack);
         VertexConsumer vertexConsumer = multiBufferSource.getBuffer(RenderType.armorCutoutNoCull(texture));
         model.renderToBuffer(matrices, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, color);
-        
+
         GlovesModel finalTrimModel = trimModel;
 
         ArmorTrim trim = stack.get(DataComponents.TRIM);

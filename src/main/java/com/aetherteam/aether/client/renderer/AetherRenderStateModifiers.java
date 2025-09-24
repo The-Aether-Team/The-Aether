@@ -6,9 +6,6 @@ import com.aetherteam.aether.client.renderer.accessory.layer.ArmorStandCapeLayer
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
-import io.wispforest.accessories.api.AccessoriesCapability;
-import io.wispforest.accessories.api.AccessoriesContainer;
-import io.wispforest.accessories.api.slot.SlotTypeReference;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.TippableArrowRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -59,19 +56,12 @@ public class AetherRenderStateModifiers {
             armorStandRenderState.setRenderData(IS_CAPE_VISIBLE, AetherMixinHooks.isCapeVisible(armorStand));
 
             ResourceLocation texture = null;
-            SlotTypeReference identifier = CapeItem.getStaticIdentifier();
-            AccessoriesCapability accessories = AccessoriesCapability.get(armorStand);
-            if (accessories != null) {
-                AccessoriesContainer accessoriesContainer = accessories.getContainer(identifier);
-                if (accessoriesContainer != null) {
-                    ItemStack itemStack = accessoriesContainer.getAccessories().getItem(0);
-                    if (!itemStack.isEmpty()) {
-                        if (itemStack.getItem() instanceof CapeItem capeItem) {
-                            texture = capeItem.getCapeTexture();
-                            if (itemStack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) { // Easter Egg cape texture.
-                                texture = ArmorStandCapeLayer.SWUFF_CAPE_LOCATION;
-                            }
-                        }
+            ItemStack itemStack = EquipmentUtil.getCape(armorStand);
+            if (!itemStack.isEmpty()) {
+                if (itemStack.getItem() instanceof CapeItem capeItem) {
+                    texture = capeItem.getCapeTexture();
+                    if (itemStack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) { // Easter Egg cape texture.
+                        texture = ArmorStandCapeLayer.SWUFF_CAPE_LOCATION;
                     }
                 }
             }

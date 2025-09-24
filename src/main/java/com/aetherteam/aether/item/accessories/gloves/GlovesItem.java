@@ -2,21 +2,21 @@ package com.aetherteam.aether.item.accessories.gloves;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.inventory.AetherAccessorySlots;
+import com.aetherteam.aether.inventory.container.AccessoryContainer;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
-import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
-import io.wispforest.accessories.api.attributes.AccessoryAttributeBuilder;
-import io.wispforest.accessories.api.slot.SlotReference;
-import io.wispforest.accessories.api.slot.SlotTypeReference;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 
-public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
+import java.util.HashMap;
+import java.util.Map;
+
+public class GlovesItem extends AccessoryItem {
     public static final ResourceLocation BASE_PUNCH_DAMAGE_ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "base_punch_damage");
     protected final ArmorMaterial material;
     protected final double damage;
@@ -27,15 +27,17 @@ public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
     }
 
     public GlovesItem(ArmorMaterial material, double punchDamage, ResourceLocation glovesName, Holder<SoundEvent> glovesSound, Properties properties) {
-        super(glovesSound, properties);
+        super(glovesSound, properties, AccessoryContainer.SlotType.GLOVES);
         this.material = material;
         this.damage = punchDamage;
         this.setRenderTexture(glovesName.getNamespace(), glovesName.getPath());
     }
 
     @Override
-    public void getDynamicModifiers(ItemStack stack, SlotReference reference, AccessoryAttributeBuilder builder) {
-        builder.addStackable(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_PUNCH_DAMAGE_ID, this.damage, AttributeModifier.Operation.ADD_VALUE));
+    public Map<Holder<Attribute>, AttributeModifier> getAttributes(ItemStack stack) {
+        Map<Holder<Attribute>, AttributeModifier> map = super.getAttributes(stack);
+        map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_PUNCH_DAMAGE_ID, this.damage, AttributeModifier.Operation.ADD_VALUE));
+        return map;
     }
 
     public ArmorMaterial getMaterial() {
@@ -52,18 +54,5 @@ public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
 
     public ResourceLocation getGlovesTexture() {
         return this.GLOVES_TEXTURE;
-    }
-
-    /**
-     * @return {@link GlovesItem}'s own identifier for its accessory slot,
-     * using a static method as it is used in other conditions without access to an instance.
-     */
-    @Override
-    public SlotTypeReference getIdentifier() {
-        return getStaticIdentifier();
-    }
-
-    public static SlotTypeReference getStaticIdentifier() {
-        return AetherConfig.COMMON.use_default_accessories_menu.get() ? new SlotTypeReference("hand") : AetherAccessorySlots.getGlovesSlotType();
     }
 }

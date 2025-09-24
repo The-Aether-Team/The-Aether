@@ -1,8 +1,8 @@
 package com.aetherteam.aether.attachment;
 
+import com.aetherteam.aether.inventory.container.AccessoryContainer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.wispforest.accessories.api.slot.SlotTypeReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +16,8 @@ public class MobAccessoryAttachment {
 
     public MobAccessoryAttachment() {
         this.accessoryDropChances = new HashMap<>(Map.ofEntries(
-                Map.entry("hand", 0.085F),
-                Map.entry("necklace", 0.085F),
-                Map.entry("aether:gloves_slot", 0.085F),
-                Map.entry("aether:pendant_slot", 0.085F)
+                Map.entry("GLOVES", 0.085F),
+                Map.entry("PENDANT", 0.085F)
         ));
     }
 
@@ -27,22 +25,22 @@ public class MobAccessoryAttachment {
         this.accessoryDropChances = new HashMap<>(dropChances);
     }
 
-    public void setGuaranteedDrop(SlotTypeReference identifier) {
-        if (this.accessoryDropChances.containsKey(identifier.slotName())) {
-            this.getAccessoryDropChances().put(identifier.slotName(), 2.0F);
+    public void setGuaranteedDrop(AccessoryContainer.SlotType identifier) {
+        if (this.accessoryDropChances.containsKey(identifier.name())) {
+            this.getAccessoryDropChances().put(identifier.name(), 2.0F);
         }
     }
 
-    public float getEquipmentDropChance(SlotTypeReference identifier) {
-        if (this.accessoryDropChances.containsKey(identifier.slotName())) {
-            return this.getAccessoryDropChances().get(identifier.slotName());
+    public float getEquipmentDropChance(AccessoryContainer.SlotType identifier) {
+        if (this.accessoryDropChances.containsKey(identifier.name())) {
+            return this.getAccessoryDropChances().get(identifier.name());
         }
         return 0.0F;
     }
 
-    public void setDropChance(SlotTypeReference identifier, float chance) {
-        if (this.accessoryDropChances.containsKey(identifier.slotName())) {
-            this.getAccessoryDropChances().put(identifier.slotName(), chance);
+    public void setDropChance(AccessoryContainer.SlotType identifier, float chance) {
+        if (this.accessoryDropChances.containsKey(identifier.name())) {
+            this.getAccessoryDropChances().put(identifier.name(), chance);
         }
     }
 

@@ -82,7 +82,6 @@ configurations {
 dependencies {
     implementation "com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}"
     implementation "com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}"
-    implementation "io.wispforest:accessories-neoforge:${project.accessories_version}+1.21.2"
 
     jarJar("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}") {
         version {
@@ -95,13 +94,6 @@ dependencies {
         version {
             strictly "[${project.cumulus_version},)"
             prefer "${project.cumulus_version}"
-        }
-    }
-
-    jarJar("io.wispforest:accessories-neoforge:${project.accessories_version}+1.21.2") {
-        version {
-            strictly "[${project.accessories_version}+1.21.2,)"
-            prefer "${project.accessories_version}+1.21.2"
         }
     }
 

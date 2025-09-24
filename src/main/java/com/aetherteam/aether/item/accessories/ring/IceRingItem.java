@@ -3,8 +3,10 @@ package com.aetherteam.aether.item.accessories.ring;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.accessories.abilities.FreezingAccessory;
-import io.wispforest.accessories.api.slot.SlotReference;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class IceRingItem extends RingItem implements FreezingAccessory {
     public IceRingItem(Properties properties) {
@@ -12,9 +14,9 @@ public class IceRingItem extends RingItem implements FreezingAccessory {
     }
 
     @Override
-    public void tick(ItemStack stack, SlotReference reference) {
-        if (!reference.entity().isInFluidType()) {
-            this.freezeTick(reference, stack);
+    public void tick(ItemStack stack, Level level, LivingEntity entity, InteractionHand hand) {
+        if (!entity.isInFluidType()) {
+            this.freezeTick(stack, level, entity, hand);
         }
     }
 }

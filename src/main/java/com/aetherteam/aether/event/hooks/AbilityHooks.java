@@ -21,7 +21,6 @@ import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.util.concurrent.AtomicDouble;
-import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -70,10 +69,10 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.mixin.mixins.common.PlayerMixin#attack(Entity, CallbackInfo)
          */
         public static void damageGloves(Player player) {
-            SlotEntryReference slotResult = EquipmentUtil.getGloves(player);
-            if (slotResult != null) {
+            ItemStack itemStack = EquipmentUtil.getGloves(player);
+            if (!itemStack.isEmpty()) {
                 if (player.level() instanceof ServerLevel serverLevel) {
-                    slotResult.stack().hurtAndBreak(1, serverLevel, player, (item) -> slotResult.reference().breakStack());
+                    itemStack.hurtAndBreak(1, serverLevel, player, (item) -> {});
                 }
             }
         }
@@ -84,12 +83,12 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
          */
         public static void damageZaniteRing(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
-            List<SlotEntryReference> slotResults = EquipmentUtil.getZaniteRings(entity);
-            for (SlotEntryReference slotResult : slotResults) {
-                if (slotResult != null) {
+            List<ItemStack> itemStacks = EquipmentUtil.getZaniteRings(entity);
+            for (ItemStack itemStack : itemStacks) {
+                if (!itemStack.isEmpty()) {
                     if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
                         if (entity.level() instanceof ServerLevel serverLevel) {
-                            slotResult.stack().hurtAndBreak(1, serverLevel, entity, (item) -> slotResult.reference().breakStack());
+                            itemStack.hurtAndBreak(1, serverLevel, entity, (item) -> {});
                         }
                     }
                 }
@@ -102,11 +101,11 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
          */
         public static void damageZanitePendant(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
-            SlotEntryReference slotResult = EquipmentUtil.getZanitePendant(entity);
-            if (slotResult != null) {
+            ItemStack itemStack = EquipmentUtil.getZanitePendant(entity);
+            if (!itemStack.isEmpty()) {
                 if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
                     if (entity.level() instanceof ServerLevel serverLevel) {
-                        slotResult.stack().hurtAndBreak(1, serverLevel, entity, (item) -> slotResult.reference().breakStack());
+                        itemStack.hurtAndBreak(1, serverLevel, entity, (item) -> {});
                     }
                 }
             }
@@ -119,10 +118,10 @@ public class AbilityHooks {
          */
         public static float handleZaniteRingAbility(LivingEntity entity, float speed) {
             float newSpeed = speed;
-            List<SlotEntryReference> slotResults = EquipmentUtil.getZaniteRings(entity);
-            for (SlotEntryReference slotResult : slotResults) {
-                if (slotResult != null) {
-                    newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, slotResult.stack());
+            List<ItemStack> itemStacks = EquipmentUtil.getZaniteRings(entity);
+            for (ItemStack itemStack : itemStacks) {
+                if (!itemStack.isEmpty()) {
+                    newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, itemStack);
                 }
             }
             return newSpeed;
@@ -134,9 +133,9 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
          */
         public static float handleZanitePendantAbility(LivingEntity entity, float speed) {
-            SlotEntryReference slotResult = EquipmentUtil.getZanitePendant(entity);
-            if (slotResult != null) {
-                speed = ZaniteAccessory.handleMiningSpeed(speed, slotResult.stack());
+            ItemStack itemStack = EquipmentUtil.getZanitePendant(entity);
+            if (!itemStack.isEmpty()) {
+                speed = ZaniteAccessory.handleMiningSpeed(speed, itemStack);
             }
             return speed;
         }

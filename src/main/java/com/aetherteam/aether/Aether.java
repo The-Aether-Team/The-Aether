@@ -32,7 +32,6 @@ import com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener;
 import com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener;
 import com.aetherteam.aether.event.listeners.capability.AetherPlayerListener;
 import com.aetherteam.aether.event.listeners.capability.AetherTimeListener;
-import com.aetherteam.aether.inventory.AetherAccessorySlots;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherCreativeTabs;
@@ -68,7 +67,6 @@ import com.aetherteam.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import com.aetherteam.aether.world.trunkplacer.AetherTrunkPlacerTypes;
 import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
-import io.wispforest.accessories.api.slot.UniqueSlotHandling;
 import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -204,7 +202,6 @@ public class Aether {
             AetherBlocks.registerFlammability();
             AetherBlocks.registerFluidInteractions();
 
-            AetherItems.registerAccessories();
             AetherItems.setupBucketReplacements();
 
             AetherRecipePropertySets.addToMap();
@@ -212,8 +209,6 @@ public class Aether {
             this.registerDispenserBehaviors();
             this.registerCauldronInteractions();
         });
-
-        UniqueSlotHandling.EVENT.register(AetherAccessorySlots.INSTANCE);
     }
 
     public void registerPackets(RegisterPayloadHandlersEvent event) {

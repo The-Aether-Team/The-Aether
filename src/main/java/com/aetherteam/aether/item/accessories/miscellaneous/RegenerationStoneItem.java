@@ -1,13 +1,15 @@
 package com.aetherteam.aether.item.accessories.miscellaneous;
 
+import com.aetherteam.aether.inventory.container.AccessoryContainer;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
-import io.wispforest.accessories.api.slot.SlotReference;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class RegenerationStoneItem extends AccessoryItem {
     public RegenerationStoneItem(Properties properties) {
-        super(properties);
+        super(properties, AccessoryContainer.SlotType.ACCESSORY);
     }
 
     /**
@@ -17,11 +19,10 @@ public class RegenerationStoneItem extends AccessoryItem {
      * @param reference The {@link SlotReference} of the accessory.
      */
     @Override
-    public void tick(ItemStack stack, SlotReference reference) {
-        LivingEntity livingEntity = reference.entity();
-        if (livingEntity.tickCount % 50 == 0) {
-            if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
-                livingEntity.heal(1.0F);
+    public void tick(ItemStack stack, Level level, LivingEntity entity, InteractionHand hand) {
+        if (entity.tickCount % 50 == 0) {
+            if (entity.getHealth() < entity.getMaxHealth()) {
+                entity.heal(1.0F);
             }
         }
     }

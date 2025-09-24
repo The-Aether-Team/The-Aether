@@ -1,10 +1,8 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
+import com.aetherteam.aether.integration.AccessoryUtil;
+import com.aetherteam.aether.inventory.container.AccessoryContainer;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
-import io.wispforest.accessories.api.AccessoriesCapability;
-import io.wispforest.accessories.api.AccessoriesContainer;
-import io.wispforest.accessories.api.slot.SlotTypeReference;
-import io.wispforest.accessories.impl.ExpandedSimpleContainer;
 import net.minecraft.client.gui.screens.inventory.SmithingScreen;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -33,24 +31,16 @@ public class SmithingScreenMixin {
     @Inject(at = @At("HEAD"), method = "updateArmorStandPreview(Lnet/minecraft/world/item/ItemStack;)V", cancellable = true)
     private void updateArmorStandPreview(ItemStack stack, CallbackInfo ci) {
         if (this.armorStandPreview != null) {
-            SlotTypeReference slotTypeReference = GlovesItem.getStaticIdentifier();
-            AccessoriesCapability accessories = AccessoriesCapability.get(this.armorStandPreview);
-            if (accessories != null) {
-                AccessoriesContainer accessoriesContainer = accessories.getContainer(slotTypeReference);
-                if (accessoriesContainer != null) {
-                    ExpandedSimpleContainer simpleContainer = accessoriesContainer.getAccessories();
-                    simpleContainer.setItem(0, ItemStack.EMPTY);
-                    for (EquipmentSlot slot : EquipmentSlot.values()) {
-                        this.armorStandPreview.setItemSlot(slot, ItemStack.EMPTY);
-                    }
-                    if (!stack.isEmpty()) {
-                        ItemStack itemStack = stack.copy();
-                        Item item = stack.getItem();
-                        if (item instanceof GlovesItem) {
-                            simpleContainer.setItem(0, itemStack);
-                            ci.cancel();
-                        }
-                    }
+            AccessoryUtil.setItemBySlot(this.armorStandPreview, ItemStack.EMPTY, AccessoryContainer.SlotType.GLOVES);
+            for (EquipmentSlot slot : EquipmentSlot.values()) { //todo ?
+                this.armorStandPreview.setItemSlot(slot, ItemStack.EMPTY);
+            }
+            if (!stack.isEmpty()) {
+                ItemStack itemStack = stack.copy();
+                Item item = stack.getItem();
+                if (item instanceof GlovesItem) {
+                    AccessoryUtil.setItemBySlot(this.armorStandPreview, itemStack, AccessoryContainer.SlotType.GLOVES);
+                    ci.cancel();
                 }
             }
         }
