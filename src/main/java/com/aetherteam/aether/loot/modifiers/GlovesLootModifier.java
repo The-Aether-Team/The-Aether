@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
@@ -49,7 +50,8 @@ public class GlovesLootModifier extends LootModifier {
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> lootStacks, LootContext context) {
         RandomSource randomSource = context.getRandom();
         Vec3 vec3 = context.getParamOrNull(LootContextParams.ORIGIN);
-        if (vec3 != null) {
+        Entity entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);
+        if (vec3 != null && entity != null) {
             BlockPos pos = BlockPos.containing(vec3);
             BlockEntity blockEntity = context.getLevel().getBlockEntity(pos);
             if (blockEntity instanceof BaseContainerBlockEntity) {
