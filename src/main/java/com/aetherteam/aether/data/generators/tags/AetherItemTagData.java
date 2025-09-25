@@ -559,7 +559,7 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(ItemTags.DYEABLE).add(
                 AetherItems.LEATHER_GLOVES.get()
         );
-        this.tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(AetherTags.Items.ACCESSORIES_GLOVES).add(
+        this.tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(AetherTags.Items.DART_SHOOTERS).addTag(AetherTags.Items.ACCESSORIES_GLOVES).add(
                 AetherItems.HAMMER_OF_KINGBDOGZ.get(),
                 AetherItems.LIGHTNING_KNIFE.get(),
                 AetherItems.ZANITE_RING.get(),
