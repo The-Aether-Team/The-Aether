@@ -576,3 +576,4 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(ItemTags.VANISHING_ENCHANTABLE).addTag(AetherTags.Items.ACCESSORIES);
     }
 }
+
