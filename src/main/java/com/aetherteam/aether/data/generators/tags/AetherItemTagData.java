@@ -40,8 +40,11 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.copy(AetherTags.Blocks.ANGELIC_BLOCKS, AetherTags.Items.ANGELIC_BLOCKS);
         this.copy(AetherTags.Blocks.HELLFIRE_BLOCKS, AetherTags.Items.HELLFIRE_BLOCKS);
         this.copy(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT, AetherTags.Items.AECHOR_PLANT_SPAWNABLE_DETERRENT);
-        this.copy(AetherTags.Blocks.ORES_IN_GROUND_HOLYSTONE, AetherTags.Items.ORES_IN_GROUND_HOLYSTONE);
         this.copy(AetherTags.Blocks.ORE_BEARING_GROUND_HOLYSTONE, AetherTags.Items.ORE_BEARING_GROUND_HOLYSTONE);
+        this.copy(AetherTags.Blocks.ORES_AMBROSIUM, AetherTags.Items.ORES_AMBROSIUM);
+        this.copy(AetherTags.Blocks.ORES_ZANITE, AetherTags.Items.ORES_ZANITE);
+        this.copy(AetherTags.Blocks.ORES_GRAVITITE, AetherTags.Items.ORES_GRAVITITE);
+        this.copy(AetherTags.Blocks.ORES_IN_GROUND_HOLYSTONE, AetherTags.Items.ORES_IN_GROUND_HOLYSTONE);
 
         this.tag(AetherTags.Items.CRAFTS_SKYROOT_PLANKS).addTags(
                 AetherTags.Items.SKYROOT_LOGS,
@@ -203,6 +206,7 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(AetherTags.Items.SENTRY_REPAIRING);
         this.tag(AetherTags.Items.ICE_REPAIRING);
 
+        this.tag(AetherTags.Items.GEMS_AMBROSIUM).add(AetherItems.AMBROSIUM_SHARD.get());
         this.tag(AetherTags.Items.GEMS_ZANITE).add(AetherItems.ZANITE_GEMSTONE.get());
         this.tag(AetherTags.Items.PROCESSED_GRAVITITE).add(AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());
 
@@ -290,7 +294,19 @@ public class AetherItemTagData extends ItemTagsProvider {
             AetherItems.GOLDEN_GUMMY_SWET.get(),
             AetherItems.CANDY_CANE.get()
         );
-        this.tag(Tags.Items.GEMS).add(AetherItems.ZANITE_GEMSTONE.get());
+        this.tag(Tags.Items.FOODS).add(AetherItems.HEALING_STONE.get());
+        this.tag(Tags.Items.ANIMAL_FOODS).addTags(
+            AetherTags.Items.PHYG_TEMPTATION_ITEMS,
+            AetherTags.Items.FLYING_COW_TEMPTATION_ITEMS,
+            AetherTags.Items.SHEEPUFF_TEMPTATION_ITEMS,
+            AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS,
+            AetherTags.Items.MOA_FOOD_ITEMS
+        );
+        this.tag(Tags.Items.GEMS).add(
+            AetherItems.AMBROSIUM_SHARD.get(),
+            AetherItems.ZANITE_GEMSTONE.get()
+        );
+        this.tag(Tags.Items.HIDDEN_FROM_RECIPE_VIEWERS).add(AetherItems.AETHER_PORTAL_FRAME.get().asItem());
         this.tag(Tags.Items.GLASS_BLOCKS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get().asItem());
         this.tag(Tags.Items.GLASS_BLOCKS_CHEAP).add(AetherBlocks.QUICKSOIL_GLASS.get().asItem());
         this.tag(Tags.Items.GLASS_PANES_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS_PANE.get().asItem());

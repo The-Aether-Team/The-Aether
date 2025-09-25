@@ -43,6 +43,7 @@ Cicopath
 darksonic300
 - Implementation of the is_cold damage type tag.
 - Changing aetherSurfaceRules() method to be public.
+- Changing Inebriation to not affect flying Creative and Spectator players.
 
 embeddedt
 - Fixes to make entity dimension falling checks more performant.

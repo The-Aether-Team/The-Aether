@@ -58,7 +58,7 @@ public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>> exte
                     color = PerkUtil.getPerkColor(developerGlows.get(playerUUID).hexColor());
                 }
                 if (color != null) {
-                    this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, new Color(color.getLeft() * 255, color.getMiddle() * 255, color.getRight() * 255, 255).getRGB());
+                    this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, new Color(color.getLeft(), color.getMiddle(), color.getRight(), 1.0F).getRGB());
                 } else {
                     this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY);
                 }

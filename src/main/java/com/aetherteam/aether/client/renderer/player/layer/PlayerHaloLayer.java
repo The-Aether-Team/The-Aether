@@ -76,7 +76,7 @@ public class PlayerHaloLayer<T extends Player, M extends PlayerModel<T>> extends
                 }
                 if (color != null) {
                     VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(PLAYER_HALO_GRAYSCALE_LOCATION));
-                    this.playerHalo.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, new Color(color.getLeft() * 255, color.getMiddle() * 255, color.getRight() * 255, 255).getRGB());
+                    this.playerHalo.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, new Color(color.getLeft(), color.getMiddle(), color.getRight(), 1.0F).getRGB());
                 } else {
                     VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(PLAYER_HALO_LOCATION));
                     this.playerHalo.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
