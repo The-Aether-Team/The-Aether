@@ -559,7 +559,7 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(ItemTags.DYEABLE).add(
                 AetherItems.LEATHER_GLOVES.get()
         );
-        this.tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(AetherTags.Items.ACCESSORIES_GLOVES).add(
+        this.tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(AetherTags.Items.DART_SHOOTERS).addTag(AetherTags.Items.ACCESSORIES_GLOVES).add(
                 AetherItems.HAMMER_OF_KINGBDOGZ.get(),
                 AetherItems.LIGHTNING_KNIFE.get(),
                 AetherItems.ZANITE_RING.get(),
@@ -569,9 +569,11 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.SHIELD_OF_REPULSION.get(),
                 AetherItems.COLD_PARACHUTE.get(),
                 AetherItems.GOLDEN_PARACHUTE.get(),
-                AetherItems.NATURE_STAFF.get()
+                AetherItems.NATURE_STAFF.get(),
+                AetherItems.CLOUD_STAFF.get()
         );
         this.tag(ItemTags.BOW_ENCHANTABLE).addTag(AetherTags.Items.DART_SHOOTERS).add(AetherItems.PHOENIX_BOW.get());
         this.tag(ItemTags.VANISHING_ENCHANTABLE).addTag(AetherTags.Items.ACCESSORIES);
     }
 }
+

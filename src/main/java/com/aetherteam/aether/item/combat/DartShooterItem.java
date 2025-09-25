@@ -144,7 +144,12 @@ public class DartShooterItem extends ProjectileWeaponItem { //implements Vanisha
 
     @Override
     public boolean isPrimaryItemFor(ItemStack stack, Holder<Enchantment> enchantment) {
-        return ImmutableSet.of(Enchantments.POWER, Enchantments.PUNCH).contains(enchantment.getKey());
+        return super.isPrimaryItemFor(stack, enchantment) && !enchantment.is(Enchantments.FLAME) && !enchantment.is(Enchantments.INFINITY);
+    }
+
+    @Override
+    public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
+        return super.supportsEnchantment(stack, enchantment) && !enchantment.is(Enchantments.FLAME) && !enchantment.is(Enchantments.INFINITY);
     }
 
     /**

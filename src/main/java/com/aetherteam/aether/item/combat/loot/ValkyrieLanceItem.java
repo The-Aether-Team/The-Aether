@@ -28,6 +28,11 @@ public class ValkyrieLanceItem extends SwordItem implements ValkyrieTool {
     }
 
     @Override
+    public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
+        return super.supportsEnchantment(stack, enchantment) && !enchantment.is(Enchantments.SWEEPING_EDGE);
+    }
+
+    @Override
     public boolean canPerformAction(ItemStack stack, ItemAbility ItemAbility) {
         return ItemAbilities.DEFAULT_SWORD_ACTIONS.contains(ItemAbility) && ItemAbility != ItemAbilities.SWORD_SWEEP;
     }
