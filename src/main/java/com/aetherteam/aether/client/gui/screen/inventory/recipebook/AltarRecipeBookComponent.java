@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.gui.screen.inventory.recipebook;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.inventory.menu.AbstractAetherFurnaceMenu;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.GhostSlots;
@@ -10,16 +11,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.display.FurnaceRecipeDisplay;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class AltarRecipeBookComponent extends RecipeBookComponent<AbstractAetherFurnaceMenu> {
-    private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled_highlighted"));
+    private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(
+        ResourceLocation.fromNamespaceAndPath(Aether.MODID, "recipe_book/altar_filter_enabled"),
+        ResourceLocation.fromNamespaceAndPath(Aether.MODID, "recipe_book/altar_filter_disabled"),
+        ResourceLocation.fromNamespaceAndPath(Aether.MODID, "recipe_book/altar_filter_enabled_highlighted"),
+        ResourceLocation.fromNamespaceAndPath(Aether.MODID, "recipe_book/altar_filter_disabled_highlighted")
+    );
     private static final Component FILTER_NAME = Component.translatable("gui.aether.recipebook.toggleRecipes.enchantable");
 
     public AltarRecipeBookComponent(AbstractAetherFurnaceMenu menu, List<TabInfo> tabInfos) {
