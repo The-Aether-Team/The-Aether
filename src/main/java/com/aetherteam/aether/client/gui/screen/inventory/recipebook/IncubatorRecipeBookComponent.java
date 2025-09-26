@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.gui.screen.inventory.recipebook;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -19,10 +20,10 @@ import java.util.stream.Collectors;
 
 public class IncubatorRecipeBookComponent extends RecipeBookComponent {
     private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(
-            ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled"),
-            ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled"),
-            ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled_highlighted"),
-            ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled_highlighted")
+            ResourceLocation.fromNamespaceAndPath(Aether.MODID, "recipe_book/incubator_filter_enabled"),
+            ResourceLocation.fromNamespaceAndPath(Aether.MODID, "recipe_book/incubator_filter_disabled"),
+            ResourceLocation.fromNamespaceAndPath(Aether.MODID, "recipe_book/incubator_filter_enabled_highlighted"),
+            ResourceLocation.fromNamespaceAndPath(Aether.MODID, "recipe_book/incubator_filter_disabled_highlighted")
     );
     private static final Component FILTER_NAME = Component.translatable("gui.aether.recipebook.toggleRecipes.incubatable");
     @Nullable
