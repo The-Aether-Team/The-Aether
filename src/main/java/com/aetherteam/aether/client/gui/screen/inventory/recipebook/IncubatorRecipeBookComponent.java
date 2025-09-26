@@ -1,8 +1,10 @@
 package com.aetherteam.aether.client.gui.screen.inventory.recipebook;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -14,13 +16,14 @@ import java.util.List;
 import java.util.Set;
 
 public class IncubatorRecipeBookComponent extends RecipeBookComponent {
+    protected static final ResourceLocation FILTER_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/inventory/filter.png");
     private static final Component FILTER_NAME = Component.translatable("gui.aether.recipebook.toggleRecipes.incubatable");
     @Nullable
     private Ingredient fuels;
 
     @Override
     protected void initFilterButtonTextures() {
-        this.filterButton.initTextureValues(152, 182, 28, 18, RECIPE_BOOK_LOCATION);
+        this.filterButton.initTextureValues(0, 72, 28, 18, FILTER_LOCATION);
     }
 
     @Override
