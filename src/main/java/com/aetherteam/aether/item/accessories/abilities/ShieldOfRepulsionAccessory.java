@@ -3,15 +3,15 @@ package com.aetherteam.aether.item.accessories.abilities;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.attachment.AetherPlayerAttachment;
+import com.aetherteam.aether.integration.AccessoryUtil;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.nitrogen.ConstantsUtil;
-import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileDeflection;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -32,8 +32,8 @@ public interface ShieldOfRepulsionAccessory {
         if (hitResult.getType() == HitResult.Type.ENTITY && hitResult instanceof EntityHitResult entityHitResult) {
             if (entityHitResult.getEntity() instanceof LivingEntity impactedLiving) {
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
-                    SlotEntryReference slotResult = EquipmentUtil.getAccessory(impactedLiving, AetherItems.SHIELD_OF_REPULSION.get());
-                    if (slotResult != null) {
+                    ItemStack itemStack = AccessoryUtil.getFirstItem(impactedLiving, (stack) -> stack.is(AetherItems.SHIELD_OF_REPULSION));
+                    if (!itemStack.isEmpty()) {
                         Vec3 motion = impactedLiving.getDeltaMovement();
                         if (impactedLiving instanceof Player player) {
                             var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
@@ -42,11 +42,11 @@ public interface ShieldOfRepulsionAccessory {
                                     data.setProjectileImpactedMaximum(150);
                                     data.setProjectileImpactedTimer(150);
                                 }
-                                handleDeflection(event, projectile, player, slotResult);
+                                handleDeflection(event, projectile, player, itemStack);
                             }
                         } else {
                             if (motion.x() == 0.0 && (motion.y() == ConstantsUtil.DEFAULT_DELTA_MOVEMENT_Y || motion.y() == 0.0) && motion.z() == 0.0) {
-                                handleDeflection(event, projectile, impactedLiving, slotResult);
+                                handleDeflection(event, projectile, impactedLiving, itemStack);
                             }
                         }
                     }
@@ -61,15 +61,15 @@ public interface ShieldOfRepulsionAccessory {
      *
      * @param projectile     The impacting {@link Projectile}.
      * @param impactedLiving The impacted {@link LivingEntity}.
-     * @param slotResult     The {@link SlotEntryReference} of the Shield of Repulsion.
+     * @param stack     The {@link ItemStack} of the Shield of Repulsion.
      */
-    private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, SlotEntryReference slotResult) {
+    private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, ItemStack stack) {
         event.setCanceled(true);
         if (!impactedLiving.equals(projectile.getOwner())) {
             projectile.deflect(ProjectileDeflection.REVERSE, impactedLiving, projectile.getOwner(), false);
             projectile.setDeltaMovement(projectile.getDeltaMovement().scale(0.25));
             if (impactedLiving.level() instanceof ServerLevel serverLevel) {
-                slotResult.stack().hurtAndBreak(1, serverLevel, impactedLiving, (item) -> slotResult.reference().breakStack());
+                stack.hurtAndBreak(1, serverLevel, impactedLiving, (item) -> {});
             }
         }
     }

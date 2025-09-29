@@ -2,10 +2,8 @@ package com.aetherteam.aether.item;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.item.accessories.cape.CapeItem;
-import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
-import io.wispforest.accessories.api.AccessoriesCapability;
-import io.wispforest.accessories.api.slot.SlotEntryReference;
+import com.aetherteam.aether.integration.AccessoryUtil;
+import com.aetherteam.aether.inventory.container.AccessoryContainer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -13,10 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModList;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
 
 public final class EquipmentUtil {
     /**
@@ -43,36 +38,33 @@ public final class EquipmentUtil {
     }
 
     /**
-     * Searches for gloves in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
+     * Searches for gloves in an entity's accessory inventory and returns the first {@link ItemStack} instance.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotEntryReference} for the accessory item.
+     * @return The {@link ItemStack} for the accessory item.
      */
-    @Nullable
-    public static SlotEntryReference getGloves(LivingEntity entity) {
-        Optional<SlotEntryReference> slotResultOptional = EquipmentUtil.findFirstAccessory(entity, (stack) -> stack.getItem() instanceof GlovesItem);
-        return slotResultOptional.orElse(null);
+    public static ItemStack getGloves(LivingEntity entity) {
+        return AccessoryUtil.getInFirstSlot(entity, AccessoryContainer.SlotType.GLOVES);
     }
 
     /**
-     * Searches for Zanite Rings in an entity's accessory inventory and returns all the {@link SlotEntryReference} instances.
+     * Searches for Zanite Rings in an entity's accessory inventory and returns all the {@link ItemStack} instances.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link List} of {@link SlotEntryReference}s for the accessory items.
+     * @return The {@link List} of {@link ItemStack}s for the accessory items.
      */
-    public static List<SlotEntryReference> getZaniteRings(LivingEntity entity) {
-        return getAccessories(entity, AetherItems.ZANITE_RING.get());
+    public static List<ItemStack> getZaniteRings(LivingEntity entity) {
+        return AccessoryUtil.getItems(entity, (stack) -> stack.is(AetherItems.ZANITE_RING));
     }
 
     /**
-     * Searches for a Zanite Pendant in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
+     * Searches for a Zanite Pendant in an entity's accessory inventory and returns the first {@link ItemStack} instance.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotEntryReference} for the accessory item.
+     * @return The {@link ItemStack} for the accessory item.
      */
-    @Nullable
-    public static SlotEntryReference getZanitePendant(LivingEntity entity) {
-        return getAccessory(entity, AetherItems.ZANITE_PENDANT.get());
+    public static ItemStack getZanitePendant(LivingEntity entity) {
+        return AccessoryUtil.getFirstItem(entity, (stack) -> stack.is(AetherItems.ZANITE_PENDANT));
     }
 
     /**
@@ -82,7 +74,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasFreezingAccessory(LivingEntity entity) {
-        return hasAccessory(entity, AetherItems.ICE_PENDANT.get()) || hasAccessory(entity, AetherItems.ICE_RING.get());
+        return AccessoryUtil.hasItem(entity, (stack) -> stack.is(AetherItems.ICE_PENDANT) || stack.is(AetherItems.ICE_RING));
     }
 
     /**
@@ -92,7 +84,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasSwetPacifyingAccessory(LivingEntity entity) {
-        return findFirstAccessory(entity, stack -> stack.is(AetherTags.Items.PACIFIES_SWETS)).isPresent();
+        return AccessoryUtil.hasItem(entity, (stack) -> stack.is(AetherTags.Items.PACIFIES_SWETS));
     }
 
     /**
@@ -102,7 +94,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasSwetCape(LivingEntity entity) {
-        return hasAccessory(entity, AetherItems.SWET_CAPE.get());
+        return AccessoryUtil.hasItem(entity, (stack) -> stack.is(AetherItems.SWET_CAPE));
     }
 
     /**
@@ -112,66 +104,27 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasInvisibilityCloak(LivingEntity entity) {
-        return hasAccessory(entity, AetherItems.INVISIBILITY_CLOAK.get());
+        return AccessoryUtil.hasItem(entity, (stack) -> stack.is(AetherItems.INVISIBILITY_CLOAK));
     }
 
     /**
-     * Checks if a {@link CapeItem} exists in an entity's accessory inventory.
+     * Checks if a cape exists in an entity's accessory inventory.
      *
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasCape(LivingEntity entity) {
-        return findFirstAccessory(entity, stack -> stack.getItem() instanceof CapeItem).isPresent();
+        return AccessoryUtil.hasInSlot(entity, AccessoryContainer.SlotType.CAPE);
     }
 
     /**
-     * Searches for a {@link CapeItem} in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
+     * Searches for a cape in an entity's accessory inventory and returns the first {@link ItemStack} instance.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotEntryReference} for the accessory item.
+     * @return The {@link ItemStack} for the accessory item.
      */
-    @Nullable
-    public static SlotEntryReference getCape(LivingEntity entity) {
-        return findFirstAccessory(entity, stack -> stack.getItem() instanceof CapeItem).orElse(null);
-    }
-
-    /**
-     * Checks if an accessory {@link Item} exists in an entity's accessory inventory.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @param item   The accessory {@link Item} to look for.
-     * @return The result of the check, as a {@link Boolean}.
-     */
-    public static boolean hasAccessory(LivingEntity entity, Item item) {
-        return findFirstAccessory(entity, item).isPresent();
-    }
-
-    /**
-     * Searches for an accessory {@link Item} in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @param item   The accessory {@link Item} to look for.
-     * @return The {@link SlotEntryReference} for the accessory item.
-     */
-    @Nullable
-    public static SlotEntryReference getAccessory(LivingEntity entity, Item item) {
-        return findFirstAccessory(entity, item).orElse(null);
-    }
-
-    /**
-     * Searches for an accessory {@link Item} in an entity's accessory inventory and returns all the {@link SlotEntryReference} instances.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @param item   The accessory {@link Item} to look for.
-     * @return The {@link List} of {@link SlotEntryReference}s for the accessory items.
-     */
-    public static List<SlotEntryReference> getAccessories(LivingEntity entity, Item item) {
-        AccessoriesCapability accessories = AccessoriesCapability.get(entity);
-        if (accessories != null) {
-            return accessories.getEquipped(item);
-        }
-        return List.of();
+    public static ItemStack getCape(LivingEntity entity) {
+        return AccessoryUtil.getInFirstSlot(entity, AccessoryContainer.SlotType.CAPE);
     }
 
     /**
@@ -250,7 +203,7 @@ public final class EquipmentUtil {
                 && entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 && entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
                 && entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
-                && (!AetherConfig.SERVER.require_gloves.get() || findFirstAccessory(entity, gloves).isPresent());
+                && (!AetherConfig.SERVER.require_gloves.get() || EquipmentUtil.getGloves(entity).is(gloves));
     }
 
     /**
@@ -269,21 +222,6 @@ public final class EquipmentUtil {
                 || entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 || entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
                 || entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
-                || findFirstAccessory(entity, gloves).isPresent();
-    }
-
-    public static Optional<SlotEntryReference> findFirstAccessory(LivingEntity entity, Item item) {
-        return findFirstAccessory(entity, (itemStack) -> itemStack.is(item));
-    }
-
-    public static Optional<SlotEntryReference> findFirstAccessory(LivingEntity entity, Predicate<ItemStack> predicate) {
-        AccessoriesCapability accessories = AccessoriesCapability.get(entity);
-        if (accessories != null) {
-            SlotEntryReference slotEntryReference = accessories.getFirstEquipped(predicate);
-            if (slotEntryReference != null) {
-                return Optional.of(slotEntryReference);
-            }
-        }
-        return Optional.empty();
+                || EquipmentUtil.getGloves(entity).is(gloves);
     }
 }

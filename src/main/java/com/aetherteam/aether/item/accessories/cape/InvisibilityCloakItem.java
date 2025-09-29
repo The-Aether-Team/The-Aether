@@ -3,14 +3,16 @@ package com.aetherteam.aether.item.accessories.cape;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.AetherKeys;
+import com.aetherteam.aether.inventory.container.AccessoryContainer;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LivingEntityAccessor;
 import com.aetherteam.aether.network.packet.clientbound.SetInvisibilityPacket;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
-import io.wispforest.accessories.api.slot.SlotReference;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -22,19 +24,18 @@ import net.neoforged.neoforge.network.PacketDistributor;
  */
 public class InvisibilityCloakItem extends AccessoryItem {
     public InvisibilityCloakItem(Properties properties) {
-        super(properties);
+        super(properties, AccessoryContainer.SlotType.CAPE);
     }
 
     @Override
-    public void tick(ItemStack stack, SlotReference reference) {
-        LivingEntity livingEntity = reference.entity();
-        if (livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
+    public void tick(ItemStack stack, Level level, LivingEntity entity, InteractionHand hand) {
+        if (entity.level().isClientSide() && entity instanceof Player player) {
             if (AetherKeys.INVISIBILITY_TOGGLE.consumeClick()) {
                 var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
                 data.setSynched(player.getId(), INBTSynchable.Direction.SERVER, "setInvisibilityEnabled", !data.isInvisibilityEnabled());
             }
         }
-        if (!livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
+        if (!entity.level().isClientSide() && entity instanceof Player player) {
             var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
             if (data.isInvisibilityEnabled()) {
                 if (!AetherConfig.SERVER.balance_invisibility_cloak.get()) {
@@ -50,19 +51,19 @@ public class InvisibilityCloakItem extends AccessoryItem {
                 data.setSynched(player.getId(), INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", false);
             }
         }
-        if (!livingEntity.level().isClientSide()) {
-            if (!livingEntity.isInvisible()) {
-                if (livingEntity instanceof Player player) {
+        if (!entity.level().isClientSide()) {
+            if (!entity.isInvisible()) {
+                if (entity instanceof Player player) {
                     var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
                     if (data.isWearingInvisibilityCloak()) {
                         player.setInvisible(true);
                         PacketDistributor.sendToAllPlayers(new SetInvisibilityPacket(player.getId(), true));
                     }
                 } else {
-                    livingEntity.setInvisible(true);
+                    entity.setInvisible(true);
                 }
             } else {
-                if (livingEntity instanceof Player player) {
+                if (entity instanceof Player player) {
                     var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
                     if (!data.isWearingInvisibilityCloak()) {
                         player.setInvisible(false);
@@ -74,12 +75,11 @@ public class InvisibilityCloakItem extends AccessoryItem {
     }
 
     @Override
-    public void onUnequip(ItemStack stack, SlotReference reference) {
-        LivingEntity livingEntity = reference.entity();
-        if (!livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
+    public void onUnequip(ItemStack stack, Level level, LivingEntity entity, InteractionHand hand) {
+        if (!entity.level().isClientSide() && entity instanceof Player player) {
             player.getData(AetherDataAttachments.AETHER_PLAYER).setSynched(player.getId(), INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", false);
         }
-        livingEntity.setInvisible(false);
-        ((LivingEntityAccessor) livingEntity).callUpdateEffectVisibility();
+        entity.setInvisible(false);
+        ((LivingEntityAccessor) entity).callUpdateEffectVisibility();
     }
 }

@@ -1,6 +1,7 @@
 package com.aetherteam.aether.attachment;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.inventory.container.AccessoryContainer;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -16,4 +17,5 @@ public class AetherDataAttachments {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<LightningTrackerAttachment>> LIGHTNING_TRACKER = ATTACHMENTS.register("lightning_tracker", () -> AttachmentType.builder(LightningTrackerAttachment::new).serialize(LightningTrackerAttachment.CODEC).build());
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<DroppedItemAttachment>> DROPPED_ITEM = ATTACHMENTS.register("dropped_item", () -> AttachmentType.builder(DroppedItemAttachment::new).serialize(DroppedItemAttachment.CODEC).build());
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<AetherTimeAttachment>> AETHER_TIME = ATTACHMENTS.register("aether_time", () -> AttachmentType.builder(AetherTimeAttachment::new).serialize(AetherTimeAttachment.CODEC).build());
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<AccessoryContainer>> ACCESSORIES = ATTACHMENTS.register("accessories", () -> AttachmentType.builder(AccessoryContainer::new).serialize(AccessoryContainer.CODEC).copyOnDeath().build()); //.sync(AccessoriesInventory.STREAM_CODEC) //TODO PACKET
 }

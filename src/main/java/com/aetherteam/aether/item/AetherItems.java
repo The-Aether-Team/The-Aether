@@ -57,8 +57,6 @@ import com.aetherteam.aether.item.tools.zanite.ZaniteAxeItem;
 import com.aetherteam.aether.item.tools.zanite.ZaniteHoeItem;
 import com.aetherteam.aether.item.tools.zanite.ZanitePickaxeItem;
 import com.aetherteam.aether.item.tools.zanite.ZaniteShovelItem;
-import io.wispforest.accessories.api.Accessory;
-import io.wispforest.accessories.api.AccessoryRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.component.DataComponents;
@@ -306,45 +304,6 @@ public class AetherItems {
     public static final DeferredItem<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.registerItem("zephyr_spawn_egg", (properties) -> new SpawnEggItem(AetherEntityTypes.ZEPHYR.get(), 0xDFDFDF, 0x99CFE8, properties));
 
     public static ItemStack SWET_BANNER = null;
-
-    public static void registerAccessories() {
-        AccessoryRegistry.register(AetherItems.IRON_RING.get(), (Accessory) AetherItems.IRON_RING.get());
-        AccessoryRegistry.register(AetherItems.GOLDEN_RING.get(), (Accessory) AetherItems.GOLDEN_RING.get());
-        AccessoryRegistry.register(AetherItems.ZANITE_RING.get(), (Accessory) AetherItems.ZANITE_RING.get());
-        AccessoryRegistry.register(AetherItems.ICE_RING.get(), (Accessory) AetherItems.ICE_RING.get());
-
-        AccessoryRegistry.register(AetherItems.IRON_PENDANT.get(), (Accessory) AetherItems.IRON_PENDANT.get());
-        AccessoryRegistry.register(AetherItems.GOLDEN_PENDANT.get(), (Accessory) AetherItems.GOLDEN_PENDANT.get());
-        AccessoryRegistry.register(AetherItems.ZANITE_PENDANT.get(), (Accessory) AetherItems.ZANITE_PENDANT.get());
-        AccessoryRegistry.register(AetherItems.ICE_PENDANT.get(), (Accessory) AetherItems.ICE_PENDANT.get());
-
-        AccessoryRegistry.register(AetherItems.LEATHER_GLOVES.get(), (Accessory) AetherItems.LEATHER_GLOVES.get());
-        AccessoryRegistry.register(AetherItems.CHAINMAIL_GLOVES.get(), (Accessory) AetherItems.CHAINMAIL_GLOVES.get());
-        AccessoryRegistry.register(AetherItems.IRON_GLOVES.get(), (Accessory) AetherItems.IRON_GLOVES.get());
-        AccessoryRegistry.register(AetherItems.GOLDEN_GLOVES.get(), (Accessory) AetherItems.GOLDEN_GLOVES.get());
-        AccessoryRegistry.register(AetherItems.DIAMOND_GLOVES.get(), (Accessory) AetherItems.DIAMOND_GLOVES.get());
-        AccessoryRegistry.register(AetherItems.NETHERITE_GLOVES.get(), (Accessory) AetherItems.NETHERITE_GLOVES.get());
-        AccessoryRegistry.register(AetherItems.ZANITE_GLOVES.get(), (Accessory) AetherItems.ZANITE_GLOVES.get());
-        AccessoryRegistry.register(AetherItems.GRAVITITE_GLOVES.get(), (Accessory) AetherItems.GRAVITITE_GLOVES.get());
-        AccessoryRegistry.register(AetherItems.VALKYRIE_GLOVES.get(), (Accessory) AetherItems.VALKYRIE_GLOVES.get());
-        AccessoryRegistry.register(AetherItems.NEPTUNE_GLOVES.get(), (Accessory) AetherItems.NEPTUNE_GLOVES.get());
-        AccessoryRegistry.register(AetherItems.PHOENIX_GLOVES.get(), (Accessory) AetherItems.PHOENIX_GLOVES.get());
-        AccessoryRegistry.register(AetherItems.OBSIDIAN_GLOVES.get(), (Accessory) AetherItems.OBSIDIAN_GLOVES.get());
-
-        AccessoryRegistry.register(AetherItems.RED_CAPE.get(), (Accessory) AetherItems.RED_CAPE.get());
-        AccessoryRegistry.register(AetherItems.BLUE_CAPE.get(), (Accessory) AetherItems.BLUE_CAPE.get());
-        AccessoryRegistry.register(AetherItems.YELLOW_CAPE.get(), (Accessory) AetherItems.YELLOW_CAPE.get());
-        AccessoryRegistry.register(AetherItems.WHITE_CAPE.get(), (Accessory) AetherItems.WHITE_CAPE.get());
-        AccessoryRegistry.register(AetherItems.AGILITY_CAPE.get(), (Accessory) AetherItems.AGILITY_CAPE.get());
-        AccessoryRegistry.register(AetherItems.SWET_CAPE.get(), (Accessory) AetherItems.SWET_CAPE.get());
-        AccessoryRegistry.register(AetherItems.INVISIBILITY_CLOAK.get(), (Accessory) AetherItems.INVISIBILITY_CLOAK.get());
-        AccessoryRegistry.register(AetherItems.VALKYRIE_CAPE.get(), (Accessory) AetherItems.VALKYRIE_CAPE.get());
-
-        AccessoryRegistry.register(AetherItems.GOLDEN_FEATHER.get(), (Accessory) AetherItems.GOLDEN_FEATHER.get());
-        AccessoryRegistry.register(AetherItems.REGENERATION_STONE.get(), (Accessory) AetherItems.REGENERATION_STONE.get());
-        AccessoryRegistry.register(AetherItems.IRON_BUBBLE.get(), (Accessory) AetherItems.IRON_BUBBLE.get());
-        AccessoryRegistry.register(AetherItems.SHIELD_OF_REPULSION.get(), (Accessory) AetherItems.SHIELD_OF_REPULSION.get());
-    }
 
     /**
      * Sets up the possible replacements for vanilla buckets to Skyroot buckets.

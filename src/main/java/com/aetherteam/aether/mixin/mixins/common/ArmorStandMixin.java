@@ -1,14 +1,7 @@
 package com.aetherteam.aether.mixin.mixins.common;
 
-import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
-import com.aetherteam.aether.mixin.AetherMixinHooks;
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.sugar.Local;
-import io.wispforest.accessories.api.slot.SlotTypeReference;
 import net.minecraft.world.entity.decoration.ArmorStand;
-import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ArmorStand.class)
 public class ArmorStandMixin { //todo figure out equip code changes

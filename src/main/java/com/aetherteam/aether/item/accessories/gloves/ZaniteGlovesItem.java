@@ -2,11 +2,13 @@ package com.aetherteam.aether.item.accessories.gloves;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.combat.AetherArmorMaterials;
-import io.wispforest.accessories.api.attributes.AccessoryAttributeBuilder;
-import io.wispforest.accessories.api.slot.SlotReference;
+import net.minecraft.core.Holder;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.Map;
 
 public class ZaniteGlovesItem extends GlovesItem {
     public ZaniteGlovesItem(double punchDamage, Properties properties) {
@@ -14,8 +16,10 @@ public class ZaniteGlovesItem extends GlovesItem {
     }
 
     @Override
-    public void getDynamicModifiers(ItemStack stack, SlotReference reference, AccessoryAttributeBuilder builder) {
-        builder.addStackable(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_PUNCH_DAMAGE_ID, this.calculateIncrease(stack), AttributeModifier.Operation.ADD_VALUE));
+    public Map<Holder<Attribute>, AttributeModifier> getAttributes(ItemStack stack) {
+        Map<Holder<Attribute>, AttributeModifier> map = super.getAttributes(stack);
+        map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_PUNCH_DAMAGE_ID, this.calculateIncrease(stack), AttributeModifier.Operation.ADD_VALUE));
+        return map;
     }
 
     /**

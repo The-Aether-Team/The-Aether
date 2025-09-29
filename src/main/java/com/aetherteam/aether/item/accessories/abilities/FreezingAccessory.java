@@ -5,10 +5,10 @@ import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.block.AccessoryFreezableRecipe;
-import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.commands.CacheableFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,12 +28,11 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
      * @param context The {@link SlotReference} of the accessory.
      * @param stack   The accessory {@link ItemStack}.
      */
-    default void freezeTick(SlotReference context, ItemStack stack) {
-        LivingEntity livingEntity = context.entity();
-        if (!(livingEntity instanceof Player player) || (!player.getAbilities().flying && !player.isSpectator())) {
-            int damage = this.freezeBlocks(livingEntity.level(), livingEntity.blockPosition(), stack, 1.9F);
-            if (livingEntity.level() instanceof ServerLevel serverLevel) {
-                context.getStack().hurtAndBreak(damage / 3, serverLevel, livingEntity, (item) -> context.breakStack());
+    default void freezeTick(ItemStack stack, Level level, LivingEntity entity, InteractionHand hand) {
+        if (!(entity instanceof Player player) || (!player.getAbilities().flying && !player.isSpectator())) {
+            int damage = this.freezeBlocks(entity.level(), entity.blockPosition(), stack, 1.9F);
+            if (entity.level() instanceof ServerLevel serverLevel) {
+                stack.hurtAndBreak(damage / 3, serverLevel, entity, (item) -> {});
             }
         }
     }
