@@ -1,7 +1,6 @@
 package com.aetherteam.aether.client.gui.screen.menu;
 
 import com.aetherteam.aether.mixin.mixins.client.accessor.AbstractWidgetAccessor;
-import gg.essential.partnermod.AdButton;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -29,7 +28,7 @@ public interface TitleScreenBehavior {
                 } else if (buttonText.equals(Component.translatable("options.language"))) {
                     button.setX(titleScreen.width - 24 + xOffset);
                     button.setY(4);
-                } else if (button instanceof AdButton) {
+                } else if (buttonText.equals(Component.literal("<essential_partner_integration_button>"))) {
                     button.setX(titleScreen.width - 72 + xOffset);
                     button.setY(4);
                 }
