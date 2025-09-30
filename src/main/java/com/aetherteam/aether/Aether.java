@@ -176,6 +176,7 @@ public class Aether {
         this.setupTipsPack(event);
         this.setupColorblindPack(event);
         this.setupTooltipsPack(event);
+        this.setupImmersivePortalsPack(event);
 
         // Data Packs
         this.setupAccessoriesPack(event);
@@ -326,6 +327,27 @@ public class Aether {
                             (string) -> pack,
                             new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
                             PackType.CLIENT_RESOURCES,
+                            Pack.Position.TOP,
+                            false,
+                            PackSource.BUILT_IN)
+                    )
+            );
+        }
+    }
+
+    private void setupImmersivePortalsPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.SERVER_DATA && ModList.get().isLoaded("immersive_portals_core") && AetherConfig.COMMON.enable_immersive_portals_compatibility.get()) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/imm_ptl_compat");
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.imm_ptl_compat.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+            event.addRepositorySource((source) ->
+                    source.accept(Pack.create(
+                            "builtin/aether_imm_ptl_compat",
+                            Component.translatable("pack.aether.imm_ptl_compat.title"),
+                            true,
+                            (string) -> pack,
+                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), true),
+                            PackType.SERVER_DATA,
                             Pack.Position.TOP,
                             false,
                             PackSource.BUILT_IN)

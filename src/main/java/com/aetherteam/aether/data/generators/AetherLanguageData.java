@@ -1286,6 +1286,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addCommonConfig("data_pack", "add_ruined_portal_automatically", "Sets the Aether Ruined Portals data pack to be added to new worlds automatically");
 
         this.addCommonConfig("modpack", "randomize_boss_names", "Determines whether bosses should display a randomized name above their boss bar");
+        this.addCommonConfig("modpack", "enable_immersive_portals_compatibility", "Enables code and data pack features used for modifying Aether Portals when Immersive Portals is installed");
 
 
         this.addClientConfig("rendering", "legacy_models", "Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod");
@@ -1337,6 +1338,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackTitle("ctm", "Aether CTM Fix");
         this.addPackTitle("tips", "Aether Tips");
         this.addPackTitle("colorblind", "Aether Colorblind Textures");
+        this.addPackTitle("imm_ptl_compat", "Immersive Portals Compatibility");
         this.addPackTitle("accessories", "Aether Accessories");
         this.addPackTitle("curios", "Aether Curios Override");
         this.addPackTitle("freezing", "Aether Temporary Freezing");
@@ -1349,6 +1351,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackDescription("ctm", "Fixes Quicksoil Glass Panes when using CTM");
         this.addPackDescription("tips", "Moves Pro Tips to Tips' UI");
         this.addPackDescription("colorblind", "Changes textures for color blindness accessibility");
+        this.addPackDescription("imm_ptl_compat", "Compatibility data for Immersive Portals");
         this.addPackDescription("accessories", "Register default accessories");
         this.addPackDescription("curios", "Replace Accessories Menu with Curios' menu");
         this.addPackDescription("freezing", "Ice Accessories create temporary blocks");
