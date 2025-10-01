@@ -140,7 +140,9 @@ public class Swet extends Slime implements MountableMob {
                     if (blockEntityPos.distSqr(pos) <= radius * radius) {
                         BlockEntity blockEntity = level.getBlockEntity(blockEntityPos);
                         if (blockEntity instanceof BannerBlockEntity bannerBlockEntity && blockEntity.getBlockState().is(Blocks.BLACK_BANNER)) {
-                            if (ItemStack.matches(bannerBlockEntity.getItem(), AetherItems.createSwetBannerItemStack())) {
+                            ItemStack bannerStack = bannerBlockEntity.getItem();
+                            bannerStack.hideTooltipPart(ItemStack.TooltipPart.ADDITIONAL);
+                            if (ItemStack.matches(bannerStack, AetherItems.createSwetBannerItemStack())) {
                                 return true;
                             }
                         }
