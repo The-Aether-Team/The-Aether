@@ -3,6 +3,7 @@ package com.aetherteam.aether.item.accessories.miscellaneous;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 public class ShieldOfRepulsionItem extends AccessoryItem {
     private static final ResourceLocation SHIELD_OF_REPULSION = new ResourceLocation(Aether.MODID, "textures/models/accessory/shield_of_repulsion/shield_of_repulsion_accessory.png");
@@ -12,6 +13,11 @@ public class ShieldOfRepulsionItem extends AccessoryItem {
 
     public ShieldOfRepulsionItem(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public boolean rendersInFirstPerson(ItemStack stack) {
+        return true;
     }
 
     public ResourceLocation getShieldOfRepulsionTexture() {

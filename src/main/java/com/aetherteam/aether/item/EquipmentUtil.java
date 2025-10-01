@@ -150,6 +150,21 @@ public final class EquipmentUtil {
     }
 
     /**
+     * Searches for a curio in an entity's accessory inventory based on an {@link ItemStack} {@link Predicate} and returns all the {@link SlotResult} instances.
+     * @param entity The {@link LivingEntity} wearer.
+     * @param item The curio {@link ItemStack} {@link Predicate} to look for.
+     * @return The {@link List} of {@link SlotResult}s for the curio items.
+     */
+    public static List<SlotResult> getCurios(LivingEntity entity, Predicate<ItemStack> item) {
+        LazyOptional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
+        if (inventoryOptional.isPresent() && inventoryOptional.resolve().isPresent()) {
+            ICuriosItemHandler inventory = inventoryOptional.resolve().get();
+            return inventory.findCurios(item);
+        }
+        return List.of();
+    }
+
+    /**
      * Searches for a curio {@link Item} in an entity's accessory inventory and returns all the {@link SlotResult} instances.
      * @param entity The {@link LivingEntity} wearer.
      * @param item The curio {@link Item} to look for.
