@@ -34,7 +34,13 @@ import net.neoforged.neoforge.client.event.RegisterDimensionTransitionScreenEven
 import net.neoforged.neoforge.client.event.RegisterEntitySpectatorShadersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
+
 public class AetherClient {
+    public static Map<Predicate<ItemStack>, ResourceLocation> CAPE_SECRETS = new HashMap<>();
+
     public static void clientInit(IEventBus bus) {
         bus.addListener(AetherClient::clientSetup);
         bus.addListener(AetherClient::registerSpectatorShaders);
@@ -66,6 +72,8 @@ public class AetherClient {
 
         ItemProperties.register(AetherItems.HAMMER_OF_KINGBDOGZ.get(), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "named"), // Easter Egg texture.
                 (stack, world, living, i) -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
+
+        CAPE_SECRETS.put((stack) -> stack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape"), ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png"));
     }
 
     public static void registerTooltipOverrides() {
