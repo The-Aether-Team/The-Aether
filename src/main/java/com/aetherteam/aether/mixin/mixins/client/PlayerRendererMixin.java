@@ -28,8 +28,15 @@ public abstract class PlayerRendererMixin {
     @Unique
     private static HumanoidArm currentArm = null;
 
-    @Shadow
-    public abstract void render(AbstractClientPlayer entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight);
+    @Inject(method = "renderRightHand", at = @At("HEAD"))
+    private void firstPersonRightAccessories(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, CallbackInfo ci) {
+        currentArm = HumanoidArm.RIGHT;
+    }
+
+    @Inject(method = "renderLeftHand", at = @At("HEAD"))
+    private void firstPersonLeftAccessories(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, CallbackInfo ci) {
+        currentArm = HumanoidArm.LEFT;
+    }
 
     @WrapMethod(method = "renderHand(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;)V")
     private void renderHand(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, ModelPart rendererArm, ModelPart rendererArmwear, Operation<Void> original) {
@@ -58,13 +65,6 @@ public abstract class PlayerRendererMixin {
         currentArm = null;
     }
 
-    @Inject(method = "renderRightHand", at = @At("HEAD"))
-    private void firstPersonRightAccessories(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, CallbackInfo ci) {
-        currentArm = HumanoidArm.RIGHT;
-    }
-
-    @Inject(method = "renderLeftHand", at = @At("HEAD"))
-    private void firstPersonLeftAccessories(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, CallbackInfo ci) {
-        currentArm = HumanoidArm.LEFT;
-    }
+    @Shadow
+    public abstract void render(AbstractClientPlayer entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight);
 }

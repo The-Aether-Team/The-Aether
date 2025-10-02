@@ -33,8 +33,11 @@ import java.util.Optional;
 public class ShieldOfRepulsionRenderer implements ICurioRenderer, FirstPersonRendering {
     private final HumanoidModel<LivingEntity> shieldModel;
     private final PlayerModel<LivingEntity> shieldModelSlim;
+    @Deprecated
     public final HumanoidModel<LivingEntity> shieldModelArm;
+    @Deprecated
     public final PlayerModel<LivingEntity> dummyArm;
+    @Deprecated
     public final PlayerModel<LivingEntity> dummyArmSlim;
 
     public ShieldOfRepulsionRenderer() {
@@ -114,27 +117,8 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer, FirstPersonRen
      * @param arm The {@link HumanoidArm} to render on.
      */
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, PlayerModel<?> playerModel, HumanoidArm arm) {
-        boolean isSlim = player.getModelName().equals("slim");
-        this.setupShieldOnHand(stack, this.shieldModelArm, poseStack, buffer, packedLight, player, playerModel, arm, isSlim);
-    }
-
-    /**
-     * Handles rendering the shield overlay model over the player's hands.
-     * @param stack The {@link ItemStack} for the Curio.
-     * @param model The player's {@link HumanoidModel}.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param player The {@link AbstractClientPlayer} to render for.
-     * @param arm The {@link HumanoidArm} to render on.
-     * @param isSlim Whether the arm model is slim, as a {@link Boolean}.
-     */
-    private void setupShieldOnHand(ItemStack stack, HumanoidModel<LivingEntity> model, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, PlayerModel<?> playerModel, HumanoidArm arm, boolean isSlim) {
-        this.setupModel(model, player);
-
-        ResourceLocation texture;
         ShieldOfRepulsionItem shield = (ShieldOfRepulsionItem) stack.getItem();
-
+        ResourceLocation texture;
         Vec3 motion = player.getDeltaMovement();
         Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
         if (aetherPlayerOptional.isPresent()) {
@@ -146,44 +130,14 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer, FirstPersonRen
         } else {
             texture = shield.getShieldOfRepulsionInactiveTexture();
         }
-
         VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, stack.isEnchanted());
 
-        boolean flag = arm != HumanoidArm.LEFT;
-        float f = flag ? 1.0F : -1.0F;
-        float offset = isSlim ? 0.0425F : 0.0F;
-        poseStack.translate((f * offset) - 0.0025, 0.0025, -0.0025);
-
-        if (arm == HumanoidArm.RIGHT) {
-            this.renderShieldOnHand(model.rightArm, playerModel.rightArm, poseStack, packedLight, consumer);
-        } else if (arm == HumanoidArm.LEFT) {
-            this.renderShieldOnHand(model.leftArm, playerModel.leftArm, poseStack, packedLight, consumer);
-        }
-    }
-
-    /**
-     * Applies basic model properties for an arm model.
-     * @param model The player's {@link PlayerModel}.
-     * @param player The {@link AbstractClientPlayer} to render for.
-     */
-    private void setupModel(HumanoidModel<LivingEntity> model, AbstractClientPlayer player) {
-        model.setAllVisible(false);
-        model.attackTime = 0.0F;
-        model.crouching = false;
-        model.swimAmount = 0.0F;
+        HumanoidModel<LivingEntity> model = player.getModelName().equals("slim") ? this.shieldModelSlim : shieldModel;
+        ModelPart shieldArm = arm == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
+        ModelPart playerArm = arm == HumanoidArm.RIGHT ? playerModel.rightArm : playerModel.leftArm;
         model.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-    }
-
-    /**
-     * Renders the shield overlay model on a player's hand.
-     * @param shieldArm The {@link ModelPart} for the arm.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param consumer The {@link VertexConsumer} for rendering.
-     */
-    private void renderShieldOnHand(ModelPart shieldArm, ModelPart playerArm, PoseStack poseStack, int packedLight, VertexConsumer consumer) {
         shieldArm.copyFrom(playerArm);
-        shieldArm.visible = true;
+        shieldArm.xRot = 0.0F;
         shieldArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 }
