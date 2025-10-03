@@ -1,4 +1,4 @@
-// 1.21.1	2025-09-25T14:31:35.3545456	Tags for minecraft:item mod id aether
+// 1.21.1	2025-10-03T13:38:38.7675329	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/item/accepted_music_discs.json
 b4d12513c8c0ef5b1fa6237ca7a1f25799c219a2 data/aether/tags/item/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/item/accessories_capes.json
@@ -127,8 +127,10 @@ ae55992a015bc68477c240af9e2959c48fba8803 data/minecraft/tags/item/chest_armor.js
 33397c0e49ca28fad45a2f4fc1a5ceb3a01edfbd data/minecraft/tags/item/cluster_max_harvestables.json
 245b2653dfdca186ced11e198ca6194cb3eb67e9 data/minecraft/tags/item/dyeable.json
 afe7910871dbdae2920afc5c8a43fc14da5275b2 data/minecraft/tags/item/enchantable/bow.json
-6464655eb2ed06e6af447fe2f0f4cdf103f6aa04 data/minecraft/tags/item/enchantable/durability.json
+18e42ae20627b29920defc1ae8afd2032e13c417 data/minecraft/tags/item/enchantable/durability.json
+addb62cbd712e3f83c6bbadcbfdf309dc0ee3cc3 data/minecraft/tags/item/enchantable/sword.json
 9a36ac3385061ad6b0797bbde04d98c24c788ce2 data/minecraft/tags/item/enchantable/vanishing.json
+addb62cbd712e3f83c6bbadcbfdf309dc0ee3cc3 data/minecraft/tags/item/enchantable/weapon.json
 7cc99b499993ff43d1bec64e0297def0c92f4c2d data/minecraft/tags/item/foot_armor.json
 252219f81f3abde4bdebe512332bb483fefab9da data/minecraft/tags/item/fox_food.json
 7b309889aa4e92af4df62936f4a36677e23c52d3 data/minecraft/tags/item/hanging_signs.json
