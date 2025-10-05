@@ -41,6 +41,7 @@ public class AetherClient {
             AetherAtlases.registerWoodTypeAtlases();
             registerGuiFactories();
             registerItemModelProperties();
+            registerTooltipOverrides();
         });
         registerLoreOverrides();
         autoApplyPacks();

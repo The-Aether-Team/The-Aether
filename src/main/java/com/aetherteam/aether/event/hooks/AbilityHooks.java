@@ -26,6 +26,7 @@ import com.aetherteam.nitrogen.network.PacketRelay;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -299,21 +300,36 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
          */
         public static float reduceToolEffectiveness(Player player, BlockState state, ItemStack stack, float speed) {
-            if (AetherConfig.SERVER.tools_debuff.get()) {
-                if (!player.level().isClientSide()) {
-                    debuffTools = true;
-                    PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.level().dimension());
-                }
-            }
             if (debuffTools) {
                 if ((state.getBlock().getDescriptionId().startsWith("block.aether.") || state.is(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK)) && !state.is(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK)) {
                     if (!stack.isEmpty() && stack.isCorrectToolForDrops(state) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
-//                        speed = (float) Math.max(Math.pow(speed, speed > 1.0 ? -0.5 : 1.5), 1.0);
                         speed = 1.0F;
                     }
                 }
             }
             return speed;
+        }
+
+        /**
+         * Sets up the debuff tool state based on the current server value and attempts to sync the state to the client if needed
+         *
+         * @param player Current player logging into the server
+         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#
+         */
+        public static void setDebuffToolsState(ServerPlayer player) {
+            if (debuffTools) {
+                PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new ToolDebuffPacket(true), player);
+            } else if (AetherConfig.SERVER.tools_debuff.get()) {
+                debuffTools = true;
+                PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new ToolDebuffPacket(true));
+            }
+        }
+
+        /**
+         * Method used to reset the debuffTools state to false on player logout
+         */
+        public static void resetDebuffToolsState() {
+            debuffTools = false;
         }
 
         /**
@@ -478,7 +494,7 @@ public class AbilityHooks {
                     if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) { // Checks if the target is an Aether entity.
                         if (!stack.isEmpty() && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).isEmpty() && stack.getAttributeModifiers(EquipmentSlot.MAINHAND).containsKey(Attributes.ATTACK_DAMAGE) && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).isEmpty()) { // Checks if the attacking item is a weapon.
                             double value = stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().mapToDouble(AttributeModifier::getAmount).sum(); // Used for checking if the attack damage from the item is greater than the attacker's default (fist).
-                            if (value > livingEntity.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) { // Checks if the attacking item is non-Aether.
+                            if (livingEntity.getAttribute(Attributes.ATTACK_DAMAGE) != null && value > livingEntity.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) { // Checks if the attacking item is non-Aether.
                                 damage = (float) pow;
                             }
                         }

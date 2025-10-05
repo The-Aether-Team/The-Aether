@@ -20,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.ApiStatus;
 import top.theillusivec4.curios.Curios;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
@@ -31,6 +32,8 @@ import java.util.Optional;
 
 public class AetherMixinHooks {
     private static final ResourceLocation SWUFF_CAPE_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
+    @ApiStatus.Internal
+    public static boolean RENDERING_ACCESSORY = false;
 
     /**
      * Checks whether a cape accessory is visible.
@@ -77,7 +80,7 @@ public class AetherMixinHooks {
      * @see com.aetherteam.aether.mixin.mixins.common.DirectoryLockMixin
      */
     public static boolean canUnlockLevel(Path basePath) {
-        if (Minecraft.getInstance().screen != null && Minecraft.getInstance().screen instanceof SelectWorldScreen) {
+        if (Minecraft.getInstance().getSingleplayerServer() != null) {
             return basePath.getFileName().toString().equals(WorldDisplayHelper.getLevelSummary().getLevelId());
         }
         return false;

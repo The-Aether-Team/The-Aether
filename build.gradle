@@ -84,9 +84,9 @@ processResources {
 dependencies {
     minecraft "net.neoforged:forge:${project.mc_version}-${project.neoforge_version}"
 
-    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:0.2.0-beta.9"))
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${project.mixinextras_version}"))
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-    implementation('com.github.llamalad7.mixinextras:mixinextras-forge:0.2.0-beta.9')
+    implementation("io.github.llamalad7:mixinextras-forge:${project.mixinextras_version}")
 
     implementation fg.deobf("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}")
     implementation fg.deobf("com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}")
@@ -97,7 +97,7 @@ dependencies {
 
 //    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
 
-    jarJar('com.github.llamalad7.mixinextras:mixinextras-forge:0.2.0-beta.9') {
+    jarJar("io.github.llamalad7:mixinextras-forge:${project.mixinextras_version}") {
         jarJar.ranged(it, "[${project.mixinextras_version},)")
         jarJar.pin(it, "${project.mixinextras_version}")
     }
@@ -159,6 +159,7 @@ repositories {
     maven { url = "https://packages.aether-mod.net/Cumulus" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.architectury.dev/" }
+    mavenCentral()
     //mavenLocal()
 }
 

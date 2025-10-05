@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class MoaType {
@@ -16,18 +17,20 @@ public class MoaType {
     private final int spawnChance;
     private final ResourceLocation texture;
     private final ResourceLocation saddleTexture;
+    private final Optional<ResourceLocation> jumpsTexture;
 
     public MoaType(MoaType.Properties properties) {
-        this(properties.egg, properties.maxJumps, properties.speed, properties.spawnChance, properties.texture, properties.saddleTexture);
+        this(properties.egg, properties.maxJumps, properties.speed, properties.spawnChance, properties.texture, properties.saddleTexture, properties.jumpsTexture);
     }
 
-    public MoaType(Supplier<? extends Item> egg, int maxJumps, float speed, int spawnChance, ResourceLocation texture, ResourceLocation saddleTexture) {
+    public MoaType(Supplier<? extends Item> egg, int maxJumps, float speed, int spawnChance, ResourceLocation texture, ResourceLocation saddleTexture, Optional<ResourceLocation> jumpsTexture) {
         this.egg = egg;
         this.maxJumps = maxJumps;
         this.speed = speed;
         this.spawnChance = spawnChance;
         this.texture = texture;
         this.saddleTexture = saddleTexture;
+        this.jumpsTexture = jumpsTexture;
     }
 
     /**
@@ -74,6 +77,13 @@ public class MoaType {
     }
 
     /**
+     * @return The {@link Optional} {@link ResourceLocation} of the {@link MoaType}'s jumps texture.
+     */
+    public Optional<ResourceLocation> getJumpsTexture() {
+        return this.jumpsTexture;
+    }
+
+    /**
      * @return The {@link ResourceLocation} of the {@link MoaType}'s full registry ID.
      */
     public ResourceLocation getId() {
@@ -94,6 +104,7 @@ public class MoaType {
         private int spawnChance = 50;
         private ResourceLocation texture = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/blue_moa.png");
         private ResourceLocation saddleTexture = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png");
+        private Optional<ResourceLocation> jumpsTexture = Optional.empty();
 
         /**
          * @see MoaType#getEgg()
@@ -162,6 +173,25 @@ public class MoaType {
          */
         public MoaType.Properties saddleTexture(String id, String saddleTexture) {
             this.saddleTexture = new ResourceLocation(id, saddleTexture);
+            return this;
+        }
+
+        /**
+         * Sets the {@link MoaType} jumps texture with the "aether" mod ID.
+         * @see MoaType#getMoaTexture()
+         */
+        public MoaType.Properties jumpsTexture(String saddleTexture) {
+            this.jumpsTexture = Optional.of(new ResourceLocation(Aether.MODID, saddleTexture));
+            return this;
+        }
+
+        /**
+         * Sets the {@link MoaType} jumps texture with a given mod ID.
+         * @param id The given mod ID {@link String}.
+         * @see MoaType#getMoaTexture()
+         */
+        public MoaType.Properties jumpsTexture(String id, String saddleTexture) {
+            this.jumpsTexture = Optional.of(new ResourceLocation(id, saddleTexture));
             return this;
         }
 

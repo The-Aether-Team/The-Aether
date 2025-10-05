@@ -30,4 +30,7 @@ public interface AetherTime extends INBTSynchable<CompoundTag> {
 
     void setEternalDay(boolean isEternalDay);
     boolean getEternalDay();
+
+
+    boolean isTimeSynced();
 }

@@ -1,0 +1,17 @@
+{
+  "schema_version": "imm_ptl:v1",
+  "from": [
+    "minecraft:overworld"
+  ],
+  "to": "aether:the_aether",
+  "form": {
+    "type": "imm_ptl:heterogeneous",
+    "area_block": "minecraft:air",
+    "frame_block": "aether:aether_portal_blocks",
+    "generate_frame_if_not_found": true
+  },
+  "trigger": {
+    "type": "imm_ptl:use_item",
+    "item": "aether:skyroot_water_bucket"
+  }
+}

@@ -3,6 +3,7 @@ package com.aetherteam.aether.event.listeners.abilities;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -66,6 +67,11 @@ public class ToolAbilityListener {
             event.setNewSpeed(AbilityHooks.ToolHooks.handleZaniteToolAbility(itemStack, event.getNewSpeed()));
             event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(player, blockState, itemStack, event.getNewSpeed()));
         }
+    }
+
+    @SubscribeEvent
+    public static void setupDebuffToolState(PlayerEvent.PlayerLoggedInEvent event) {
+        AbilityHooks.ToolHooks.setDebuffToolsState((ServerPlayer) event.getEntity());
     }
 
     /**

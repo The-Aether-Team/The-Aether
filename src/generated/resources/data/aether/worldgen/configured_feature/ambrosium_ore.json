@@ -13,7 +13,7 @@
         },
         "target": {
           "predicate_type": "minecraft:tag_match",
-          "tag": "aether:holystone"
+          "tag": "aether:holystone_ore_replaceables"
         }
       }
     ]

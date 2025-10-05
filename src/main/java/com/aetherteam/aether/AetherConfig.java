@@ -37,6 +37,8 @@ public class AetherConfig {
         public final ConfigValue<Boolean> disable_aether_portal;
         public final ConfigValue<Boolean> disable_falling_to_overworld;
         public final ConfigValue<Boolean> disable_eternal_day;
+        public final ConfigValue<Boolean> normal_length_aether_time;
+        public final ConfigValue<Boolean> sync_aether_time;
         public final ConfigValue<String> portal_destination_dimension_ID;
         public final ConfigValue<String> portal_return_dimension_ID;
 
@@ -146,6 +148,14 @@ public class AetherConfig {
                     .comment("Removes eternal day so that the Aether has a normal daylight cycle even before defeating the Sun Spirit")
                     .translation("config.aether.server.modpack.disable_eternal_day")
                     .define("Disables eternal day", false);
+            normal_length_aether_time = builder
+                    .comment("Sets the Aether's time cycle to be the same length as the Overworld's")
+                    .translation("config.aether.server.modpack.normal_length_aether_time")
+                    .define("Overworld-length Aether time cycle", false);
+            sync_aether_time = builder
+                    .comment("Syncs the Aether's time cycle to the Overworld's")
+                    .translation("config.aether.server.modpack.sync_aether_time")
+                    .define("Syncs time cycles", false);
             portal_destination_dimension_ID = builder
                     .comment("Sets the ID of the dimension that the Aether Portal will send the player to")
                     .translation("config.aether.server.modpack.portal_destination_dimension_ID")
@@ -170,6 +180,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> add_ruined_portal_automatically;
 
         public final ConfigValue<Boolean> randomize_boss_names;
+        public final ConfigValue<Boolean> enable_immersive_portals_compatibility;
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
@@ -218,6 +229,10 @@ public class AetherConfig {
                     .comment("Determines whether bosses should display a randomized name above their boss bar")
                     .translation("config.aether.common.modpack.randomize_boss_names")
                     .define("Randomize boss names", true);
+            enable_immersive_portals_compatibility = builder
+                    .comment("Enables code and data pack features used for modifying Aether Portals when Immersive Portals is installed")
+                    .translation("config.aether.common.modpack.enable_immersive_portals_compatibility")
+                    .define("Enables Immersive Portals compatibility", true);
             builder.pop();
         }
     }
@@ -225,6 +240,7 @@ public class AetherConfig {
     public static class Client {
         public final ConfigValue<Boolean> legacy_models;
         public final ConfigValue<Boolean> disable_aether_skybox;
+        public final ConfigValue<Boolean> disable_clouds;
         public final ConfigValue<Boolean> colder_lightmap;
         public final ConfigValue<Boolean> green_sunset;
 
@@ -238,6 +254,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> enable_trivia;
         public final ConfigValue<Boolean> enable_silver_hearts;
         public final ConfigValue<Boolean> disable_accessory_button;
+        public final ConfigValue<Boolean> disable_skins_button;
         public final ConfigValue<Integer> portal_text_y;
         public final ConfigValue<Integer> button_inventory_x;
         public final ConfigValue<Integer> button_inventory_y;
@@ -271,6 +288,10 @@ public class AetherConfig {
                     .comment("Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes")
                     .translation("config.aether.client.rendering.disable_aether_skybox")
                     .define("Disables Aether custom skybox", false);
+            disable_clouds = builder
+                    .comment("Disables the cloud rendering in the Aether")
+                    .translation("config.aether.client.rendering.disable_clouds")
+                    .define("Disables Aether's clouds", false);
             colder_lightmap = builder
                     .comment("Removes warm-tinting of the lightmap in the Aether, giving the lighting a colder feel")
                     .translation("config.aether.client.rendering.colder_lightmap")
@@ -322,6 +343,10 @@ public class AetherConfig {
                     .comment("Disables the Aether's accessories button from appearing in GUIs")
                     .translation("config.aether.client.gui.disable_accessory_button")
                     .define("Disables the accessories button", false);
+            disable_skins_button = builder
+                    .comment("Disables the Aether's Moa Skins button from appearing in GUIs")
+                    .translation("config.aether.client.gui.disable_skins_button")
+                    .define("Disables the Moa Skins button", false);
             portal_text_y = builder
                     .comment("The y-coordinate of the Ascending to the Aether and Descending from the Aether text in loading screens")
                     .translation("config.aether.client.gui.portal_text_y")
@@ -351,13 +376,13 @@ public class AetherConfig {
                     .translation("config.aether.client.gui.button_accessories_y")
                     .define("Button y-coordinate in accessories menu", 68);
             layout_perks_x = builder
-                    .comment("The x-coordinate of the perks button layout when in the pause menu")
+                    .comment("The x-coordinate of the layout of perks buttons when in the pause menu")
                     .translation("config.aether.client.gui.layout_perks_x")
-                    .define("Layout x-coordinate in pause menu", -116);
+                    .define("Perks layout x-coordinate in pause menu", -116);
             layout_perks_y = builder
-                    .comment("The y-coordinate of the perks button layout when in the pause menu")
+                    .comment("The y-coordinate of the layout of perks buttons when in the pause menu")
                     .translation("config.aether.client.gui.layout_perks_y")
-                    .define("Layout y-coordinate in pause menu", 0);
+                    .define("Perks layout y-coordinate in pause menu", 0);
             enable_hammer_cooldown_overlay = builder
                     .comment("Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown")
                     .translation("config.aether.client.gui.enable_hammer_cooldown_overlay")

@@ -146,8 +146,12 @@ public class ServerPerkData<T> {
         for (Map.Entry<UUID, T> serverPerkDataEntry : this.getSavedMap(server).entrySet()) { // Iterates through perk data that is stored by the server world.
             if (storedUsers.containsKey(serverPerkDataEntry.getKey())) { // Ensures the UUID from the perk data map also exists in the user map.
                 User user = storedUsers.get(serverPerkDataEntry.getKey()); // Gets the User corresponding to the UUID.
-                if (user != null && this.getVerificationPredicate(serverPerkDataEntry.getValue()).test(user)) { // Double checks whether the User has access to the perk that is currently attached to its UUID.
-                    verifiedPerkData.put(serverPerkDataEntry.getKey(), serverPerkDataEntry.getValue()); // Adds the UUID and perk to the map indicating that the entry pair is verified.
+                try {
+                    if (user != null && this.getVerificationPredicate(serverPerkDataEntry.getValue()).test(user)) { // Double checks whether the User has access to the perk that is currently attached to its UUID.
+                        verifiedPerkData.put(serverPerkDataEntry.getKey(), serverPerkDataEntry.getValue()); // Adds the UUID and perk to the map indicating that the entry pair is verified.
+                    }
+                } catch (RuntimeException e) {
+                    Aether.LOGGER.info(e.getMessage());
                 }
             }
         }

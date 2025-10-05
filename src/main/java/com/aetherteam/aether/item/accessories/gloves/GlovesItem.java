@@ -56,6 +56,11 @@ public class GlovesItem extends AccessoryItem {
         return this.material.getRepairIngredient().test(material) || super.isValidRepairItem(item, material);
     }
 
+    @Override
+    public boolean rendersInFirstPerson(ItemStack stack) {
+        return true;
+    }
+
     public ArmorMaterial getMaterial() {
         return this.material;
     }

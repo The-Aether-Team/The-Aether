@@ -42,4 +42,8 @@ public class AccessoryItem extends Item implements ICurioItem, Vanishable {
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         return super.canApplyAtEnchantingTable(stack, enchantment) || enchantment == Enchantments.BINDING_CURSE;
     }
+
+    public boolean rendersInFirstPerson(ItemStack stack) {
+        return false;
+    }
 }

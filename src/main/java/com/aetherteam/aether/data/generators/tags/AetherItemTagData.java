@@ -40,6 +40,8 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.copy(AetherTags.Blocks.ANGELIC_BLOCKS, AetherTags.Items.ANGELIC_BLOCKS);
         this.copy(AetherTags.Blocks.HELLFIRE_BLOCKS, AetherTags.Items.HELLFIRE_BLOCKS);
         this.copy(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_DETERRENT, AetherTags.Items.AECHOR_PLANT_SPAWNABLE_DETERRENT);
+        this.copy(AetherTags.Blocks.ORES_IN_GROUND_HOLYSTONE, AetherTags.Items.ORES_IN_GROUND_HOLYSTONE);
+        this.copy(AetherTags.Blocks.ORE_BEARING_GROUND_HOLYSTONE, AetherTags.Items.ORE_BEARING_GROUND_HOLYSTONE);
 
         this.tag(AetherTags.Items.CRAFTS_SKYROOT_PLANKS).addTags(
                 AetherTags.Items.SKYROOT_LOGS,
@@ -126,6 +128,7 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(AetherTags.Items.FREEZABLE_PENDANTS)
                 .add(AetherItems.IRON_PENDANT.get())
                 .add(AetherItems.GOLDEN_PENDANT.get());
+        this.tag(AetherTags.Items.PACIFIES_SWETS).add(AetherItems.SWET_CAPE.get());
         this.tag(AetherTags.Items.SLIDER_DAMAGING_ITEMS).addTag(ItemTags.PICKAXES);
         this.tag(AetherTags.Items.BRONZE_DUNGEON_LOOT).add(
                 AetherItems.VALKYRIE_LANCE.get(),

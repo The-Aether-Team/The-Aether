@@ -1,0 +1,14 @@
+{
+  "schema_version": "imm_ptl:v1",
+  "from": [
+    "minecraft:overworld"
+  ],
+  "to": "aether:the_aether",
+  "form": {
+    "type": "imm_ptl:convert_conventional_portal",
+    "portal_block": "aether:aether_portal"
+  },
+  "trigger": {
+    "type": "imm_ptl:conventional_dimension_change"
+  }
+}

@@ -244,6 +244,18 @@ public class EntityHooks {
     }
 
     /**
+     * Tracks whether a passenger has mounted or dismounted a {@link MountableAnimal}.
+     *
+     * @param mount       The mounted {@link Entity}.
+     * @param dismounting Whether the rider is trying to dismount, as a {@link Boolean}.
+     */
+    public static void trackMount(Entity mount, boolean dismounting) {
+        if (mount instanceof MountableAnimal mountableAnimal) {
+            mountableAnimal.setHasPassenger(!dismounting);
+        }
+    }
+
+    /**
      * Launches a mount when it interacts with a blue aercloud. This is handled as an event to get around a vanilla bug with it not working from the {@link com.aetherteam.aether.block.natural.BlueAercloudBlock} class.
      * @param player The passenger {@link Player}.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onRiderTick(TickEvent.PlayerTickEvent)

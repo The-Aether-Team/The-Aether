@@ -36,7 +36,7 @@ public interface ShieldOfRepulsionAccessory {
                         Vec3 motion = impactedLiving.getDeltaMovement();
                         if (impactedLiving instanceof Player player) {
                             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                                if (!aetherPlayer.isMoving()) {
+                                if (!aetherPlayer.isMoving() || (aetherPlayer.isMoving() && motion.x() == 0.0 && (motion.y() == ConstantsUtil.DEFAULT_DELTA_MOVEMENT_Y || motion.y() == 0.0) && motion.z() == 0.0)) {
                                     if (aetherPlayer.getPlayer().level().isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
                                         aetherPlayer.setProjectileImpactedMaximum(150);
                                         aetherPlayer.setProjectileImpactedTimer(150);

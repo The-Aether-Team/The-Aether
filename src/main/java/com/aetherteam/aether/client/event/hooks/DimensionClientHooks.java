@@ -139,10 +139,14 @@ public class DimensionClientHooks {
     public static void tickTime() {
         ClientLevel level = Minecraft.getInstance().level;
         if (level != null && !Minecraft.getInstance().isPaused() && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-            LevelAccessor levelAccessor = (LevelAccessor) level;
-            if (levelAccessor.aether$getLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-                AetherTime.get(level).ifPresent(aetherTime -> level.setDayTime(aetherTime.tickTime(level) - 1)); // The client always increments time by 1 every tick.
-            }
+            AetherTime.get(level).ifPresent(aetherTime -> {
+                if (!aetherTime.isTimeSynced()) {
+                    LevelAccessor levelAccessor = (LevelAccessor) level;
+                    if (levelAccessor.aether$getLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+                        level.setDayTime(aetherTime.tickTime(level) - 1); // The client always increments time by 1 every tick.
+                    }
+                }
+            });
         }
     }
 }

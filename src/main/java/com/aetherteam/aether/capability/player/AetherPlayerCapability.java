@@ -253,7 +253,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 */
 	@Override
 	public void onJoinLevel() {
-		if (this.getPlayer().level().isClientSide()) {
+		if (this.getPlayer().level().isClientSide() && player.isLocalPlayer()) {
 			CustomizationsOptions.INSTANCE.load();
 			this.setSynched(Direction.SERVER, "setShouldSyncBetweenClients", true);
 		}

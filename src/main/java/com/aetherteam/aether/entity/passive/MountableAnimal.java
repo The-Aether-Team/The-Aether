@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
@@ -35,6 +36,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	private static final EntityDataAccessor<Boolean> DATA_MOUNT_JUMPING_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_PLAYER_CROUCHED_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_HAS_PASSENGER_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 
 	protected MountableAnimal(EntityType<? extends Animal> type, Level level) {
 		super(type, level);
@@ -48,6 +50,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 		this.getEntityData().define(DATA_MOUNT_JUMPING_ID, false);
 		this.getEntityData().define(DATA_PLAYER_CROUCHED_ID, false);
 		this.getEntityData().define(DATA_ENTITY_ON_GROUND_ID, true);
+		this.getEntityData().define(DATA_HAS_PASSENGER_ID, false);
 	}
 
 	/**
@@ -64,6 +67,9 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 		}
 		if (this.getPlayerJumped()) {
 			this.setEntityOnGround(false);
+		}
+		if (!this.hasPassenger() && this.getControllingPassenger() != null) {
+			this.ejectPassengers();
 		}
 	}
 
@@ -251,6 +257,22 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	}
 
 	/**
+	 * @return Whether this entity has a passenger, as a {@link Boolean} value.
+	 */
+	public boolean hasPassenger() {
+		return this.getEntityData().get(DATA_HAS_PASSENGER_ID);
+	}
+
+	/**
+	 * Sets whether this entity has a passenger.
+	 *
+	 * @param hasPassenger The {@link Boolean} value.
+	 */
+	public void setHasPassenger(boolean hasPassenger) {
+		this.getEntityData().set(DATA_HAS_PASSENGER_ID, hasPassenger);
+	}
+
+	/**
 	 * @return A {@link Boolean} for whether this entity can perform a boosted jump, depending on whether it is saddled according to {@link MountableAnimal#isSaddled()} and is also on the ground.
 	 */
 	@Override
@@ -285,6 +307,11 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	@Override
 	public double jumpFactor() {
 		return this.getBlockJumpFactor();
+	}
+
+	@Override
+	public boolean shouldSwim(Mob owner) {
+		return owner.isInWater() && owner.getFluidHeight(FluidTags.WATER) > owner.getFluidJumpThreshold() || owner.isInLava() || owner.isInFluidType((fluidType, height) -> owner.canSwimInFluidType(fluidType) && height > owner.getFluidJumpThreshold());
 	}
 
 	@Nullable

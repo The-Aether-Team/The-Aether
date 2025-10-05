@@ -30,7 +30,7 @@ public class ConnectScreenMixin {
     @Inject(at = @At(value = "HEAD"), method = "startConnecting(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/multiplayer/resolver/ServerAddress;Lnet/minecraft/client/multiplayer/ServerData;Z)V")
     private static void startConnecting(Screen screen, Minecraft minecraft, ServerAddress serverAddress, ServerData serverData, boolean isQuickPlay, CallbackInfo ci) {
         if (WorldDisplayHelper.isActive()) {
-            WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.literal("")));
+            WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.translatable("menu.savingLevel")));
         }
     }
 }

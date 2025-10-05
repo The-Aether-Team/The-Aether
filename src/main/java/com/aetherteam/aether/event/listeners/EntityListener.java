@@ -53,7 +53,11 @@ public class EntityListener {
         Entity riderEntity = event.getEntityMounting();
         Entity mountEntity = event.getEntityBeingMounted();
         boolean isDismounting = event.isDismounting();
-        event.setCanceled(EntityHooks.dismountPrevention(riderEntity, mountEntity, isDismounting));
+        if (EntityHooks.dismountPrevention(riderEntity, mountEntity, isDismounting)) {
+            event.setCanceled(true);
+        } else {
+            EntityHooks.trackMount(mountEntity, isDismounting);
+        }
     }
 
     /**
@@ -93,7 +97,7 @@ public class EntityListener {
     public static void onProjectileHitEntity(ProjectileImpactEvent event) {
         Entity projectileEntity = event.getEntity();
         HitResult rayTraceResult = event.getRayTraceResult();
-        event.setCanceled(EntityHooks.preventEntityHooked(projectileEntity, rayTraceResult));
+        if (EntityHooks.preventEntityHooked(projectileEntity, rayTraceResult)) event.setCanceled(true);
     }
 
     /**

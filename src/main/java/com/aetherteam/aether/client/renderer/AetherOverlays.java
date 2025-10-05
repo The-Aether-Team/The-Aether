@@ -2,9 +2,11 @@ package com.aetherteam.aether.client.renderer;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.effect.AetherEffects;
+import com.aetherteam.aether.entity.ai.attribute.AetherAttributes;
 import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.mixin.mixins.client.accessor.GuiAccessor;
@@ -24,6 +26,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -35,6 +38,11 @@ import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherOverlays {
@@ -213,7 +221,9 @@ public class AetherOverlays {
         if (AetherConfig.CLIENT.enable_hammer_cooldown_overlay.get()) {
             Inventory inventory = player.getInventory();
             if (inventory.hasAnyMatching((itemStack) -> itemStack.is(AetherItems.HAMMER_OF_KINGBDOGZ.get()))) {
-                for (ItemStack itemStack : inventory.items) {
+                List<ItemStack> items = new ArrayList<>(inventory.items);
+                items.addAll(inventory.offhand);
+                for (ItemStack itemStack : items) {
                     Item item = itemStack.getItem();
                     if (item == AetherItems.HAMMER_OF_KINGBDOGZ.get()) {
                         float cooldownPercent = player.getCooldowns().getCooldownPercent(item, 0.0F);
@@ -247,11 +257,55 @@ public class AetherOverlays {
                 int xPos = ((window.getGuiScaledWidth() / 2) + (jumpCount * 8)) - (moa.getMaxJumps() * 8) / 2;
                 int yPos = 18;
                 if (jumpCount < moa.getRemainingJumps()) {
-                    guiGraphics.blit(TEXTURE_JUMPS, xPos, yPos, 0, 0, 9, 11, 256, 256);
+                    guiGraphics.blit(getMoaJumpTexture(moa, jumpCount), xPos, yPos, 0, 0, 9, 11, 256, 256);
                 } else {
-                    guiGraphics.blit(TEXTURE_JUMPS, xPos, yPos, 10, 0, 9, 11, 256, 256);
+                    guiGraphics.blit(getMoaJumpTexture(moa, jumpCount), xPos, yPos, 10, 0, 9, 11, 256, 256);
                 }
             }
+        }
+    }
+
+    /**
+     * Gets the texture used to render the feather on top of the screen.
+     *
+     * @param moa        The {@link Moa} being ridden
+     * @param count      The current feather being rendered
+     * @return           The {@link ResourceLocation} of the feather that should be rendered
+     */
+    private static ResourceLocation getMoaJumpTexture(Moa moa, double count) {
+        AttributeInstance instance = moa.getAttribute(AetherAttributes.MOA_MAX_JUMPS.get());
+        if (instance != null) {
+            if (count < instance.getBaseValue()) {
+                return getDefaultJumpsTexture(moa.getMoaType());
+            } else {
+                Set<AttributeModifier> modifiers = instance.getModifiers();
+                double currentCount = instance.getBaseValue();
+
+                for (AttributeModifier modifier : modifiers) {
+                    if (modifier.getOperation() == AttributeModifier.Operation.MULTIPLY_BASE) {
+                        currentCount += (instance.getBaseValue() * modifier.getAmount());
+                    } else {
+                        currentCount += modifier.getAmount();
+                    }
+                    if (currentCount >= count) {
+                        return moa.getOverlayTexture(modifier.getId());
+                    }
+                }
+            }
+        }
+        return TEXTURE_JUMPS;
+    }
+
+    /**
+     * @param type The {@link MoaType} being rendered.
+     * @return The {@link ResourceLocation} of the texture that should be rendered on top of the screen.
+     * Uses {@link AetherOverlays#TEXTURE_JUMPS} as a fallback if no other texture has been specified inside the {@link MoaType}
+     */
+    public static ResourceLocation getDefaultJumpsTexture(@Nullable MoaType type) {
+        if (type == null) {
+            return TEXTURE_JUMPS;
+        } else {
+            return type.getJumpsTexture().isPresent() ? type.getJumpsTexture().get() : TEXTURE_JUMPS;
         }
     }
 

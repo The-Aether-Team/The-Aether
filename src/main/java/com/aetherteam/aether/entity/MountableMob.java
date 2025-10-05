@@ -5,7 +5,9 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListen
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.StepHeightPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -35,9 +37,7 @@ public interface MountableMob {
     default void riderTick(Mob vehicle) {
         if (vehicle.getControllingPassenger() instanceof Player player) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                if (aetherPlayer.isJumping() && !this.isMountJumping()) {
-                    this.setPlayerJumped(true);
-                }
+                this.setPlayerJumped(aetherPlayer.isJumping());
             });
         }
     }
@@ -51,7 +51,6 @@ public interface MountableMob {
             Entity entity = vehicle.getControllingPassenger();
             if (vehicle.isVehicle() && entity instanceof LivingEntity passenger) {
                 if (vehicle.getPlayerJumped() && !vehicle.isMountJumping() && vehicle.canJump()) {
-                    vehicle.onJump(vehicle);
                     vehicle.setMountJumping(true);
                     vehicle.setPlayerJumped(false);
                 }
@@ -99,6 +98,11 @@ public interface MountableMob {
                     }
                 }
                 vehicle.hasImpulse = true;
+                vehicle.onJump(vehicle);
+            } else if (vehicle.getPlayerJumped() && vehicle.isMountJumping() && vehicle.canJump() && this.shouldSwim(vehicle)) {
+                vehicle.jumpInFluid(vehicle.level().getFluidState(vehicle.getOnPos()).getFluidType());
+                vehicle.hasImpulse = true;
+                vehicle.onJump(vehicle);
             }
             // Handles step height.
             AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
@@ -190,6 +194,10 @@ public interface MountableMob {
      */
     default void onJump(Mob vehicle) {
         net.minecraftforge.common.ForgeHooks.onLivingJump(vehicle);
+    }
+
+    default boolean shouldSwim(Mob owner) {
+        return false;
     }
 
     default AttributeModifier getMountStepHeightModifier() {

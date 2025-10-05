@@ -5,9 +5,11 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.MountableMob;
+import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -30,10 +32,15 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BannerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
@@ -126,16 +133,17 @@ public class Swet extends Slime implements MountableMob {
      * @return Whether the blocks were found in the radius, as a {@link Boolean}.
      */
     private static boolean inRadiusOfBanner(LevelAccessor level, BlockPos pos, int radius) {
-        for (int xOffset = -radius; xOffset <= radius; xOffset++) {
-            for (int yOffset = -radius; yOffset <= radius; yOffset++) {
-                for (int zOffset = -radius; zOffset <= radius; zOffset++) {
-                    if (xOffset * xOffset + yOffset * yOffset + zOffset * zOffset <= radius * radius) {
-                        BlockPos offsetPos = pos.offset(xOffset, yOffset, zOffset);
-                        if (level.getBlockState(offsetPos).is(Blocks.BLACK_BANNER)) {
-                            if (level.getBlockEntity(offsetPos) instanceof BannerBlockEntity bannerBlockEntity) {
-                                if (AetherBlocks.SWET_BANNER_PATTERN.toListTag().equals(BannerBlockEntity.getItemPatterns(bannerBlockEntity.getItem()))) {
-                                    return true;
-                                }
+        for (ChunkPos chunk : ChunkPos.rangeClosed(new ChunkPos(pos), radius).toList()) {
+            ChunkAccess chunkAccess = level.getChunk(chunk.x, chunk.z, ChunkStatus.FULL, false);
+            if (chunkAccess != null) {
+                for (BlockPos blockEntityPos : chunkAccess.getBlockEntitiesPos()) {
+                    if (blockEntityPos.distSqr(pos) <= radius * radius) {
+                        BlockEntity blockEntity = level.getBlockEntity(blockEntityPos);
+                        if (blockEntity instanceof BannerBlockEntity bannerBlockEntity && blockEntity.getBlockState().is(Blocks.BLACK_BANNER)) {
+                            ItemStack bannerStack = bannerBlockEntity.getItem();
+                            bannerStack.hideTooltipPart(ItemStack.TooltipPart.ADDITIONAL);
+                            if (ItemStack.matches(bannerStack, AetherItems.createSwetBannerItemStack())) {
+                                return true;
                             }
                         }
                     }
@@ -449,7 +457,7 @@ public class Swet extends Slime implements MountableMob {
      * @return Whether the Swet should target, as a {@link Boolean}.
      */
     public boolean isFriendlyTowardEntity(LivingEntity entity) {
-        return EquipmentUtil.hasSwetCape(entity);
+        return EquipmentUtil.hasSwetPacifyingAccessory(entity);
     }
 
     /**

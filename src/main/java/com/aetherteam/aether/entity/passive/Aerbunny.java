@@ -426,6 +426,13 @@ public class Aerbunny extends AetherAnimal {
         return !this.isPassenger() && super.isInWall();
     }
 
+    @Override
+    public void checkDespawn() {
+        if (this.getVehicle() == null) {
+            super.checkDespawn();
+        }
+    }
+
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob entity) {

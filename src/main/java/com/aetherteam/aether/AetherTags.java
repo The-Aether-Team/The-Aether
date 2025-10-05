@@ -37,6 +37,7 @@ public class AetherTags {
 		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 		public static final TagKey<Block> SLIDER_UNBREAKABLE = tag("slider_unbreakable");
 		public static final TagKey<Block> VALKYRIE_QUEEN_UNBREAKABLE = tag("valkyrie_queen_unbreakable");
+		public static final TagKey<Block> SUN_SPIRIT_UNBREAKABLE = tag("sun_spirit_unbreakable");
 		public static final TagKey<Block> NON_RUINED_PORTAL_SPAWNABLE = tag("non_ruined_portal_spawnable");
 		public static final TagKey<Block> RUINED_PORTAL_GROUND_REPLACEABLE = tag("ruined_portal_ground_replaceable");
 		public static final TagKey<Block> NON_BRONZE_DUNGEON_SPAWNABLE = tag("non_bronze_dungeon_spawnable");
@@ -51,6 +52,10 @@ public class AetherTags {
 		public static final TagKey<Block> ALLOWED_FLAMMABLES = tag("allowed_flammables");
 		public static final TagKey<Block> VALKYRIE_TELEPORTABLE_ON = tag("valkyrie_teleportable_on");
 		public static final TagKey<Block> TREATED_AS_AETHER_BLOCK = tag("treated_as_aether_block");
+		public static final TagKey<Block> DOUBLE_DROPS_OVERRIDE = tag("double_drops_override");
+		public static final TagKey<Block> HOLYSTONE_ORE_REPLACEABLES = tag("holystone_ore_replaceables");
+		public static final TagKey<Block> ORES_IN_GROUND_HOLYSTONE = tag("ores_in_ground/holystone");
+		public static final TagKey<Block> ORE_BEARING_GROUND_HOLYSTONE = tag("ore_bearing_ground/holystone");
 
 		private static TagKey<Block> tag(String name) {
 			return TagKey.create(Registries.BLOCK, new ResourceLocation(Aether.MODID, name));
@@ -73,6 +78,8 @@ public class AetherTags {
 		public static final TagKey<Item> ANGELIC_BLOCKS = tag("angelic_blocks");
 		public static final TagKey<Item> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 		public static final TagKey<Item> AECHOR_PLANT_SPAWNABLE_DETERRENT = tag("aechor_plant_spawnable_deterrent");
+		public static final TagKey<Item> ORES_IN_GROUND_HOLYSTONE = tag("ores_in_ground/holystone");
+		public static final TagKey<Item> ORE_BEARING_GROUND_HOLYSTONE = tag("ore_bearing_ground/holystone");
 
 		public static final TagKey<Item> CRAFTS_SKYROOT_PLANKS = tag("crafts_skyroot_planks");
 		public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");
@@ -99,6 +106,7 @@ public class AetherTags {
 		public static final TagKey<Item> FREEZABLE_BUCKETS = tag("freezable_buckets");
 		public static final TagKey<Item> FREEZABLE_RINGS = tag("freezable_rings");
 		public static final TagKey<Item> FREEZABLE_PENDANTS = tag("freezable_pendants");
+		public static final TagKey<Item> PACIFIES_SWETS = tag("pacifies_swets");
 		public static final TagKey<Item> SLIDER_DAMAGING_ITEMS = tag("slider_damaging_items");
 		public static final TagKey<Item> BRONZE_DUNGEON_LOOT = tag("bronze_dungeon_loot");
 		public static final TagKey<Item> SILVER_DUNGEON_LOOT = tag("silver_dungeon_loot");

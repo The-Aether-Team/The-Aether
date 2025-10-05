@@ -75,7 +75,11 @@ public class AetherPortalForcer implements ITeleporter {
         } else if (this.isStartup) {
             return new PortalInfo(this.checkPositionsForInitialSpawn(destinationLevel, entity.blockPosition()).getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         } else if (!this.hasFrame) { // For falling out of the Aether.
-            return new PortalInfo(new Vec3(entity.getX(), destinationLevel.getMaxBuildHeight(), entity.getZ()), Vec3.ZERO, entity.getYRot(), entity.getXRot());
+            double vehicleOffset = 0.0;
+            if (entity.getVehicle() != null) {
+                vehicleOffset = entity.getVehicle().getBbHeight();
+            }
+            return new PortalInfo(new Vec3(entity.getX(), destinationLevel.getMaxBuildHeight() - entity.getBbHeight() - vehicleOffset, entity.getZ()), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         } else {
             WorldBorder worldBorder = destinationLevel.getWorldBorder();
             double scale = DimensionType.getTeleportationScale(this.level.dimensionType(), destinationLevel.dimensionType());

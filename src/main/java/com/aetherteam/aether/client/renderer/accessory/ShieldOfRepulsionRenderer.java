@@ -30,11 +30,14 @@ import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 import java.util.Optional;
 
-public class ShieldOfRepulsionRenderer implements ICurioRenderer {
+public class ShieldOfRepulsionRenderer implements ICurioRenderer, FirstPersonRendering {
     private final HumanoidModel<LivingEntity> shieldModel;
     private final PlayerModel<LivingEntity> shieldModelSlim;
+    @Deprecated
     public final HumanoidModel<LivingEntity> shieldModelArm;
+    @Deprecated
     public final PlayerModel<LivingEntity> dummyArm;
+    @Deprecated
     public final PlayerModel<LivingEntity> dummyArmSlim;
 
     public ShieldOfRepulsionRenderer() {
@@ -69,10 +72,11 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
 
         if (livingEntity instanceof Player player && renderLayerParent.getModel() instanceof PlayerModel<?> playerModel) {
             PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
+            Vec3 motion = player.getDeltaMovement();
             model = playerModelAccessor.aether$getSlim() ? this.shieldModelSlim : this.shieldModel;
             Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
             if (aetherPlayerOptional.isPresent()) {
-                if (!aetherPlayerOptional.get().isMoving()) {
+                if (!aetherPlayerOptional.get().isMoving() || (aetherPlayerOptional.get().isMoving() && motion.x() == 0.0 && (motion.y() == ConstantsUtil.DEFAULT_DELTA_MOVEMENT_Y || motion.y() == 0.0) && motion.z() == 0.0)) {
                     texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
                 } else {
                     texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
@@ -96,45 +100,29 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
         model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    /**
-     * Renders the Shield of Repulsion overlay over the player's hands in first person.
-     * This also renders a dummy model of the player's hand to get around an issue with transparency culling
-     * normally making the player's hand invisible.
-     * @param stack The {@link ItemStack} for the Curio.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param player The {@link AbstractClientPlayer} to render for.
-     * @param arm The {@link HumanoidArm} to render on.
-     */
-    public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm) {
-        boolean isSlim = player.getModelName().equals("slim");
-        if (!player.isInvisible()) {
-            this.setupHand(isSlim ? this.dummyArmSlim : this.dummyArm, poseStack, buffer, packedLight, player, arm, isSlim);
+    @Override
+    public <M extends LivingEntity> void renderOnFirstPerson(HumanoidArm arm, ItemStack stack, LivingEntity livingEntity, PoseStack matrices, EntityModel<M> model, MultiBufferSource multiBufferSource, int light) {
+        if (livingEntity instanceof AbstractClientPlayer player && model instanceof PlayerModel<M> playerModel) {
+            this.renderFirstPerson(stack, matrices, multiBufferSource, light, player, playerModel, arm);
         }
-        this.setupShieldOnHand(stack, this.shieldModelArm, poseStack, buffer, packedLight, player, arm, isSlim);
     }
 
     /**
-     * Handles rendering the shield overlay model over the player's hands.
+     * Renders the Shield of Repulsion overlay over the player's hands in first person.
      * @param stack The {@link ItemStack} for the Curio.
-     * @param model The player's {@link HumanoidModel}.
      * @param poseStack The rendering {@link PoseStack}.
      * @param buffer The rendering {@link MultiBufferSource}.
      * @param packedLight The {@link Integer} for the packed lighting for rendering.
      * @param player The {@link AbstractClientPlayer} to render for.
      * @param arm The {@link HumanoidArm} to render on.
-     * @param isSlim Whether the arm model is slim, as a {@link Boolean}.
      */
-    private void setupShieldOnHand(ItemStack stack, HumanoidModel<LivingEntity> model, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm, boolean isSlim) {
-        this.setupModel(model, player);
-
-        ResourceLocation texture;
+    public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, PlayerModel<?> playerModel, HumanoidArm arm) {
         ShieldOfRepulsionItem shield = (ShieldOfRepulsionItem) stack.getItem();
-
+        ResourceLocation texture;
+        Vec3 motion = player.getDeltaMovement();
         Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
         if (aetherPlayerOptional.isPresent()) {
-            if (!aetherPlayerOptional.get().isMoving()) {
+            if (!aetherPlayerOptional.get().isMoving() || (aetherPlayerOptional.get().isMoving() && motion.x() == 0.0 && (motion.y() == ConstantsUtil.DEFAULT_DELTA_MOVEMENT_Y || motion.y() == 0.0) && motion.z() == 0.0)) {
                 texture = shield.getShieldOfRepulsionTexture();
             } else {
                 texture = shield.getShieldOfRepulsionInactiveTexture();
@@ -142,87 +130,14 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
         } else {
             texture = shield.getShieldOfRepulsionInactiveTexture();
         }
-
         VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, stack.isEnchanted());
-        if (isSlim) {
-            poseStack.translate((arm != HumanoidArm.LEFT ? 1.0F : -1.0F) * 0.05F, 0.0F, 0.0F);
-        }
-        if (arm == HumanoidArm.RIGHT) {
-            this.renderShieldOnHand(model.rightArm, poseStack, packedLight, consumer);
-        } else if (arm == HumanoidArm.LEFT) {
-            this.renderShieldOnHand(model.leftArm, poseStack, packedLight, consumer);
-        }
-    }
 
-    /**
-     * Handles rendering the player's hands.
-     * @param model The player's {@link PlayerModel}.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param player The {@link AbstractClientPlayer} to render for.
-     * @param arm The {@link HumanoidArm} to render on.
-     * @param isSlim Whether the arm model is slim, as a {@link Boolean}.
-     */
-    private void setupHand(PlayerModel<LivingEntity> model, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm, boolean isSlim) {
-        this.setupModel(model, player);
-
-        Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
-        if (aetherPlayerOptional.isPresent()) {
-            if (!aetherPlayerOptional.get().isMoving()) {
-                VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(player.getSkinTextureLocation()));
-                if (isSlim) {
-                    poseStack.translate((arm != HumanoidArm.LEFT ? 1.0F : -1.0F) * -0.05F, 0.0F, 0.0F);
-                }
-                if (arm == HumanoidArm.RIGHT) {
-                    this.renderHand(model.rightArm, model.rightSleeve, poseStack, packedLight, consumer);
-                } else if (arm == HumanoidArm.LEFT) {
-                    this.renderHand(model.leftArm, model.leftSleeve, poseStack, packedLight, consumer);
-                }
-            }
-        }
-    }
-
-    /**
-     * Applies basic model properties for an arm model.
-     * @param model The player's {@link PlayerModel}.
-     * @param player The {@link AbstractClientPlayer} to render for.
-     */
-    private void setupModel(HumanoidModel<LivingEntity> model, AbstractClientPlayer player) {
-        model.setAllVisible(false);
-        model.attackTime = 0.0F;
-        model.crouching = false;
-        model.swimAmount = 0.0F;
+        HumanoidModel<LivingEntity> model = player.getModelName().equals("slim") ? this.shieldModelSlim : shieldModel;
+        ModelPart shieldArm = arm == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
+        ModelPart playerArm = arm == HumanoidArm.RIGHT ? playerModel.rightArm : playerModel.leftArm;
         model.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-    }
-
-    /**
-     * Renders the shield overlay model on a player's hand.
-     * @param shieldArm The {@link ModelPart} for the arm.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param consumer The {@link VertexConsumer} for rendering.
-     */
-    private void renderShieldOnHand(ModelPart shieldArm, PoseStack poseStack, int packedLight, VertexConsumer consumer) {
-        shieldArm.visible = true;
+        shieldArm.copyFrom(playerArm);
         shieldArm.xRot = 0.0F;
         shieldArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-    }
-
-    /**
-     * Renders a dummy model of the player's hand.
-     * @param dummyArm The {@link ModelPart} for the arm.
-     * @param dummySleeve The {@link ModelPart} for the sleeve.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param consumer The {@link VertexConsumer} for rendering.
-     */
-    private void renderHand(ModelPart dummyArm, ModelPart dummySleeve, PoseStack poseStack, int packedLight, VertexConsumer consumer) {
-        dummyArm.visible = true;
-        dummySleeve.visible = true;
-        dummyArm.xRot = 0.0F;
-        dummySleeve.xRot = 0.0F;
-        dummyArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        dummySleeve.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

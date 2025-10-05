@@ -235,8 +235,8 @@ public class AetherItems {
 	public static final RegistryObject<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key", () -> new DungeonKeyItem(new ResourceLocation(Aether.MODID, "gold"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
 
 	public static final RegistryObject<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune", () -> new RecordItem(1, AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 2980));
-	public static final RegistryObject<Item> MUSIC_DISC_ASCENDING_DAWN  = ITEMS.register("music_disc_ascending_dawn", () -> new RecordItem(2, AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 7000));
-	public static final RegistryObject<Item> MUSIC_DISC_CHINCHILLA  = ITEMS.register("music_disc_chinchilla", () -> new RecordItem(3, AetherSoundEvents.ITEM_MUSIC_DISC_CHINCHILLA, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3260));
+	public static final RegistryObject<Item> MUSIC_DISC_ASCENDING_DAWN = ITEMS.register("music_disc_ascending_dawn", () -> new RecordItem(2, AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 7000));
+	public static final RegistryObject<Item> MUSIC_DISC_CHINCHILLA = ITEMS.register("music_disc_chinchilla", () -> new RecordItem(3, AetherSoundEvents.ITEM_MUSIC_DISC_CHINCHILLA, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3280));
 	public static final RegistryObject<Item> MUSIC_DISC_HIGH = ITEMS.register("music_disc_high", () -> new RecordItem(4, AetherSoundEvents.ITEM_MUSIC_DISC_HIGH, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3720));
 	public static final RegistryObject<Item> MUSIC_DISC_KLEPTO = ITEMS.register("music_disc_klepto", () -> new RecordItem(5, AetherSoundEvents.ITEM_MUSIC_DISC_KLEPTO, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3840));
 	public static final RegistryObject<Item> MUSIC_DISC_SLIDERS_WRATH = ITEMS.register("music_disc_sliders_wrath", () -> new RecordItem(6, AetherSoundEvents.ITEM_MUSIC_DISC_SLIDERS_WRATH, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3440));
@@ -294,6 +294,8 @@ public class AetherItems {
 	public static final RegistryObject<SpawnEggItem> SUN_SPIRIT_SPAWN_EGG = ITEMS.register("sun_spirit_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.SUN_SPIRIT, 0xFEF500, 0xFF6D01, new Item.Properties()));
 	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.ZEPHYR, 0xDFDFDF, 0x99CFE8, new Item.Properties()));
 
+	public static ItemStack SWET_BANNER = null;
+
 	/**
 	 * Sets up the possible replacements for vanilla buckets to Skyroot buckets.
 	 * @see com.aetherteam.aether.event.hooks.EntityHooks#pickupBucketable(Entity, Player, InteractionHand)
@@ -307,14 +309,18 @@ public class AetherItems {
 		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.TROPICAL_FISH_BUCKET, AetherItems.SKYROOT_TROPICAL_FISH_BUCKET);
 		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.AXOLOTL_BUCKET, AetherItems.SKYROOT_AXOLOTL_BUCKET);
 		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.TADPOLE_BUCKET, AetherItems.SKYROOT_TADPOLE_BUCKET);
+		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.MILK_BUCKET, AetherItems.SKYROOT_MILK_BUCKET);
 	}
 
 	public static ItemStack createSwetBannerItemStack() {
-		ItemStack bannerStack = new ItemStack(Items.BLACK_BANNER).setHoverName(Component.translatable("aether.block.aether.swet_banner").withStyle(ChatFormatting.GOLD));
-		CompoundTag tag = new CompoundTag();
-		tag.put("Patterns", AetherBlocks.SWET_BANNER_PATTERN.toListTag());
-		BlockItem.setBlockEntityData(bannerStack, BlockEntityType.BANNER, tag);
-		bannerStack.hideTooltipPart(ItemStack.TooltipPart.ADDITIONAL);
-		return bannerStack;
+		if (SWET_BANNER == null) {
+			ItemStack bannerStack = new ItemStack(Items.BLACK_BANNER).setHoverName(Component.translatable("aether.block.aether.swet_banner").withStyle(ChatFormatting.GOLD));
+			CompoundTag tag = new CompoundTag();
+			tag.put("Patterns", AetherBlocks.SWET_BANNER_PATTERN.toListTag());
+			BlockItem.setBlockEntityData(bannerStack, BlockEntityType.BANNER, tag);
+			bannerStack.hideTooltipPart(ItemStack.TooltipPart.ADDITIONAL);
+			SWET_BANNER = bannerStack;
+		}
+		return SWET_BANNER;
 	}
 }

@@ -45,6 +45,7 @@ public class Parachute extends Entity {
             this.moveParachute(passenger);
             this.spawnExplosionParticle();
             if (this.onGround() || this.isInFluidType() || this.verticalCollisionBelow) { // The parachute breaks when it collides with something.
+                passenger.checkSlowFallDistance(); // Fall distance reset safeguard.
                 this.ejectPassengers();
                 this.die();
             }

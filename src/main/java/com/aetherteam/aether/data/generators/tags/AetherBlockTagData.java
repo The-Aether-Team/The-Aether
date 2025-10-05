@@ -180,6 +180,25 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
+        this.tag(AetherTags.Blocks.SUN_SPIRIT_UNBREAKABLE).add(
+                Blocks.WATER,
+                Blocks.BEDROCK,
+                Blocks.END_PORTAL,
+                Blocks.END_PORTAL_FRAME,
+                Blocks.END_GATEWAY,
+                Blocks.COMMAND_BLOCK,
+                Blocks.REPEATING_COMMAND_BLOCK,
+                Blocks.CHAIN_COMMAND_BLOCK,
+                Blocks.STRUCTURE_BLOCK,
+                Blocks.JIGSAW,
+                Blocks.MOVING_PISTON,
+                Blocks.LIGHT,
+                Blocks.REINFORCED_DEEPSLATE
+        ).addTags(
+                AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
         this.tag(AetherTags.Blocks.NON_RUINED_PORTAL_SPAWNABLE);
         this.tag(AetherTags.Blocks.RUINED_PORTAL_GROUND_REPLACEABLE)
                 .addTag(BlockTags.BASE_STONE_OVERWORLD)
@@ -223,6 +242,13 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.LOCKED_ANGELIC_STONE.get(),
                 AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get());
         this.tag(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK);
+        this.tag(AetherTags.Blocks.DOUBLE_DROPS_OVERRIDE);
+        this.tag(AetherTags.Blocks.HOLYSTONE_ORE_REPLACEABLES).add(AetherBlocks.HOLYSTONE.get());
+        this.tag(AetherTags.Blocks.ORES_IN_GROUND_HOLYSTONE).add(
+                AetherBlocks.AMBROSIUM_ORE.get(),
+                AetherBlocks.ZANITE_ORE.get(),
+                AetherBlocks.GRAVITITE_ORE.get());
+        this.tag(AetherTags.Blocks.ORE_BEARING_GROUND_HOLYSTONE).add(AetherBlocks.HOLYSTONE.get());
 
         // Vanilla
         this.tag(BlockTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get());

@@ -308,7 +308,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
                             NoiseChunk noisechunk = ((ChunkAccessAccessor) chunkAccess).aether$getNoiseChunk();
                             if (noisechunk != null) {
                                 CarvingContext carvingcontext = new CarvingContext(noiseBasedChunkGenerator, worldGenLevel.registryAccess(), chunkAccess.getHeightAccessorForGeneration(), noisechunk, serverChunkCache.randomState(), surfaceRule);
-                                Optional<BlockState> state = carvingcontext.topMaterial(worldGenLevel.getBiomeManager()::getBiome, chunkAccess, pos, false);
+                                Optional<BlockState> state = carvingcontext.topMaterial(worldGenLevel.getBiomeManager()::getNoiseBiomeAtPosition, chunkAccess, pos, false);
                                 if (state.isPresent()) {
                                     if (originalState.is(AetherTags.Blocks.AETHER_DIRT) && !originalState.is(AetherBlocks.AETHER_DIRT.get()) && state.get().is(AetherTags.Blocks.AETHER_DIRT)) {
                                         return state.get();

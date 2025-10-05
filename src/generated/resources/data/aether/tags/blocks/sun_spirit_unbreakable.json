@@ -1,0 +1,21 @@
+{
+  "values": [
+    "minecraft:water",
+    "minecraft:bedrock",
+    "minecraft:end_portal",
+    "minecraft:end_portal_frame",
+    "minecraft:end_gateway",
+    "minecraft:command_block",
+    "minecraft:repeating_command_block",
+    "minecraft:chain_command_block",
+    "minecraft:structure_block",
+    "minecraft:jigsaw",
+    "minecraft:moving_piston",
+    "minecraft:light",
+    "minecraft:reinforced_deepslate",
+    "#aether:locked_dungeon_blocks",
+    "#aether:trapped_dungeon_blocks",
+    "#aether:boss_doorway_dungeon_blocks",
+    "#aether:treasure_doorway_dungeon_blocks"
+  ]
+}

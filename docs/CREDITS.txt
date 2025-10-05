@@ -34,9 +34,13 @@ CartoonishVillain:
 CDAGaming:
 - Fixes to the Aether main menu.
 
+Cicopath
+- Further integration with Just Enough Effect Descriptions.
+
 darksonic300
 - Implementation of the is_cold damage type tag.
 - Changing aetherSurfaceRules() method to be public.
+- Changing Inebriation to not affect flying Creative and Spectator players.
 
 embeddedt
 - Fixes to make entity dimension falling checks more performant.
@@ -78,6 +82,9 @@ Jonathing
 KaiAF
 - Fixes to Optifine incompatibility.
 
+KaiserOfNone
+- Fix client player syncing sending too many packets over the network.
+
 Kelvin285
 - Implementation of the world preview feature for the Aether's main menu.
 
@@ -96,7 +103,7 @@ mrjasonn
 muzikbike
 - Contribution of the reference JSON for an improved Aercloud block model.
 
-parasdice
+AriaElidove
 - Contribution of the beta Lootr Mimic texture.
 
 rhysdh540
@@ -120,6 +127,14 @@ Toranktto
 Trico-Everfire
 - Fixes to Aechor Plants being able to be leashed.
 - Fixes to unintentional jumping on Blue Aerclouds.
+
+TunefulTurnip
+- Implementation of improved modifiability to Moa jump behavior and rendering.
+- Fixes to a crash from the Gold Dungeon in modded biomes.
+- Fixes to the Slider ignoring players not in line of sight.
+
+VoidLeech
+- Fixes to Skyroot Milk Bucket not working properly with milk fluid.
 
 YvanCywan
 - Made Skyroot Buckets work as fuel.

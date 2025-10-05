@@ -28,12 +28,14 @@ import org.violetmoon.quark.content.tools.module.ColorRunesModule;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
-public class GlovesRenderer implements ICurioRenderer {
+public class GlovesRenderer implements ICurioRenderer, FirstPersonRendering {
     private final GlovesModel glovesModel;
     private final GlovesModel glovesTrimModel;
     private final GlovesModel glovesModelSlim;
     private final GlovesModel glovesTrimModelSlim;
+    @Deprecated
     private final GlovesModel glovesFirstPerson;
+    @Deprecated
     private final GlovesModel glovesTrimFirstPerson;
     private final TextureAtlas armorTrimAtlas;
 
@@ -102,6 +104,13 @@ public class GlovesRenderer implements ICurioRenderer {
         }
     }
 
+    @Override
+    public <M extends LivingEntity> void renderOnFirstPerson(HumanoidArm arm, ItemStack stack, LivingEntity livingEntity, PoseStack matrices, EntityModel<M> model, MultiBufferSource multiBufferSource, int light) {
+        if (livingEntity instanceof AbstractClientPlayer player && model instanceof PlayerModel<M> playerModel) {
+            this.renderFirstPerson(stack, matrices, multiBufferSource, light, player, playerModel, arm);
+        }
+    }
+
     /**
      * Renders a glove in the player's hand in first person.
      * @param stack The {@link ItemStack} for the Curio.
@@ -111,10 +120,7 @@ public class GlovesRenderer implements ICurioRenderer {
      * @param player The {@link AbstractClientPlayer} to render for.
      * @param arm The {@link HumanoidArm} to render on.
      */
-    public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm) {
-        GlovesModel model = this.glovesFirstPerson;
-        GlovesModel trimModel = this.glovesTrimFirstPerson;
-
+    public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, PlayerModel<?> playerModel, HumanoidArm arm) {
         GlovesItem glovesItem = (GlovesItem) stack.getItem();
         VertexConsumer consumer = buffer.getBuffer(RenderType.armorCutoutNoCull(glovesItem.getGlovesTexture()));
 
@@ -122,30 +128,22 @@ public class GlovesRenderer implements ICurioRenderer {
         float green = glovesItem.getColors(stack).getMiddle();
         float blue = glovesItem.getColors(stack).getRight();
 
-        model.setAllVisible(false);
-        model.attackTime = 0.0F;
-        model.crouching = false;
-        model.swimAmount = 0.0F;
-        model.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-
+        GlovesModel model = player.getModelName().equals("slim") ? this.glovesModelSlim : this.glovesModel;
         ModelPart gloveArm = arm == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
-        gloveArm.visible = true;
+        ModelPart playerArm = arm == HumanoidArm.RIGHT ? playerModel.rightArm : playerModel.leftArm;
+        model.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+        gloveArm.copyFrom(playerArm);
         gloveArm.xRot = 0.0F;
         gloveArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
 
         ArmorTrim.getTrim(player.level().registryAccess(), stack).ifPresent((trim) -> {
-            trimModel.setAllVisible(false);
-            trimModel.attackTime = 0.0F;
-            trimModel.crouching = false;
-            trimModel.swimAmount = 0.0F;
-            trimModel.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-
-            ModelPart gloveTrimArm = arm == HumanoidArm.RIGHT ? trimModel.rightArm : trimModel.leftArm;
-            gloveTrimArm.visible = true;
-            gloveTrimArm.xRot = 0.0F;
-
             TextureAtlasSprite textureAtlasSprite = this.armorTrimAtlas.getSprite(trim.outerTexture(glovesItem.getMaterial()));
             VertexConsumer trimConsumer = textureAtlasSprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet()));
+
+            GlovesModel trimModel = ((PlayerModelAccessor) playerModel).aether$getSlim() ? this.glovesTrimModelSlim : this.glovesTrimModel;
+            ModelPart gloveTrimArm = arm == HumanoidArm.RIGHT ? trimModel.rightArm : trimModel.leftArm;
+            trimModel.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+            gloveTrimArm.copyFrom(gloveArm);
             gloveTrimArm.render(poseStack, trimConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         });
         if (stack.hasFoil()) {

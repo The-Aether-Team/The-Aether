@@ -1,6 +1,8 @@
 package com.aetherteam.aether.command;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.capability.time.AetherTime;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import net.minecraft.commands.CommandSourceStack;
@@ -27,6 +29,9 @@ public class EternalDayCommand {
         AetherTime.get(level).ifPresent(aetherTime -> {
             aetherTime.setEternalDay(value);
             aetherTime.updateEternalDay(); // Syncs to client.
+            if (AetherConfig.SERVER.sync_aether_time.get()) {
+                aetherTime.setSynched(INBTSynchable.Direction.DIMENSION, "setShouldWait", true, level);
+            }
             source.sendSuccess(() -> Component.translatable("commands.aether.capability.time.eternal_day.set", value), true);
         });
         return 1;

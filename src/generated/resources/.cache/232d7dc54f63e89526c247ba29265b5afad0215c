@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-04T11:43:18.1353387	Tags for minecraft:item mod id aether
+// 1.20.1	2025-08-05T20:21:29.105766	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -49,6 +49,9 @@ d0f09b8dfc6381aa826e9b27dfc398b8b7c02625 data/aether/tags/items/moa_temptation_i
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/neptune_repairing.json
 1eecfc37581b2c99fe3316dd778068abcba0fa2c data/aether/tags/items/no_skyroot_double_drops.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/obsidian_repairing.json
+47071da7c265ffd70c41ff2b88a06b237cd784f9 data/aether/tags/items/ores_in_ground/holystone.json
+336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/aether/tags/items/ore_bearing_ground/holystone.json
+c48ebdf05f4edd90cd7a46cb05f501d227b86ab4 data/aether/tags/items/pacifies_swets.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/phoenix_repairing.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/phyg_temptation_items.json
 75df44deafb1f627b674575d499833e104a43f2b data/aether/tags/items/pig_drops.json

@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item;
 
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -81,6 +82,16 @@ public final class EquipmentUtil {
     }
 
     /**
+     * Checks if an accessory that pacifies Swets exists in an entity's accessory inventory.
+     *
+     * @param entity The {@link LivingEntity} wearer.
+     * @return The result of the check, as a {@link Boolean}.
+     */
+    public static boolean hasSwetPacifyingAccessory(LivingEntity entity) {
+        return findFirstCurio(entity, stack -> stack.is(AetherTags.Items.PACIFIES_SWETS)).isPresent();
+    }
+
+    /**
      * Checks if a Swet Cape exists in an entity's accessory inventory.
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
@@ -136,6 +147,21 @@ public final class EquipmentUtil {
     @Nullable
     public static SlotResult getCurio(LivingEntity entity, Item item) {
         return findFirstCurio(entity, item).orElse(null);
+    }
+
+    /**
+     * Searches for a curio in an entity's accessory inventory based on an {@link ItemStack} {@link Predicate} and returns all the {@link SlotResult} instances.
+     * @param entity The {@link LivingEntity} wearer.
+     * @param item The curio {@link ItemStack} {@link Predicate} to look for.
+     * @return The {@link List} of {@link SlotResult}s for the curio items.
+     */
+    public static List<SlotResult> getCurios(LivingEntity entity, Predicate<ItemStack> item) {
+        LazyOptional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
+        if (inventoryOptional.isPresent() && inventoryOptional.resolve().isPresent()) {
+            ICuriosItemHandler inventory = inventoryOptional.resolve().get();
+            return inventory.findCurios(item);
+        }
+        return List.of();
     }
 
     /**

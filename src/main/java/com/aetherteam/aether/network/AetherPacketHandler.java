@@ -41,6 +41,7 @@ public class AetherPacketHandler {
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(MoaInteractPacket.class, MoaInteractPacket::decode);
 		register(OpenSunAltarPacket.class, OpenSunAltarPacket::decode);
+		register(PortalInteractPacket.class, PortalInteractPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(QueenDialoguePacket.class, QueenDialoguePacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
@@ -66,6 +67,7 @@ public class AetherPacketHandler {
         register(ServerHaloPacket.Remove.class, ServerHaloPacket.Remove::decode);
 		register(ServerMoaSkinPacket.Apply.class, ServerMoaSkinPacket.Apply::decode);
 		register(ServerMoaSkinPacket.Remove.class, ServerMoaSkinPacket.Remove::decode);
+		register(SetupLevelDisplayPacket.class, SetupLevelDisplayPacket::decode);
 		register(StepHeightPacket.class, StepHeightPacket::decode);
 		register(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
 

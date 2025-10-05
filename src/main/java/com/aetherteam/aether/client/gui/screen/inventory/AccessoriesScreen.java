@@ -108,13 +108,16 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
         this.updateRenderButtons();
 
         // Create perk-related buttons.
-        ImageButton skinsButton = this.createSkinsButton();
-        this.addRenderableWidget(skinsButton);
-
         User user = UserData.Client.getClientUser();
-        if (user != null && (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user))) {
-            ImageButton customizationButton = this.createCustomizationButton();
-            this.addRenderableWidget(customizationButton);
+        if (user != null) {
+            if (!AetherConfig.CLIENT.disable_skins_button.get() || PerkUtil.hasAnyMoaSkins().test(user)) { // Add the skins button if the config is enabled. If not, only display for players with access.
+                ImageButton skinsButton = this.createSkinsButton();
+                this.addRenderableWidget(skinsButton);
+            }
+            if (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user)) {
+                ImageButton customizationButton = this.createCustomizationButton();
+                this.addRenderableWidget(customizationButton);
+            }
         }
     }
 

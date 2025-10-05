@@ -1,5 +1,6 @@
 package com.aetherteam.aether.entity.ai.goal;
 
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.core.BlockPos;
@@ -68,7 +69,7 @@ public class FoxEatBerryBushGoal extends MoveToBlockGoal {
     }
 
     private void pickBlueBerries() {
-        boolean onEnchantedGrass = this.mob.level().getBlockState(this.blockPos.below()).is(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
+        boolean onEnchantedGrass = this.mob.level().getBlockState(this.blockPos.below()).is(AetherTags.Blocks.ENCHANTED_GRASS);
         int j = 1 + this.mob.level().getRandom().nextInt(3) + (onEnchantedGrass ? 1 : 0);
         ItemStack itemStack = this.mob.getItemBySlot(EquipmentSlot.MAINHAND);
         if (itemStack.isEmpty()) {
