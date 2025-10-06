@@ -13,16 +13,9 @@
   "gui.aether.menu.button.world_preview": "W",
   "item.aether.regeneration_stone": "Piedra de Regeneracion",
   "item.aether.yellow_cape": "Capa Amarilla",
-  "lore.block.aether.crystal_leaves": "Las hojas que provienen de los Árboles de cristal, se generan en islas flotantes. A veces tienen frutos que pueden curar la embriaguez.",
-  "lore.block.aether.golden_oak_leaves": "Estas hojas doradas se generan con los robles dorados. Generan partículas doradas en un radio de 5 bloques. Producen retoños de roble dorado cuando se disipan.",
-  "lore.block.aether.skyroot_leaves": "Estas hojas se generan con los árboles de raicielo. Pueden dejar caer retoños de raicielo cuando se disipan.",
-  "lore.item.aether.gravitite_hoe": "Parte del mejor nivel de herramientas del Aether. Esta azada no sólo puede hacer flotar bloques extrañamente específicos, sino que también puede labrar tierra, lo que justifica totalmente su existencia.",
-  "lore.item.aether.holystone_hoe": "Una de las herramientas de piedra del Aether. Tiene más durabilidad que la Azada de raicielo, además de generar Fragmentos de ambrosium al azar. Lo que la hace más útil que la mayoría de las Azadas.",
   "lore.item.aether.neptune_boots": "Esta armadura, que se encuentra en Mazmorras de plata, permite nadar más rápido en el agua. El conjunto completo es un sustituto mucho mejor para el encantamiento Agilidad acuática.",
   "lore.item.aether.neptune_chestplate": "Esta armadura, que se encuentra en Mazmorras de plata, permite nadar más rápido en el agua. Combinada con una Burbuja de hierro, esta armadura es muy útil para derrotar templos submarinos.",
   "lore.item.aether.neptune_gloves": "Estos guantes, que se encuentran en Mazmorras de plata, son necesarios para completar el conjunto de armadura de Neptuno, que permite caminar bajo el agua.",
   "lore.item.aether.neptune_helmet": "Esta armadura, que se encuentra en Mazmorras de plata, permite nadar más rápido en el agua. Combinada con una Burbuja de hierro, esta armadura es muy útil para derrotar templos submarinos.",
-  "lore.item.aether.neptune_leggings": "Esta armadura, que se encuentra en Mazmorras de plata, permite nadar más rápido en el agua. Combinada con una Burbuja de hierro, esta armadura es súper útil para derrotar templos submarinos.",
-  "lore.item.aether.skyroot_hoe": "Una de las herramientas de madera del Aether, utilizada para labrar la tierra para permitir la siembra de cultivos. Famosamente subestimada.",
-  "lore.item.aether.zanite_hoe": "Una de las herramientas de nivel medio de Aether, tiene más durabilidad que la Azada de piedra sagrada, y será incluso más rápida para extraer bloques muy extrañamente específicos a medida que la herramienta se desgaste."
+  "lore.item.aether.neptune_leggings": "Esta armadura, que se encuentra en Mazmorras de plata, permite nadar más rápido en el agua. Combinada con una Burbuja de hierro, esta armadura es súper útil para derrotar templos submarinos."
 }
