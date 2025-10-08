@@ -155,10 +155,6 @@ public abstract class AbstractWhirlwind extends Mob {
                 double d2 = Math.atan2(this.getX() - x, this.getZ() - z) / 0.0175;
                 d2 += 160.0;
                 entity.setDeltaMovement(-Math.cos(0.0175 * d2) * (distance + 0.25) * 0.1, entity.getDeltaMovement().y, Math.sin(0.0175 * d2) * (distance + 0.25) * 0.1);
-
-                if (entity instanceof AbstractWhirlwind) {
-                    entity.discard();
-                }
             } else {
                 double d3 = Math.atan2(this.getX() - x, this.getZ() - z) / 0.0175;
                 entity.setDeltaMovement(entity.getDeltaMovement().add(Math.sin(0.0175 * d3) * 0.01, entity.getDeltaMovement().y, Math.cos(0.0175 * d3) * 0.01));

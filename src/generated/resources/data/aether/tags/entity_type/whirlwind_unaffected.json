@@ -1,6 +1,8 @@
 {
   "values": [
+    "#c:bosses",
     "aether:aechor_plant",
-    "#c:bosses"
+    "aether:whirlwind",
+    "aether:evil_whirlwind"
   ]
 }
