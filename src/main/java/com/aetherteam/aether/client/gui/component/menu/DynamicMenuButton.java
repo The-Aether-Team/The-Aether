@@ -30,6 +30,8 @@ public class DynamicMenuButton extends Button {
         } else {
             this.enabled = false;
         }
+        this.active = this.enabled;
+        this.visible = this.enabled;
     }
 
     private boolean shouldRender() {
@@ -51,13 +53,6 @@ public class DynamicMenuButton extends Button {
             }
         }
         return offset;
-    }
-
-    @Override
-    public void onPress() {
-        if (this.enabled) {
-            super.onPress();
-        }
     }
 
     @SafeVarargs
