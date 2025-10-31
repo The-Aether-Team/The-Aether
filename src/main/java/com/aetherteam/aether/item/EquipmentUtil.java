@@ -30,7 +30,7 @@ public final class EquipmentUtil {
         if (!(attacker instanceof Player player)) return true;
         boolean combatifyLoaded = ModList.get().isLoaded("combatify");
         float charge = 1.0F;
-        if (combatifyLoaded) charge = Combatify.CONFIG.chargedAttacks() ? 1.95F : charge;
+        if (combatifyLoaded) charge = Combatify.CONFIG.chargedAttacks() && !Combatify.getState().equals(Combatify.CombatifyState.VANILLA) ? 1.95F : charge;
         return player.getAttackStrengthScale(1.0F) >= charge;
     }
 
