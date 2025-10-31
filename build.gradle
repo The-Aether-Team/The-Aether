@@ -120,6 +120,7 @@ dependencies {
     compileOnly "curse.maven:jade-324717:${project.jade_version}"
     compileOnly "curse.maven:lootr-361276:${project.lootr_version}"
 
+    compileOnly "curse.maven:atlas-core-1073789:${project.atlas_core_version}"
     compileOnly "curse.maven:combatify-658569:${project.combatify_version}"
 
 //    implementation fileTree(dir: 'libs', include: '*.jar')
