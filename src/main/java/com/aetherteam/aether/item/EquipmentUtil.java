@@ -29,10 +29,9 @@ public final class EquipmentUtil {
     public static boolean isFullStrength(LivingEntity attacker) {
         if (!(attacker instanceof Player player)) return true;
         boolean combatifyLoaded = ModList.get().isLoaded("combatify");
-        float strengthScale = player.getAttackStrengthScale(1.0F);
         float charge = 1.0F;
         if (combatifyLoaded) charge = Combatify.CONFIG.chargedAttacks() ? 1.95F : charge;
-        return strengthScale >= charge;
+        return player.getAttackStrengthScale(1.0F) >= charge;
     }
 
     /**
