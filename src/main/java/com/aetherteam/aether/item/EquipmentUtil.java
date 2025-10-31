@@ -6,6 +6,7 @@ import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import io.wispforest.accessories.api.AccessoriesCapability;
 import io.wispforest.accessories.api.slot.SlotEntryReference;
+import net.atlas.combatify.Combatify;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -26,8 +27,12 @@ public final class EquipmentUtil {
      * @return Whether the attack was full strength, as a {@link Boolean}.
      */
     public static boolean isFullStrength(LivingEntity attacker) {
+        if (!(attacker instanceof Player player)) return true;
         boolean combatifyLoaded = ModList.get().isLoaded("combatify");
-        return !(attacker instanceof Player player) || (combatifyLoaded ? player.getAttackStrengthScale(1.0F) >= 1.95F : player.getAttackStrengthScale(1.0F) >= 1.0F);
+        float strengthScale = player.getAttackStrengthScale(1.0F);
+        float charge = 1.0F;
+        if (combatifyLoaded) charge = Combatify.CONFIG.chargedAttacks() ? 1.95F : charge;
+        return strengthScale >= charge;
     }
 
     /**
