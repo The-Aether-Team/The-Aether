@@ -20,7 +20,6 @@ import java.util.function.Consumer;
 
 @Mixin(LootTable.class)
 public abstract class LootTableMixin {
-
     @Unique
     private static final ResourceLocation UNKNOWN_TABLE_ID = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "unknown");
 

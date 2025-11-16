@@ -4,9 +4,12 @@ import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.inventory.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AetherAccessoriesScreen;
+import com.aetherteam.aetherfabric.client.events.ScreenKeyboardEventsExtension;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenKeyboardEvents;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.GuiGraphics;
@@ -29,7 +32,11 @@ public class GuiListener {
         ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
             onGuiInitialize(screen, Screens.getButtons(screen)::add);
             ScreenEvents.afterRender(screen).register((screen1, drawContext, mouseX, mouseY, tickDelta) -> GuiListener.onGuiDraw(screen1, drawContext));
-            //KeyboardHandlerMixin.aetherFabric$afterKeyPressedEvent -> GuiListener.onKeyPress
+            ScreenKeyboardEvents.afterKeyPress(screen).register((screen1, key, scancode, modifiers) -> {
+                if (ScreenKeyboardEventsExtension.getPressedResult(screen1)) return;
+
+                onKeyPress(key, InputConstants.PRESS);
+            });
         });
         ClientTickEvents.END_CLIENT_TICK.register(client -> onClientTick());
     }

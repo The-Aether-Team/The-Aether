@@ -1,5 +1,6 @@
 package com.aetherteam.aetherfabric.pond.client;
 
+import com.aetherteam.aetherfabric.mixin.client.fabric.ButtonListMixin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.world.inventory.Slot;
@@ -32,10 +33,13 @@ public interface ScreenExtension {
         return 0;
     }
 
-    static <T> T throwUnimplementedException() {
+    private static <T> T throwUnimplementedException() {
         throw new IllegalStateException("Injected Interface method not implement!");
     }
 
+    ///
+    /// Method invoked within [ButtonListMixin]
+    ///
     default AbstractWidget onScreensWidgetAdd(AbstractWidget abstractWidget) {
         return abstractWidget;
     }

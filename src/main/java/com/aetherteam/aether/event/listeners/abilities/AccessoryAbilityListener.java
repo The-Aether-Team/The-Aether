@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.item.accessories.abilities.ShieldOfRepulsionAccessory;
 import com.aetherteam.aetherfabric.events.CancellableCallback;
+import com.aetherteam.aetherfabric.events.LivingEntityEvents;
 import com.aetherteam.aetherfabric.events.PlayerEvents;
 import com.aetherteam.aetherfabric.events.ProjectileEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -29,7 +30,7 @@ public class AccessoryAbilityListener {
     public static void listen() {
         PlayerBlockBreakEvents.AFTER.register((level, player, pos, state, blockEntity) -> onBlockBreak(level, player, pos, state));
         PlayerEvents.ON_BLOCK_DESTROY.register(AccessoryAbilityListener::onMiningSpeed);
-        // LivingEntityMixin.aether$adjustEntityVisibility -> AccessoryAbilityListener.onTargetSet;
+        LivingEntityEvents.ON_VISIBILITY_CALCULATED.register(AccessoryAbilityListener::onTargetSet);
         ProjectileEvents.ON_IMPACT.register(AccessoryAbilityListener::onProjectileImpact);
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> onEntityHurt(entity, source));
     }

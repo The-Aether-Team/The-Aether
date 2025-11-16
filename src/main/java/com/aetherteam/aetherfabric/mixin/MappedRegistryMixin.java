@@ -17,7 +17,6 @@ import java.util.Map;
 
 @Mixin(MappedRegistry.class)
 public abstract class MappedRegistryMixin<T> implements FullDataMapAccess<T>{
-
     @Unique
     private final Map<DataMapType<T, ?>, Map<ResourceKey<T>, ?>> dataMaps = new IdentityHashMap<>();
 
@@ -34,7 +33,6 @@ public abstract class MappedRegistryMixin<T> implements FullDataMapAccess<T>{
 
     @Mixin(targets = "net/minecraft/core/MappedRegistry$1")
     public abstract static class InnerClass<T> implements RegistryLookupExtension<T> {
-
         @Final
         @Shadow(remap = false)
         MappedRegistry<T> field_36468;

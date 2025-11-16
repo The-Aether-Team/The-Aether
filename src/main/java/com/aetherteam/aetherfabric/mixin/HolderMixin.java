@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(Holder.class)
 public interface HolderMixin<T> extends IHolderExtension<T>, IWithData<T> {
-
     @Mixin(Holder.Reference.class)
     abstract class HolderReferenceMixin<T> implements IHolderExtension<T>, IWithData<T>  {
         @Shadow

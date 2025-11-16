@@ -3,11 +3,15 @@ package com.aetherteam.aetherfabric.events;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.fabricmc.fabric.api.util.TriState;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import org.apache.commons.lang3.mutable.MutableDouble;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,6 +47,22 @@ public class LivingEntityEvents {
         }
         return result;
     });
+
+    public static final Event<Visibility> ON_VISIBILITY_CALCULATED = EventFactory.createArrayBacked(Visibility.class, invokers -> (livingEntity, lookingEntity, visibilityValue) -> {
+        for (var invoker : invokers) invoker.adjustVisibility(livingEntity, lookingEntity, visibilityValue);
+    });
+
+    public static final Event<Swing> ON_SWING = EventFactory.createArrayBacked(Swing.class, invokers -> (stack, entity, hand, callback) -> {
+        for (var invoker : invokers) invoker.onSwing(stack, entity, hand, callback);
+    });
+
+    public interface Visibility {
+        void adjustVisibility(LivingEntity livingEntity, @Nullable Entity lookingEntity, MutableDouble visibilityValue);
+    }
+
+    public interface Swing {
+        void onSwing(ItemStack stack, LivingEntity entity, InteractionHand hand, CancellableCallback callback);
+    }
 
     public interface Jumped {
         void onJump(LivingEntity livingEntity);

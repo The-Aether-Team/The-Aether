@@ -12,7 +12,6 @@ import java.util.Deque;
 
 @Mixin(LootContext.class)
 public abstract class LootContextMixin implements LootContextExtension {
-
     @Nullable
     @Unique
     private Deque<ResourceLocation> aetherFabric$tableId = new ArrayDeque<>();

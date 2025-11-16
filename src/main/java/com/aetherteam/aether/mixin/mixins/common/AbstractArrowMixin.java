@@ -64,30 +64,4 @@ public class AbstractArrowMixin {
                     1, 0.0, 0.0, 0.0, 0.0F);
         }
     }
-
-    //--
-
-    @Definition(id = "hitResult", local = @Local(type = HitResult.class))
-    @Definition(id = "bl", local = @Local(ordinal = 0, type = Boolean.class))
-    @Expression("hitResult != null")
-    @ModifyExpressionValue(method = "tick", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 1))
-    private boolean aether$neoParityAdjustExpression(boolean original, @Local() HitResult hitResult) {
-        return original && hitResult.getType() != HitResult.Type.MISS;
-    }
-
-    private static final ProjectileDeflection EMPTY_DEFLECTION = (projectile, entity, randomSource) -> {};
-
-    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;hitTargetOrDeflectSelf(Lnet/minecraft/world/phys/HitResult;)Lnet/minecraft/world/entity/projectile/ProjectileDeflection;"))
-    private ProjectileDeflection aether$projectileImpactEvent(AbstractArrow instance, HitResult hitResult, Operation<ProjectileDeflection> original) {
-        return ProjectileEvents.shouldCancelImpact(instance, hitResult) ? EMPTY_DEFLECTION : original.call(instance, hitResult);
-    }
-
-    @Definition(id = "hasImpulse", field = "Lnet/minecraft/world/entity/projectile/AbstractArrow;hasImpulse:Z")
-    @Expression("this.hasImpulse = true")
-    @WrapOperation(method = "tick", at = @At(value = "MIXINEXTRAS:EXPRESSION"))
-    private void aether$preventImpulseFlagging(AbstractArrow instance, boolean value, Operation<Void> original, @Local() ProjectileDeflection deflection) {
-        if (deflection == EMPTY_DEFLECTION) return;
-
-        original.call(instance, value);
-    }
 }

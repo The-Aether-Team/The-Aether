@@ -2,6 +2,7 @@ package com.aetherteam.aether.client.event.listeners.capability;
 
 import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.CapabilityClientHooks;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.player.Player;
 

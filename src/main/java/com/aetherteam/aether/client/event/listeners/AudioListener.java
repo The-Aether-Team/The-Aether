@@ -2,8 +2,11 @@ package com.aetherteam.aether.client.event.listeners;
 
 import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.AudioHooks;
+import com.aetherteam.aetherfabric.client.events.ClientPlayerEvents;
 import com.aetherteam.aetherfabric.events.CancellableCallback;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.mixin.client.sound.SoundInstanceMixin;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundEngine;
 
@@ -14,7 +17,7 @@ public class AudioListener {
     public static void listen() {
         //SoundEngineMixin.aetherFabric$adjustSoundInstance -> AudioListener.onPlaySound
         ClientTickEvents.END_CLIENT_TICK.register(client -> onClientTick());
-        //ClientPacketListenerMixin.aetherFabric$onPlayerClone -> AudioListener.onPlayerRespawn
+        ClientPlayerEvents.ON_RESPAWN.register((oldPlayer, newPlayer) -> onPlayerRespawn());
     }
 
     /**

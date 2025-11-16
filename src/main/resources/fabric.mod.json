@@ -48,9 +48,9 @@
   },
   "mixins": [
     "${mod_id}.mixins.json",
-    "aetherfabric.mixins.json"
+    "${mod_id}-fabric.mixins.json"
   ],
-  "accessWidener": "aether.accesswidener",
+  "accessWidener": "${mod_id}.accesswidener",
   "depends": {
     "fabricloader": "${fabric_loader_version_range}",
     "minecraft": "${minecraft_version_range}",

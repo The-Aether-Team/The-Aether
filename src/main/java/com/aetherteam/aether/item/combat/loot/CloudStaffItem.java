@@ -6,6 +6,7 @@ import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aetherfabric.events.LivingEntityEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -21,6 +22,12 @@ import net.minecraft.world.level.block.state.BlockState;
 public class CloudStaffItem extends Item {
     public CloudStaffItem() {
         super(new Item.Properties().durability(60).rarity(AetherItems.AETHER_LOOT));
+
+        LivingEntityEvents.ON_SWING.register((stack, entity, hand, callback) -> {
+            if (!stack.isEmpty() && stack.getItem() instanceof CloudStaffItem staffItem) {
+                staffItem.onEntitySwing(stack, (LivingEntity)(Object) this, hand);
+            }
+        });
     }
 
     /**

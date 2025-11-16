@@ -4,6 +4,7 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.resources.registries.AetherPlacedFeatures;
 import com.aetherteam.aether.mixin.mixins.common.accessor.SpreadingSnowyDirtBlockAccessor;
 import com.aetherteam.aetherfabric.Utils;
+import com.aetherteam.aetherfabric.events.BlockEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
@@ -25,6 +26,12 @@ import java.util.function.BiConsumer;
 public class EnchantedAetherGrassBlock extends GrassBlock {
     public EnchantedAetherGrassBlock(Properties properties) {
         super(properties);
+
+        BlockEvents.ON_TREE_GROW.register((state, level, placeFunction, randomSource, pos, config, callback) -> {
+            if (state.is(this)) {
+                callback.setCanceled(this.onTreeGrow(state, level, placeFunction, randomSource, pos, config));
+            }
+        });
     }
 
     public boolean onTreeGrow(BlockState state, LevelReader level, BiConsumer<BlockPos, BlockState> placeFunction, RandomSource randomSource, BlockPos pos, TreeConfiguration config) {
