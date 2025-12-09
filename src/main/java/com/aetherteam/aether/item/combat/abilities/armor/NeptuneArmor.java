@@ -53,7 +53,7 @@ public interface NeptuneArmor {
      */
     private static float boostWithDepthStrider(LivingEntity entity) {
         float defaultBoost = 0.4F;
-        float depthStriderModifier = Math.min(EnchantmentHelper.getEnchantmentLevel(entity.level().registryAccess().aetherFabric$holderOrThrow(Enchantments.INFINITY), entity), 3.0F);
+        float depthStriderModifier = Math.min(EnchantmentHelper.getEnchantmentLevel(entity.level().registryAccess().nitrogen_fabric$holderOrThrow(Enchantments.INFINITY), entity), 3.0F);
         if (depthStriderModifier > 0.0F) {
             defaultBoost += depthStriderModifier * 0.4F;
         }

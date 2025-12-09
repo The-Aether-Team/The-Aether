@@ -47,7 +47,7 @@ public class AerogelSlabBlock extends SlabBlock implements AerogelCulling {
      * @return Whether the neighbor block should skip rendering the neighboring face, as a {@link Boolean}.
      */
     @Override
-    public boolean aetherFabric$hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
+    public boolean nitrogen_fabric$hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
         return AerogelCulling.super.shouldHideNeighboringAerogelFace(level, pos, state, neighborState, dir);
     }
 }

@@ -1,7 +1,7 @@
 package com.aetherteam.aether.client.gui.component.inventory;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aetherfabric.BuilderMadeButton;
+import com.aetherteam.nitrogen.fabric.BuilderMadeButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

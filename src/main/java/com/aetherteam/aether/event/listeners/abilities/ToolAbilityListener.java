@@ -2,8 +2,8 @@ package com.aetherteam.aether.event.listeners.abilities;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
-import com.aetherteam.aetherfabric.events.CancellableCallback;
-import com.aetherteam.aetherfabric.events.PlayerEvents;
+import com.aetherteam.nitrogen.fabric.events.CancellableCallback;
+import com.aetherteam.nitrogen.fabric.events.PlayerEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.core.BlockPos;
@@ -25,7 +25,7 @@ public class ToolAbilityListener {
         PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> doHolystoneAbility(player, world, pos, player.getMainHandItem(), state));
         PlayerEvents.ON_BLOCK_DESTROY.register(ToolAbilityListener::modifyBreakSpeed);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> ToolAbilityListener.setupDebuffToolState(handler.getPlayer()));
-        // AxeItemMixin.aetherFabric$onLogStripping -> ToolAbilityListener.doGoldenOakStripping;
+        // AxeItemMixin.nitrogen_fabric$onLogStripping -> ToolAbilityListener.doGoldenOakStripping;
     }
 
 //    /**

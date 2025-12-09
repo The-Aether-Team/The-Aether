@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'fabric-loom' version '1.13-SNAPSHOT'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
 }
@@ -80,16 +80,17 @@ dependencies {
 
     modCompileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
 
-    modCompileOnly("io.github.fabricators_of_create.Porting-Lib:extensions:2.3.4+1.20.1") {
+    modCompileOnly("io.github.fabricators_of_create.Porting-Lib:extensions:3.1.0-fdrf.4+1.21.1") {
         transitive = false
+        exclude group : "io.github.fabricators_of_create.Porting-Lib"
     }
 
-    for (String module in port_lib_modules.split(",")) {
-        modLocalRuntime("io.github.fabricators_of_create.Porting-Lib:$module:3.1.0-fdrf.4+1.21.1")
-    }
-    for (String module in port_lib_temp_modules.split(",")) {
-        modLocalRuntime("io.github.fabricators_of_create.Porting-Lib:$module:3.1.0-fdrf.4+1.21.1")
-    }
+//    for (String module in port_lib_modules.split(",")) {
+//        modLocalRuntime("io.github.fabricators_of_create.Porting-Lib:$module:3.1.0-fdrf.4+1.21.1")
+//    }
+//    for (String module in port_lib_temp_modules.split(",")) {
+//        modLocalRuntime("io.github.fabricators_of_create.Porting-Lib:$module:3.1.0-fdrf.4+1.21.1")
+//    }
 
     modLocalRuntime "maven.modrinth:debugutils:1.21-${project.debugutils_version}"
 

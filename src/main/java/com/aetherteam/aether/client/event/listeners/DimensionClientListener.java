@@ -2,9 +2,9 @@ package com.aetherteam.aether.client.event.listeners;
 
 import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.DimensionClientHooks;
-import com.aetherteam.aetherfabric.client.events.FogAdjustmentHelper;
-import com.aetherteam.aetherfabric.client.events.FogColorHelper;
-import com.aetherteam.aetherfabric.client.events.FogEvents;
+import com.aetherteam.nitrogen.fabric.client.events.FogAdjustmentHelper;
+import com.aetherteam.nitrogen.fabric.client.events.FogColorHelper;
+import com.aetherteam.nitrogen.fabric.client.events.FogEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.FogRenderer;

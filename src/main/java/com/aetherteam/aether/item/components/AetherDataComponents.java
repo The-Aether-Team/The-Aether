@@ -1,8 +1,8 @@
 package com.aetherteam.aether.item.components;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aetherfabric.registries.DeferredHolder;
-import com.aetherteam.aetherfabric.registries.DeferredRegister;
+import com.aetherteam.nitrogen.fabric.registries.DeferredHolder;
+import com.aetherteam.nitrogen.fabric.registries.DeferredRegister;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;

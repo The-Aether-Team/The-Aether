@@ -11,9 +11,9 @@ public class AetherPlayerClientListener {
      * @see AetherClient#eventSetup()
      */
     public static void listen() {
-        //LocalPlayerMixin.aetherFabric$updateOnInput -> AetherPlayerClientListener.onMove
-        //MouseHandlerMixin.aetherFabric$onPostPress -> AetherPlayerClientListener.onClick
-        //KeyboardHandlerMixin.aetherFabric$onPostKeyPress -> AetherPlayerClientListener.onPress
+        //LocalPlayerMixin.nitrogen_fabric$updateOnInput -> AetherPlayerClientListener.onMove
+        //MouseHandlerMixin.nitrogen_fabric$onPostPress -> AetherPlayerClientListener.onClick
+        //KeyboardHandlerMixin.nitrogen_fabric$onPostKeyPress -> AetherPlayerClientListener.onPress
     }
 
     /**

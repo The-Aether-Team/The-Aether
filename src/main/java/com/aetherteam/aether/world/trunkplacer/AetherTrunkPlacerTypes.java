@@ -1,8 +1,8 @@
 package com.aetherteam.aether.world.trunkplacer;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aetherfabric.registries.DeferredHolder;
-import com.aetherteam.aetherfabric.registries.DeferredRegister;
+import com.aetherteam.nitrogen.fabric.registries.DeferredHolder;
+import com.aetherteam.nitrogen.fabric.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 

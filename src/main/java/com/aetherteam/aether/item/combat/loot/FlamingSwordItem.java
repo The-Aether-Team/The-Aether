@@ -37,7 +37,7 @@ public class FlamingSwordItem extends SwordItem {
                 ItemStack heldStack = attacker.getMainHandItem();
                 if (heldStack.is(AetherItems.FLAMING_SWORD.get())) {
                     int defaultTime = 30;
-                    int fireAspectModifier = EnchantmentHelper.getEnchantmentLevel(attacker.level().registryAccess().aetherFabric$holderOrThrow(Enchantments.FIRE_ASPECT), attacker);
+                    int fireAspectModifier = EnchantmentHelper.getEnchantmentLevel(attacker.level().registryAccess().nitrogen_fabric$holderOrThrow(Enchantments.FIRE_ASPECT), attacker);
                     if (fireAspectModifier > 0) {
                         defaultTime += (fireAspectModifier * 4);
                     }

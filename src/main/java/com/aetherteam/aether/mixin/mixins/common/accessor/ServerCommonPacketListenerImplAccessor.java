@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface ServerCommonPacketListenerImplAccessor {
 
     @Accessor("connection")
-    Connection aetherFabric$connection();
+    Connection nitrogen_fabric$connection();
 }

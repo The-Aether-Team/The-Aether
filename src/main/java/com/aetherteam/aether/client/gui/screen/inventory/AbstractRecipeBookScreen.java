@@ -28,14 +28,14 @@ public abstract class AbstractRecipeBookScreen<A extends RecipeInput, B extends 
 
     protected void initScreen(int leftOffset) {
         this.widthTooNarrow = this.width < 379;
-        this.getRecipeBookComponent().init(this.width, this.height, this.aetherFabric$getMinecraft(), this.widthTooNarrow, this.getMenu());
-        this.leftPos = this.getRecipeBookComponent().updateScreenPosition(this.width, this.aetherFabric$getXSize());
-        this.addRenderableWidget(new ImageButton(this.aetherFabric$getGuiLeft() + leftOffset, this.height / 2 - 49, 20, 18, RecipeBookComponent.RECIPE_BUTTON_SPRITES, (button) -> {
+        this.getRecipeBookComponent().init(this.width, this.height, this.nitrogen_fabric$getMinecraft(), this.widthTooNarrow, this.getMenu());
+        this.leftPos = this.getRecipeBookComponent().updateScreenPosition(this.width, this.nitrogen_fabric$getXSize());
+        this.addRenderableWidget(new ImageButton(this.nitrogen_fabric$getGuiLeft() + leftOffset, this.height / 2 - 49, 20, 18, RecipeBookComponent.RECIPE_BUTTON_SPRITES, (button) -> {
             this.getRecipeBookComponent().toggleVisibility();
-            this.leftPos = this.getRecipeBookComponent().updateScreenPosition(this.width, this.aetherFabric$getXSize());
-            button.setPosition(this.aetherFabric$getGuiLeft() + leftOffset, this.height / 2 - 49);
+            this.leftPos = this.getRecipeBookComponent().updateScreenPosition(this.width, this.nitrogen_fabric$getXSize());
+            button.setPosition(this.nitrogen_fabric$getGuiLeft() + leftOffset, this.height / 2 - 49);
         }));
-        this.titleLabelX = (this.aetherFabric$getXSize() - this.font.width(this.getTitle())) / 2;
+        this.titleLabelX = (this.nitrogen_fabric$getXSize() - this.font.width(this.getTitle())) / 2;
     }
 
     @Override
@@ -52,10 +52,10 @@ public abstract class AbstractRecipeBookScreen<A extends RecipeInput, B extends 
         } else {
             super.render(guiGraphics, mouseX, mouseY, partialTicks);
             this.getRecipeBookComponent().render(guiGraphics, mouseX, mouseY, partialTicks);
-            this.getRecipeBookComponent().renderGhostRecipe(guiGraphics, this.aetherFabric$getGuiLeft(), this.aetherFabric$getGuiTop(), true, partialTicks);
+            this.getRecipeBookComponent().renderGhostRecipe(guiGraphics, this.nitrogen_fabric$getGuiLeft(), this.nitrogen_fabric$getGuiTop(), true, partialTicks);
         }
         this.renderTooltip(guiGraphics, mouseX, mouseY);
-        this.getRecipeBookComponent().renderTooltip(guiGraphics, this.aetherFabric$getGuiLeft(), this.aetherFabric$getGuiTop(), mouseX, mouseY);
+        this.getRecipeBookComponent().renderTooltip(guiGraphics, this.nitrogen_fabric$getGuiLeft(), this.nitrogen_fabric$getGuiTop(), mouseX, mouseY);
     }
 
     @Override

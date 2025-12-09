@@ -3,7 +3,7 @@ package com.aetherteam.aether.event.listeners.capability;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.event.hooks.CapabilityHooks;
-import com.aetherteam.aetherfabric.events.EntityTickEvents;
+import com.aetherteam.nitrogen.fabric.events.EntityTickEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;

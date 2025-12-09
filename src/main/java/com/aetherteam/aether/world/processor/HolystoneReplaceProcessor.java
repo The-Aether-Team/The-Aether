@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.processor;
 
 import com.aetherteam.aether.block.AetherBlocks;
-import com.aetherteam.aetherfabric.level.ExtendedStructureProcessor;
+import com.aetherteam.nitrogen.fabric.level.ExtendedStructureProcessor;
 import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.Util;

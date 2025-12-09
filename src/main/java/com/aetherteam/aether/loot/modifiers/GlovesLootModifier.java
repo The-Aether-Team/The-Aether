@@ -1,11 +1,15 @@
 package com.aetherteam.aether.loot.modifiers;
 
-import com.aetherteam.aetherfabric.common.loot.LootModifier;
+import com.aetherteam.nitrogen.fabric.loot.IGlobalLootModifier;
+import com.aetherteam.nitrogen.fabric.loot.LootModifier;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.fabricmc.fabric.api.item.v1.EnchantingContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.RandomSource;
@@ -28,10 +32,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class GlovesLootModifier extends LootModifier {
-//    public static final MapCodec<GlovesLootModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> codecStart(instance)
-//            .and(ItemStack.CODEC.fieldOf("gloves").forGetter(modifier -> modifier.glovesStack))
-//            .and(BuiltInRegistries.ARMOR_MATERIAL.holderByNameCodec().fieldOf("armor_material").forGetter(modifier -> modifier.armorMaterial))
-//            .apply(instance, GlovesLootModifier::new));
+    public static final MapCodec<GlovesLootModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> codecStart(instance)
+            .and(ItemStack.CODEC.fieldOf("gloves").forGetter(modifier -> modifier.glovesStack))
+            .and(BuiltInRegistries.ARMOR_MATERIAL.holderByNameCodec().fieldOf("armor_material").forGetter(modifier -> modifier.armorMaterial))
+            .apply(instance, GlovesLootModifier::new));
 
     public final ItemStack glovesStack;
     public final Holder<ArmorMaterial> armorMaterial;
@@ -67,7 +71,7 @@ public class GlovesLootModifier extends LootModifier {
                         ItemStack gloves = this.glovesStack.copy();
                         int cost = 0;
                         boolean isTreasure = false;
-                        for (Object2IntMap.Entry<Holder<Enchantment>> enchantmentInfo : armorStack.aetherFabric$getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT))) {
+                        for (Object2IntMap.Entry<Holder<Enchantment>> enchantmentInfo : armorStack.nitrogen_fabric$getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT))) {
                             Holder<Enchantment> enchantment = enchantmentInfo.getKey();
                             int enchantmentValue = enchantmentInfo.getIntValue();
                             cost = Math.max(cost, enchantment.value().getMinCost(enchantmentValue));
@@ -78,10 +82,10 @@ public class GlovesLootModifier extends LootModifier {
                                 gloves.enchant(enchantment, enchantmentInfo.getIntValue());
                             }
                         }
-                        if (!armorStack.aetherFabric$getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty() && gloves.aetherFabric$getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty()) {
+                        if (!armorStack.nitrogen_fabric$getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty() && gloves.nitrogen_fabric$getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty()) {
                             EnchantmentHelper.enchantItem(randomSource, gloves, cost, level.registryAccess(), Optional.of(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentTags.ON_RANDOM_LOOT)));
                         }
-                        if (armorStack.aetherFabric$getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty() || !gloves.aetherFabric$getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty()) {
+                        if (armorStack.nitrogen_fabric$getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty() || !gloves.nitrogen_fabric$getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)).isEmpty()) {
                             lootStacks.replaceAll((stack) -> stack.equals(armorStack) ? gloves : stack);
                         }
                     }
@@ -91,8 +95,8 @@ public class GlovesLootModifier extends LootModifier {
         return lootStacks;
     }
 
-//    @Override
-//    public MapCodec<? extends IGlobalLootModifier> codec() {
-//        return GlovesLootModifier.CODEC;
-//    }
+    @Override
+    public MapCodec<? extends IGlobalLootModifier> codec() {
+        return GlovesLootModifier.CODEC;
+    }
 }

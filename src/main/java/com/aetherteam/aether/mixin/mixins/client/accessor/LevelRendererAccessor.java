@@ -40,5 +40,5 @@ public interface LevelRendererAccessor {
     MeshData callBuildClouds(Tesselator tesselator, double x, double y, double z, Vec3 cloudColor);
 
     @Accessor("ticks")
-    int aetherFabric$getTicks();
+    int nitrogen_fabric$getTicks();
 }

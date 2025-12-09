@@ -2,8 +2,8 @@ package com.aetherteam.aether.client.event.listeners.abilities;
 
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.AetherClient;
-import com.aetherteam.aetherfabric.client.events.PlayerRenderEvents;
-import com.aetherteam.aetherfabric.events.CancellableCallback;
+import com.aetherteam.nitrogen.fabric.client.events.PlayerRenderEvents;
+import com.aetherteam.nitrogen.fabric.events.CancellableCallback;
 import net.minecraft.world.entity.player.Player;
 
 public class AccessoryAbilityClientListener {

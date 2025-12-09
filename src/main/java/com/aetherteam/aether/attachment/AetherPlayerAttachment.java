@@ -21,7 +21,7 @@ import com.aetherteam.aether.perk.data.ClientDeveloperGlowPerkData;
 import com.aetherteam.aether.perk.data.ClientHaloPerkData;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
 import com.aetherteam.aether.perk.data.ServerPerkData;
-import com.aetherteam.aetherfabric.network.PacketDistributor;
+import com.aetherteam.nitrogen.fabric.network.PacketDistributor;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import com.aetherteam.nitrogen.network.packet.SyncPacket;
 import com.mojang.serialization.Codec;
@@ -377,7 +377,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
 
     private void removeRemedyDuration(Player player) {
         if (this.remedyStartDuration > 0) {
-            if (!player.hasEffect(AetherEffects.REMEDY.aetherFabric$getDelegate())) {
+            if (!player.hasEffect(AetherEffects.REMEDY.nitrogen_fabric$getDelegate())) {
                 this.remedyStartDuration = 0;
             }
         }

@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.structurepiece.bronzedungeon;
 
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
-import com.aetherteam.aetherfabric.level.PieceBeardifierModifier;
+import com.aetherteam.nitrogen.fabric.level.PieceBeardifierModifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;

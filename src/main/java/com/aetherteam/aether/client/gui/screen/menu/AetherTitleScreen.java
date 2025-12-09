@@ -155,8 +155,9 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
         return this.alignedLeft;
     }
 
+
     @Override
-    public AbstractWidget onScreensWidgetAdd(AbstractWidget abstractWidget) {
+    public AbstractWidget nitrogen_fabric$onScreensWidgetAdd(AbstractWidget abstractWidget) {
         if (abstractWidget instanceof Button button) {
             return this.getAetherButton(button);
         }

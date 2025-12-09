@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(Button.Builder.class)
 public interface ButtonBuilderAccessor {
 
-    @Accessor("message") Component aetherFabric$message();
-    @Accessor("onPress") Button.OnPress aetherFabric$onPress();
-    @Accessor("tooltip") @Nullable Tooltip aetherFabric$tooltip();
-    @Accessor("x") int aetherFabric$x();
-    @Accessor("y") int aetherFabric$y();
-    @Accessor("width") int aetherFabric$width();
-    @Accessor("height") int aetherFabric$height();
-    @Accessor("createNarration") Button.CreateNarration aetherFabric$createNarration();
+    @Accessor("message") Component nitrogen_fabric$message();
+    @Accessor("onPress") Button.OnPress nitrogen_fabric$onPress();
+    @Accessor("tooltip") @Nullable Tooltip nitrogen_fabric$tooltip();
+    @Accessor("x") int nitrogen_fabric$x();
+    @Accessor("y") int nitrogen_fabric$y();
+    @Accessor("width") int nitrogen_fabric$width();
+    @Accessor("height") int nitrogen_fabric$height();
+    @Accessor("createNarration") Button.CreateNarration nitrogen_fabric$createNarration();
 }

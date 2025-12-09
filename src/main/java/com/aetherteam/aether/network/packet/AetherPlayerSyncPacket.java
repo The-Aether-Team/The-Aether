@@ -3,7 +3,7 @@ package com.aetherteam.aether.network.packet;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.attachment.AetherPlayerAttachment;
-import com.aetherteam.aetherfabric.network.handling.IPayloadContext;
+import com.aetherteam.nitrogen.fabric.network.handling.IPayloadContext;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import com.aetherteam.nitrogen.network.packet.SyncEntityPacket;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;

@@ -47,6 +47,7 @@
     "common.accessor.StoredUserListAccessor",
     "common.accessor.ZombifiedPiglinAccessor",
     "common.aether_fabric.BoatMixin",
+    "common.aether_fabric.BoatMixin$TypeMixin",
     "common.aether_fabric.ChestBoatMixin",
     "common.aether_fabric.LiquidBlockMixin",
     "common.aether_fabric.PlayerMixin",
@@ -93,7 +94,6 @@
     "client.aether_fabric.LocalPlayerMixin",
     "client.aether_fabric.ModelLayersMixin",
     "client.aether_fabric.MouseHandlerMixin",
-    "client.aether_fabric.NetworkRegisterHelperMixin",
     "client.aether_fabric.SoundEngineMixin",
     "client.optifine.BossHealthOverlayMixin"
   ],

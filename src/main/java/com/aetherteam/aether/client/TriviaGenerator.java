@@ -1,7 +1,7 @@
 package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.mixin.mixins.client.accessor.I18nAccessor;
-import com.aetherteam.aetherfabric.pond.LanguageExtension;
+import com.aetherteam.nitrogen.fabric.pond.LanguageExtension;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.RandomSource;
@@ -23,7 +23,7 @@ public class TriviaGenerator {
      * The trivia is gathered from all language file entries starting with "aether.pro_tips.line."
      */
     public void generateTriviaList() {
-        for (String string : ((LanguageExtension)I18nAccessor.aether$getLanguage()).getLanguageData().keySet()) {
+        for (String string : ((LanguageExtension)I18nAccessor.aether$getLanguage()).nitrogen_fabric$getLanguageData().keySet()) {
             if (string.startsWith("aether.pro_tips.line.")) {
                 this.getTrivia().add(Component.translatable(string));
             }

@@ -50,7 +50,7 @@ import com.aetherteam.aether.item.combat.loot.PigSlayerItem;
 import com.aetherteam.aether.item.components.AetherDataComponents;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
-import com.aetherteam.aether.loot.modifiers.AetherLootTableModifications;
+import com.aetherteam.aether.loot.modifiers.AetherLootModifiers;
 import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
 import com.aetherteam.aether.network.packet.AetherTimeSyncPacket;
 import com.aetherteam.aether.network.packet.PhoenixArrowSyncPacket;
@@ -67,14 +67,13 @@ import com.aetherteam.aether.world.structure.AetherStructureTypes;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.aetherteam.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import com.aetherteam.aether.world.trunkplacer.AetherTrunkPlacerTypes;
-import com.aetherteam.aetherfabric.AetherFabric;
-import com.aetherteam.aetherfabric.NetworkRegisterHelper;
-import com.aetherteam.aetherfabric.WrappedInventoryStorage;
-import com.aetherteam.aetherfabric.events.AddPackFindersEvent;
-import com.aetherteam.aetherfabric.events.ItemAttributeModifierHelper;
-import com.aetherteam.aetherfabric.events.LivingEntityEvents;
-import com.aetherteam.aetherfabric.registries.DeferredRegister;
-import com.aetherteam.aetherfabric.registries.datamaps.RegisterDataMapTypesEvent;
+import com.aetherteam.nitrogen.fabric.NetworkRegisterHelper;
+import com.aetherteam.nitrogen.fabric.WrappedInventoryStorage;
+import com.aetherteam.nitrogen.fabric.events.AddPackFindersEvent;
+import com.aetherteam.nitrogen.fabric.events.ItemAttributeModifierHelper;
+import com.aetherteam.nitrogen.fabric.events.LivingEntityEvents;
+import com.aetherteam.nitrogen.fabric.registries.DeferredRegister;
+import com.aetherteam.nitrogen.fabric.registries.datamaps.RegisterDataMapTypesEvent;
 import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
@@ -154,6 +153,7 @@ public class Aether implements ModInitializer {
                 AetherRecipeSerializers.RECIPE_SERIALIZERS,
                 AetherLootFunctions.LOOT_FUNCTION_TYPES,
                 AetherLootConditions.LOOT_CONDITION_TYPES,
+                AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS,
                 AetherGameEvents.GAME_EVENTS,
                 AetherCreativeTabs.CREATIVE_MODE_TABS,
@@ -197,12 +197,6 @@ public class Aether implements ModInitializer {
         this.registerCauldronInteractions();
 
         UniqueSlotHandling.EVENT.register(AetherAccessorySlots.INSTANCE);
-
-        //--
-
-        AetherFabric.init();
-
-        AetherLootTableModifications.initLootModifiers();
     }
 
     public void registerPackets() {

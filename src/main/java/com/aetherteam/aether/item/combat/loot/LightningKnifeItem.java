@@ -38,7 +38,7 @@ public class LightningKnifeItem extends Item implements ProjectileItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
         if (!level.isClientSide()) {
-            if (!player.getAbilities().instabuild && heldStack.aetherFabric$getEnchantmentLevel(level.registryAccess().aetherFabric$holderOrThrow(Enchantments.INFINITY)) == 0) { // Note: Lightning knives can't be enchanted with Infinity in survival, but we still implement the behavior.
+            if (!player.getAbilities().instabuild && heldStack.nitrogen_fabric$getEnchantmentLevel(level.registryAccess().nitrogen_fabric$holderOrThrow(Enchantments.INFINITY)) == 0) { // Note: Lightning knives can't be enchanted with Infinity in survival, but we still implement the behavior.
                 heldStack.shrink(1);
             }
             ThrownLightningKnife lightningKnife = new ThrownLightningKnife(player, level);

@@ -5,7 +5,7 @@ import com.aetherteam.aether.recipe.AetherBookCategory;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
 import com.aetherteam.aether.recipe.recipes.item.AltarRepairRecipe;
-import com.aetherteam.aetherfabric.events.RecipeBookCategoriesHelper;
+import com.aetherteam.nitrogen.fabric.events.RecipeBookCategoriesHelper;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.RecipeBookCategories;

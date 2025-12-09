@@ -46,9 +46,9 @@ public class AetherREIClientPlugin implements REIClientPlugin {
 
     public static List<FuelRecipe> getFuelRecipes() {
         List<FuelRecipe> fuelRecipes = new ArrayList<>();
-        BuiltInRegistries.ITEM.aetherFabric$getDataMap(AetherDataMaps.ALTAR_FUEL).forEach((item, fuel) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(BuiltInRegistries.ITEM.get(item))), fuel.burnTime(), AetherBlocks.ALTAR.get())));
-        BuiltInRegistries.ITEM.aetherFabric$getDataMap(AetherDataMaps.FREEZER_FUEL).forEach((item, fuel) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(BuiltInRegistries.ITEM.get(item))), fuel.burnTime(), AetherBlocks.FREEZER.get())));
-        BuiltInRegistries.ITEM.aetherFabric$getDataMap(AetherDataMaps.INCUBATOR_FUEL).forEach((item, fuel) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(BuiltInRegistries.ITEM.get(item))), fuel.burnTime(), AetherBlocks.INCUBATOR.get())));
+        BuiltInRegistries.ITEM.nitrogen_fabric$getDataMap(AetherDataMaps.ALTAR_FUEL).forEach((item, fuel) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(BuiltInRegistries.ITEM.get(item))), fuel.burnTime(), AetherBlocks.ALTAR.get())));
+        BuiltInRegistries.ITEM.nitrogen_fabric$getDataMap(AetherDataMaps.FREEZER_FUEL).forEach((item, fuel) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(BuiltInRegistries.ITEM.get(item))), fuel.burnTime(), AetherBlocks.FREEZER.get())));
+        BuiltInRegistries.ITEM.nitrogen_fabric$getDataMap(AetherDataMaps.INCUBATOR_FUEL).forEach((item, fuel) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(BuiltInRegistries.ITEM.get(item))), fuel.burnTime(), AetherBlocks.INCUBATOR.get())));
         return fuelRecipes;
     }
 

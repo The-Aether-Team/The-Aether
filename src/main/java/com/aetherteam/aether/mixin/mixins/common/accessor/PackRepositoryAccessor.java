@@ -10,8 +10,8 @@ import java.util.Set;
 @Mixin(PackRepository.class)
 public interface PackRepositoryAccessor {
     @Accessor("sources")
-    Set<RepositorySource> aetherFabric$sources();
+    Set<RepositorySource> nitrogen_fabric$sources();
 
     @Accessor("sources")
-    void aetherFabric$sources(Set<RepositorySource> sources);
+    void nitrogen_fabric$sources(Set<RepositorySource> sources);
 }

@@ -50,7 +50,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
     public final DimensionRenderingRegistry.CloudRenderer CLOUD_RENDERER = context ->{
         renderClouds(
             context.world(),
-            ((LevelRendererAccessor)context.worldRenderer()).aetherFabric$getTicks(),
+            ((LevelRendererAccessor)context.worldRenderer()).nitrogen_fabric$getTicks(),
             context.tickCounter().getGameTimeDeltaPartialTick(false),
             context.matrixStack(),
             context.camera().getPosition().x(),
@@ -75,7 +75,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
 
         renderSky(
             context.world(),
-            ((LevelRendererAccessor)context.worldRenderer()).aetherFabric$getTicks(),
+            ((LevelRendererAccessor)context.worldRenderer()).nitrogen_fabric$getTicks(),
             context.tickCounter().getGameTimeDeltaPartialTick(false),
             context.positionMatrix(),
             context.camera(),

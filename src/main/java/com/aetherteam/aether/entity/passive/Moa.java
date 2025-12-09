@@ -24,7 +24,7 @@ import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.network.packet.clientbound.MoaInteractPacket;
 import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
-import com.aetherteam.aetherfabric.network.PacketDistributor;
+import com.aetherteam.nitrogen.fabric.network.PacketDistributor;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -125,7 +125,7 @@ public class Moa extends MountableAnimal implements WingedBird {
                 .add(Attributes.MOVEMENT_SPEED, 1.0)
                 .add(Attributes.FOLLOW_RANGE, 16.0)
                 .add(Attributes.ATTACK_DAMAGE, 5.0)
-                .add(AetherAttributes.MOA_MAX_JUMPS.aetherFabric$getDelegate(), -1.0); //placeholder until the real value is initialized
+                .add(AetherAttributes.MOA_MAX_JUMPS.nitrogen_fabric$getDelegate(), -1.0); //placeholder until the real value is initialized
     }
 
     @Override
@@ -746,7 +746,7 @@ public class Moa extends MountableAnimal implements WingedBird {
      * Changes the value of {@link AetherAttributes#MOA_MAX_JUMPS} with the default value of {@link MoaType#maxJumps()} if the attribute value isn't matching.
      */
     public int getMaxJumps() {
-        AttributeInstance attribute = this.getAttribute(AetherAttributes.MOA_MAX_JUMPS.aetherFabric$getDelegate());
+        AttributeInstance attribute = this.getAttribute(AetherAttributes.MOA_MAX_JUMPS.nitrogen_fabric$getDelegate());
         int defaultValue = this.getMoaType() != null ? this.getMoaType().maxJumps() : 3;
 
         if(attribute != null) {

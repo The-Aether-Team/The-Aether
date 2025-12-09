@@ -4,8 +4,8 @@ import com.aetherteam.aether.block.AetherBlockStateProperties;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.resources.registries.AetherPlacedFeatures;
 import com.aetherteam.aether.mixin.mixins.common.accessor.SpreadingSnowyDirtBlockAccessor;
-import com.aetherteam.aetherfabric.Utils;
-import com.aetherteam.aetherfabric.events.BlockEvents;
+import com.aetherteam.nitrogen.fabric.Utils;
+import com.aetherteam.nitrogen.fabric.events.BlockEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
@@ -78,7 +78,7 @@ public class AetherGrassBlock extends GrassBlock {
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         BlockPos abovePos = pos.above();
         Block grass = AetherBlocks.AETHER_GRASS_BLOCK.get();
-        Optional<Holder.Reference<PlacedFeature>> grassFeatureOptional = level.registryAccess().aetherFabric$holder(AetherPlacedFeatures.AETHER_GRASS_BONEMEAL);
+        Optional<Holder.Reference<PlacedFeature>> grassFeatureOptional = level.registryAccess().nitrogen_fabric$holder(AetherPlacedFeatures.AETHER_GRASS_BONEMEAL);
 
         start:
         for (int i = 0; i < 128; ++i) {

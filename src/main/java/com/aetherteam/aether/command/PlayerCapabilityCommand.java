@@ -2,7 +2,7 @@ package com.aetherteam.aether.command;
 
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.network.packet.clientbound.HealthResetPacket;
-import com.aetherteam.aetherfabric.network.PacketDistributor;
+import com.aetherteam.nitrogen.fabric.network.PacketDistributor;
 import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;

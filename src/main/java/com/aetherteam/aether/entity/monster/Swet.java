@@ -517,7 +517,7 @@ public class Swet extends Slime implements MountableMob {
      * The player can attack the swet to try to kill it before they finish the attack.
      */
     @Override
-    public boolean aetherFabric$canRiderInteract() {
+    public boolean nitrogen_fabric$canRiderInteract() {
         return true;
     }
 
@@ -859,7 +859,7 @@ public class Swet extends Slime implements MountableMob {
         }
 
         public boolean canUse() {
-            return this.swet.getTarget() == null && (this.swet.onGround() || this.swet.aetherFabric$isInFluidType() || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof SwetMoveControl;
+            return this.swet.getTarget() == null && (this.swet.onGround() || this.swet.nitrogen_fabric$isInFluidType() || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof SwetMoveControl;
         }
 
         public void tick() {

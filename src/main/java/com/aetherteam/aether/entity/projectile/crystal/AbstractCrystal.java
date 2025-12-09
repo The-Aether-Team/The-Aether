@@ -1,7 +1,7 @@
 package com.aetherteam.aether.entity.projectile.crystal;
 
-import com.aetherteam.aetherfabric.events.CancellableCallbackImpl;
-import com.aetherteam.aetherfabric.events.ProjectileEvents;
+import com.aetherteam.nitrogen.fabric.events.CancellableCallbackImpl;
+import com.aetherteam.nitrogen.fabric.events.ProjectileEvents;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;

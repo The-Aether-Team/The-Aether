@@ -100,7 +100,7 @@ public interface PhoenixArmor {
      */
     private static float boostWithDepthStrider(LivingEntity entity, float start, float increment) {
         float defaultBoost = start;
-        float depthStriderModifier = Math.min(EnchantmentHelper.getEnchantmentLevel(entity.level().registryAccess().aetherFabric$holderOrThrow(Enchantments.DEPTH_STRIDER), entity), 3.0F);
+        float depthStriderModifier = Math.min(EnchantmentHelper.getEnchantmentLevel(entity.level().registryAccess().nitrogen_fabric$holderOrThrow(Enchantments.DEPTH_STRIDER), entity), 3.0F);
         if (depthStriderModifier > 0.0F) {
             defaultBoost += depthStriderModifier * increment;
         }

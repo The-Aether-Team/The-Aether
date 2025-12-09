@@ -4,7 +4,7 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ChunkAccessAccessor;
 import com.aetherteam.aether.world.BlockLogicUtil;
-import com.aetherteam.aetherfabric.level.ExtendedStructureProcessor;
+import com.aetherteam.nitrogen.fabric.level.ExtendedStructureProcessor;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerChunkCache;

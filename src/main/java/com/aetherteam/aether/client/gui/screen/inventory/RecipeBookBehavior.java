@@ -19,8 +19,8 @@ public interface RecipeBookBehavior<T extends RecipeBookMenu<?, ?>, V extends Ab
     }
 
     default boolean hasClickedOutside(V screen, double mouseX, double mouseY, int guiLeft, int guiTop, int mouseButton) {
-        boolean flag = mouseX < (double) guiLeft || mouseY < (double) guiTop || mouseX >= (double) (guiLeft + screen.aetherFabric$getXSize()) || mouseY >= (double) (guiTop + screen.aetherFabric$getYSize());
-        return screen.getRecipeBookComponent().hasClickedOutside(mouseX, mouseY, screen.aetherFabric$getGuiLeft(), screen.aetherFabric$getGuiTop(), screen.aetherFabric$getXSize(), screen.aetherFabric$getYSize(), mouseButton) && flag;
+        boolean flag = mouseX < (double) guiLeft || mouseY < (double) guiTop || mouseX >= (double) (guiLeft + screen.nitrogen_fabric$getXSize()) || mouseY >= (double) (guiTop + screen.nitrogen_fabric$getYSize());
+        return screen.getRecipeBookComponent().hasClickedOutside(mouseX, mouseY, screen.nitrogen_fabric$getGuiLeft(), screen.nitrogen_fabric$getGuiTop(), screen.nitrogen_fabric$getXSize(), screen.nitrogen_fabric$getYSize(), mouseButton) && flag;
     }
 
     default boolean charTyped(V screen, char codePoint, int modifiers) {

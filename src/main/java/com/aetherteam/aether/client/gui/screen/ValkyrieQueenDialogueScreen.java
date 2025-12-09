@@ -5,7 +5,7 @@ import com.aetherteam.aether.client.gui.component.dialogue.DialogueChoiceCompone
 import com.aetherteam.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
-import com.aetherteam.aetherfabric.network.PacketDistributor;
+import com.aetherteam.nitrogen.fabric.network.PacketDistributor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -27,12 +27,12 @@ public class ValkyrieQueenDialogueScreen extends Screen {
 
     @Override
     protected void init() {
-        if (this.aetherFabric$getMinecraft().player != null) {
+        if (this.nitrogen_fabric$getMinecraft().player != null) {
             this.setupDialogueChoices( // Set up choices.
                     new DialogueChoiceComponent(this.buildDialogueChoice("question"), button -> this.finishChat((byte) 0)),
                     new DialogueChoiceComponent(this.buildDialogueChoice("challenge"), button -> { // Opens a new dialogue tree.
                         this.setDialogueAnswer(Component.translatable("gui.aether.queen.dialog.challenge")); // The Valkyrie Queen's response to the challenge choice in the GUI (not a chat message).
-                        int medals = this.aetherFabric$getMinecraft().player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get());
+                        int medals = this.nitrogen_fabric$getMinecraft().player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get());
                         DialogueChoiceComponent startFightChoice = medals >= 10
                                 ? new DialogueChoiceComponent(this.buildDialogueChoice("have_medals"), button1 -> this.finishChat((byte) 1))
                                 : new DialogueChoiceComponent(this.buildDialogueChoice("no_medals").append(" (" + medals + "/10)"), button1 -> this.finishChat((byte) 1));

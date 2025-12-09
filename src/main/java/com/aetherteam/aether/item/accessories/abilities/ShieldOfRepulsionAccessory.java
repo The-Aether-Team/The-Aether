@@ -5,7 +5,7 @@ import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
-import com.aetherteam.aetherfabric.events.ProjectileEvents;
+import com.aetherteam.nitrogen.fabric.events.ProjectileEvents;
 import com.aetherteam.nitrogen.ConstantsUtil;
 import io.wispforest.accessories.api.AccessoriesAPI;
 import io.wispforest.accessories.api.slot.SlotEntryReference;

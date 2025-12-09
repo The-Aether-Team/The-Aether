@@ -3,7 +3,7 @@ package com.aetherteam.aether.network.packet.serverbound;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.command.SunAltarWhitelist;
-import com.aetherteam.aetherfabric.network.handling.IPayloadContext;
+import com.aetherteam.nitrogen.fabric.network.handling.IPayloadContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;

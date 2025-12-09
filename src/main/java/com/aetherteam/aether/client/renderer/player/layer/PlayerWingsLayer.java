@@ -58,7 +58,7 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
      * @param sinage The {@link Float} for the rotation value.
      */
     public void setupWingRotation(T entity, float sinage) {
-        if (!entity.onGround() && !entity.aetherFabric$isInFluidType() && (entity.getVehicle() != null && !entity.getVehicle().onGround())) {
+        if (!entity.onGround() && !entity.nitrogen_fabric$isInFluidType() && (entity.getVehicle() != null && !entity.getVehicle().onGround())) {
             sinage *= 1.5F;
         } else {
             sinage *= 0.3F;
@@ -82,8 +82,8 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
         }
 
         this.wings.rightWing.yRot -= Mth.sin(sinage) / 6.0F;
-        this.wings.rightWing.zRot -= Mth.cos(sinage) / (entity.onGround() || entity.aetherFabric$isInFluidType() ? 8.0F : 3.0F);
+        this.wings.rightWing.zRot -= Mth.cos(sinage) / (entity.onGround() || entity.nitrogen_fabric$isInFluidType() ? 8.0F : 3.0F);
         this.wings.leftWing.yRot += Mth.sin(sinage) / 6.0F;
-        this.wings.leftWing.zRot += Mth.cos(sinage) / (entity.onGround() || entity.aetherFabric$isInFluidType() ? 8.0F : 3.0F);
+        this.wings.leftWing.zRot += Mth.cos(sinage) / (entity.onGround() || entity.nitrogen_fabric$isInFluidType() ? 8.0F : 3.0F);
     }
 }

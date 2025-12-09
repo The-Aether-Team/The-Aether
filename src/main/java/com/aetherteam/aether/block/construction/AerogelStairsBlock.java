@@ -40,7 +40,7 @@ public class AerogelStairsBlock extends StairBlock implements AerogelCulling {
      * @see net.neoforged.neoforge.common.extensions.IBlockExtension#supportsExternalFaceHiding(BlockState)
      */
     @Override
-    public boolean aetherFabric$supportsExternalFaceHiding(BlockState state) {
+    public boolean nitrogen_fabric$supportsExternalFaceHiding(BlockState state) {
         return true;
     }
 
@@ -55,7 +55,7 @@ public class AerogelStairsBlock extends StairBlock implements AerogelCulling {
      * @return Whether the neighbor block should skip rendering the neighboring face, as a {@link Boolean}.
      */
     @Override
-    public boolean aetherFabric$hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
+    public boolean nitrogen_fabric$hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
         return AerogelCulling.super.shouldHideNeighboringAerogelFace(level, pos, state, neighborState, dir);
     }
 }

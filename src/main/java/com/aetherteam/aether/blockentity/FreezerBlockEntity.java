@@ -30,7 +30,7 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity {
     @Override
     protected int getBurnDuration(ItemStack fuelStack) {
         if (!fuelStack.isEmpty()) {
-            var datamap = fuelStack.getItemHolder().aetherFabric$getData(AetherDataMaps.FREEZER_FUEL);
+            var datamap = fuelStack.getItemHolder().nitrogen_fabric$getData(AetherDataMaps.FREEZER_FUEL);
             if (datamap != null) {
                 return datamap.burnTime();
             }

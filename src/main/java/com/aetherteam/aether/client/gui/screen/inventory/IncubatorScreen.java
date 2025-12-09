@@ -27,9 +27,9 @@ public class IncubatorScreen extends AbstractRecipeBookScreen<SingleRecipeInput,
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
-        int left = this.aetherFabric$getGuiLeft();
-        int top = this.aetherFabric$getGuiTop();
-        guiGraphics.blit(INCUBATOR_GUI_TEXTURES, left, top, 0, 0, this.aetherFabric$getXSize(), this.aetherFabric$getYSize());
+        int left = this.nitrogen_fabric$getGuiLeft();
+        int top = this.nitrogen_fabric$getGuiTop();
+        guiGraphics.blit(INCUBATOR_GUI_TEXTURES, left, top, 0, 0, this.nitrogen_fabric$getXSize(), this.nitrogen_fabric$getYSize());
         if (this.getMenu().isIncubating()) {
             int incubationTimeRemaining = this.getMenu().getIncubationTimeRemaining() + 1;
             guiGraphics.blitSprite(LIT_PROGRESS_TEXTURE, 14, 14, 0, 14 - incubationTimeRemaining, left + 74, top + 36 + 13 - incubationTimeRemaining, 14, incubationTimeRemaining);

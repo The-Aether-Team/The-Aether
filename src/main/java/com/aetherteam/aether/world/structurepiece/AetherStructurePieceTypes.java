@@ -10,8 +10,8 @@ import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverBossRoom;
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverDungeonRoom;
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverFloorPiece;
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverTemplePiece;
-import com.aetherteam.aetherfabric.registries.DeferredHolder;
-import com.aetherteam.aetherfabric.registries.DeferredRegister;
+import com.aetherteam.nitrogen.fabric.registries.DeferredHolder;
+import com.aetherteam.nitrogen.fabric.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 

@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface RegistryOpsAccessor {
 
     @Accessor("lookupProvider")
-    RegistryOps.RegistryInfoLookup aetherFabric$lookup();
+    RegistryOps.RegistryInfoLookup nitrogen_fabric$lookup();
 }

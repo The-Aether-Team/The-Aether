@@ -87,7 +87,7 @@ public class BerryBushBlock extends AetherBushBlock {
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
         super.playerDestroy(level, player, pos, state, blockEntity, tool);
-        if (tool.aetherFabric$getEnchantmentLevel(level.registryAccess().aetherFabric$holderOrThrow(Enchantments.SILK_TOUCH)) <= 0) {
+        if (tool.nitrogen_fabric$getEnchantmentLevel(level.registryAccess().nitrogen_fabric$holderOrThrow(Enchantments.SILK_TOUCH)) <= 0) {
             level.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 1 | 2);
             if (AetherConfig.SERVER.berry_bush_consistency.get()) { // Destroy stem too if config is enabled.
                 level.destroyBlock(pos, true, player);

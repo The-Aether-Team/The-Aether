@@ -60,7 +60,7 @@ public class CapabilityClientHooks {
             Player player = Minecraft.getInstance().player;
             if (player != null) {
                 var aetherPlayer = player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER);
-                boolean isAttack = input == Minecraft.getInstance().options.keyAttack.aetherFabric$getKey().getValue();
+                boolean isAttack = input == Minecraft.getInstance().options.keyAttack.nitrogen_fabric$getKey().getValue();
                 boolean isPressing = Minecraft.getInstance().options.keyAttack.isDown();
                 boolean isHitting = isAttack && isPressing;
                 if (isHitting != aetherPlayer.isHitting()) {
@@ -78,7 +78,7 @@ public class CapabilityClientHooks {
             Player player = Minecraft.getInstance().player;
             if (player != null) {
                 var aetherPlayer = player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER);
-                if (input == AetherKeys.GRAVITITE_JUMP_ABILITY.aetherFabric$getKey().getValue()) {
+                if (input == AetherKeys.GRAVITITE_JUMP_ABILITY.nitrogen_fabric$getKey().getValue()) {
                     aetherPlayer.setSynched(player.getId(), INBTSynchable.Direction.SERVER, "setGravititeJumpActive", AetherKeys.GRAVITITE_JUMP_ABILITY.isDown());
                 }
             }

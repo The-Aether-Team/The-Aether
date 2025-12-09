@@ -77,7 +77,7 @@ public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<
         if (Minecraft.getInstance().level != null) {
             for (BlockPropertyPair pair : pairs) {
                 if (pair.block() instanceof LiquidBlock liquidBlock) {
-                    ingredients.add(this.fluidHelper.create(((LiquidBlockAccessor) liquidBlock).aetherFabric$fluid().builtInRegistryHolder(), 1000));
+                    ingredients.add(this.fluidHelper.create(((LiquidBlockAccessor) liquidBlock).nitrogen_fabric$fluid().builtInRegistryHolder(), 1000));
                 } else {
                     BlockState state = pair.block().defaultBlockState();
                     if (pair.properties().isPresent()) {

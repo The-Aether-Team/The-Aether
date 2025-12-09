@@ -6,7 +6,7 @@ import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aetherfabric.events.LivingEntityEvents;
+import com.aetherteam.nitrogen.fabric.events.LivingEntityEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;

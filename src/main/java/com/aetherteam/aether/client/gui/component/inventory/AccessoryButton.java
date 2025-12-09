@@ -3,7 +3,7 @@ package com.aetherteam.aether.client.gui.component.inventory;
 import com.aetherteam.aether.client.gui.screen.inventory.AetherAccessoriesScreen;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.network.packet.serverbound.OpenInventoryPacket;
-import com.aetherteam.aetherfabric.network.PacketDistributor;
+import com.aetherteam.nitrogen.fabric.network.PacketDistributor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
@@ -46,8 +46,8 @@ public class AccessoryButton extends ImageButton {
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         Tuple<Integer, Integer> offsets = AetherAccessoriesScreen.getButtonOffset(this.parentScreen);
-        this.setX(this.parentScreen.aetherFabric$getGuiLeft() + offsets.getA());
-        this.setY(this.parentScreen.aetherFabric$getGuiTop() + offsets.getB());
+        this.setX(this.parentScreen.nitrogen_fabric$getGuiLeft() + offsets.getA());
+        this.setY(this.parentScreen.nitrogen_fabric$getGuiTop() + offsets.getB());
         if (this.parentScreen instanceof CreativeModeInventoryScreen screen) {
             boolean isInventoryTab = screen.isInventoryOpen();
             this.active = isInventoryTab;

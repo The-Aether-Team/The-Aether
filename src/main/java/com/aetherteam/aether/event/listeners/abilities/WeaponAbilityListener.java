@@ -2,10 +2,10 @@ package com.aetherteam.aether.event.listeners.abilities;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
-import com.aetherteam.aetherfabric.events.CancellableCallback;
-import com.aetherteam.aetherfabric.events.EntityEvents;
-import com.aetherteam.aetherfabric.events.LivingEntityEvents;
-import com.aetherteam.aetherfabric.events.ProjectileEvents;
+import com.aetherteam.nitrogen.fabric.events.CancellableCallback;
+import com.aetherteam.nitrogen.fabric.events.EntityEvents;
+import com.aetherteam.nitrogen.fabric.events.LivingEntityEvents;
+import com.aetherteam.nitrogen.fabric.events.ProjectileEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;

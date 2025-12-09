@@ -34,26 +34,6 @@ public abstract class BoatMixin {
     @Mixin(Boat.Type.class)
     public static abstract class TypeMixin {
 
-//        @Invoker("<init>")
-//        public static Boat.Type aetherFabric$invokeNew(String internalName, int ordinal, Block baseBlock, String name) {
-//            throw new IllegalStateException("How did this mixin stub get called conc");
-//        }
-//
-//        @Final
-//        @Shadow
-//        @Mutable
-//        private static Boat.Type[] $VALUES;
-//
-//        @Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/vehicle/Boat$Type;$VALUES:[Lnet/minecraft/world/entity/vehicle/Boat$Type;", shift = At.Shift.AFTER, opcode = Opcodes.PUTSTATIC))
-//        private static void aetherFabric$addSkyRootBoat(CallbackInfo ci) {
-//            var boatTypes = new Boat.Type[$VALUES.length + 1];
-//            System.arraycopy($VALUES, 0, boatTypes, 0, $VALUES.length);
-//
-//            boatTypes[boatTypes.length - 1] = TypeMixin.aetherFabric$invokeNew("AETHER_SKYROOT", Boat.Type.values().length, null, "aether:skyroot");
-//
-//            $VALUES = boatTypes;
-//        }
-
         @Shadow
         public abstract String getName();
 

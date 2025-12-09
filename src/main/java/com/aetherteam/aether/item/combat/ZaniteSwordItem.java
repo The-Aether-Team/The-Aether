@@ -2,7 +2,7 @@ package com.aetherteam.aether.item.combat;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.combat.abilities.weapon.ZaniteWeapon;
-import com.aetherteam.aetherfabric.events.ItemAttributeModifierHelper;
+import com.aetherteam.nitrogen.fabric.events.ItemAttributeModifierHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;

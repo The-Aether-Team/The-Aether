@@ -170,7 +170,7 @@ public class AetherOverlays {
      * @param player      The player that has the effect.
      */
     private static void renderInebriationOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, Player player) {
-        MobEffectInstance inebriation = player.getEffect(AetherEffects.INEBRIATION.aetherFabric$getDelegate());
+        MobEffectInstance inebriation = player.getEffect(AetherEffects.INEBRIATION.nitrogen_fabric$getDelegate());
         double effectScale = minecraft.options.screenEffectScale().get();
         if (inebriation != null) {
             float inebriationDuration = (float) (inebriation.getDuration() % 50) / 50;
@@ -188,7 +188,7 @@ public class AetherOverlays {
      * @param player      The player that has the effect.
      */
     private static void renderRemedyOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, Player player) {
-        MobEffectInstance remedy = player.getEffect(AetherEffects.REMEDY.aetherFabric$getDelegate());
+        MobEffectInstance remedy = player.getEffect(AetherEffects.REMEDY.nitrogen_fabric$getDelegate());
         double effectScale = minecraft.options.screenEffectScale().get();
         if (remedy != null) {
             int remedyStartDuration = player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER).getRemedyStartDuration();
@@ -296,7 +296,7 @@ public class AetherOverlays {
      * @return           The {@link ResourceLocation} of the feather that should be rendered
      */
     private static ResourceLocation getMoaJumpTexture(Moa moa, double count) {
-        AttributeInstance instance = moa.getAttribute(AetherAttributes.MOA_MAX_JUMPS.aetherFabric$getDelegate());
+        AttributeInstance instance = moa.getAttribute(AetherAttributes.MOA_MAX_JUMPS.nitrogen_fabric$getDelegate());
         if(instance != null) {
             if (count < instance.getBaseValue()) {
                 return getDefaultJumpsTexture(moa.getMoaType());

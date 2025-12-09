@@ -4,7 +4,7 @@ import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.inventory.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AetherAccessoriesScreen;
-import com.aetherteam.aetherfabric.client.events.ScreenKeyboardEventsExtension;
+import com.aetherteam.nitrogen.fabric.client.events.ScreenKeyboardEventsExtension;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;

@@ -19,8 +19,8 @@ import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.mixin.mixins.common.accessor.FireBlockAccessor;
 import com.aetherteam.aether.world.treegrower.AetherTreeGrowers;
-import com.aetherteam.aetherfabric.registries.DeferredBlock;
-import com.aetherteam.aetherfabric.registries.DeferredRegister;
+import com.aetherteam.nitrogen.fabric.registries.DeferredBlock;
+import com.aetherteam.nitrogen.fabric.registries.DeferredRegister;
 import com.aetherteam.nitrogen.item.block.EntityBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -266,7 +266,7 @@ public class AetherBlocks {
     }
 
     public static void registerFluidInteractions() {
-        // Handled by LiquidBlockMixin.aetherFabric$adjustInteraction
+        // Handled by LiquidBlockMixin.nitrogen_fabric$adjustInteraction
 //        FluidInteractionRegistry.addInteraction(NeoForgeMod.WATER_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
 //                (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(AetherBlocks.QUICKSOIL.get()) && level.getBlockState(relativePos).is(Blocks.MAGMA_BLOCK),
 //                AetherBlocks.HOLYSTONE.get().defaultBlockState()

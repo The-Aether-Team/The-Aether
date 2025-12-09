@@ -55,6 +55,6 @@ public interface ValkyrieArmor {
     }
 
     private static boolean onGround(Player player) {
-        return player.onGround() || player.aetherFabric$isInFluidType();
+        return player.onGround() || player.nitrogen_fabric$isInFluidType();
     }
 }

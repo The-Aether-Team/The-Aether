@@ -1,6 +1,6 @@
 package com.aetherteam.aether.world.processor;
 
-import com.aetherteam.aetherfabric.level.ExtendedStructureProcessor;
+import com.aetherteam.nitrogen.fabric.level.ExtendedStructureProcessor;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;

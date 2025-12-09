@@ -18,8 +18,7 @@ import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.mixin.mixins.client.accessor.RecipeBookCategoriesAccessor;
 import com.aetherteam.aether.perk.CustomizationsOptions;
-import com.aetherteam.aetherfabric.client.AetherFabricClient;
-import com.aetherteam.aetherfabric.events.RecipeBookCategoriesHelper;
+import com.aetherteam.nitrogen.fabric.events.RecipeBookCategoriesHelper;
 import com.aetherteam.nitrogen.event.listeners.TooltipListeners;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.reflect.Reflection;
@@ -52,8 +51,6 @@ public class AetherClient implements ClientModInitializer {
         AetherClient.eventSetup();
 
         setupRenderTypes();
-
-        AetherFabricClient.init();
 
         ConfigScreenFactoryRegistry.INSTANCE.register("aether", ConfigurationScreen::new);
     }
@@ -148,7 +145,7 @@ public class AetherClient implements ClientModInitializer {
 
             aggregatedCategories.putAll(RecipeBookCategoriesHelper.INSTANCE.aggregateCategories);
 
-            RecipeBookCategoriesAccessor.aetherFabric$setAGGREGATE_CATEGORIES(ImmutableMap.copyOf(aggregatedCategories));
+            RecipeBookCategoriesAccessor.nitrogen_fabric$setAGGREGATE_CATEGORIES(ImmutableMap.copyOf(aggregatedCategories));
         });
     }
 

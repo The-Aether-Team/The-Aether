@@ -7,5 +7,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(targets = "net/minecraft/resources/RegistryOps$HolderLookupAdapter")
 public interface HolderLookupAdapterAccessor {
     @Accessor("lookupProvider")
-    HolderLookup.Provider aetherFabric$lookupProvider();
+    HolderLookup.Provider nitrogen_fabric$lookupProvider();
 }

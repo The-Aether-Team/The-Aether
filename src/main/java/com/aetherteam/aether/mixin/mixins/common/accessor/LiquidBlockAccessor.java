@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(LiquidBlock.class)
 public interface LiquidBlockAccessor {
     @Accessor("fluid")
-    FlowingFluid aetherFabric$fluid();
+    FlowingFluid nitrogen_fabric$fluid();
 }

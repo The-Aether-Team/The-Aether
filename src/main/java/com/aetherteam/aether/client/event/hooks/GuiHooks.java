@@ -13,7 +13,7 @@ import com.aetherteam.aether.event.hooks.DimensionHooks;
 import com.aetherteam.aether.inventory.menu.AetherAccessoriesMenu;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.perk.PerkUtil;
-import com.aetherteam.aetherfabric.network.PacketDistributor;
+import com.aetherteam.nitrogen.fabric.network.PacketDistributor;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -71,7 +71,7 @@ public class GuiHooks {
     public static AccessoryButton setupAccessoryButton(Screen screen, Tuple<Integer, Integer> offsets) {
         AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen);
         if (containerScreen != null) {
-            return new AccessoryButton(containerScreen, containerScreen.aetherFabric$getGuiLeft() + offsets.getA(), containerScreen.aetherFabric$getGuiTop() + offsets.getB(), AetherAccessoriesScreen.ACCESSORIES_BUTTON);
+            return new AccessoryButton(containerScreen, containerScreen.nitrogen_fabric$getGuiLeft() + offsets.getA(), containerScreen.nitrogen_fabric$getGuiTop() + offsets.getB(), AetherAccessoriesScreen.ACCESSORIES_BUTTON);
         }
         return null;
     }
@@ -228,9 +228,9 @@ public class GuiHooks {
             if (Minecraft.getInstance().player != null) {
                 if (DimensionHooks.displayAetherTravel) {
                     if (DimensionHooks.playerLeavingAether) {
-                        guiGraphics.drawCenteredString(screen.aetherFabric$getMinecraft().font, Component.translatable("gui.aether.descending"), screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 16777215);
+                        guiGraphics.drawCenteredString(screen.nitrogen_fabric$getMinecraft().font, Component.translatable("gui.aether.descending"), screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 16777215);
                     } else {
-                        guiGraphics.drawCenteredString(screen.aetherFabric$getMinecraft().font, Component.translatable("gui.aether.ascending"), screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 16777215);
+                        guiGraphics.drawCenteredString(screen.nitrogen_fabric$getMinecraft().font, Component.translatable("gui.aether.ascending"), screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 16777215);
                     }
                 }
             }
@@ -284,7 +284,7 @@ public class GuiHooks {
         if (minecraft.screen instanceof AbstractContainerScreen<?> abstractContainerScreen) {
             var focused = abstractContainerScreen.getFocused();
             if (!(focused instanceof EditBox || focused instanceof MultiLineEditBox)) {
-                if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.aetherFabric$getKey().getValue() == key && (action == InputConstants.PRESS || action == InputConstants.REPEAT)) {
+                if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.nitrogen_fabric$getKey().getValue() == key && (action == InputConstants.PRESS || action == InputConstants.REPEAT)) {
                     abstractContainerScreen.onClose();
                 }
             }

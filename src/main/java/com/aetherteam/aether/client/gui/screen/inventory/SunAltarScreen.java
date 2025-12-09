@@ -20,8 +20,8 @@ public class SunAltarScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        if (this.aetherFabric$getMinecraft().level != null) {
-            double sliderValue = (this.aetherFabric$getMinecraft().level.getDayTime() % (long) this.timeScale) / (double) this.timeScale; // What position the slider bar should be at.
+        if (this.nitrogen_fabric$getMinecraft().level != null) {
+            double sliderValue = (this.nitrogen_fabric$getMinecraft().level.getDayTime() % (long) this.timeScale) / (double) this.timeScale; // What position the slider bar should be at.
             this.addRenderableWidget(new SunAltarSlider(this.width / 2 - 75, this.height / 2, 150, 20, Component.translatable("gui.aether.sun_altar.time"), sliderValue, this.timeScale));
         }
     }

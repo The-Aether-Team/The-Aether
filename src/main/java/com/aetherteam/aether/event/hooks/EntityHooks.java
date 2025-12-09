@@ -232,7 +232,7 @@ public class EntityHooks {
      */
     public static boolean dismountPrevention(Entity rider, Entity mount, boolean dismounting) {
         if (dismounting && rider.isShiftKeyDown()) {
-            return (mount instanceof MountableAnimal && !mount.onGround() && !mount.aetherFabric$isInFluidType() && !mount.isPassenger()) || (mount instanceof Swet swet && !swet.isFriendly());
+            return (mount instanceof MountableAnimal && !mount.onGround() && !mount.nitrogen_fabric$isInFluidType() && !mount.isPassenger()) || (mount instanceof Swet swet && !swet.isFriendly());
         }
         return false;
     }
@@ -525,7 +525,7 @@ public class EntityHooks {
                     if (!itemStack.isEmpty()) {
                         itemStacks.removeIf((stack) -> ItemStack.isSameItemSameComponents(stack, itemStack));
                     }
-                    if (!itemStack.isEmpty() && itemStack.aetherFabric$getEnchantmentLevel(entity.level().registryAccess().aetherFabric$holderOrThrow(Enchantments.VANISHING_CURSE)) == 0 && recentlyHit && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f) {
+                    if (!itemStack.isEmpty() && itemStack.nitrogen_fabric$getEnchantmentLevel(entity.level().registryAccess().nitrogen_fabric$holderOrThrow(Enchantments.VANISHING_CURSE)) == 0 && recentlyHit && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f) {
                         if (!flag && itemStack.isDamageableItem()) {
                             itemStack.setDamageValue(itemStack.getMaxDamage() - mob.getRandom().nextInt(1 + mob.getRandom().nextInt(Math.max(itemStack.getMaxDamage() - 3, 1))));
                         }

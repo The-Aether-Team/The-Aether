@@ -19,6 +19,6 @@ public class AltarMenu extends AbstractAetherFurnaceMenu {
 
     @Override
     public boolean isFuel(ItemStack stack) {
-        return stack.getItemHolder().aetherFabric$getData(AetherDataMaps.ALTAR_FUEL) != null;
+        return stack.getItemHolder().nitrogen_fabric$getData(AetherDataMaps.ALTAR_FUEL) != null;
     }
 }

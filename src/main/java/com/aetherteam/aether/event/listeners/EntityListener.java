@@ -2,7 +2,7 @@ package com.aetherteam.aether.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.EntityHooks;
-import com.aetherteam.aetherfabric.events.*;
+import com.aetherteam.nitrogen.fabric.events.*;
 import io.wispforest.accessories.api.events.OnDeathCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
@@ -46,13 +46,13 @@ public class EntityListener {
         EntityEvents.STRUCK_BY_LIGHTNING.register(EntityListener::onLightningStrike);
         LivingEntityEvents.ON_EXPERIENCE_DROP.register((entity, attackingPlayer, helper) -> onDropExperience(entity, helper));
         LivingEntityEvents.ON_EFFECT.register((entity, instance, result) -> EntityListener.onEffectApply(entity, instance));
-        // SlimeMixin.aetherFabric$dontSplitForSwets -> EntityHooks.preventSplit
+        // SlimeMixin.nitrogen_fabric$dontSplitForSwets -> EntityHooks.preventSplit
         //bus.addListener(EntityListener::onLoadPlayerFile);
 
         OnDeathCallback.EVENT.register((currentState, entity, capability, damageSource, droppedStacks) -> {
             List<ItemStack> droppedStacksCopy = new ArrayList<>(droppedStacks);
             boolean recentlyHit = entity.hurtMarked;
-            int looting = EnchantmentHelper.getEnchantmentLevel(entity.level().registryAccess().aetherFabric$holderOrThrow(Enchantments.LOOTING), entity);
+            int looting = EnchantmentHelper.getEnchantmentLevel(entity.level().registryAccess().nitrogen_fabric$holderOrThrow(Enchantments.LOOTING), entity);
             droppedStacks.clear();
             droppedStacks.addAll(EntityHooks.handleEntityAccessoryDrops(entity, droppedStacksCopy, recentlyHit, looting));
             return TriState.DEFAULT;

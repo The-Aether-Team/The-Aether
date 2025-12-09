@@ -1,7 +1,7 @@
 package com.aetherteam.aether.mixin.mixins.client.aether_fabric;
 
 import com.aetherteam.aether.client.event.listeners.AudioListener;
-import com.aetherteam.aetherfabric.events.CancellableCallbackImpl;
+import com.aetherteam.nitrogen.fabric.events.CancellableCallbackImpl;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.resources.sounds.SoundInstance;

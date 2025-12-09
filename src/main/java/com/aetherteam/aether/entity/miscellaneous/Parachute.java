@@ -43,7 +43,7 @@ public class Parachute extends Entity {
             this.checkSlowFallDistance(); // Resets the Parachute's fall distance.
             this.moveParachute(passenger);
             this.spawnExplosionParticle();
-            if (this.onGround() || this.aetherFabric$isInFluidType() || this.verticalCollisionBelow) { // The parachute breaks when it collides with something.
+            if (this.onGround() || this.nitrogen_fabric$isInFluidType() || this.verticalCollisionBelow) { // The parachute breaks when it collides with something.
                 passenger.checkSlowFallDistance(); // Fall distance reset safeguard.
                 this.ejectPassengers();
                 this.die();
@@ -129,12 +129,12 @@ public class Parachute extends Entity {
     }
 
     @Override
-    public boolean aetherFabric$canRiderInteract() {
+    public boolean nitrogen_fabric$canRiderInteract() {
         return false;
     }
 
     @Override
-    public boolean aetherFabric$shouldRiderSit() {
+    public boolean nitrogen_fabric$shouldRiderSit() {
         return false;
     }
 

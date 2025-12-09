@@ -1,7 +1,10 @@
 package com.aetherteam.aether.loot.modifiers;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aetherfabric.common.loot.LootModifier;
+import com.aetherteam.nitrogen.fabric.loot.IGlobalLootModifier;
+import com.aetherteam.nitrogen.fabric.loot.LootModifier;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
@@ -12,7 +15,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
 public class RemoveSeedsModifier extends LootModifier {
-//    public static final MapCodec<RemoveSeedsModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> LootModifier.codecStart(instance).apply(instance, RemoveSeedsModifier::new));
+    public static final MapCodec<RemoveSeedsModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> LootModifier.codecStart(instance).apply(instance, RemoveSeedsModifier::new));
 
     public RemoveSeedsModifier(LootItemCondition[] conditions) {
         super(conditions);
@@ -34,8 +37,8 @@ public class RemoveSeedsModifier extends LootModifier {
         return lootStacks;
     }
 
-//    @Override
-//    public MapCodec<? extends IGlobalLootModifier> codec() {
-//        return RemoveSeedsModifier.CODEC;
-//    }
+    @Override
+    public MapCodec<? extends IGlobalLootModifier> codec() {
+        return RemoveSeedsModifier.CODEC;
+    }
 }

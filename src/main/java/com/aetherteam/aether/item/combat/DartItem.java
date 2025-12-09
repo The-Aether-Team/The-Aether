@@ -24,6 +24,6 @@ public abstract class DartItem extends Item implements ProjectileItem {
     public abstract AbstractDart createDart(Level level, ItemStack ammo, LivingEntity shooter, @Nullable ItemStack firedFromWeapon);
 
     public boolean isInfinite(ItemStack ammo, ItemStack weapon, LivingEntity livingEntity) {
-        return weapon.aetherFabric$getEnchantmentLevel(livingEntity.level().registryAccess().aetherFabric$holderOrThrow(Enchantments.INFINITY)) > 0;
+        return weapon.nitrogen_fabric$getEnchantmentLevel(livingEntity.level().registryAccess().nitrogen_fabric$holderOrThrow(Enchantments.INFINITY)) > 0;
     }
 }

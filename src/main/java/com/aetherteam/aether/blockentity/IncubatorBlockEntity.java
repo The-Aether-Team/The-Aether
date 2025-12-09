@@ -233,7 +233,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 
     protected int getBurnDuration(ItemStack fuelStack) {
         if (!fuelStack.isEmpty()) {
-            var datamap = fuelStack.getItemHolder().aetherFabric$getData(AetherDataMaps.INCUBATOR_FUEL);
+            var datamap = fuelStack.getItemHolder().nitrogen_fabric$getData(AetherDataMaps.INCUBATOR_FUEL);
             if (datamap != null) {
                 return datamap.burnTime();
             }

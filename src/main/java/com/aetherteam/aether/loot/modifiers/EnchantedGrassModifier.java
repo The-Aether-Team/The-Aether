@@ -1,7 +1,10 @@
 package com.aetherteam.aether.loot.modifiers;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aetherfabric.common.loot.LootModifier;
+import com.aetherteam.nitrogen.fabric.loot.IGlobalLootModifier;
+import com.aetherteam.nitrogen.fabric.loot.LootModifier;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
@@ -13,9 +16,9 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Optional;
 
 public class EnchantedGrassModifier extends LootModifier {
-//    public static final MapCodec<EnchantedGrassModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> LootModifier.codecStart(instance)
-//            .and(ItemStack.CODEC.fieldOf("item").forGetter((modifier) -> modifier.item))
-//            .apply(instance, EnchantedGrassModifier::new));
+    public static final MapCodec<EnchantedGrassModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> LootModifier.codecStart(instance)
+            .and(ItemStack.CODEC.fieldOf("item").forGetter((modifier) -> modifier.item))
+            .apply(instance, EnchantedGrassModifier::new));
 
     public final ItemStack item;
 
@@ -44,8 +47,8 @@ public class EnchantedGrassModifier extends LootModifier {
         return lootStacks;
     }
 
-//    @Override
-//    public MapCodec<? extends IGlobalLootModifier> codec() {
-//        return EnchantedGrassModifier.CODEC;
-//    }
+    @Override
+    public MapCodec<? extends IGlobalLootModifier> codec() {
+        return EnchantedGrassModifier.CODEC;
+    }
 }

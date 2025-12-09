@@ -17,7 +17,7 @@ public class QuicksoilGlassPaneBlock extends IronBarsBlock implements FrictionCa
      * @see FrictionCapped#getCappedFriction(Entity, float)
      */
     @Override
-    public Float aetherFabric$getFriction(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
+    public Float nitrogen_fabric$getFriction(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
         return this.getCappedFriction(entity, super.getFriction());
     }
 }

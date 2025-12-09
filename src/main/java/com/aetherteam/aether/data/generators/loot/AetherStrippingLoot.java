@@ -21,6 +21,6 @@ public record AetherStrippingLoot(HolderLookup.Provider registries) implements L
         builder.accept(AetherLoot.STRIP_GOLDEN_OAK, LootTable.lootTable()
                 .withPool(LootPool.lootPool().add(LootItem.lootTableItem(AetherItems.GOLDEN_AMBER.get())
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
-                        .apply(ApplyBonusCount.addOreBonusCount(this.registries.aetherFabric$holderOrThrow(Enchantments.FORTUNE))))));
+                        .apply(ApplyBonusCount.addOreBonusCount(this.registries.nitrogen_fabric$holderOrThrow(Enchantments.FORTUNE))))));
     }
 }

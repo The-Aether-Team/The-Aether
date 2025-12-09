@@ -3,7 +3,7 @@ package com.aetherteam.aether.client.gui.component.menu;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.aetherteam.aether.mixin.mixins.client.accessor.ButtonAccessor;
-import com.aetherteam.aetherfabric.BuilderMadeButton;
+import com.aetherteam.nitrogen.fabric.BuilderMadeButton;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;

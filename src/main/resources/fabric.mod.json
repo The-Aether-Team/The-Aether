@@ -47,8 +47,7 @@
     ]
   },
   "mixins": [
-    "${mod_id}.mixins.json",
-    "${mod_id}-fabric.mixins.json"
+    "${mod_id}.mixins.json"
   ],
   "accessWidener": "${mod_id}.accesswidener",
   "depends": {
@@ -60,46 +59,17 @@
   },
   "custom": {
     "loom:injected_interfaces": {
-      "net/minecraft/class_6880": [
-        "com/aetherteam/aetherfabric/pond/IHolderExtension<TT;>",
-        "com/aetherteam/aetherfabric/pond/IWithData<TT;>"
-      ],
-      "net/minecraft/class_2378": [
-        "com/aetherteam/aetherfabric/pond/IRegistryExtension<TT;>"
+      "net/minecraft/class_1297": [
+        "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget"
       ],
       "net/minecraft/class_1937": [
         "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget"
       ],
       "net/minecraft/class_1799": [
-        "net/fabricmc/fabric/api/item/v1/FabricItemStack",
-        "com/aetherteam/aetherfabric/pond/ItemStackExtension"
+        "net/fabricmc/fabric/api/item/v1/FabricItemStack"
       ],
       "net/minecraft/class_8610": [
         "net/fabricmc/fabric/api/networking/v1/FabricServerConfigurationNetworkHandler"
-      ],
-      "net/minecraft/class_7225\u0024class_7874": [
-        "com/aetherteam/aetherfabric/pond/IHolderLookupProviderExtension"
-      ],
-      "net/minecraft/class_1297": [
-        "com/aetherteam/aetherfabric/pond/EntityExtension"
-      ],
-      "net/minecraft/class_437": [
-        "com/aetherteam/aetherfabric/pond/client/ScreenExtension"
-      ],
-      "net/minecraft/class_2680": [
-        "com/aetherteam/aetherfabric/pond/BlockStateExtension"
-      ],
-      "net/minecraft/class_2248": [
-        "com/aetherteam/aetherfabric/pond/BlockExtension"
-      ],
-      "net/minecraft/class_304": [
-        "com/aetherteam/aetherfabric/pond/client/KeyMappingExtension"
-      ],
-      "net/minecraft/class_2586": [
-        "com/aetherteam/aetherfabric/pond/BlockEntityExtension"
-      ],
-      "net/minecraft/class_7225\u0024class_7226": [
-        "com/aetherteam/aetherfabric/pond/RegistryLookupExtension<TT;>"
       ]
     }
   }

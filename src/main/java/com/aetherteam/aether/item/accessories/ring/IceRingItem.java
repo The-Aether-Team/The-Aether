@@ -18,7 +18,7 @@ public class IceRingItem extends RingItem implements FreezingAccessory {
 
     @Override
     public void tick(ItemStack stack, SlotReference reference) {
-        if (!reference.entity().aetherFabric$isInFluidType()) {
+        if (!reference.entity().nitrogen_fabric$isInFluidType()) {
             this.freezeTick(reference, stack);
         }
     }

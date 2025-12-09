@@ -2,8 +2,8 @@ package com.aetherteam.aether.client.event.listeners;
 
 import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.AudioHooks;
-import com.aetherteam.aetherfabric.client.events.ClientPlayerEvents;
-import com.aetherteam.aetherfabric.events.CancellableCallback;
+import com.aetherteam.nitrogen.fabric.client.events.ClientPlayerEvents;
+import com.aetherteam.nitrogen.fabric.events.CancellableCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.mixin.client.sound.SoundInstanceMixin;
@@ -15,7 +15,7 @@ public class AudioListener {
      * @see AetherClient#eventSetup()
      */
     public static void listen() {
-        //SoundEngineMixin.aetherFabric$adjustSoundInstance -> AudioListener.onPlaySound
+        //SoundEngineMixin.nitrogen_fabric$adjustSoundInstance -> AudioListener.onPlaySound
         ClientTickEvents.END_CLIENT_TICK.register(client -> onClientTick());
         ClientPlayerEvents.ON_RESPAWN.register((oldPlayer, newPlayer) -> onPlayerRespawn());
     }

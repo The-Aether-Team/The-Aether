@@ -9,7 +9,7 @@ import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.aetherteam.aether.network.packet.serverbound.AerbunnyPuffPacket;
-import com.aetherteam.aetherfabric.network.PacketDistributor;
+import com.aetherteam.nitrogen.fabric.network.PacketDistributor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -126,7 +126,7 @@ public class Aerbunny extends AetherAnimal {
             }
         }
 
-        if (this.getVehicle() != null && (this.getVehicle().onGround() || this.getVehicle().aetherFabric$isInFluidType() || blockIntersection)) { // Reset the last tracked fall position if the Aerbunny touches a surface.
+        if (this.getVehicle() != null && (this.getVehicle().onGround() || this.getVehicle().nitrogen_fabric$isInFluidType() || blockIntersection)) { // Reset the last tracked fall position if the Aerbunny touches a surface.
             this.lastPos = null;
         }
     }
@@ -170,7 +170,7 @@ public class Aerbunny extends AetherAnimal {
             if (!player.onGround() && !player.isFallFlying()) {
                 AttributeInstance playerGravity = player.getAttribute(Attributes.GRAVITY);
                 if (playerGravity != null) {
-                    if (!player.getAbilities().flying && !player.aetherFabric$isInFluidType() && playerGravity.getValue() > 0.02) {  // Entity isn't allowed to fall too slowly from gravity.
+                    if (!player.getAbilities().flying && !player.nitrogen_fabric$isInFluidType() && playerGravity.getValue() > 0.02) {  // Entity isn't allowed to fall too slowly from gravity.
                         player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
                     }
                 }
@@ -386,7 +386,7 @@ public class Aerbunny extends AetherAnimal {
     }
 
     @Override
-    public boolean aetherFabric$canRiderInteract() {
+    public boolean nitrogen_fabric$canRiderInteract() {
         return true;
     }
 

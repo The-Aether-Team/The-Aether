@@ -12,7 +12,7 @@ import java.util.Map;
 public interface RecipeBookCategoriesAccessor {
     @Mutable
     @Accessor("AGGREGATE_CATEGORIES")
-    static void aetherFabric$setAGGREGATE_CATEGORIES(Map<RecipeBookCategories, List<RecipeBookCategories>> map) {
+    static void nitrogen_fabric$setAGGREGATE_CATEGORIES(Map<RecipeBookCategories, List<RecipeBookCategories>> map) {
         throw new IllegalStateException("HOW DID THIS HAPPEN");
     }
 }

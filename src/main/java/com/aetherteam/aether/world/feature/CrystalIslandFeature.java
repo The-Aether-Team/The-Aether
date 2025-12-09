@@ -44,7 +44,7 @@ public class CrystalIslandFeature extends Feature<NoneFeatureConfiguration> {
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         WorldGenLevel level = context.level();
         BlockPos pos = context.origin();
-        PlacedFeature feature = PlacementUtils.inlinePlaced(context.level().registryAccess().aetherFabric$holderOrThrow(AetherConfiguredFeatures.CRYSTAL_TREE_CONFIGURATION)).value();
+        PlacedFeature feature = PlacementUtils.inlinePlaced(context.level().registryAccess().nitrogen_fabric$holderOrThrow(AetherConfiguredFeatures.CRYSTAL_TREE_CONFIGURATION)).value();
         if (feature.place(level, context.chunkGenerator(), context.random(), context.origin().above())) {
             for (int i = 0; i < 3; i++) {
                 BlockState state;

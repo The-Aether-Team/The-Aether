@@ -53,7 +53,7 @@ public class SkyrootBucketItem extends BucketItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
-        BlockHitResult blockhitResult = getPlayerPOVHitResult(level, player, ((BucketItemAccessor)this).aetherFabric$content() == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
+        BlockHitResult blockhitResult = getPlayerPOVHitResult(level, player, ((BucketItemAccessor)this).nitrogen_fabric$content() == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
         if (blockhitResult.getType() == HitResult.Type.MISS) {
             return InteractionResultHolder.pass(heldStack);
         } else if (blockhitResult.getType() != HitResult.Type.BLOCK) {
@@ -63,7 +63,7 @@ public class SkyrootBucketItem extends BucketItem {
             Direction direction = blockhitResult.getDirection();
             BlockPos relativePos = blockPos.relative(direction);
             if (level.mayInteract(player, blockPos) && player.mayUseItemAt(relativePos, direction, heldStack)) {
-                if (((BucketItemAccessor)this).aetherFabric$content() == Fluids.EMPTY) {
+                if (((BucketItemAccessor)this).nitrogen_fabric$content() == Fluids.EMPTY) {
                     BlockState blockState = level.getBlockState(blockPos);
                     FluidState fluidState = level.getFluidState(blockPos);
                     if (blockState.getBlock() instanceof BucketPickup bucketPickup && (blockState.is(AetherTags.Blocks.ALLOWED_BUCKET_PICKUP) || fluidState.is(AetherTags.Fluids.ALLOWED_BUCKET_PICKUP))) {
@@ -132,6 +132,6 @@ public class SkyrootBucketItem extends BucketItem {
      * [CODE COPY] - {@link BucketItem#canBlockContainFluid(Player, Level, BlockPos, BlockState)}.
      */
     protected boolean canBlockContainFluid(Player player, Level level, BlockPos pos, BlockState state) {
-        return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(player, level, pos, state, ((BucketItemAccessor)this).aetherFabric$content());
+        return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(player, level, pos, state, ((BucketItemAccessor)this).nitrogen_fabric$content());
     }
 }

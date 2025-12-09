@@ -2,7 +2,7 @@ package com.aetherteam.aether.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
-import com.aetherteam.aetherfabric.events.*;
+import com.aetherteam.nitrogen.fabric.events.*;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
@@ -39,7 +39,7 @@ public class DimensionListener {
         ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> DimensionListener.onPlayerChangedDimension(player));
         PlayerTickEvents.AFTER.register(DimensionListener::onPlayerTraveling);
         ServerWorldEvents.LOAD.register((server, world) -> onWorldLoad(world));
-        // ServerLevelMixin.aetherFabric$adjustSleepTime -> DimensionListener::onSleepFinish
+        // ServerLevelMixin.nitrogen_fabric$adjustSleepTime -> DimensionListener::onSleepFinish
         EntitySleepEvents.ALLOW_SLEEPING.register((player, sleepingPos) -> DimensionListener.onTriedToSleep(player));
 //        bus.addListener(DimensionListener::onAlterGround);
     }

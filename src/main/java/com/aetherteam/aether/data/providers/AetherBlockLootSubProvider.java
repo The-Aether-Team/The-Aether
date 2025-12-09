@@ -71,11 +71,11 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
     }
 
     public LootTable.Builder droppingWithChancesAndSkyrootSticks(Block block, Block sapling, float... chances) {
-        return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.aetherFabric$holderOrThrow(Enchantments.FORTUNE), chances)))
+        return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.nitrogen_fabric$holderOrThrow(Enchantments.FORTUNE), chances)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(HAS_SHEARS.or(this.hasSilkTouch()).invert())
                         .add(this.applyExplosionDecay(block,
                                         LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.aetherFabric$holderOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.nitrogen_fabric$holderOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .apply(DoubleDrops.builder());
     }
 
@@ -84,19 +84,19 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(HAS_SHEARS.or(this.hasSilkTouch()).invert())
                         .add(this.applyExplosionCondition(block,
                                         LootItem.lootTableItem(Items.GOLDEN_APPLE))
-                                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.aetherFabric$holderOrThrow(Enchantments.FORTUNE), 0.00005F, 0.000055555557F, 0.0000625F, 0.00008333334F, 0.00025F))));
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.nitrogen_fabric$holderOrThrow(Enchantments.FORTUNE), 0.00005F, 0.000055555557F, 0.0000625F, 0.00008333334F, 0.00025F))));
     }
 
     public LootTable.Builder droppingDoubleItemsWithFortune(Block block, Item item) {
         return createSilkTouchDispatchTable(block, this.applyExplosionDecay(block, LootItem.lootTableItem(item)
-                .apply(ApplyBonusCount.addOreBonusCount(this.registries.aetherFabric$holderOrThrow(Enchantments.FORTUNE)))))
+                .apply(ApplyBonusCount.addOreBonusCount(this.registries.nitrogen_fabric$holderOrThrow(Enchantments.FORTUNE)))))
                 .apply(DoubleDrops.builder());
     }
 
     public LootTable.Builder droppingWithSkyrootSticks(Block block) {
         return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionDecay(block,
                         LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.aetherFabric$holderOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F)))
+                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.nitrogen_fabric$holderOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F)))
                 .apply(DoubleDrops.builder());
     }
 
@@ -105,7 +105,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(HAS_SHEARS.or(this.hasSilkTouch()).invert())
                         .add(this.applyExplosionDecay(block,
                                         LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.aetherFabric$holderOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(this.registries.nitrogen_fabric$holderOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .apply(DoubleDrops.builder());
     }
 
@@ -119,7 +119,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
                         .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
                         .when(this.hasSilkTouch().invert())
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
-                        .apply(ApplyBonusCount.addOreBonusCount(this.registries.aetherFabric$holderOrThrow(Enchantments.FORTUNE))))))
+                        .apply(ApplyBonusCount.addOreBonusCount(this.registries.nitrogen_fabric$holderOrThrow(Enchantments.FORTUNE))))))
                 .apply(DoubleDrops.builder());
     }
 
@@ -127,7 +127,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
         return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(this.applyExplosionDecay(block, LootItem.lootTableItem(drop)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
-                        .apply(ApplyBonusCount.addUniformBonusCount(this.registries.aetherFabric$holderOrThrow(Enchantments.FORTUNE))))
+                        .apply(ApplyBonusCount.addUniformBonusCount(this.registries.nitrogen_fabric$holderOrThrow(Enchantments.FORTUNE))))
                 .when(this.hasSilkTouch().invert())
                 .apply(DoubleDrops.builder())
         ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))

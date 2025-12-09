@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface ConnectionAccessor {
 
     @Accessor("channel")
-    Channel aetherFabric$getChannel();
+    Channel nitrogen_fabric$getChannel();
 }

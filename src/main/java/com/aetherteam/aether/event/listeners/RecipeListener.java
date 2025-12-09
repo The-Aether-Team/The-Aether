@@ -5,7 +5,7 @@ import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.event.PlacementBanEvent;
 import com.aetherteam.aether.event.PlacementConvertEvent;
 import com.aetherteam.aether.event.hooks.RecipeHooks;
-import com.aetherteam.aetherfabric.events.BlockEvents;
+import com.aetherteam.nitrogen.fabric.events.BlockEvents;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.core.BlockPos;

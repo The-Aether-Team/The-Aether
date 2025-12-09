@@ -25,12 +25,12 @@ public class AetherJukeboxSongs {
     }
 
     public static void bootstrap(BootstrapContext<JukeboxSong> context) {
-        register(context, AETHER_TUNE, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE.aetherFabric$getDelegate(), 149, 1);
-        register(context, ASCENDING_DAWN, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN.aetherFabric$getDelegate(), 350, 2);
-        register(context, CHINCHILLA, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_CHINCHILLA.aetherFabric$getDelegate(), 164, 3);
-        register(context, HIGH, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_HIGH.aetherFabric$getDelegate(), 186, 4);
-        register(context, KLEPTO, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_KLEPTO.aetherFabric$getDelegate(), 192, 5);
-        register(context, SLIDERS_WRATH, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_SLIDERS_WRATH.aetherFabric$getDelegate(), 172, 6);
+        register(context, AETHER_TUNE, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE.nitrogen_fabric$getDelegate(), 149, 1);
+        register(context, ASCENDING_DAWN, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN.nitrogen_fabric$getDelegate(), 350, 2);
+        register(context, CHINCHILLA, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_CHINCHILLA.nitrogen_fabric$getDelegate(), 164, 3);
+        register(context, HIGH, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_HIGH.nitrogen_fabric$getDelegate(), 186, 4);
+        register(context, KLEPTO, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_KLEPTO.nitrogen_fabric$getDelegate(), 192, 5);
+        register(context, SLIDERS_WRATH, (Holder.Reference<SoundEvent>) AetherSoundEvents.ITEM_MUSIC_DISC_SLIDERS_WRATH.nitrogen_fabric$getDelegate(), 172, 6);
     }
 
     private static void register(BootstrapContext<JukeboxSong> context, ResourceKey<JukeboxSong> key, Holder.Reference<SoundEvent> soundEvent, int lengthInSeconds, int comparatorOutput) {
