@@ -118,7 +118,8 @@ dependencies {
     compileOnly "mezz.jei:jei-${project.minecraft_version}-neoforge:${project.jei_version}"
 
     compileOnly "curse.maven:jade-324717:${project.jade_version}"
-    compileOnly "curse.maven:lootr-361276:${project.lootr_version}"
+    // Lootr via Maven for full API access
+    compileOnly "noobanidus.mods.lootr:lootr-neoforge:${project.lootr_maven_version}"
 
 //    implementation fileTree(dir: 'libs', include: '*.jar')
 

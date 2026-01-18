@@ -12,6 +12,10 @@ public class AetherAtlases {
     public static Material TREASURE_CHEST_LEFT_MATERIAL;
     public static Material TREASURE_CHEST_RIGHT_MATERIAL;
 
+    // Lootr integration textures
+    public static Material LOOTR_TREASURE_CHEST_OPENED_MATERIAL;
+    public static Material LOOTR_TREASURE_CHEST_UNOPENED_MATERIAL;
+
     /**
      * Need to register these static values here from {@link AetherClient#clientSetup(FMLClientSetupEvent)},
      * otherwise they'll be loaded too early from static initialization in the field.
@@ -20,6 +24,10 @@ public class AetherAtlases {
         TREASURE_CHEST_MATERIAL = getChestMaterial("treasure_chest");
         TREASURE_CHEST_LEFT_MATERIAL = getChestMaterial("treasure_chest_left");
         TREASURE_CHEST_RIGHT_MATERIAL = getChestMaterial("treasure_chest_right");
+
+        // Lootr textures (used when Lootr is installed)
+        LOOTR_TREASURE_CHEST_OPENED_MATERIAL = getChestMaterial("lootr/treasure_chest_opened");
+        LOOTR_TREASURE_CHEST_UNOPENED_MATERIAL = getChestMaterial("lootr/treasure_chest_unopened");
     }
 
     public static void registerWoodTypeAtlases() {

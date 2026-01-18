@@ -36,6 +36,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.event.EventHooks;
 
 import java.util.function.Supplier;
@@ -84,7 +85,13 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return level.isClientSide() ? createTickerHelper(blockEntityType, this.blockEntityType(), TreasureChestBlockEntity::lidAnimateTick) : null;
+        if (level.isClientSide()) {
+            return createTickerHelper(blockEntityType, this.blockEntityType(), TreasureChestBlockEntity::lidAnimateTick);
+        } else if (ModList.get().isLoaded("lootr")) {
+            // Lootr integration: use Lootr's ticker for decay/refresh mechanics
+            return com.aetherteam.aether.integration.lootr.LootrCompat.getTicker();
+        }
+        return null;
     }
 
     @Override
@@ -98,6 +105,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
     /**
      * [CODE COPY] - {@link ChestBlock#useWithoutItem(BlockState, Level, BlockPos, Player, BlockHitResult)}.<br><br>
      * Handles behavior for checking if a chest is locked and being able to unlock the chest.
+     * When Lootr is installed, uses Lootr's per-player inventory system.
      *
      * @param state  The {@link BlockState} of the block.
      * @param level  The {@link Level} the block is in.
@@ -114,11 +122,23 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
                 if (level.isClientSide()) {
                     return InteractionResult.SUCCESS;
                 } else {
-                    MenuProvider menuprovider = this.getMenuProvider(state, level, pos);
-                    if (menuprovider != null) {
-                        player.openMenu(menuprovider);
+                    // Lootr integration: use per-player inventory when Lootr is installed
+                    if (ModList.get().isLoaded("lootr")) {
+                        if (player.isShiftKeyDown()) {
+                            com.aetherteam.aether.integration.lootr.LootrCompat.handleTreasureChestSneak(player, pos, level);
+                        } else {
+                            com.aetherteam.aether.integration.lootr.LootrCompat.openTreasureChest(player, pos, level);
+                        }
                         player.awardStat(Stats.CUSTOM.get(Stats.OPEN_CHEST));
                         PiglinAi.angerNearbyPiglins(player, true);
+                    } else {
+                        // Default behavior without Lootr
+                        MenuProvider menuprovider = this.getMenuProvider(state, level, pos);
+                        if (menuprovider != null) {
+                            player.openMenu(menuprovider);
+                            player.awardStat(Stats.CUSTOM.get(Stats.OPEN_CHEST));
+                            PiglinAi.angerNearbyPiglins(player, true);
+                        }
                     }
 
                     return InteractionResult.CONSUME;
@@ -182,6 +202,15 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
                 level.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, level, pos, stateOther, flag);
+        }
+    }
+
+    @Override
+    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack itemStack) {
+        super.playerDestroy(level, player, pos, state, blockEntity, itemStack);
+        // Lootr integration: notify Lootr when chest is destroyed
+        if (ModList.get().isLoaded("lootr") && blockEntity instanceof TreasureChestBlockEntity treasureChest) {
+            com.aetherteam.aether.integration.lootr.LootrCompat.onTreasureChestDestroyed(level, player, pos, treasureChest);
         }
     }
 
