@@ -1,1 +1,4 @@
-{}
+{
+  "advancement.aether.craft_altar.desc": "Construa um Altar",
+  "block.aether.altar": "Altar"
+}
