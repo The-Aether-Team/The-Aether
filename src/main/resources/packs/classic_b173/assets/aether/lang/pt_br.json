@@ -1,1 +1,11 @@
-{}
+{
+  "advancement.aether.craft_altar.desc": "Construa um Altar",
+  "aether.pro_tips.line.aether.altar_repairing": "Altares podem reparar itens danificados e aprimorar itens existentes.",
+  "aether.pro_tips.line.aether.ambrosium_shard_fuel": "Fragmentos de Ambrósio são ótimos para abastecer Altares.",
+  "block.aether.altar": "Altar",
+  "lore.aether.blue_berry": "Colhido de Arbustos de Mirtilo, esta é a fonte de comida mais comum no Aether. Possui uma restauração de fome muito fraca. Você pode encantá-lo em um Altar para melhorar a sua restauração de fome.",
+  "lore.aether.enchanted_gravitite": "Após colocar Minério de Gravitita em um Altar e encanta-lo, você conseguira Gravitita Encantada. Isso pode ser transformado em Ferramentas e Armadora de Gravitita. Quando energizados com um sinal de Redstone, Blocos de Gravitita Encantada flutuarão, similar a Minério de Gravitita.",
+  "lore.aether.golden_dart_shooter": "Uma Zarabatana que atira Dardos Dourados, encantando-a em um Altar aprimora seu poder de ataque!",
+  "menu.aether.altar": "Altar",
+  "subtitles.aether.block.altar.crackle": "Altar estala"
+}
