@@ -52,7 +52,10 @@ public class EntityListener {
         OnDeathCallback.EVENT.register((currentState, entity, capability, damageSource, droppedStacks) -> {
             List<ItemStack> droppedStacksCopy = new ArrayList<>(droppedStacks);
             boolean recentlyHit = entity.hurtMarked;
-            int looting = EnchantmentHelper.getEnchantmentLevel(entity.level().registryAccess().aetherFabric$holderOrThrow(Enchantments.LOOTING), entity);
+            int looting = EnchantmentHelper.getEnchantmentLevel(
+                    entity.level().registryAccess().lookupOrThrow(Enchantments.LOOTING.registryKey()).getOrThrow(Enchantments.LOOTING),
+                    entity
+            );
             droppedStacks.clear();
             droppedStacks.addAll(EntityHooks.handleEntityAccessoryDrops(entity, droppedStacksCopy, recentlyHit, looting));
             return TriState.DEFAULT;
