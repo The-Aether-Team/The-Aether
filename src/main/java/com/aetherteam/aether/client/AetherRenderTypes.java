@@ -12,13 +12,27 @@ import net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent;
 public class AetherRenderTypes {
     public static final ResourceLocation ENCHANTED_GLINT_MOA = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/misc/enchanted_glint_moa.png");
 
-    public static final RenderType POTTERY_MOA = RenderType.create(
-        "entity_glint",
+    public static final RenderType POTTERY_MOA = RenderType.create("aether:pottery_moa",
         DefaultVertexFormat.POSITION_TEX,
         VertexFormat.Mode.QUADS,
         1536,
         RenderType.CompositeState.builder()
             .setShaderState(new RenderStateShard.ShaderStateShard(AetherShaders::getPotteryMoaShader))
+            .setTextureState(new RenderStateShard.TextureStateShard(ENCHANTED_GLINT_MOA, true, false))
+            .setWriteMaskState(RenderType.COLOR_WRITE)
+            .setCullState(RenderType.NO_CULL)
+            .setDepthTestState(RenderType.EQUAL_DEPTH_TEST)
+            .setTransparencyState(RenderType.GLINT_TRANSPARENCY)
+            .setOutputState(RenderType.ITEM_ENTITY_TARGET)
+            .setTexturingState(RenderType.GLINT_TEXTURING)
+            .createCompositeState(false)
+    );
+    public static final RenderType FOUNTAIN_MOA = RenderType.create("aether:fountain_moa",
+        DefaultVertexFormat.POSITION_TEX,
+        VertexFormat.Mode.QUADS,
+        1536,
+        RenderType.CompositeState.builder()
+            .setShaderState(new RenderStateShard.ShaderStateShard(AetherShaders::getFountainMoaShader))
             .setTextureState(new RenderStateShard.TextureStateShard(ENCHANTED_GLINT_MOA, true, false))
             .setWriteMaskState(RenderType.COLOR_WRITE)
             .setCullState(RenderType.NO_CULL)
@@ -65,6 +79,10 @@ public class AetherRenderTypes {
         return POTTERY_MOA;
     }
 
+    public static RenderType fountainMoa() {
+        return FOUNTAIN_MOA;
+    }
+
     public static RenderType voidMoa() {
         return VOID_MOA;
     }
@@ -75,6 +93,7 @@ public class AetherRenderTypes {
 
     public static void registerRenderBuffers(RegisterRenderBuffersEvent event) {
         event.registerRenderBuffer(potteryMoa());
+        event.registerRenderBuffer(fountainMoa());
         event.registerRenderBuffer(voidMoa());
         event.registerRenderBuffer(galaxianMoa());
     }

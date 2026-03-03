@@ -2,10 +2,7 @@ package com.aetherteam.aether.perk.types;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.api.registers.MoaType;
-import com.aetherteam.aether.client.renderer.entity.sub.PotteryMoaSubRenderer;
-import com.aetherteam.aether.client.renderer.entity.sub.GalaxianMoaSubRenderer;
-import com.aetherteam.aether.client.renderer.entity.sub.MoaSubRenderer;
-import com.aetherteam.aether.client.renderer.entity.sub.VoidMoaSubRenderer;
+import com.aetherteam.aether.client.renderer.entity.sub.*;
 import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
@@ -362,6 +359,14 @@ public class MoaSkins {
             .iconLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/icons/pottery_moa_icon"))
             .skinLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/skins/pottery_moa/pottery_moa.png"))
             .subRenderer(new PotteryMoaSubRenderer())
+            .info(new MoaSkin.Info(User.Tier.ARKENZUS, false))
+        ));
+        register("fountain_moa", new MoaSkin("fountain_moa", new MoaSkin.Properties()
+            .displayName(Component.translatable("gui.aether.moa_skins.skin.fountain_moa"))
+            .userPredicate((user) -> PerkUtil.hasArkenzusMoaSkins().test(user))
+            .iconLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/icons/fountain_moa_icon"))
+            .skinLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/skins/fountain_moa/fountain_moa.png"))
+            .subRenderer(new FountainMoaSubRenderer())
             .info(new MoaSkin.Info(User.Tier.ARKENZUS, false))
         ));
         register("void_moa", new MoaSkin("void_moa", new MoaSkin.Properties()
