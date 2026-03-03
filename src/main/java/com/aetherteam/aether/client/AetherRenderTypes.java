@@ -11,20 +11,22 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent;
 
 public class AetherRenderTypes {
-    public static final RenderType POTTERY_MOA = RenderType.create( //todo decrease frequency of fluctuation
+    public static final ResourceLocation ENCHANTED_GLINT_MOA = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/misc/enchanted_glint_moa.png");
+    
+    public static final RenderType POTTERY_MOA = RenderType.create(
         "entity_glint",
         DefaultVertexFormat.POSITION_TEX,
         VertexFormat.Mode.QUADS,
         1536,
         RenderType.CompositeState.builder()
             .setShaderState(new RenderStateShard.ShaderStateShard(AetherShaders::getPotteryMoaShader))
-            .setTextureState(new RenderStateShard.TextureStateShard(ItemRenderer.ENCHANTED_GLINT_ITEM, true, false))
+            .setTextureState(new RenderStateShard.TextureStateShard(ENCHANTED_GLINT_MOA, true, false))
             .setWriteMaskState(RenderType.COLOR_WRITE)
             .setCullState(RenderType.NO_CULL)
             .setDepthTestState(RenderType.EQUAL_DEPTH_TEST)
             .setTransparencyState(RenderType.GLINT_TRANSPARENCY)
             .setOutputState(RenderType.ITEM_ENTITY_TARGET)
-            .setTexturingState(RenderType.ENTITY_GLINT_TEXTURING)
+            .setTexturingState(RenderType.GLINT_TEXTURING)
             .createCompositeState(false)
     );
     public static final RenderType VOID_MOA = RenderType.create("aether:void_moa",
