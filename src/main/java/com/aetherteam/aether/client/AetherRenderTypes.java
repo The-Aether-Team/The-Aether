@@ -6,13 +6,12 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent;
 
 public class AetherRenderTypes {
     public static final ResourceLocation ENCHANTED_GLINT_MOA = ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/misc/enchanted_glint_moa.png");
-    
+
     public static final RenderType POTTERY_MOA = RenderType.create(
         "entity_glint",
         DefaultVertexFormat.POSITION_TEX,

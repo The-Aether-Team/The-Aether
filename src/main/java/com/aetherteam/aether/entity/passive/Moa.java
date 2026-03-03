@@ -5,6 +5,7 @@ import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.renderer.AetherOverlays;
+import com.aetherteam.aether.client.renderer.entity.sub.MoaSubRenderer;
 import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.EntityUtil;
@@ -280,6 +281,10 @@ public class Moa extends MountableAnimal implements WingedBird {
             }
         }
         this.checkSlowFallDistance(); // Resets the Moa's fall distance.
+
+        if (this.level().isClientSide()) {
+            MoaSubRenderer.tickParticles(this);
+        }
     }
 
     /**
