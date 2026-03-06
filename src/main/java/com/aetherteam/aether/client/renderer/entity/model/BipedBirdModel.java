@@ -8,6 +8,7 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
@@ -27,6 +28,7 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
     public final ModelPart leftTailFeather;
 
     public BipedBirdModel(ModelPart root) {
+        super(RenderType::entityTranslucent);
         this.head = root.getChild("head");
         this.jaw = this.head.getChild("jaw");
         this.neck = this.head.getChild("neck");
