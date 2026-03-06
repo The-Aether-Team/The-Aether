@@ -102,9 +102,19 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
         UUID moaUUID = moa.getMoaUUID();
         Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
         if (Minecraft.getInstance().screen instanceof MoaSkinsScreen moaSkinsScreen && moaSkinsScreen.getSelectedSkin() != null && moaSkinsScreen.getPreviewMoa() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID().equals(moaUUID)) {
-            return moaSkinsScreen.getSelectedSkin().getSkinLocation();
+            ResourceLocation texture = moaSkinsScreen.getSelectedSkin().getSkinLocation();
+            if (moaSkinsScreen.getSelectedSkin().getSubRenderer() != null && moaSkinsScreen.getSelectedSkin().getSubRenderer().getAnimationData() != null) {
+                return moaSkinsScreen.getSelectedSkin().getSubRenderer().getAnimationFrame(texture, moa.tickCount);
+            } else {
+                return texture;
+            }
         } else if (userSkinsData.containsKey(lastRiderUUID) && userSkinsData.get(lastRiderUUID).moaSkin() != null && userSkinsData.get(lastRiderUUID).moaUUID() != null && userSkinsData.get(lastRiderUUID).moaUUID().equals(moaUUID)) {
-            return userSkinsData.get(lastRiderUUID).moaSkin().getSkinLocation();
+            ResourceLocation texture = userSkinsData.get(lastRiderUUID).moaSkin().getSkinLocation();
+            if (userSkinsData.get(lastRiderUUID).moaSkin().getSubRenderer() != null && userSkinsData.get(lastRiderUUID).moaSkin().getSubRenderer().getAnimationData() != null) {
+                return userSkinsData.get(lastRiderUUID).moaSkin().getSubRenderer().getAnimationFrame(texture, moa.tickCount);
+            } else {
+                return texture;
+            }
         }
         return null;
     }

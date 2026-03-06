@@ -19,4 +19,9 @@ public class FountainMoaSubRenderer implements MoaSubRenderer {
         layerModel.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
     }
+
+    @Override
+    public AnimationData getAnimationData() {
+        return new AnimationData(4, 20);
+    }
 }

@@ -9,6 +9,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 import java.util.Map;
 import java.util.UUID;
@@ -31,5 +33,23 @@ public interface MoaSubRenderer {
                 userSkinsData.get(lastRiderUUID).moaSkin().getSubRenderer().createParticles(level, moa);
             }
         }
+    }
+
+    default ResourceLocation getAnimationFrame(ResourceLocation texture, int tickCount) {
+        if (this.getAnimationData() != null) {
+            int frame = Mth.floor(((float) tickCount / this.getAnimationData().delay()) % this.getAnimationData().frames());
+            String textureString = texture.toString();
+            textureString = textureString.replace(".png", "_" + frame + ".png");
+            return ResourceLocation.parse(textureString);
+        }
+        return texture;
+    }
+
+    default AnimationData getAnimationData() {
+        return null;
+    }
+
+    record AnimationData(int frames, int delay) {
+
     }
 }
