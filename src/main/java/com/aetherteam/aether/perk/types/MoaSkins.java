@@ -353,11 +353,11 @@ public class MoaSkins {
             .saddleLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/skins/prehistoric_moa/prehistoric_moa_saddle.png"))
             .info(new MoaSkin.Info(User.Tier.VALKYRIE, false))
         ));
-        register("science_moa", new MoaSkin("science_moa", new MoaSkin.Properties()
-            .displayName(Component.translatable("gui.aether.moa_skins.skin.science_moa"))
+        register("anatomical_moa", new MoaSkin("anatomical_moa", new MoaSkin.Properties()
+            .displayName(Component.translatable("gui.aether.moa_skins.skin.anatomical_moa"))
             .userPredicate((user) -> PerkUtil.hasArkenzusMoaSkins().test(user))
-            .iconLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/icons/science_moa_icon"))
-            .skinLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/skins/science_moa/science_moa.png"))
+            .iconLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "skins/icons/anatomical_moa_icon"))
+            .skinLocation(ResourceLocation.fromNamespaceAndPath(Aether.MODID, "textures/entity/mobs/moa/skins/anatomical_moa/anatomical_moa.png"))
             .info(new MoaSkin.Info(User.Tier.ARKENZUS, false))
         ));
         register("pottery_moa", new MoaSkin("pottery_moa", new MoaSkin.Properties()
