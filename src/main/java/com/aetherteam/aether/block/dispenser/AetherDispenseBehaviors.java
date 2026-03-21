@@ -77,28 +77,12 @@ public class AetherDispenseBehaviors {
             LivingEntity livingEntity = list.get(0);
             if (!(livingEntity instanceof ArmorStand armorStand)) {
                 Optional.ofNullable(AccessoriesAPI.getAccessory(stack)).ifPresent(curio -> Optional.ofNullable(livingEntity.accessoriesCapability()).ifPresent(handler -> {
-                    Map<String, AccessoriesContainer> curios = handler.getContainers();
-                    for (Map.Entry<String, AccessoriesContainer> entry : curios.entrySet()) { // Curios entries.
-                        AccessoriesContainer stacksHandler = entry.getValue();
-                        if (List.of(AccessoriesMenu.AETHER_IDENTIFIERS).contains(entry.getKey())) { // Check if Curios entries match the ones in the Aether accessories menu.
-                            ExpandedSimpleContainer stackHandler = stacksHandler.getAccessories();
-                            for (int i = 0; i < stackHandler.items.size(); i++) {
-                                String id = entry.getKey();
-                                SlotReference slotContext = stacksHandler.createReference(i); // Get slot that a Curio entry has.
-                                if (curio.canEquip(stack, slotContext) && curio.canEquipFromUse(stack, slotContext)) {
-                                    ItemStack slotStack = stackHandler.getItem(i);
-                                    if (slotStack.isEmpty()) { // Check if Curio slot is empty.
-                                        stackHandler.setItem(i, stack.split(1)); // Split 1 item from dispenser stack into slot.
-                                        if (livingEntity instanceof Mob mob && EntityHooks.canMobSpawnWithAccessories(mob)) {
-                                            MobAccessory.get(mob).ifPresent((accessoryMob) -> {
-                                                accessoryMob.setGuaranteedDrop(id);
-                                                accessoryMob.getMob().setPersistenceRequired();
-                                            });
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    SlotReference slotReference = handler.attemptToEquipAccessory(stack); // Innate check for if the accessory fits.
+                    if (slotReference != null && livingEntity instanceof Mob mob && EntityHooks.canMobSpawnWithAccessories(mob)) {
+                        MobAccessory.get(mob).ifPresent((accessoryMob) -> {
+                            accessoryMob.setGuaranteedDrop(slotReference.slotName());
+                            accessoryMob.getMob().setPersistenceRequired();
+                        });
                     }
                 }));
             } else {
@@ -129,7 +113,7 @@ public class AetherDispenseBehaviors {
                                             } else {
                                                 armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, armorStand.getSoundSource(), 1, 1);
                                             }
-                                            stackHandler.setItem(0, stack.split(1));
+                                            stackHandler.setItem(0, stack.split(1)); // Using the Container to target the cosmetic accessories specifically.
                                             if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
                                                 armorStand.setShowArms(true);
                                             }

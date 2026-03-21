@@ -62,6 +62,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -558,24 +560,33 @@ public class EntityHooks {
      */
     public static List<ItemStack> handleEntityAccessoryDrops(LivingEntity entity, List<ItemStack> itemStacks, boolean recentlyHit, int looting) {
         if (entity instanceof Mob mob) {
+            AccessoriesCapability handler = AccessoriesCapability.get(entity);
+            List<ItemStack> stacks = new ArrayList<>();
             String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
+            if(handler == null) return itemStacks;
             for (String identifier : allSlots) {
-                if (!itemStacks.isEmpty()) {
-                    ItemStack itemStack = itemStacks.get(0);
-                    float f = AetherCapabilities.MOB_ACCESSORY_CAPABILITY.maybeGet(mob).orElseThrow().getEquipmentDropChance(identifier);
-                    boolean flag = f > 1.0F;
-                    if (!itemStack.isEmpty()) {
-                        itemStacks.removeIf((stack) -> ItemStack.isSameItemSameTags(stack, itemStack));
-                    }
-                    if (!itemStack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemStack) && recentlyHit && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f) {
-                        if (!flag && itemStack.isDamageableItem()) {
-                            itemStack.setDamageValue(itemStack.getMaxDamage() - mob.getRandom().nextInt(1 + mob.getRandom().nextInt(Math.max(itemStack.getMaxDamage() - 3, 1))));
+                AccessoriesContainer stacksHandler = handler.getContainer(new SlotTypeReference(identifier));
+                if(stacksHandler != null) {
+                    ExpandedSimpleContainer stackHandler = stacksHandler.getAccessories();
+                    for(ItemStack itemStack : itemStacks) {
+                        if(!itemStack.isEmpty() && stackHandler.canAddItem(itemStack)) {
+                            float f = AetherCapabilities.MOB_ACCESSORY_CAPABILITY.maybeGet(mob).orElseThrow().getEquipmentDropChance(identifier);
+                            boolean flag = f > 1.0F;
+                            if (!EnchantmentHelper.hasVanishingCurse(itemStack)) {
+                                if (!flag) {
+                                    itemStack.setDamageValue(itemStack.getMaxDamage() - mob.getRandom().nextInt(1 + mob.getRandom().nextInt(Math.max(itemStack.getMaxDamage() - 3, 1))));
+                                }
+                                if(flag || (recentlyHit && itemStack.isDamageableItem() && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f)) {
+                                    stacks.add(itemStack);
+                                }
+                            }
                         }
-                        itemStacks.add(itemStack);
                     }
+                    itemStacks.removeIf(stackHandler::canAddItem);
                 }
             }
-
+            stacks.addAll(itemStacks);
+            return stacks;
         }
         return itemStacks;
     }
