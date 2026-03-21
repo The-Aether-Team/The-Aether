@@ -75,9 +75,8 @@ public class AetherDispenseBehaviors {
             return false;
         } else {
             LivingEntity livingEntity = list.get(0);
-            ItemStack itemStack = stack.split(1);
             if (!(livingEntity instanceof ArmorStand armorStand)) {
-                Optional.ofNullable(AccessoriesAPI.getAccessory(itemStack)).ifPresent(curio -> Optional.ofNullable(livingEntity.accessoriesCapability()).ifPresent(handler -> {
+                Optional.ofNullable(AccessoriesAPI.getAccessory(stack)).ifPresent(curio -> Optional.ofNullable(livingEntity.accessoriesCapability()).ifPresent(handler -> {
                     Map<String, AccessoriesContainer> curios = handler.getContainers();
                     for (Map.Entry<String, AccessoriesContainer> entry : curios.entrySet()) { // Curios entries.
                         AccessoriesContainer stacksHandler = entry.getValue();
@@ -86,12 +85,10 @@ public class AetherDispenseBehaviors {
                             for (int i = 0; i < stackHandler.items.size(); i++) {
                                 String id = entry.getKey();
                                 SlotReference slotContext = stacksHandler.createReference(i); // Get slot that a Curio entry has.
-                                if (curio.canEquip(itemStack, slotContext) && curio.canEquipFromUse(itemStack, slotContext)) {
+                                if (curio.canEquip(stack, slotContext) && curio.canEquipFromUse(stack, slotContext)) {
                                     ItemStack slotStack = stackHandler.getItem(i);
                                     if (slotStack.isEmpty()) { // Check if Curio slot is empty.
-                                        stackHandler.setItem(i, itemStack.copy()); // Put copy of stack from dispenser into slot.
-                                        int count = itemStack.getCount();
-                                        itemStack.shrink(count); // Shrink stack in dispenser.
+                                        stackHandler.setItem(i, stack.split(1)); // Split 1 item from dispenser stack into slot.
                                         if (livingEntity instanceof Mob mob && EntityHooks.canMobSpawnWithAccessories(mob)) {
                                             MobAccessory.get(mob).ifPresent((accessoryMob) -> {
                                                 accessoryMob.setGuaranteedDrop(id);
@@ -105,16 +102,16 @@ public class AetherDispenseBehaviors {
                     }
                 }));
             } else {
-                Optional.ofNullable(AccessoriesAPI.getAccessory(itemStack)).ifPresent(curio -> Optional.ofNullable(livingEntity.accessoriesCapability()).ifPresent(handler -> {
-                    if (itemStack.is(AetherTags.Items.ACCESSORIES)) {
+                Optional.ofNullable(AccessoriesAPI.getAccessory(stack)).ifPresent(curio -> Optional.ofNullable(livingEntity.accessoriesCapability()).ifPresent(handler -> {
+                    if (stack.is(AetherTags.Items.ACCESSORIES)) {
                         String identifier = "";
-                        if (itemStack.getItem() instanceof GlovesItem) {
+                        if (stack.getItem() instanceof GlovesItem) {
                             identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
-                        } else if (itemStack.getItem() instanceof PendantItem) {
+                        } else if (stack.getItem() instanceof PendantItem) {
                             identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
-                        } else if (itemStack.getItem() instanceof CapeItem) {
+                        } else if (stack.getItem() instanceof CapeItem) {
                             identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
-                        } else if (itemStack.getItem() instanceof ShieldOfRepulsionItem) {
+                        } else if (stack.getItem() instanceof ShieldOfRepulsionItem) {
                             identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
                         }
                         AccessoriesContainer stacksHandler = handler.getContainer(SlotTypeLoader.getSlotType(livingEntity, identifier));
@@ -122,17 +119,17 @@ public class AetherDispenseBehaviors {
                             ExpandedSimpleContainer stackHandler = stacksHandler.getCosmeticAccessories();
                             if (0 < stackHandler.items.size()) {
                                 if (stackHandler.getItem(0).isEmpty()) {
-                                    if (itemStack.getItem() instanceof AccessoryItem accessoryItem) {
+                                    if (stack.getItem() instanceof AccessoryItem accessoryItem) {
                                         SlotReference slotContext = stacksHandler.createReference(0);
-                                        if (accessoryItem.canEquip(itemStack, slotContext)) {
-                                            stackHandler.setItem(0, itemStack.copy());
+                                        if (accessoryItem.canEquip(stack, slotContext)) {
                                             if (accessoryItem instanceof GlovesItem glovesItem) {
-                                                armorStand.level().playSound(null, armorStand.blockPosition(), glovesItem.getEquipSound(itemStack, slotContext).event(), armorStand.getSoundSource(), 1, 1);
+                                                armorStand.level().playSound(null, armorStand.blockPosition(), glovesItem.getEquipSound(stack, slotContext).event(), armorStand.getSoundSource(), 1, 1);
                                             } else if (accessoryItem instanceof PendantItem pendantItem) {
-                                                armorStand.level().playSound(null, armorStand.blockPosition(), pendantItem.getEquipSound(itemStack, slotContext).event(), armorStand.getSoundSource(), 1, 1);
+                                                armorStand.level().playSound(null, armorStand.blockPosition(), pendantItem.getEquipSound(stack, slotContext).event(), armorStand.getSoundSource(), 1, 1);
                                             } else {
                                                 armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, armorStand.getSoundSource(), 1, 1);
                                             }
+                                            stackHandler.setItem(0, stack.split(1));
                                             if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
                                                 armorStand.setShowArms(true);
                                             }
