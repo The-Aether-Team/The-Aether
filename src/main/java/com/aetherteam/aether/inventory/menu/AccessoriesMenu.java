@@ -329,4 +329,6 @@ public class AccessoriesMenu extends InventoryMenu {
     public RecipeBookType getRecipeBookType() {
         return RecipeBookType.CRAFTING;
     }
+
+    public void trinkets$updateTrinketSlots(boolean slotsChanged) { } // Prevents instantiation of InventoryMenu from refreshing Trinkets slots.
 }
