@@ -1,5 +1,6 @@
 package com.aetherteam.aether.inventory.menu;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.mixin.mixins.common.accessor.AbstractContainerMenuAccessor;
 import com.mojang.datafixers.util.Pair;
 import io.wispforest.accessories.api.AccessoriesAPI;
@@ -53,6 +54,14 @@ public class AccessoriesMenu extends InventoryMenu {
             "aether_ring",
             "aether_gloves",
             "aether_accessory"
+    };
+    public static final String[] AETHER_CURIOS_IDENTIFIERS = new String[] {
+            "necklace",
+            "back", // Whilst accessories uses cape and back,
+            "body", // Curios uses back and body.
+            "ring",
+            "hands",
+            "charm"
     };
 
     public final Optional<AccessoriesCapability> curiosHandler;
@@ -144,12 +153,13 @@ public class AccessoriesMenu extends InventoryMenu {
             int slots = 0;
             int xOffset = 77;
             int yOffset = 8;
-            for (String identifier : AETHER_IDENTIFIERS) { // Creates the slots for all the Aether Accessory identifiers.
+            for (String identifier : AetherConfig.COMMON.use_curios_menu.get() ? AETHER_CURIOS_IDENTIFIERS : AETHER_IDENTIFIERS) { // Creates the slots for all the Aether Accessory identifiers.
                 AccessoriesContainer stacksHandler = curioMap.get(identifier);
+                if(stacksHandler == null) continue;
                 ExpandedSimpleContainer stackHandler = stacksHandler.getAccessories();
 //                if (!stacksHandler.isVisible()) {
                     for (int i = 0; i < stacksHandler.getSize(); i++) {
-                        if (!identifier.equals("aether_accessory")) {
+                        if (!identifier.equals("aether_accessory") && !identifier.equals("charm")) {
                             this.addSlot(AccessoriesBasedSlot.of(this.player, stacksHandler.slotType(), i, xOffset, yOffset));
                             slots++;
                             yOffset += 18;
@@ -158,7 +168,7 @@ public class AccessoriesMenu extends InventoryMenu {
                                 yOffset = 8;
                             }
                         } else {
-                            if (slots == 6) {
+                            if (i == 0) {
                                 xOffset = 77;
                             }
                             this.addSlot(AccessoriesBasedSlot.of(this.player, stacksHandler.slotType(), i, xOffset, 62));
@@ -311,14 +321,11 @@ public class AccessoriesMenu extends InventoryMenu {
 
     private Set<Integer> getEmptyCurioSlots(Collection<SlotType> slotData) {
         Set<Integer> slots = new HashSet<>();
-        for (SlotType identifier : slotData) {
-            switch(identifier.name()) {
-                case "aether_pendant" -> slots.add(46);
-                case "aether_cape" -> slots.add(47);
-                case "aether_shield" -> slots.add(48);
-                case "aether_ring" -> slots.addAll(Set.of(49, 50));
-                case "aether_gloves" -> slots.add(51);
-                case "aether_accessory" -> slots.addAll(Set.of(52, 53));
+        for (int slotIndex = 46; slotIndex < this.slots.size(); slotIndex++) {
+            for (SlotType identifier : slotData) {
+                if(this.slots.get(slotIndex) instanceof AccessoriesBasedSlot accessoriesBasedSlot && identifier.equals(accessoriesBasedSlot.accessoriesContainer.slotType())) {
+                    slots.add(slotIndex); // Adds slot IDs agnostically to the slot identifiers themselves, so to work with Curios slot names in addition to Accessories, as well as with modified slot counts.
+                }
             }
         }
         slots.removeIf(index -> this.slots.get(index).hasItem());
