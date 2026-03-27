@@ -32,7 +32,7 @@ public class ElytraLayerMixin<T extends LivingEntity> {
     @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;armorCutoutNoCull(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/RenderType;"), method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V")
     private RenderType getElytraTexture(ResourceLocation location, Operation<RenderType> original, PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity) {
         if (entity instanceof ArmorStand armorStand) {
-            String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
+            String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "cape" : "aether_cape";
             AccessoriesCapability handler = armorStand.accessoriesCapability();
             if (handler != null) {
                 AccessoriesContainer stacksHandler = handler.getContainers().get(identifier);

@@ -57,8 +57,8 @@ public class AccessoriesMenu extends InventoryMenu {
     };
     public static final String[] AETHER_CURIOS_IDENTIFIERS = new String[] {
             "necklace",
-            "back", // Whilst accessories uses cape and back,
-            "body", // Curios uses back and body.
+            "cape", // Whilst accessories uses cape and back,
+            "back", // Curios uses back and body.
             "ring",
             "hands",
             "charm"

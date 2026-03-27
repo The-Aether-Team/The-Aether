@@ -351,9 +351,9 @@ public class EntityHooks {
                     } else if (stack.getItem() instanceof PendantItem) {
                         identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
                     } else if (stack.getItem() instanceof CapeItem) {
-                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
+                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "cape" : "aether_cape";
                     } else if (stack.getItem() instanceof ShieldOfRepulsionItem) {
-                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
+                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_shield";
                     }
                     AccessoriesCapability handler = armorStand.accessoriesCapability();
                     if (handler != null) {
@@ -436,8 +436,8 @@ public class EntityHooks {
         double vertical = isSmall ? pos.y * 2.0 : pos.y;
         String glovesIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
         String pendantIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
-        String capeIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
-        String shieldIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
+        String capeIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "cape" : "aether_cape";
+        String shieldIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_shield";
         if (!getItemByIdentifier(armorStand, glovesIdentifier).isEmpty()
                 && Math.abs(front) >= (isSmall ? 0.15 : 0.2)
                 && vertical >= (isSmall ? 0.65 : 0.75)
@@ -470,11 +470,13 @@ public class EntityHooks {
         AccessoriesCapability handler = armorStand.accessoriesCapability();
         if (handler != null) {
             SlotType slotType = SlotTypeLoader.getSlotType(armorStand, identifier);
-            AccessoriesContainer stacksHandler = handler.getContainer(slotType);
-            if (stacksHandler != null) {
-                ExpandedSimpleContainer stackHandler = stacksHandler.getCosmeticAccessories();
-                if (0 < stackHandler.getContainerSize()) {
-                    return stackHandler.getItem(0);
+            if (slotType != null) {
+                AccessoriesContainer stacksHandler = handler.getContainer(slotType);
+                if (stacksHandler != null) {
+                    ExpandedSimpleContainer stackHandler = stacksHandler.getCosmeticAccessories();
+                    if (0 < stackHandler.getContainerSize()) {
+                        return stackHandler.getItem(0);
+                    }
                 }
             }
         }
