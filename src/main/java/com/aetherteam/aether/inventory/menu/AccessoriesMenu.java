@@ -2,6 +2,9 @@ package com.aetherteam.aether.inventory.menu;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.mixin.mixins.common.accessor.AbstractContainerMenuAccessor;
+import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.network.packet.clientbound.ClientGrabItemPacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.datafixers.util.Pair;
 import io.wispforest.accessories.api.AccessoriesAPI;
 import io.wispforest.accessories.api.AccessoriesCapability;
@@ -11,12 +14,15 @@ import io.wispforest.accessories.api.slot.SlotType;
 import io.wispforest.accessories.impl.ExpandedSimpleContainer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -71,6 +77,7 @@ public class AccessoriesMenu extends InventoryMenu {
     private final ResultContainer craftResult = new ResultContainer();
 
     public final boolean hasButton;
+    protected boolean slotUpdateFlag;
 
     public AccessoriesMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, true);
@@ -338,4 +345,19 @@ public class AccessoriesMenu extends InventoryMenu {
     }
 
     public void trinkets$updateTrinketSlots(boolean slotsChanged) { } // Prevents instantiation of InventoryMenu from refreshing Trinkets slots.
+
+    public static void queueSlotRefresh(LivingEntity livingEntity, AccessoriesCapability capability, Map<AccessoriesContainer, Boolean> updatedContainers) {
+        if (livingEntity instanceof ServerPlayer serverPlayer && serverPlayer.containerMenu instanceof AccessoriesMenu accessoriesMenu) {
+            if (!updatedContainers.isEmpty() && updatedContainers.containsValue(true)) {
+                accessoriesMenu.slotUpdateFlag = true;
+            } else if (accessoriesMenu.slotUpdateFlag) { // After slot counts have updated, refresh the menu with the new slot layout. Will cause loss of mouse position.
+                accessoriesMenu.slotUpdateFlag = false;
+                ItemStack itemStack = accessoriesMenu.getCarried();
+                accessoriesMenu.setCarried(ItemStack.EMPTY);
+                serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, playerEntity) -> new AccessoriesMenu(id, inventory), Component.translatable("container.crafting")));
+                serverPlayer.containerMenu.setCarried(itemStack);
+                PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new ClientGrabItemPacket(itemStack), serverPlayer);
+            }
+        }
+    }
 }
