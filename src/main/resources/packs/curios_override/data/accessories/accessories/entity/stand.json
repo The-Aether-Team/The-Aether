@@ -1,0 +1,4 @@
+{
+  "entities": ["armor_stand"],
+  "slots": ["hand", "necklace", "cape", "back"]
+}

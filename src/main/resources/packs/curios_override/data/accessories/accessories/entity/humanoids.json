@@ -1,4 +1,4 @@
 {
   "entities": ["zombie", "zombie_villager", "husk", "skeleton", "stray", "piglin", "zombified_piglin"],
-  "slots": ["hands", "necklace"]
+  "slots": ["hand", "necklace"]
 }

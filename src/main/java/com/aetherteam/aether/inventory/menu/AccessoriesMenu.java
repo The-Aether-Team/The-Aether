@@ -60,7 +60,7 @@ public class AccessoriesMenu extends InventoryMenu {
             "cape", // Whilst accessories uses cape and back,
             "back", // Curios uses back and body.
             "ring",
-            "hands",
+            "hand",
             "charm"
     };
 

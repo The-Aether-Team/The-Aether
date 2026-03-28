@@ -90,7 +90,7 @@ public class AetherDispenseBehaviors {
                     if (stack.is(AetherTags.Items.ACCESSORIES)) {
                         String identifier = "";
                         if (stack.getItem() instanceof GlovesItem) {
-                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hand" : "aether_gloves";
                         } else if (stack.getItem() instanceof PendantItem) {
                             identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
                         } else if (stack.getItem() instanceof CapeItem) {
@@ -114,7 +114,7 @@ public class AetherDispenseBehaviors {
                                                 armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, armorStand.getSoundSource(), 1, 1);
                                             }
                                             stackHandler.setItem(0, stack.split(1)); // Using the Container to target the cosmetic accessories specifically.
-                                            if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
+                                            if (identifier.equals("hand") || identifier.equals("aether_gloves")) {
                                                 armorStand.setShowArms(true);
                                             }
                                         }

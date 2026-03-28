@@ -10,16 +10,16 @@ public class MobAccessoryCapability implements MobAccessory {
     private final Mob mob;
 
     private final Map<String, Float> accessoryDropChances = new HashMap<>(Map.ofEntries(
-            Map.entry("hands", 0.085F),
+            Map.entry("hand", 0.085F),
             Map.entry("necklace", 0.085F),
             Map.entry("aether_gloves", 0.085F),
             Map.entry("aether_pendant", 0.085F)
     ));
 
     private final Map<String, String> oppositeIdentifier = new HashMap<>(Map.ofEntries(
-            Map.entry("hands", "aether_gloves"),
+            Map.entry("hand", "aether_gloves"),
             Map.entry("necklace", "aether_pendant"),
-            Map.entry("aether_gloves", "hands"),
+            Map.entry("aether_gloves", "hand"),
             Map.entry("aether_pendant", "necklace")
     ));
 
@@ -61,7 +61,7 @@ public class MobAccessoryCapability implements MobAccessory {
     }
 
     public void setDropChance(String identifier, float chance) {
-        if (identifier.equals("hands") || identifier.equals("necklace") || identifier.equals("aether_gloves") || identifier.equals("aether_pendant")) {
+        if (identifier.equals("hand") || identifier.equals("necklace") || identifier.equals("aether_gloves") || identifier.equals("aether_pendant")) {
             this.getAccessoryDropChances().put(identifier, chance);
             this.getAccessoryDropChances().put(oppositeIdentifier.getOrDefault(identifier, identifier), chance);
         }

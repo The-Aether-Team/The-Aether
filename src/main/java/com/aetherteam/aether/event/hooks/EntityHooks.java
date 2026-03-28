@@ -105,8 +105,8 @@ public class EntityHooks {
         if (entity instanceof Mob mob && mob.level() instanceof ServerLevel) {
             RandomSource random = mob.getRandom();
             EntityType<?> entityType = mob.getType();
-            String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
-            String[] gloveSlots = {"hands", "aether_gloves"};
+            String[] allSlots = {"hand", "necklace", "aether_gloves", "aether_pendant"};
+            String[] gloveSlots = {"hand", "aether_gloves"};
             if (entityType == EntityType.PIGLIN) {
                 if (mob instanceof AbstractPiglin abstractPiglin && abstractPiglin.isAdult()) {
                     for (String identifier : allSlots) {
@@ -181,7 +181,7 @@ public class EntityHooks {
      */
     @Nullable
     private static Item getEquipmentForSlot(String identifier, ArmorMaterials armorMaterials) {
-        if (identifier.equals(AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves")) {
+        if (identifier.equals(AetherConfig.COMMON.use_curios_menu.get() ? "hand" : "aether_gloves")) {
             switch (armorMaterials) {
                 case LEATHER -> {
                     return AetherItems.LEATHER_GLOVES.get();
@@ -347,7 +347,7 @@ public class EntityHooks {
                 if (stack.is(AetherTags.Items.ACCESSORIES)) {
                     String identifier = "";
                     if (stack.getItem() instanceof GlovesItem) {
-                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hand" : "aether_gloves";
                     } else if (stack.getItem() instanceof PendantItem) {
                         identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
                     } else if (stack.getItem() instanceof CapeItem) {
@@ -375,7 +375,7 @@ public class EntityHooks {
                                             } else {
                                                 armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, armorStand.getSoundSource(), 1, 1);
                                             }
-                                            if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
+                                            if (identifier.equals("hand") || identifier.equals("aether_gloves")) {
                                                 armorStand.setShowArms(true);
                                             }
                                             if (!player.isCreative()) {
@@ -434,7 +434,7 @@ public class EntityHooks {
         double z = isSmall ? pos.z * 2.0 : pos.z;
         double front = axis == Direction.Axis.X ? z : x;
         double vertical = isSmall ? pos.y * 2.0 : pos.y;
-        String glovesIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+        String glovesIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "hand" : "aether_gloves";
         String pendantIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
         String capeIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "cape" : "aether_cape";
         String shieldIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_shield";
@@ -564,7 +564,7 @@ public class EntityHooks {
         if (entity instanceof Mob mob) {
             AccessoriesCapability handler = AccessoriesCapability.get(entity);
             List<ItemStack> stacks = new ArrayList<>();
-            String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
+            String[] allSlots = {"hand", "necklace", "aether_gloves", "aether_pendant"};
             if(handler == null) return itemStacks;
             for (String identifier : allSlots) {
                 AccessoriesContainer stacksHandler = handler.getContainer(new SlotTypeReference(identifier));
@@ -608,7 +608,7 @@ public class EntityHooks {
                 AccessoriesCapability handler = mob.accessoriesCapability();
                 if (handler != null) {
                     if (experience > 0) {
-                        String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
+                        String[] allSlots = {"hand", "necklace", "aether_gloves", "aether_pendant"};
                         for (String identifier : allSlots) {
                             AccessoriesContainer accessoriesContainer = handler.getContainer(new SlotTypeReference(identifier));
                             if (accessoriesContainer != null) {

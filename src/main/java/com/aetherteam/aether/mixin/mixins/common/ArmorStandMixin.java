@@ -25,7 +25,7 @@ public class ArmorStandMixin {
         ArmorStand armorStand = (ArmorStand) (Object) this;
         String identifier = "";
         if (stack.getItem() instanceof GlovesItem) {
-            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hand" : "aether_gloves";
         } else if (stack.getItem() instanceof PendantItem) {
             identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
         } else if (stack.getItem() instanceof CapeItem) {
