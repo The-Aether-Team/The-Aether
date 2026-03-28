@@ -3,6 +3,7 @@ package com.aetherteam.aether.mixin.mixins.common;
 import com.aetherteam.aether.capability.accessory.MobAccessory;
 import com.aetherteam.aether.event.hooks.EntityHooks;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
+import io.wispforest.accessories.api.AccessoriesCapability;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,7 +21,7 @@ public class MobMixin {
     @Inject(at = @At(value = "HEAD"), method = "canTakeItem(Lnet/minecraft/world/item/ItemStack;)Z", cancellable = true)
     private void canTakeItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         Mob mob = (Mob) (Object) this;
-        if (EntityHooks.canMobSpawnWithAccessories(mob)) {
+        if (EntityHooks.canMobSpawnWithAccessories(mob) && AccessoriesCapability.get(mob) != null) {
             String identifier = AetherMixinHooks.getIdentifierForItem(mob, stack);
             if (!identifier.isEmpty()) {
                 ItemStack accessory = AetherMixinHooks.getItemByIdentifier(mob, identifier);
