@@ -25,13 +25,13 @@ public class ArmorStandMixin {
         ArmorStand armorStand = (ArmorStand) (Object) this;
         String identifier = "";
         if (stack.getItem() instanceof GlovesItem) {
-            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hand" : "aether_gloves";
         } else if (stack.getItem() instanceof PendantItem) {
             identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
         } else if (stack.getItem() instanceof CapeItem) {
-            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
+            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "cape" : "aether_cape";
         } else if (stack.getItem() instanceof ShieldOfRepulsionItem) {
-            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
+            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_shield";
         }
         if (!identifier.isEmpty()) {
             ItemStack accessory = AetherMixinHooks.getItemByIdentifier(armorStand, identifier);

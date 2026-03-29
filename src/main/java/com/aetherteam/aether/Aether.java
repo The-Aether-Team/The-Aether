@@ -29,6 +29,7 @@ import com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener;
 import com.aetherteam.aether.event.listeners.capability.AetherPlayerListener;
 import com.aetherteam.aether.event.listeners.capability.AetherTimeListener;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
+import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
@@ -56,6 +57,7 @@ import io.github.fabricators_of_create.porting_lib.event.common.AddPackFindersEv
 import io.github.fabricators_of_create.porting_lib.resources.PathPackResources;
 import io.github.fabricators_of_create.porting_lib.util.EnvExecutor;
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
+import io.wispforest.accessories.api.events.ContainersChangeCallback;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -156,6 +158,8 @@ public class Aether implements ModInitializer {
 
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT).register(AetherCreativeTabs::buildCreativeModeTabs);
         CommandRegistrationCallback.EVENT.register(AetherCommands::registerCommands);
+
+        ContainersChangeCallback.EVENT.register(AccessoriesMenu::queueSlotRefresh);
     }
 
     public void commonSetup() {

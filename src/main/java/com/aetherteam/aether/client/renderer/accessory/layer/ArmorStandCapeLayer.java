@@ -42,7 +42,7 @@ public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, ArmorStand livingEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-        String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
+        String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "cape" : "aether_cape";
         AccessoriesCapability handler = livingEntity.accessoriesCapability();
         if (handler != null) {
             AccessoriesContainer stacksHandler = handler.getContainers().get(identifier);

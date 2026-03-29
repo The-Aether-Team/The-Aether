@@ -33,7 +33,7 @@ public class SmithingScreenMixin {
     @Inject(at = @At("HEAD"), method = "updateArmorStandPreview(Lnet/minecraft/world/item/ItemStack;)V", cancellable = true)
     private void updateArmorStandPreview(ItemStack stack, CallbackInfo ci) {
         if (this.armorStandPreview != null) {
-            String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+            String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hand" : "aether_gloves";
             AccessoriesCapability handler = this.armorStandPreview.accessoriesCapability();
             if (handler != null) {
                 AccessoriesContainer container = handler.getContainer(SlotTypeLoader.getSlotType(this.armorStandPreview, identifier));

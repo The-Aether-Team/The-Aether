@@ -4,6 +4,7 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.renderer.accessory.GlovesRenderer;
+import com.aetherteam.aether.client.renderer.accessory.NullRenderer;
 import com.aetherteam.aether.client.renderer.accessory.PendantRenderer;
 import com.aetherteam.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
 import com.aetherteam.aether.client.renderer.accessory.layer.ArmorStandCapeLayer;
@@ -179,6 +180,14 @@ public class AetherRenderers {
         AccessoriesRendererRegistry.registerRenderer(AetherItems.PHOENIX_GLOVES.get(), GlovesRenderer::new);
         AccessoriesRendererRegistry.registerRenderer(AetherItems.OBSIDIAN_GLOVES.get(), GlovesRenderer::new);
         AccessoriesRendererRegistry.registerRenderer(AetherItems.VALKYRIE_GLOVES.get(), GlovesRenderer::new);
+
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.AGILITY_CAPE.get(), NullRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.BLUE_CAPE.get(), NullRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.RED_CAPE.get(), NullRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.SWET_CAPE.get(), NullRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.VALKYRIE_CAPE.get(), NullRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.WHITE_CAPE.get(), NullRenderer::new);
+        AccessoriesRendererRegistry.registerRenderer(AetherItems.YELLOW_CAPE.get(), NullRenderer::new);
 
         AccessoriesRendererRegistry.registerRenderer(AetherItems.SHIELD_OF_REPULSION.get(), ShieldOfRepulsionRenderer::new);
     }
