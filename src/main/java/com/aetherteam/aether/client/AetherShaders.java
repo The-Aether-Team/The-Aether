@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class AetherShaders {
     private static ShaderInstance potteryMoaShader;
-    private static ShaderInstance fountainMoaShader;
     private static ShaderInstance voidMoaShader;
     private static ShaderInstance galaxianMoaShader;
 
@@ -19,7 +18,6 @@ public class AetherShaders {
         ResourceProvider resourceProvider = event.getResourceProvider();
         try {
             event.registerShader(new ShaderInstance(resourceProvider, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "pottery_moa"), DefaultVertexFormat.NEW_ENTITY), instance -> potteryMoaShader = instance);
-            event.registerShader(new ShaderInstance(resourceProvider, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "fountain_moa"), DefaultVertexFormat.NEW_ENTITY), instance -> fountainMoaShader = instance);
             event.registerShader(new ShaderInstance(resourceProvider, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "void_moa"), DefaultVertexFormat.NEW_ENTITY), instance -> voidMoaShader = instance);
             event.registerShader(new ShaderInstance(resourceProvider, ResourceLocation.fromNamespaceAndPath(Aether.MODID, "galaxian_moa"), DefaultVertexFormat.NEW_ENTITY), instance -> galaxianMoaShader = instance);
         } catch (IOException e) {
@@ -29,10 +27,6 @@ public class AetherShaders {
 
     public static ShaderInstance getPotteryMoaShader() {
         return potteryMoaShader;
-    }
-
-    public static ShaderInstance getFountainMoaShader() {
-        return fountainMoaShader;
     }
 
     public static ShaderInstance getVoidMoaShader() {

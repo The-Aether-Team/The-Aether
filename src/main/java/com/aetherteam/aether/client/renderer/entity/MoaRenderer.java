@@ -11,6 +11,7 @@ import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -104,14 +105,14 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
         if (Minecraft.getInstance().screen instanceof MoaSkinsScreen moaSkinsScreen && moaSkinsScreen.getSelectedSkin() != null && moaSkinsScreen.getPreviewMoa() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID().equals(moaUUID)) {
             ResourceLocation texture = moaSkinsScreen.getSelectedSkin().getSkinLocation();
             if (moaSkinsScreen.getSelectedSkin().getSubRenderer() != null && moaSkinsScreen.getSelectedSkin().getSubRenderer().getAnimationData() != null) {
-                return moaSkinsScreen.getSelectedSkin().getSubRenderer().getAnimationFrame(texture, moa.tickCount);
+                return moaSkinsScreen.getSelectedSkin().getSubRenderer().getAnimationFrame(texture, Util.getMillis());
             } else {
                 return texture;
             }
         } else if (userSkinsData.containsKey(lastRiderUUID) && userSkinsData.get(lastRiderUUID).moaSkin() != null && userSkinsData.get(lastRiderUUID).moaUUID() != null && userSkinsData.get(lastRiderUUID).moaUUID().equals(moaUUID)) {
             ResourceLocation texture = userSkinsData.get(lastRiderUUID).moaSkin().getSkinLocation();
             if (userSkinsData.get(lastRiderUUID).moaSkin().getSubRenderer() != null && userSkinsData.get(lastRiderUUID).moaSkin().getSubRenderer().getAnimationData() != null) {
-                return userSkinsData.get(lastRiderUUID).moaSkin().getSubRenderer().getAnimationFrame(texture, moa.tickCount);
+                return userSkinsData.get(lastRiderUUID).moaSkin().getSubRenderer().getAnimationFrame(texture, Util.getMillis());
             } else {
                 return texture;
             }

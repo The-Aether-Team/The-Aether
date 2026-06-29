@@ -35,9 +35,9 @@ public interface MoaSubRenderer {
         }
     }
 
-    default ResourceLocation getAnimationFrame(ResourceLocation texture, int tickCount) {
+    default ResourceLocation getAnimationFrame(ResourceLocation texture, long time) {
         if (this.getAnimationData() != null) {
-            int frame = Mth.floor(((float) tickCount / this.getAnimationData().delay()) % this.getAnimationData().frames());
+            int frame = Mth.floor((time / (float) this.getAnimationData().delay()) % this.getAnimationData().frames());
             String textureString = texture.toString();
             textureString = textureString.replace(".png", "_" + frame + ".png");
             return ResourceLocation.parse(textureString);

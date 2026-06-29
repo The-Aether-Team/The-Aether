@@ -27,21 +27,6 @@ public class AetherRenderTypes {
             .setTexturingState(RenderType.GLINT_TEXTURING)
             .createCompositeState(false)
     );
-    public static final RenderType FOUNTAIN_MOA = RenderType.create("aether:fountain_moa",
-        DefaultVertexFormat.POSITION_TEX,
-        VertexFormat.Mode.QUADS,
-        1536,
-        RenderType.CompositeState.builder()
-            .setShaderState(new RenderStateShard.ShaderStateShard(AetherShaders::getFountainMoaShader))
-            .setTextureState(new RenderStateShard.TextureStateShard(ENCHANTED_GLINT_MOA, true, false))
-            .setWriteMaskState(RenderType.COLOR_WRITE)
-            .setCullState(RenderType.NO_CULL)
-            .setDepthTestState(RenderType.EQUAL_DEPTH_TEST)
-            .setTransparencyState(RenderType.GLINT_TRANSPARENCY)
-            .setOutputState(RenderType.ITEM_ENTITY_TARGET)
-            .setTexturingState(RenderType.GLINT_TEXTURING)
-            .createCompositeState(false)
-    );
     public static final RenderType VOID_MOA = RenderType.create("aether:void_moa",
         DefaultVertexFormat.NEW_ENTITY,
         VertexFormat.Mode.QUADS,
@@ -79,10 +64,6 @@ public class AetherRenderTypes {
         return POTTERY_MOA;
     }
 
-    public static RenderType fountainMoa() {
-        return FOUNTAIN_MOA;
-    }
-
     public static RenderType voidMoa() {
         return VOID_MOA;
     }
@@ -93,7 +74,6 @@ public class AetherRenderTypes {
 
     public static void registerRenderBuffers(RegisterRenderBuffersEvent event) {
         event.registerRenderBuffer(potteryMoa());
-        event.registerRenderBuffer(fountainMoa());
         event.registerRenderBuffer(voidMoa());
         event.registerRenderBuffer(galaxianMoa());
     }
