@@ -3,6 +3,7 @@ package com.aetherteam.aether.mixin;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
@@ -28,10 +29,11 @@ import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class AetherMixinHooks {
-    private static final ResourceLocation SWUFF_CAPE_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
     @ApiStatus.Internal
     public static boolean RENDERING_ACCESSORY = false;
 
@@ -64,11 +66,12 @@ public class AetherMixinHooks {
      */
     public static ResourceLocation getCapeTexture(ItemStack stack) {
         if (stack.getItem() instanceof CapeItem capeItem) {
-            if (stack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) { // Easter Egg cape texture.
-                return SWUFF_CAPE_LOCATION;
-            } else {
-                return capeItem.getCapeTexture();
+            for (Map.Entry<Predicate<ItemStack>, ResourceLocation> entry : AetherClient.CAPE_SECRETS.entrySet()) {
+                if (entry.getKey().test(stack)) {
+                    return entry.getValue();
+                }
             }
+            return capeItem.getCapeTexture();
         }
         return null;
     }
