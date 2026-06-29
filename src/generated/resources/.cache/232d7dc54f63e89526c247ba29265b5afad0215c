@@ -1,4 +1,4 @@
-// 1.20.1	2025-08-05T20:21:29.105766	Tags for minecraft:item mod id aether
+// 1.20.1	2026-06-29T08:36:54.3289961	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -29,6 +29,7 @@ b7b37d30e23e65ee6925f4068e6d142f874fadd6 data/aether/tags/items/dungeon_blocks.j
 465cdb990ab342cb97554e980a0558c26a7fb539 data/aether/tags/items/freezable_buckets.json
 cf02540e648766882006eb0eb293476a9c3d33c5 data/aether/tags/items/freezable_pendants.json
 bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/items/freezable_rings.json
+6cfba7d2e971d158ca80b5187945d09c184598b6 data/aether/tags/items/gems/ambrosium.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/items/gems/zanite.json
 1fa02ed3118a751ff7ef2022d14fa9d0ba8b31e6 data/aether/tags/items/golden_amber_harvesters.json
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/items/golden_oak_logs.json
@@ -49,6 +50,9 @@ d0f09b8dfc6381aa826e9b27dfc398b8b7c02625 data/aether/tags/items/moa_temptation_i
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/neptune_repairing.json
 1eecfc37581b2c99fe3316dd778068abcba0fa2c data/aether/tags/items/no_skyroot_double_drops.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/obsidian_repairing.json
+b8af6b0dc29b1d908d706f469049a268ce5ceffc data/aether/tags/items/ores/ambrosium.json
+9065ebf7fc44a6127cb60d0a3e6cabf0039c7b27 data/aether/tags/items/ores/gravitite.json
+732e6fd3a41ab373f9c1edb1580eaadf529b7d57 data/aether/tags/items/ores/zanite.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/aether/tags/items/ores_in_ground/holystone.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/aether/tags/items/ore_bearing_ground/holystone.json
 c48ebdf05f4edd90cd7a46cb05f501d227b86ab4 data/aether/tags/items/pacifies_swets.json
@@ -95,7 +99,7 @@ bc9de2bdb11aba0025a16f480e48e231376296ee data/forge/tags/items/fences.json
 bc9de2bdb11aba0025a16f480e48e231376296ee data/forge/tags/items/fences/wooden.json
 0bba5a874905f77d759a35126765746aff21acf2 data/forge/tags/items/fence_gates.json
 0bba5a874905f77d759a35126765746aff21acf2 data/forge/tags/items/fence_gates/wooden.json
-794ba2e4990dd4fa1823ea008d8b78437527dacd data/forge/tags/items/gems.json
+23a966f68cc616cfaf49187e5cf5eddd17c9189c data/forge/tags/items/gems.json
 3549a6c0791821524c9419a608b6af0de62b3530 data/forge/tags/items/glass/colorless.json
 3e52c5c101f4f3e27d0a4c0ceb478864450a6a40 data/forge/tags/items/glass_panes/colorless.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/forge/tags/items/ores.json

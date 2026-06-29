@@ -244,11 +244,16 @@ public class AetherBlockTagData extends BlockTagsProvider {
         this.tag(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK);
         this.tag(AetherTags.Blocks.DOUBLE_DROPS_OVERRIDE);
         this.tag(AetherTags.Blocks.HOLYSTONE_ORE_REPLACEABLES).add(AetherBlocks.HOLYSTONE.get());
+        this.tag(AetherTags.Blocks.ORE_BEARING_GROUND_HOLYSTONE).add(AetherBlocks.HOLYSTONE.get());
+        this.tag(AetherTags.Blocks.ORES_AMBROSIUM).add(AetherBlocks.AMBROSIUM_ORE.get());
+        this.tag(AetherTags.Blocks.ORES_ZANITE).add(AetherBlocks.ZANITE_ORE.get());
+        this.tag(AetherTags.Blocks.ORES_GRAVITITE).add(AetherBlocks.GRAVITITE_ORE.get());
         this.tag(AetherTags.Blocks.ORES_IN_GROUND_HOLYSTONE).add(
                 AetherBlocks.AMBROSIUM_ORE.get(),
                 AetherBlocks.ZANITE_ORE.get(),
                 AetherBlocks.GRAVITITE_ORE.get());
-        this.tag(AetherTags.Blocks.ORE_BEARING_GROUND_HOLYSTONE).add(AetherBlocks.HOLYSTONE.get());
+        this.tag(AetherTags.Blocks.STORAGE_BLOCKS_AMBROSIUM).add(AetherBlocks.AMBROSIUM_BLOCK.get());
+        this.tag(AetherTags.Blocks.STORAGE_BLOCKS_ZANITE).add(AetherBlocks.ZANITE_BLOCK.get());
 
         // Vanilla
         this.tag(BlockTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get());

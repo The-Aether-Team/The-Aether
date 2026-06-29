@@ -1,4 +1,4 @@
-// 1.20.1	2024-11-05T15:06:49.4769146	Recipes
+// 1.20.1	2026-06-29T08:36:54.3309972	Recipes
 ce9ab2e043b1d5d8747a22324584f0bcf4c2b3b1 data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 90208eb708709fa9badd0fc606e5daf5ad91b03b data/aether/advancements/recipes/building_blocks/aerogel_slab_from_aerogel_stonecutting.json
 6845688223f47a89fd0d51f6e6d1de155f983710 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -332,7 +332,7 @@ f16e7f5f90f310f7be36030d1070e44e76e7cbdb data/aether/recipes/ambrosium_block.jso
 311c797765eefdecd2e980cbbfb50217d7ad66ee data/aether/recipes/ambrosium_shard_from_ambrosium_block.json
 4f194dde321a2e6a6db64b64dc33f993dc549219 data/aether/recipes/ambrosium_shard_from_blasting.json
 affdc90fc8ebd8020b56c2db4f9d1c05f8c4e641 data/aether/recipes/ambrosium_shard_from_smelting.json
-88c51b133d39f1ee39ce97ad8e4af36f2e7c8b31 data/aether/recipes/ambrosium_torch.json
+ec7668fd21041a5f1314a6aa88a6d4a96e82ceda data/aether/recipes/ambrosium_torch.json
 01bc3f36195424b47dfc6cb32809eacd01ecac7f data/aether/recipes/angelic_slab.json
 0c34c9b8029712e8dce8476a776b05b344e806ae data/aether/recipes/angelic_slab_from_angelic_stone_stonecutting.json
 42ff9131899358358d36715bbc60045c873d9dd5 data/aether/recipes/angelic_stairs.json
