@@ -93,6 +93,8 @@ dependencies {
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}+${project.mc_version}")
 
+    implementation fg.deobf("gg.essential:partner-mod-integration-1.20.1-forge:${project.essential_partner_integration_version}")
+
     compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
 
 //    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
@@ -115,6 +117,11 @@ dependencies {
     jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}+${project.mc_version}") {
         jarJar.ranged(it, "[${project.curios_version},)")
         jarJar.pin(it, "${project.curios_version}+${project.mc_version}")
+    }
+
+    jarJar fg.deobf("gg.essential:partner-mod-integration-1.20.1-forge:${project.essential_partner_integration_version}") {
+        jarJar.ranged(it, "[${project.essential_partner_integration_version},)")
+        jarJar.pin(it, "${project.essential_partner_integration_version}")
     }
 
     compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}"))
@@ -155,6 +162,7 @@ repositories {
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://www.cursemaven.com" }
     maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
+    maven { url = "https://repo.essential.gg/public" }
     maven { url = "https://packages.aether-mod.net/Nitrogen" }
     maven { url = "https://packages.aether-mod.net/Cumulus" }
     maven { url "https://maven.shedaniel.me/" }

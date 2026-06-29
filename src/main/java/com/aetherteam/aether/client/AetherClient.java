@@ -27,8 +27,14 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
+
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherClient {
+    public static Map<Predicate<ItemStack>, ResourceLocation> CAPE_SECRETS = new HashMap<>();
+
     private static boolean refreshPacks = false;
 
     @SubscribeEvent
@@ -78,6 +84,8 @@ public class AetherClient {
 
         ItemProperties.register(AetherItems.HAMMER_OF_KINGBDOGZ.get(), new ResourceLocation(Aether.MODID, "named"), // Easter Egg texture.
                 (stack, world, living, i) -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
+
+        CAPE_SECRETS.put((stack) -> stack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape"), new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png"));
     }
 
     public static void registerTooltipOverrides() {

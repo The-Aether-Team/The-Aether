@@ -2,6 +2,7 @@ package com.aetherteam.aether.client.renderer.accessory.layer;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
@@ -26,15 +27,15 @@ import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * [CODE COPY] - {@link net.minecraft.client.renderer.entity.layers.CapeLayer}.<br><br>
  * Modified to check for capes in the Armor Stand's slots, as well as remove rotational fields and instead keep rotations constant.
  */
 public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel> {
-    private static final ResourceLocation SWUFF_CAPE_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
-
     private final CapeModel cape;
 
     public ArmorStandCapeLayer(RenderLayerParent<ArmorStand, ArmorStandModel> renderer) {
@@ -56,8 +57,11 @@ public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel
                     if (!itemStack.isEmpty()) {
                         if (itemStack.getItem() instanceof CapeItem capeItem) {
                             ResourceLocation texture = capeItem.getCapeTexture();
-                            if (itemStack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) { // Easter Egg cape texture.
-                                texture = SWUFF_CAPE_LOCATION;
+                            for (Map.Entry<Predicate<ItemStack>, ResourceLocation> entry : AetherClient.CAPE_SECRETS.entrySet()) {
+                                if (entry.getKey().test(itemStack)) {
+                                    texture = entry.getValue();
+                                    break;
+                                }
                             }
                             if (!livingEntity.isInvisible() && texture != null) {
                                 ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);

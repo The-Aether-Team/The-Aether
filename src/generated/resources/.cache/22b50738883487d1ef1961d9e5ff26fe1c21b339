@@ -1,4 +1,4 @@
-// 1.20.1	2025-08-05T20:21:29.1007684	Tags for minecraft:block mod id aether
+// 1.20.1	2026-06-29T08:36:54.3239956	Tags for minecraft:block mod id aether
 04c3617fbc472d94c5befb6664262911a296e0de data/aether/tags/blocks/aechor_plant_spawnable_deterrent.json
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/blocks/aerclouds.json
@@ -25,12 +25,17 @@ b39b9a730fa6d6ce0d57bcbb88a249b6617d6822 data/aether/tags/blocks/infiniburn.json
 cf3608bd187922aeb48c566c19e8482b0dca34c7 data/aether/tags/blocks/non_bronze_dungeon_spawnable.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/blocks/non_ruined_portal_spawnable.json
 f044320c552d2490be4d416f191e85aff1a934e6 data/aether/tags/blocks/non_tunnel_replaceable.json
+b8af6b0dc29b1d908d706f469049a268ce5ceffc data/aether/tags/blocks/ores/ambrosium.json
+9065ebf7fc44a6127cb60d0a3e6cabf0039c7b27 data/aether/tags/blocks/ores/gravitite.json
+732e6fd3a41ab373f9c1edb1580eaadf529b7d57 data/aether/tags/blocks/ores/zanite.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/aether/tags/blocks/ores_in_ground/holystone.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/aether/tags/blocks/ore_bearing_ground/holystone.json
 866fa462d31ceebc7a01a7520e22c673b2391a30 data/aether/tags/blocks/ruined_portal_ground_replaceable.json
 66891bf965b86e92235cc816a4a0c898ada827e6 data/aether/tags/blocks/sentry_blocks.json
 df16ed8f5964fbb722ae2040903fb88c95ad2b99 data/aether/tags/blocks/skyroot_logs.json
 31c6217cf1ecdd680f867d440f3dca420bbf9b99 data/aether/tags/blocks/slider_unbreakable.json
+c907836fd82065c1742a5ff7b2a724f4e02fcb5f data/aether/tags/blocks/storage_blocks/ambrosium.json
+d24f40d39ac69d0ffd58ac28499955162c924292 data/aether/tags/blocks/storage_blocks/zanite.json
 af61d0b4368cde926f896d6a9bda3fed75061d35 data/aether/tags/blocks/sun_spirit_unbreakable.json
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/swet_spawnable_on.json
 35939e5beaa968e84aa88a102d8a79663d47ab1d data/aether/tags/blocks/trapped_dungeon_blocks.json
