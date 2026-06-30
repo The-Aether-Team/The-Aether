@@ -18,4 +18,6 @@ public record MoaType(ItemStack egg, int maxJumps, float speed, int spawnChance,
             ResourceLocation.CODEC.fieldOf("saddle_texture").forGetter(MoaType::saddleTexture),
             ResourceLocation.CODEC.optionalFieldOf("jumps_texture").forGetter(MoaType::jumpsTexture)
         ).apply(in, MoaType::new));
+
+    public ItemStack egg() { return this.egg.copy(); }
 }
