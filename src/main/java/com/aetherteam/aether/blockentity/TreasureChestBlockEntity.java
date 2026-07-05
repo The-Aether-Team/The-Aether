@@ -4,12 +4,16 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.components.AetherDataComponents;
 import com.aetherteam.aether.item.components.DungeonKind;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -31,6 +35,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 /**
@@ -39,6 +45,13 @@ import java.util.stream.IntStream;
  */
 public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity, WorldlyContainer {
     private NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
+
+    // Lootr integration fields
+    private UUID lootrInfoId = null;
+    private boolean lootrHasBeenOpened = false;
+    private final Set<UUID> lootrClientOpeners = new ObjectOpenHashSet<>();
+    private boolean lootrClientOpened = false;
+
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level level, BlockPos pos, BlockState state) {
             TreasureChestBlockEntity.playSound(level, pos, state, SoundEvents.CHEST_OPEN);
@@ -181,6 +194,41 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         return this.locked;
     }
 
+    // Lootr integration methods
+    public UUID getLootrInfoUUID() {
+        if (this.lootrInfoId == null) {
+            this.lootrInfoId = UUID.randomUUID();
+        }
+        return this.lootrInfoId;
+    }
+
+    public boolean getLootrHasBeenOpened() {
+        return this.lootrHasBeenOpened;
+    }
+
+    public void setLootrHasBeenOpened(boolean opened) {
+        this.lootrHasBeenOpened = opened;
+    }
+
+    public Set<UUID> getLootrClientOpeners() {
+        return this.lootrClientOpeners;
+    }
+
+    public boolean isLootrClientOpened() {
+        return this.lootrClientOpened;
+    }
+
+    public void setLootrClientOpened(boolean opened) {
+        this.lootrClientOpened = opened;
+    }
+
+    public boolean hasClientOpened(UUID uuid) {
+        if (this.lootrClientOpened) {
+            return true;
+        }
+        return !this.lootrClientOpeners.isEmpty() && this.lootrClientOpeners.contains(uuid);
+    }
+
     @Override
     public void startOpen(Player player) {
         if (!this.remove && !player.isSpectator()) {
@@ -275,6 +323,18 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         if (!this.trySaveLootTable(tag)) {
             ContainerHelper.saveAllItems(tag, this.items, registries);
         }
+        // Lootr integration
+        if (this.lootrInfoId != null) {
+            tag.putUUID("LootrInfoId", this.lootrInfoId);
+        }
+        tag.putBoolean("LootrHasBeenOpened", this.lootrHasBeenOpened);
+        if (this.level != null && this.level.isClientSide() && !this.lootrClientOpeners.isEmpty()) {
+            ListTag openersList = new ListTag();
+            for (UUID opener : this.lootrClientOpeners) {
+                openersList.add(NbtUtils.createUUID(opener));
+            }
+            tag.put("LootrOpeners", openersList);
+        }
     }
 
     @Override
@@ -285,6 +345,20 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
             ContainerHelper.loadAllItems(tag, this.items, registries);
+        }
+        // Lootr integration
+        if (tag.hasUUID("LootrInfoId")) {
+            this.lootrInfoId = tag.getUUID("LootrInfoId");
+        }
+        if (tag.contains("LootrHasBeenOpened", Tag.TAG_BYTE)) {
+            this.lootrHasBeenOpened = tag.getBoolean("LootrHasBeenOpened");
+        }
+        this.lootrClientOpeners.clear();
+        if (tag.contains("LootrOpeners", Tag.TAG_LIST)) {
+            ListTag openersList = tag.getList("LootrOpeners", Tag.TAG_INT_ARRAY);
+            for (Tag openerTag : openersList) {
+                this.lootrClientOpeners.add(NbtUtils.loadUUID(openerTag));
+            }
         }
     }
 
