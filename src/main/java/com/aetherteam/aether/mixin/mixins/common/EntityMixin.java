@@ -15,6 +15,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -77,7 +78,11 @@ public class EntityMixin {
                 if (entity.getVehicle() != null) {
                     vehicleOffset = entity.getVehicle().getBbHeight();
                 }
-                DimensionTransition transition = new DimensionTransition(destination, new Vec3(entity.getX(), destination.getMaxBuildHeight() - entity.getBbHeight() - vehicleOffset, entity.getZ()), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot(), false, DimensionTransition.DO_NOTHING);
+                // Calculate the effective coordinate scaling so that falling position matches up with portal positions
+                final double coordinate_scale = DimensionType.getTeleportationScale(serverLevel.dimensionType(), destination.dimensionType());
+                final double scaledX = entity.getX() * coordinate_scale;
+                final double scaledZ = entity.getZ() * coordinate_scale;
+                DimensionTransition transition = new DimensionTransition(destination, new Vec3(scaledX, destination.getMaxBuildHeight() - entity.getBbHeight() - vehicleOffset, scaledZ), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot(), false, DimensionTransition.DO_NOTHING);
                 Entity target = entity.changeDimension(transition);
                 serverLevel.getProfiler().pop();
                 if (target != null) {
