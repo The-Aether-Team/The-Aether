@@ -11,7 +11,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.fml.ModList;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -26,8 +25,7 @@ public final class EquipmentUtil {
      * @return Whether the attack was full strength, as a {@link Boolean}.
      */
     public static boolean isFullStrength(LivingEntity attacker) {
-        boolean combatifyLoaded = ModList.get().isLoaded("combatify");
-        return !(attacker instanceof Player player) || (combatifyLoaded ? player.getAttackStrengthScale(1.0F) >= 1.95F : player.getAttackStrengthScale(1.0F) >= 1.0F);
+        return !(attacker instanceof Player player) || player.getAttackStrengthScale(1.0F) >= 1.0F;
     }
 
     /**
