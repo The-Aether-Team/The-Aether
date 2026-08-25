@@ -278,6 +278,8 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(Tags.Items.FENCES_WOODEN).add(AetherBlocks.SKYROOT_FENCE.get().asItem());
         this.tag(Tags.Items.FENCE_GATES).add(AetherBlocks.SKYROOT_FENCE_GATE.get().asItem());
         this.tag(Tags.Items.FENCES).add(AetherBlocks.SKYROOT_FENCE.get().asItem());
+        this.tag(Tags.Items.STRIPPED_LOGS).add(AetherBlocks.STRIPPED_SKYROOT_LOG.get().asItem());
+        this.tag(Tags.Items.STRIPPED_WOODS).add(AetherBlocks.STRIPPED_SKYROOT_WOOD.get().asItem());
         this.tag(Tags.Items.EGGS).addTag(AetherTags.Items.MOA_EGGS);
         this.tag(Tags.Items.FOODS_FRUIT).add(
             AetherItems.WHITE_APPLE.get()
@@ -379,6 +381,7 @@ public class AetherItemTagData extends ItemTagsProvider {
         );
 
         // Vanilla
+        this.tag(ItemTags.PLANKS).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
         this.tag(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
         this.tag(ItemTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get().asItem());
         this.tag(ItemTags.WOODEN_SLABS).add(AetherBlocks.SKYROOT_SLAB.get().asItem());

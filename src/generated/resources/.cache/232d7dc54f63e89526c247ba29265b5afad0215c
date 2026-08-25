@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-03T13:38:38.7675329	Tags for minecraft:item mod id aether
+// 1.21.1	2026-08-25T19:51:04.7231033	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/item/accepted_music_discs.json
 b4d12513c8c0ef5b1fa6237ca7a1f25799c219a2 data/aether/tags/item/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/item/accessories_capes.json
@@ -112,6 +112,8 @@ e016c33e93baa610f56a93bc2b4dc88b813dcc59 data/c/tags/item/foods/fruit.json
 59990c003209bd1350c89f0fe3c6037c16e95ae4 data/c/tags/item/slime_balls.json
 fd01915c57cee8effe17fe38cbedcefa19a98fb3 data/c/tags/item/stones.json
 01be455b4f57023ac9af8857eb885afcfb917025 data/c/tags/item/storage_blocks.json
+d2fba49a4ea5cc4f11e213ac2f6b1a8348c4d030 data/c/tags/item/stripped_logs.json
+e7629abe27052c6c57b91ea5218201035d25a161 data/c/tags/item/stripped_woods.json
 addb62cbd712e3f83c6bbadcbfdf309dc0ee3cc3 data/c/tags/item/tools.json
 194d42fbb36c91ae3f46b107ece7166c78d58625 data/c/tags/item/tools/bow.json
 89d5303adbc3b1e37dafb86fe4841df32156159d data/c/tags/item/tools/melee_weapon.json
@@ -141,6 +143,7 @@ c6a2f3012677318fa59bcac00346119501124dc5 data/minecraft/tags/item/leg_armor.json
 c365c56c9363907f546b5d4778b8608912fa27c9 data/minecraft/tags/item/logs_that_burn.json
 33397c0e49ca28fad45a2f4fc1a5ceb3a01edfbd data/minecraft/tags/item/pickaxes.json
 27f7b6d6102ecf3b0fafa98ae805897f6bfc66ca data/minecraft/tags/item/piglin_loved.json
+d57e931f91a1b51aa96c3007c5fce585e2e84cc2 data/minecraft/tags/item/planks.json
 6ef8dd4fc2ca5da0387fa62e3cd710a53a035b3d data/minecraft/tags/item/saplings.json
 031761cc00cfae6e84a03afe0f83c9288ddcf76b data/minecraft/tags/item/shovels.json
 ef0249e5296febb809f365800a45d4fb24f13322 data/minecraft/tags/item/signs.json
